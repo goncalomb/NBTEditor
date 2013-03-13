@@ -9,13 +9,12 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 
 import com.goncalomb.bukkit.customitems.api.CustomBow;
 import com.goncalomb.bukkit.customitems.api.DelayedPlayerDetails;
-import com.goncalomb.bukkit.lang.Lang;
 
 public final class TorchBow extends CustomBow {
 	
 	public TorchBow() {
 		super("torch-bow", ChatColor.YELLOW + "Torch Bow");
-		setLore(Lang._list("citems.item-lores.ender-bow"));
+		setLore("§bLight the way with arrows.");
 	}
 	
 	@Override

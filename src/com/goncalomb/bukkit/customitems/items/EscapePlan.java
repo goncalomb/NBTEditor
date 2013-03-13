@@ -15,13 +15,15 @@ import org.bukkit.util.Vector;
 import com.goncalomb.bukkit.customitems.api.CustomFirework;
 import com.goncalomb.bukkit.customitems.api.FireworkPlayerDetails;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
-import com.goncalomb.bukkit.lang.Lang;
 
 public final class EscapePlan extends CustomFirework {
 	
 	public EscapePlan() {
 		super("escape-plan", ChatColor.YELLOW + "Escape Plan");
-		setLore(Lang._list("citems.item-lores.escape-plan"));
+		setLore("§bSteve Co. Space Program!",
+				"§bProvides a quick escape from your foes.",
+				"§b... or just send 'em into spaaaace!",
+				"§bUse on open areas.");
 	}
 	
 	@Override

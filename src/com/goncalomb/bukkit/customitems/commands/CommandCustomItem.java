@@ -24,26 +24,26 @@ public final class CommandCustomItem extends BetterCommand {
 		super("customitem", null);
 		_manager = manager;
 		setAlises("citem");
-		setDescription(Lang._("citems.itemx.desc"));
+		setDescription(Lang._("citems.cmds.citem.description"));
 	}
 	
 	public void giveCustomItem(Player player, String slug, String amount) throws BetterCommandException {
 		CustomItem customItem = _manager.getCustomItem(slug);
 		int intAmount = (amount == null ? 1 : Utils.parseInt(amount, -1));
 		if (customItem == null) {
-			throw new BetterCommandException(Lang._("citems.itemx.no-item"));
+			throw new BetterCommandException(Lang._("citems.cmds.citem.no-item"));
 		} else if (intAmount < 1) {
 			throw new BetterCommandException(Lang._("general.invalid-amount"));
 		} else {
 			ItemStack item = customItem.getItem();
 			if (item == null) {
-				throw new BetterCommandException(Lang._("citems.itemx.invalid"));
+				throw new BetterCommandException(Lang._("citems.cmds.citem.invalid"));
 			} else {
 				item.setAmount(intAmount);
 				if (player.getInventory().addItem(item).size() > 0) {
 					throw new BetterCommandException(Lang._("general.inventory-full"));
 				} else {
-					player.sendMessage(Lang._("citems.itemx.ok"));
+					player.sendMessage(Lang._("citems.cmds.citem.ok"));
 				}
 			}
 		}

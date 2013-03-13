@@ -7,13 +7,12 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 
 import com.goncalomb.bukkit.customitems.api.CustomBow;
 import com.goncalomb.bukkit.customitems.api.DelayedPlayerDetails;
-import com.goncalomb.bukkit.lang.Lang;
 
 public final class EnderBow extends CustomBow {
 	
 	public EnderBow() {
 		super("ender-bow", ChatColor.GREEN + "Ender Bow");
-		setLore(Lang._list("citems.item-lores.ender-bow"));
+		setLore("§bA bow that shoots Ender Pearls.");
 	}
 	
 	@Override

@@ -17,13 +17,13 @@ import org.bukkit.material.MaterialData;
 import org.bukkit.util.Vector;
 
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
-import com.goncalomb.bukkit.lang.Lang;
 
 public final class FireBomb extends RadiusBomb {
 	
 	public FireBomb() {
 		super("fire-bomb", ChatColor.RED + "Fire Bomb", new MaterialData(Material.FIREBALL), true);
-		setLore(Lang._list("citems.item-lores.fire-bomb"));
+		setLore("§bLeft-click or drop key to throw the bomb.",
+				"§bThe bomb will explode after a few seconds.");
 		setDefaultConfig("fuse", 40);
 		setDefaultConfig("radius", 9);
 	}

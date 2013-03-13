@@ -14,15 +14,14 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-import com.goncalomb.bukkit.lang.Lang;
-
 public final class RepulsionBomb extends RadiusBomb {
 	
 	private double _force;
 	
 	public RepulsionBomb() {
 		super("repulsion-bomb", ChatColor.YELLOW + "Repulsion Bomb", new MaterialData(Material.COAL), true);
-		setLore(Lang._list("citems.item-lores.repulsion-bomb"));
+		setLore("§bLeft-click key to throw the bomb.",
+				"§bThe bomb will explode after a few seconds.");
 		setDefaultConfig("fuse", 45);
 		setDefaultConfig("radius", 11);
 		setDefaultConfig("force", 1.8d);

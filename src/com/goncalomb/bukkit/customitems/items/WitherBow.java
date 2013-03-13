@@ -7,13 +7,12 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 
 import com.goncalomb.bukkit.customitems.api.CustomBow;
 import com.goncalomb.bukkit.customitems.api.DelayedPlayerDetails;
-import com.goncalomb.bukkit.lang.Lang;
 
 public final class WitherBow extends CustomBow {
 	
 	public WitherBow() {
 		super("wither-bow", ChatColor.GREEN + "Wither Bow");
-		setLore(Lang._list("citems.item-lores.wither-bow"));
+		setLore("§bA bow that shoots Wither Skulls.");
 	}
 	
 	@Override

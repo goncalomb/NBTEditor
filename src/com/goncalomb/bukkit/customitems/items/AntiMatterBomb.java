@@ -13,13 +13,11 @@ import org.bukkit.entity.Item;
 import org.bukkit.material.MaterialData;
 import org.bukkit.util.Vector;
 
-import com.goncalomb.bukkit.lang.Lang;
-
 public final class AntiMatterBomb extends GenericBomb {
 	
 	public AntiMatterBomb() {
 		super("anti-matter-bomb", ChatColor.GREEN + "Anti-Matter Bomb", new MaterialData(Material.ENDER_PEARL), false);
-		setLore(Lang._list("citems.item-lores.anti-matter-bomb"));
+		setLore("§c§k----- §c§lCaution! §r§c§k-----");
 		setDefaultConfig("enabled", false);
 		setDefaultConfig("fuse", 60);
 	}

@@ -13,7 +13,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.material.MaterialData;
 
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
-import com.goncalomb.bukkit.lang.Lang;
 
 public final class BatBomb extends GenericBomb {
 	
@@ -21,7 +20,9 @@ public final class BatBomb extends GenericBomb {
 	
 	public BatBomb() {
 		super("bat-bomb", ChatColor.RED + "Bat Bomb", new MaterialData(Material.MONSTER_EGG, (byte)65), false);
-		setLore(Lang._list("citems.item-lores.bat-bomb"));
+		setLore("§bLeft-click or drop key to throw the bomb.",
+				"§bRight-Click to spawn the bats at your location.",
+				"§bThe bats will explode after a few seconds.");
 		setDefaultConfig("fuse", 50);
 		setDefaultConfig("power", 3.8d);
 	}
