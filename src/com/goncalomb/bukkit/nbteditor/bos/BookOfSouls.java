@@ -32,7 +32,7 @@ public class BookOfSouls {
 	
 	private static final String _title = ChatColor.AQUA + "Book of Souls";
 	private static final String _author = ChatColor.GOLD + "The Creator";
-	private static final String _metaPageTitle = "" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Soul Data" + ChatColor.BLACK + "\n";
+	private static final String _metaPageTitle = "" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Soul Data v0.1" + ChatColor.BLACK + "\n";
 	private static final String _metaPagePre = ChatColor.MAGIC.toString();
 	
 	private static Plugin _plugin = null;

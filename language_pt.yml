@@ -1,5 +1,7 @@
 nbt:
   bos:
+    inv:
+      pholder: 
     corrupted: "§cEsse 'Book of Souls' está corrompido!"
     item:
       title: "Define o item aqui..."

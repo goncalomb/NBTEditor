@@ -17,10 +17,10 @@ import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBTOffer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
 
-public class MobInfoTool extends CustomItem {
+public class MobInspectorTool extends CustomItem {
 
-	public MobInfoTool() {
-		super("mob-info", ChatColor.AQUA + "Mob Inspector", new MaterialData(Material.STICK));
+	public MobInspectorTool() {
+		super("mob-inspector", ChatColor.AQUA + "Mob Inspector", new MaterialData(Material.STICK));
 		setLore(ChatColor.YELLOW + "Right-click on entities to see their information.");
 	}
 	

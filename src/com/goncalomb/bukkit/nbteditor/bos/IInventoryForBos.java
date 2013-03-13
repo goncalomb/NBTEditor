@@ -3,7 +3,6 @@ package com.goncalomb.bukkit.nbteditor.bos;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -11,19 +10,20 @@ import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.CustomInventory;
 import com.goncalomb.bukkit.UtilsMc;
+import com.goncalomb.bukkit.lang.Lang;
 
 abstract class IInventoryForBos extends CustomInventory {
 	
-	protected final static ItemStack _itemFiller = UtilsMc.newItem(Material.PISTON_MOVING_PIECE, "Nothing here!");
+	protected final static ItemStack _itemFiller = UtilsMc.newItem(Material.PISTON_MOVING_PIECE, Lang._("nbt.bos.inv.nothing"));
 	
 	private HashMap<Integer, ItemStack> _placeholders;
 	
 	protected final static ItemStack createPlaceholder(Material material, String name) {
-		return UtilsMc.newItem(material, name, ChatColor.ITALIC + "This is a placeholder item, it will not be saved!");
+		return UtilsMc.newItem(material, name, Lang._("nbt.bos.inv.pholder"));
 	}
 	
 	protected final static ItemStack createPlaceholder(Material material, String name, String lore) {
-		return UtilsMc.newItem(material, name, lore, ChatColor.ITALIC + "This is a placeholder item, it will not be saved!");
+		return UtilsMc.newItem(material, name, lore, Lang._("nbt.bos.inv.pholder"));
 	}
 	
 	public IInventoryForBos(Player owner, int size, String title, HashMap<Integer, ItemStack> placeholders) {

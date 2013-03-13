@@ -1,5 +1,8 @@
 nbt:
   bos:
+    inv:
+      nothing: "Nothing here!";
+      pholder: "§oThis is a placeholder item, it will not be saved!"
     corrupted: "§cThat Book of Souls is corrupted!"
     item:
       title: "Define the item here..."
