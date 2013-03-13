@@ -1,0 +1,42 @@
+citems:
+  itemx:
+    desc: Used to get custom items.
+    no-item: No such item! Use '/itemx list' to get the list of all items.
+    ok: §aEnjoy your custom item.
+    invalid: §eThis item cannot be created using the itemx command. The owner plugin may provide a way to obtain it!
+  
+  crown-found: §6{0} §fhas been crown §6King§f!
+  crown-lost: §6{0} §fhas lost his crown!
+  crown-despawn: The §6King's Crown§f has been lost forever!
+  
+  item-lores:
+    bat-bomb:
+    - §bLeft-click or drop key to throw the bomb.
+    - §bRight-Click to spawn the bats at your location.
+    - §bThe bats will explode after a few seconds.
+    fire-bomb:
+    - §bLeft-click or drop key to throw the bomb.
+    - §bThe bomb will explode after a few seconds. 
+    repulsion-bomb:
+    - §bLeft-click key to throw the bomb.
+    - §bThe bomb will explode after a few seconds.
+    lightning-rod:
+    - §bLeft-click or drop key to throw the rod.
+    - §bLightning will strike after a few seconds.
+    ender-bow:
+    - §bA bow that shoots Ender Pearls.
+    wither-bow:
+    - §bA bow that shoots Wither Skulls.
+    sun-stick:
+    - §bA magic flying stick to controls time.
+    - §bUse outside.
+    moon-stick:
+    - §bA magic flying stick to controls time.
+    - §bUse outside.
+    escape-plan:
+    - §bSteve Co. Space Program!
+    - §bProvides a quick escape from your foes.
+    - §b... or just send 'em into spaaaace!
+    - §bUse on open areas.
+    anti-matter-bomb:
+    - §c§k----- §c§lCaution! §r§c§k-----

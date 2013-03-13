@@ -1,0 +1,6 @@
+﻿# Eclipse stuff
+.project
+.classpath
+.settings/
+bin/
+*.jardesc
