@@ -1,0 +1,122 @@
+nbt:
+  bos:
+    corrupted: "§cThat Book of Souls is corrupted!"
+    item:
+      title: "Define the item here..."
+      pholder: "§6The item goes here."
+      done: "§aItem set."
+    mob:
+      title: "Entity inventory"
+      pholder:
+        head: "§6Head Equipment"
+        chest: "§6Chest Equipment"
+        legs: "§6Legs Equipment"
+        feet: "§6Feet Equipment"
+        hand: "§6Hand Item"
+        effects: "§6Effects"
+        effects-lore: "§bPotion here to apply the effects."
+      done: "§aItems set."
+      potion: "§cThat must be a potion!"
+    offers:
+      title: "Villager Offers"
+      pholder:
+        buy1: "§6Buy item 1"
+        buy2: "§6Buy item 2"
+        sell: "§6Sell item"
+        optional: "§bThis is optional."
+      done: "§aVillager offers set."
+      invalid: "§eSome offers were invalid."
+  
+  cmds:
+    bos:
+      description: "Used to create and edit Books of Souls."
+      holding: "§cYou must be holding a Book of Souls!"
+      give: "§aEnjoy your Book of Souls."
+      no-variable: "§cThat Entity doesn''t have the variable {0}!"
+      no-inventory: "§cThat must be a Mob or Item entity!"
+      no-villager: "§cThat must be a Villager entity!"
+      no-mob: "§cThat must be a Mob entity!"
+      villager-info: "§eEach column represents one offer."
+      drop-chance:
+        cleared: "§aDrop chance cleared."
+        invalid: "§cAll values must be between 1 and 0 inclusive."
+        set: "§aDrop chance set."
+    nbtb:
+      description: "Used to help book writing."
+      colors: "Color codes have been replaced."
+      title: "Book title set."
+      author: "Book author set."
+      unsign: "Book unsigned."
+    nbte:
+      description: "Used to enchant any item without limitation. Also used to edit enchanted books."
+      invalid-enchant: "§cInvalid enchantment."
+      added: "§aEnchantment added."
+      removed: "§aEnchantment removed."
+      info: "§eUse level = 0 to remove enchantments."
+    nbth:
+      description: "Used to get players heads (skulls)."
+      done: "§aEnjoy your new head."
+      invalid: "§cPlayer name too long!"
+    nbti:
+      description: "Used to edit item''s name and lore."
+      renamed: "§aItem renamed."
+      name-removed: "§aItem name removed."
+      lore-added: "§aItem lore line added."
+      lore-removed: "§aItem lore line removed."
+      lore-nop: "§cLore line with index {0} doesn''t exist!"
+      lore-cleared: "§aItem lore cleared."
+    nbtp:
+      description: "Used to edit potions."
+      invalid-effect: "§cInvalid potion effect!"
+      added: "§aPotion effect added."
+      removed: "§aPotion effect removed."
+      info: "§eUse level = 0 to remove potion effects."
+    nbts:
+      description: "Used to edit spawners."
+      no-sight: "§cNo spawner in sight!"
+      invalid-weight: "§cInvalid weight. The weight is an integer between 1 and 2147483647."
+      entity-nop: "§cEntity with index {0} doesn''t exist!"
+      no-variable: "§cSpawners don''t have the variable {0}!"
+      entity-added: "§aEntity added to the spawner."
+      firework-added: "§aFirework rocket added to the spawner."
+      no-item: "§cYou must be holding a Book of Souls, Firework Rocket or a Spawn Egg!"
+      bos-added: "§aEntity ('Book of Souls') added to the spawner."
+      entity-removed: "§aEntity removed."
+      invalid-egg: "§cInvalid spawn egg!"
+      invalid-positon: "§cInvalid position!"
+      position-set: "§aPosition set for {0}."
+      position-set-all: "§aPostition set for all entities."
+      cleared: "§aEntities cleared."
+      copy: "§aSpawner copied."
+      paste: "§aSpawner pasted."
+      no-copy: "§cYou must copy a spawner first!"
+  
+  invalid-entity: "§cInvalid entity!"
+  entities-sufix: "§7Entities: "
+  enchants-sufix: "§7Enchantments: "
+  effects-sufix: "§7Effects: "
+  variables-sufix: "§7Variables: "
+  
+  invalid-level: "§cInvalid level. The level is an integer between 1 and 32767."
+  invalid-index: "§cInvalid index. The index is an integer greater than 0."
+  
+  variable:
+    updated: "§aVariable updated."
+    cleared: "§aVariable cleared."
+    invalid-format: "§cInvalid format for variable {0}!"
+    formats:
+      boolean: "Boolean value 'true' or 'false'."
+      integer: "Integer between {0} and {1}."
+      float: "Decimal between {0} and {1}."
+      block: "Valid block id and data, 'id:data'."
+      vector: "Set of 3 decimal numbers, '0.00;0.00;0.00'."
+  
+  meta-error:
+    format: "§cYou must be holding {0}."
+    item: "an Item"
+    potion: "a Potion"
+    book: "a Book an Quill or a Written Book"
+    book-quill: "a Book an Quill"
+    book-written: "a Written Book"
+
+# XOXO

@@ -1,0 +1,122 @@
+nbt:
+  bos:
+    corrupted: "§cEsse 'Book of Souls' está corrompido!"
+    item:
+      title: "Define o item aqui..."
+      pholder: "§6O item vai aqui."
+      done: "§aItem definido."
+    mob:
+      title: "Inventário da entidade"
+      pholder:
+        head: "§6Equipamento da cabeça"
+        chest: "§6Equipamento do torso"
+        legs: "§6Equipamento das pernas"
+        feet: "§6Equipamento dos pés"
+        hand: "§6Item na mão"
+        effects: "§6Efeitos"
+        effects-lore: "§bPoção aqui para aplicar os effeitos."
+      done: "§aItems definidos."
+      potion: "§cIsso deve ser uma poção!"
+    offers:
+      title: "Offertas do Aldeão"
+      pholder:
+        buy1: "§6Item de compra 1"
+        buy2: "§6Item de compra 2"
+        sell: "§6Item de venda"
+        optional: "§bIsto é opcional."
+      done: "§aOfertas do Aldeão definidas."
+      invalid: "§eAlgumas ofertas são inválidas."
+  
+  cmds:
+    bos:
+      description: "Usado para criar e editar 'Books of Souls'."
+      holding: "§cDeves estar a segurar um 'Book of Souls'!"
+      give: "§aDesfruta o teu 'Book of Souls'."
+      no-variable: "§cEssa entidade não tem a variável {0}!"
+      no-inventory: "§cEssa entidade deve um Monstro ou um Item!"
+      no-villager: "§cEssa entidade deve ser um Aldeão!"
+      no-mob: "§cEssa entidade deve um Monstro!"
+      villager-info: "§eCada coluna representa uma offerta."
+      drop-chance:
+        cleared: "§a'Drop chance' reposta."
+        invalid: "§cTodos os valores devem ser entre 1 e 0 inclusivamente."
+        set: "§a'Drop chance' definida."
+    nbtb:
+      description: "Usado para ajudar na escrita de livros."
+      colors: "Códigos das cores foram subtituídos."
+      title: "Título do livro definido."
+      author: "Autor do livro definido."
+      unsign: "Livro foi aberto."
+    nbte:
+      description: "Usado para encantar qualquer item sem limitação. Tem usado para editar livros encantados."
+      invalid-enchant: "§cEncantamento inválido."
+      added: "§aEncantamento adicionado."
+      removed: "§aEncantamento removido."
+      info: "§eUsa nível = 0 para remover encantamentos."
+    nbth:
+      description: "Usado para obter cabeças de jogadores."
+      done: "§aDesfruta da tua nova cabeça."
+      invalid: "§cNome do jogadore demasiado longo!"
+    nbti:
+      description: "Usado para editar nome e história de items."
+      renamed: "§aItem renomeado."
+      name-removed: "§aNome do item removido."
+      lore-added: "§aFrase da história do item adicionada."
+      lore-removed: "§aFrase da história do item removida."
+      lore-nop: "§cLFrase da história com índice {0} não exite!"
+      lore-cleared: "§cHistória do item removida."
+    nbtp:
+      description: "Usado para editar poções."
+      invalid-effect: "§cEfeito de poção inválido!"
+      added: "§aEfeito de poção adicionado."
+      removed: "§aEfeito de poção removido."
+      info: "§eUsa nível = 0 para remover efeitos de poção."
+    nbts:
+      description: "Usado para editar geradores de monstros."
+      no-sight: "§cNenhum gerador de monstros visível!"
+      invalid-weight: "§cPeso inválido. O peso e um inteiro entre 1 e 2147483647."
+      entity-nop: "§cEntidade com índice {0} não exite!"
+      no-variable: "§cGeradores de monstros não têm a variável {0}!"
+      entity-added: "§aEntidade adicionada ao gerador de monstros."
+      firework-added: "§aFoguete adicionado ao gerador de monstros."
+      no-item: "§cDeves estar a segurar um 'Book of Souls', Foguete ou um Ovo de Monstro!"
+      bos-added: "§aEntidate ('Book of Souls') adicionada ao gerador de monstros."
+      entity-removed: "§aEntidade removida do geradore de monstros."
+      invalid-egg: "§cOvo de monstro inválido!"
+      invalid-positon: "§cPosição inválida!"
+      position-set: "§aPosição definida para {0}."
+      position-set-all: "§aPosição definida para todas as entidades."
+      cleared: "§aEntidades removidas."
+      copy: "§aGerador de monstros copiado."
+      paste: "§aGerador de monstros colado."
+      no-copy: "§cDeves primeiro copiar um gerador de monstros!"
+  
+  invalid-entity: "§cEntidade inválida!"
+  entities-sufix: "§7Entidades: "
+  enchants-sufix: "§7Encantamentos: "
+  effects-sufix: "§7Efeitos de poção: "
+  variables-sufix: "§7Variáveis: "
+  
+  invalid-level: "§cNível inválido. O nível é um inteiro entre 1 e 32767."
+  invalid-index: "§cÍndice inválido. O Índice é um inteiro maior que 0."
+  
+  variable:
+    updated: "§aVariável atualizada."
+    cleared: "§aVariável reposta."
+    invalid-format: "§cFormato da variável {0} inválido!"
+    formats:
+      boolean: "Variável binária 'true' ou 'false'."
+      integer: "Inteiro entre {0} e {1}."
+      float: "Decimal entre {0} e {1}."
+      block: "'block id' e 'data' válidos, 'id:data'."
+      vector: "Conjunto de 3 números decimais, '0.00;0.00;0.00'."
+  
+  meta-error:
+    format: "§cDeves estar a segurar {0}."
+    item: "um Item"
+    potion: "uma Poção"
+    book: "um Livro e Pena ou um Livro Escrito"
+    book-quill: "um Livro e Pena"
+    book-written: "um Livro Escrito"
+
+# XOXO

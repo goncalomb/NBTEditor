@@ -1,0 +1,17 @@
+name: NBTEditor
+main: com.goncalomb.bukkit.nbteditor.NBTEditor
+version: 0.0.1
+author: goncalomb
+softdepend: [CustomItems]
+
+permissions:
+  nbteditor.*:
+    default: op
+    children:
+      nbteditor.item: true
+      nbteditor.enchant: true
+      nbteditor.potion: true
+      nbteditor.book: true
+      nbteditor.head: true
+      nbteditor.spawner: true
+      nbteditor.bookofsouls: true
