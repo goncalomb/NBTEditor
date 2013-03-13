@@ -1,0 +1,13 @@
+general:
+  commands:
+    no-perm: "§cYou don't have permission to do this command!"
+    invalid-sender: "§cThis command cannot be used!"
+  inventory-full: "§cInventory full!"
+  no-perm: "§cYou don't have permission to do that!"
+  no-sight: "§cNo block in sight!"
+  invalid-duration: "§cInvalid duration. Use value in ticks or 0000d00h00m00s."
+
+citems:
+  disabled: "§cThis item is disabled!"
+  invalid-world: "§cThis item is disabled on this world!"
+  no-perm: "§cYou don't have permission to use this item!"
