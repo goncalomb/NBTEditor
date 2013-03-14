@@ -1,4 +1,11 @@
+# CustomItems by goncalomb - goncalomb.com
 name: CustomItems
 main: com.goncalomb.bukkit.customitems.CustomItems
 version: 0.0.1
 author: goncalomb
+
+permissions:
+  customitems.*:
+    default: op
+    children:
+      customitems.customitem: true

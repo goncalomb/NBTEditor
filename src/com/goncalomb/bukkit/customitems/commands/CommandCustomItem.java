@@ -21,7 +21,7 @@ public final class CommandCustomItem extends BetterCommand {
 	private CustomItemManager _manager;
 	
 	public CommandCustomItem(CustomItemManager manager) {
-		super("customitem", null);
+		super("customitem", "customitems.customitem");
 		_manager = manager;
 		setAlises("citem");
 		setDescription(Lang._("citems.cmds.citem.description"));
