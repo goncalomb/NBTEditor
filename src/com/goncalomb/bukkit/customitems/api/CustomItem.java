@@ -22,7 +22,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.Plugin;
 
-import com.goncalomb.Utils;
+import com.goncalomb.bukkit.Utils;
 
 public abstract class CustomItem {
 	

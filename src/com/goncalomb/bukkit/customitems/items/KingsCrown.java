@@ -12,9 +12,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.material.MaterialData;
 
+import com.goncalomb.bukkit.UtilsMc;
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.PlayerInventoryDetails;
-import com.goncalomb.bukkit.UtilsMc;
 import com.goncalomb.bukkit.lang.Lang;
 
 public class KingsCrown extends CustomItem {
