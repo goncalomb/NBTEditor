@@ -20,8 +20,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 import org.bukkit.util.Vector;
 
-import com.goncalomb.Utils;
-
 public final class UtilsMc {
 	
 	public static Set<Material> NON_SOLID_MATERIALS;

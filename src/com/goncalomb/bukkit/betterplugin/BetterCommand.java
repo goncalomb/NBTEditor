@@ -9,8 +9,8 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
-import com.goncalomb.Utils;
-import com.goncalomb.Utils.SplitType;
+import com.goncalomb.bukkit.Utils;
+import com.goncalomb.bukkit.Utils.SplitType;
 
 public abstract class BetterCommand extends BetterSubCommand {
 	
