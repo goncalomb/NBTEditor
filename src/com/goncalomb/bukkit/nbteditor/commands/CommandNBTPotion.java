@@ -7,8 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import com.goncalomb.Utils;
 import com.goncalomb.bukkit.PotionEffectsMap;
+import com.goncalomb.bukkit.Utils;
 import com.goncalomb.bukkit.UtilsMc;
 import com.goncalomb.bukkit.betterplugin.BetterCommand;
 import com.goncalomb.bukkit.betterplugin.BetterCommandException;

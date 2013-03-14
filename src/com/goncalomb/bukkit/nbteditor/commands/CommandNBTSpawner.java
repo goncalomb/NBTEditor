@@ -12,13 +12,13 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.goncalomb.Utils;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.FireworkNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.SpawnerEntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.SpawnerNBTWrapper;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
+import com.goncalomb.bukkit.Utils;
 import com.goncalomb.bukkit.UtilsMc;
 import com.goncalomb.bukkit.betterplugin.BetterCommand;
 import com.goncalomb.bukkit.betterplugin.BetterCommandException;

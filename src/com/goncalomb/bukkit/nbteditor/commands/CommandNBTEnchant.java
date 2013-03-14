@@ -6,8 +6,8 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
-import com.goncalomb.Utils;
 import com.goncalomb.bukkit.EnchantmentsMap;
+import com.goncalomb.bukkit.Utils;
 import com.goncalomb.bukkit.betterplugin.BetterCommand;
 import com.goncalomb.bukkit.betterplugin.BetterCommandException;
 import com.goncalomb.bukkit.betterplugin.BetterSubCommandType;
