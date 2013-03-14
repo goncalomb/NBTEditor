@@ -34,7 +34,7 @@ public final class AntiMatterBomb extends GenericBomb {
 					if (v.lengthSquared() <= radiusSquared) {
 						Location loc = location.clone().add(v);
 						Block block = loc.getBlock();
-						if (!block.isEmpty() && !block.isLiquid()) {
+						if (!block.isEmpty() && !block.isLiquid() && block.getType() != Material.BEDROCK) {
 							FallingBlock fallingBlock = world.spawnFallingBlock(loc, block.getTypeId(), block.getData());
 							fallingBlock.setDropItem(false);
 							fallingBlock.setVelocity(Vector.getRandom().multiply(2).subtract(new Vector(1, 1, 1)).normalize().multiply(2));
