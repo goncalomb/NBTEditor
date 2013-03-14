@@ -113,7 +113,7 @@ public class CommandNBTSpawner extends BetterCommand {
 				int weight = parseWeight(args, 1);
 				spawner.addEntity(new SpawnerEntityNBT(args[0], weight));
 				spawner.save();
-				sender.sendMessage(Lang._("nbt.cmds.nbts.added-entity"));
+				sender.sendMessage(Lang._("nbt.cmds.nbts.entity-added"));
 				return true;
 			}
 			sender.sendMessage(Lang._("nbt.invalid-entity"));

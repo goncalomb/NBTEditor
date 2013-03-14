@@ -1,7 +1,8 @@
 nbt:
   bos:
     inv:
-      pholder: 
+      nothing: "Nada aqui!"
+      pholder: "§oEste é um item temporário, não será guardado!"
     corrupted: "§cEsse 'Book of Souls' está corrompido!"
     item:
       title: "Define o item aqui..."

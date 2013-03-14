@@ -50,7 +50,7 @@ public class BookOfSouls {
 			@Override
 			public void onLeftClick(PlayerInteractEvent event, PlayerDetails details) {
 				Player player = event.getPlayer();
-				if (!player.hasPermission("nbt.bookofsouls")) {
+				if (!player.hasPermission("nbteditor.bookofsouls")) {
 					player.sendMessage(Lang._("general.no-perm"));
 					return;
 				}
