@@ -83,7 +83,7 @@ nbt:
       entity-added: "§aEntidade adicionada ao gerador de monstros."
       firework-added: "§aFoguete adicionado ao gerador de monstros."
       no-item: "§cDeves estar a segurar um 'Book of Souls', Foguete ou um Ovo de Monstro!"
-      bos-added: "§aEntidate ('Book of Souls') adicionada ao gerador de monstros."
+      bos-added: "§aEntidade do 'Book of Souls' adicionada ao gerador de monstros."
       entity-removed: "§aEntidade removida do geradore de monstros."
       invalid-egg: "§cOvo de monstro inválido!"
       invalid-positon: "§cPosição inválida!"

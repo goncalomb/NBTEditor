@@ -11,26 +11,29 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.Plugin;
 
-import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
-import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
-import com.goncalomb.bukkit.nbteditor.nbt.FireworkNBT;
-import com.goncalomb.bukkit.nbteditor.nbt.SpawnerEntityNBT;
-import com.goncalomb.bukkit.nbteditor.nbt.SpawnerNBTWrapper;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 import com.goncalomb.bukkit.Utils;
 import com.goncalomb.bukkit.UtilsMc;
 import com.goncalomb.bukkit.betterplugin.BetterCommand;
 import com.goncalomb.bukkit.betterplugin.BetterCommandException;
 import com.goncalomb.bukkit.betterplugin.BetterSubCommandType;
 import com.goncalomb.bukkit.lang.Lang;
+import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
+import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
+import com.goncalomb.bukkit.nbteditor.nbt.FireworkNBT;
+import com.goncalomb.bukkit.nbteditor.nbt.SpawnerEntityNBT;
+import com.goncalomb.bukkit.nbteditor.nbt.SpawnerNBTWrapper;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 
 public class CommandNBTSpawner extends BetterCommand {
 	
-	private SpawnerNBTWrapper _clipboard;
+	private Plugin _plugin;
 	
-	public CommandNBTSpawner() {
+	public CommandNBTSpawner(Plugin plugin) {
 		super("nbtspawner", "nbteditor.spawner");
+		_plugin = plugin;
 		setAlises("nbts");
 		setDescription(Lang._("nbt.cmds.nbts.description"));
 	}
@@ -204,16 +207,19 @@ public class CommandNBTSpawner extends BetterCommand {
 	
 	@SubCommand(args = "copy", type = BetterSubCommandType.PLAYER_ONLY)
 	public boolean copyCommand(CommandSender sender, String[] args) throws BetterCommandException {
-		_clipboard = getSpawner((Player) sender);
+		Player player = (Player) sender;
+		SpawnerNBTWrapper clipboard = getSpawner(player);
+		player.setMetadata("NBTEditor-spawner", new FixedMetadataValue(_plugin, clipboard));
 		sender.sendMessage(Lang._("nbt.cmds.nbts.copy"));
 		return true;
 	}
 	
 	@SubCommand(args = "paste", type = BetterSubCommandType.PLAYER_ONLY)
 	public boolean pasteCommand(CommandSender sender, String[] args) throws BetterCommandException {
-		if (_clipboard != null) {
-			SpawnerNBTWrapper spawner = getSpawner((Player) sender);
-			spawner.cloneFrom(_clipboard);
+		Player player = (Player) sender;
+		if (player.hasMetadata("NBTEditor-spawner")) {
+			SpawnerNBTWrapper spawner = getSpawner(player);
+			spawner.cloneFrom((SpawnerNBTWrapper) player.getMetadata("NBTEditor-spawner").get(0).value());
 			spawner.save();
 			sender.sendMessage(Lang._("nbt.cmds.nbts.paste"));
 		} else {

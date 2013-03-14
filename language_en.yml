@@ -83,7 +83,7 @@ nbt:
       entity-added: "§aEntity added to the spawner."
       firework-added: "§aFirework rocket added to the spawner."
       no-item: "§cYou must be holding a Book of Souls, Firework Rocket or a Spawn Egg!"
-      bos-added: "§aEntity ('Book of Souls') added to the spawner."
+      bos-added: "§aEntity from the Book of Souls added to the spawner."
       entity-removed: "§aEntity removed."
       invalid-egg: "§cInvalid spawn egg!"
       invalid-positon: "§cInvalid position!"
