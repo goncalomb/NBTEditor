@@ -23,8 +23,8 @@ public final class NBTUtils {
 	private static Method _asNMSCopy;
 	
 	// Minecraft's Entity Class;
-	private static Method _d0; // Save data to NBTTagCompound.
-	private static Method _e0; // Load data from NBTTagCompound (generic data).
+	private static Method _e0; // Save data to NBTTagCompound.
+	private static Method _f0; // Load data from NBTTagCompound (generic data).
 	private static Method _a0; // Load data from NBTTagCompound (entity specific data), this is a protected method.
 	
 	// CraftEntity Class
@@ -50,8 +50,8 @@ public final class NBTUtils {
 		_asNMSCopy = craftItemStackClass.getMethod("asNMSCopy", ItemStack.class);
 		
 		Class<?> minecraftEntityClass = BukkitReflect.getMinecraftClass("Entity");
-		_d0 = minecraftEntityClass.getMethod("d", nbtTagCompoundClass);
 		_e0 = minecraftEntityClass.getMethod("e", nbtTagCompoundClass);
+		_f0 = minecraftEntityClass.getMethod("f", nbtTagCompoundClass);
 		_a0 = minecraftEntityClass.getDeclaredMethod("a", nbtTagCompoundClass);
 		_a0.setAccessible(true);
 		
@@ -83,7 +83,7 @@ public final class NBTUtils {
 	public static NBTTagCompoundWrapper getEntityNBTTagCompound(Entity entity) {
 		NBTBaseWrapper.prepareReflection();
 		NBTTagCompoundWrapper data = new NBTTagCompoundWrapper();
-		BukkitReflect.invokeMethod(BukkitReflect.invokeMethod(entity, _getHandle), _d0, data._nbtBaseObject);
+		BukkitReflect.invokeMethod(BukkitReflect.invokeMethod(entity, _getHandle), _e0, data._nbtBaseObject);
 		return data;
 	}
 	
@@ -91,7 +91,7 @@ public final class NBTUtils {
 		NBTTagCompoundWrapper entityData = getEntityNBTTagCompound(entity);
 		entityData.merge(data);
 		Object entityHandle = BukkitReflect.invokeMethod(entity, _getHandle);
-		BukkitReflect.invokeMethod(entityHandle, _e0, entityData._nbtBaseObject);
+		BukkitReflect.invokeMethod(entityHandle, _f0, entityData._nbtBaseObject);
 		BukkitReflect.invokeMethod(entityHandle, _a0, entityData._nbtBaseObject);
 	}
 	
