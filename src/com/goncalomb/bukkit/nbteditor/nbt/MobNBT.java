@@ -24,6 +24,7 @@ public class MobNBT extends EntityNBT {
 		variables.add("death-time", new ShortVariable("DeathTime"));
 		variables.add("pick-loot", new BooleanVariable("CanPickUpLoot"));
 		variables.add("persistent", new BooleanVariable("PersistenceRequired"));
+		variables.add("name-visible", new BooleanVariable("CustomNameVisible"));
 		EntityNBTVariableManager.registerVariables(MobNBT.class, variables);
 	}
 	

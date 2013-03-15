@@ -1,5 +1,6 @@
 package com.goncalomb.bukkit.nbteditor.commands;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
@@ -66,13 +67,14 @@ public class CommandBOS extends BetterCommand {
 		return false;
 	}
 	
-	@SubCommand(args = "var", type = BetterSubCommandType.PLAYER_ONLY, minargs = 1, maxargs = 2, usage = "<variable> [value]")
+	@SubCommand(args = "var", type = BetterSubCommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<variable> [value]")
 	public boolean varCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		BookOfSouls bos = getBos((Player) sender);
 		NBTVariable variable = bos.getEntityNBT().getVariable(args[0]);
 		if (variable != null) {
-			if(args.length == 2) {
-				if (variable.setValue(args[1])) {
+			if(args.length >= 2) {
+				String value = UtilsMc.parseColors(StringUtils.join(args, " ", 1, args.length));
+				if (variable.setValue(value)) {
 					bos.saveBook();
 					sender.sendMessage(Lang._("nbt.variable.updated"));
 					return true;

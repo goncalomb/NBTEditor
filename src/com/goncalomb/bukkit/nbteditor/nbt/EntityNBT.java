@@ -17,6 +17,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.VectorVariable;
 import com.goncalomb.bukkit.reflect.NBTTagCompoundWrapper;
 import com.goncalomb.bukkit.reflect.NBTUtils;
@@ -82,6 +83,7 @@ public class EntityNBT {
 		variables.add("fire", new ShortVariable("Fire"));
 		variables.add("air", new ShortVariable("Air", (short) 0, (short) 200));
 		variables.add("invulnerable", new BooleanVariable("Invulnerable"));
+		variables.add("name", new StringVariable("CustomName"));
 		EntityNBTVariableManager.registerVariables(EntityNBT.class, variables);
 		
 		variables = new NBTGenericVariableContainer("Pig");
