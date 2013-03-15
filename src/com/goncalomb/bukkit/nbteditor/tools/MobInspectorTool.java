@@ -48,10 +48,10 @@ public class MobInspectorTool extends CustomItem {
 			boolean extra = false;
 			if (entityNBT instanceof MobNBT) {
 				float[] chances = ((MobNBT) entityNBT).getDropChances();
-				String[] names = { "head", "torso", "legs", "feet", "hand" };
+				String[] names = { "head", "chest", "legs", "feet", "hand" };
 				player.sendMessage("" + ChatColor.LIGHT_PURPLE + ChatColor.ITALIC + "Drop chance:");
 				for (int i = 0; i < 5; ++i) {
-					player.sendMessage("  " + ChatColor.AQUA + names[i] + ": " + ChatColor.WHITE + chances[i]);
+					player.sendMessage("  " + ChatColor.AQUA + names[i] + ": " + ChatColor.WHITE + chances[4 - i]);
 				}
 				extra = true;
 			}
