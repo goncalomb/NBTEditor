@@ -1,7 +1,7 @@
 # NBTEditor by goncalomb - goncalomb.com
 name: NBTEditor
 main: com.goncalomb.bukkit.nbteditor.NBTEditor
-version: 0.0.1
+version: 0.0.2
 author: goncalomb
 softdepend: [CustomItems]
 

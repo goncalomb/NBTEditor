@@ -29,6 +29,7 @@ public final class NBTEditor extends BetterPlugin {
 		} catch (Throwable e) {
 			getLogger().log(Level.SEVERE, "Error preparing reflection objects. This means that this version of NBTEditor is not compatible with this version of Bukkit.", e);
 			getLogger().warning("NBTEditor version not compatible with this version of Bukkit. Please install the apropriated version.");
+			return;
 		}
 		
 		registerCommand(new CommandBOS());
