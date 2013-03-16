@@ -16,6 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.Plugin;
 
+import com.goncalomb.bukkit.EntityTypeMap;
 import com.goncalomb.bukkit.UtilsMc;
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.CustomItemManager;
@@ -24,6 +25,7 @@ import com.goncalomb.bukkit.lang.Lang;
 import com.goncalomb.bukkit.nbteditor.nbt.DroppedItemNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;
+import com.goncalomb.bukkit.nbteditor.nbt.ThrownPotionNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
@@ -128,17 +130,15 @@ public class BookOfSouls {
 		return (_entityNbt != null);
 	}
 	
-	public boolean openDroppedItemInventory(Player player) {
-		if (_entityNbt instanceof DroppedItemNBT) {
-			(new InventoryForDroppedItems(this, player)).openInventory(player, _plugin);
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean openMobInventory(Player player) {
+	public boolean openInventory(Player player) {
 		if (_entityNbt instanceof MobNBT) {
 			(new InventoryForMobs(this, player)).openInventory(player, _plugin);
+			return true;
+		} else if (_entityNbt instanceof DroppedItemNBT) {
+			(new InventoryForDroppedItems(this, player)).openInventory(player, _plugin);
+			return true;
+		} else if (_entityNbt instanceof ThrownPotionNBT) {
+			(new InventoryForThownPotion(this, player)).openInventory(player, _plugin);
 			return true;
 		}
 		return false;
@@ -182,7 +182,7 @@ public class BookOfSouls {
 	
 	public void saveBook() {
 		BookMeta meta = (BookMeta)_book.getItemMeta();
-		String entityName = _entityNbt.getEntityType().getName();
+		String entityName = EntityTypeMap.getName(_entityNbt.getEntityType());
 		
 		meta.setDisplayName(_title + ChatColor.RESET + " (" + ChatColor.RED + entityName + ChatColor.RESET + ")");
 		meta.setTitle(_title);

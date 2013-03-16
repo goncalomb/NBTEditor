@@ -13,7 +13,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBTOffer;
 import com.goncalomb.bukkit.lang.Lang;
 
-public class InventoryForVillagers extends IInventoryForBos {
+public final class InventoryForVillagers extends IInventoryForBos {
 	
 	private static HashMap<Integer, ItemStack> _placeholders = new HashMap<Integer, ItemStack>();
 	

@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 
+import com.goncalomb.bukkit.EntityTypeMap;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
@@ -45,7 +46,7 @@ public final class SpawnerNBTWrapper {
 			_entities = new ArrayList<SpawnerEntityNBT>(l);
 			for (int i = 0; i < l; ++i) {
 				NBTTagCompoundWrapper potential = (NBTTagCompoundWrapper) spawnPotentials.get(i);
-				EntityType entityType = EntityType.fromName(potential.getString("Type"));
+				EntityType entityType = EntityTypeMap.getByName(potential.getString("Type"));
 				if (entityType != null) {
 					EntityNBT entityNbt;
 					if (potential.hasKey("Properties")) {
@@ -63,7 +64,7 @@ public final class SpawnerNBTWrapper {
 	}
 	
 	public void addEntity(SpawnerEntityNBT spawnerEntityNbt) {
-		_data.setString("EntityId", spawnerEntityNbt.getEntityType().getName());
+		_data.setString("EntityId", EntityTypeMap.getName(spawnerEntityNbt.getEntityType()));
 		_data.setCompound("SpawnData", spawnerEntityNbt.getEntityNBT()._data.clone());
 		_entities.add(spawnerEntityNbt);
 	}
@@ -94,7 +95,7 @@ public final class SpawnerNBTWrapper {
 	}
 	
 	public EntityType getCurrentEntity() {
-		return EntityType.fromName(_data.getString("EntityId"));
+		return EntityTypeMap.getByName(_data.getString("EntityId"));
 	}
 	
 	public Location getLocation() {

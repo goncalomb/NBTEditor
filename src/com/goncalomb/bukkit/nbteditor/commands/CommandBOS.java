@@ -11,6 +11,7 @@ import org.bukkit.inventory.PlayerInventory;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
+import com.goncalomb.bukkit.EntityTypeMap;
 import com.goncalomb.bukkit.UtilsMc;
 import com.goncalomb.bukkit.betterplugin.BetterCommand;
 import com.goncalomb.bukkit.betterplugin.BetterCommandException;
@@ -46,7 +47,7 @@ public class CommandBOS extends BetterCommand {
 	@SubCommand(args = "get", type = BetterSubCommandType.PLAYER_ONLY, maxargs = 1, usage = "<entity>")
 	public boolean getCommand(CommandSender sender, String[] args) {
 		if (args.length == 1) {
-			EntityType entityType = EntityType.fromName(args[0]);
+			EntityType entityType = EntityTypeMap.getByName(args[0]); // We use EntityTypeMap.getByName(...) instead of EntityType.fromName(...) to catch ThrownPotions.
 			if (entityType != null && EntityNBT.isValidType(entityType)) {
 				PlayerInventory inv = ((Player) sender).getInventory();
 				if (inv.firstEmpty() == -1) {
@@ -63,7 +64,7 @@ public class CommandBOS extends BetterCommand {
 			}
 			sender.sendMessage(Lang._("nbt.invalid-entity"));
 		}
-		sender.sendMessage(Lang._("nbt.entities-sufix") + UtilsMc.entityTypeArrayToString(EntityNBT.getValidEntityTypes()));
+		sender.sendMessage(Lang._("nbt.entities-sufix") + EntityTypeMap.getEntityNames(EntityNBT.getValidEntityTypes()));
 		return false;
 	}
 	
@@ -107,10 +108,8 @@ public class CommandBOS extends BetterCommand {
 	public boolean itemsCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		Player player = (Player) sender;
 		BookOfSouls bos = getBos(player);
-		if (!bos.openMobInventory(player)) {
-			if (!bos.openDroppedItemInventory(player)) {
-				player.sendMessage(Lang._("nbt.cmds.bos.no-inventory"));
-			}
+		if (!bos.openInventory(player)) {
+			player.sendMessage(Lang._("nbt.cmds.bos.no-inventory"));
 		}
 		return true;
 	}

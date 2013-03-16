@@ -1,5 +1,6 @@
 package com.goncalomb.bukkit.nbteditor.nbt;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 import net.iharder.Base64;
@@ -8,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
+import com.goncalomb.bukkit.EntityTypeMap;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BlockVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ByteVariable;
@@ -73,6 +75,9 @@ public class EntityNBT {
 		registerEntity(EntityType.FALLING_BLOCK, FallingBlockNBT.class);
 		registerEntity(EntityType.DROPPED_ITEM, DroppedItemNBT.class);
 		registerEntity(EntityType.EXPERIENCE_ORB, XPOrbNBT.class);
+		
+		registerEntity(EntityType.SPLASH_POTION, ThrownPotionNBT.class);
+		
 		
 		NBTGenericVariableContainer variables = null;
 		
@@ -172,8 +177,8 @@ public class EntityNBT {
 		return _entityClasses.containsKey(entityType);
 	}
 	
-	public static EntityType[] getValidEntityTypes() {
-		return _entityClasses.keySet().toArray(new EntityType[0]);
+	public static Collection<EntityType> getValidEntityTypes() {
+		return _entityClasses.keySet();
 	}
 	
 	public static EntityNBT fromEntityType(EntityType entityType) {
@@ -249,7 +254,7 @@ public class EntityNBT {
 	
 	public String serialize() {
 		try {
-			return _entityType.getName() + "," + Base64.encodeBytes(_data.serialize(), Base64.GZIP);
+			return EntityTypeMap.getName(_entityType) + "," + Base64.encodeBytes(_data.serialize(), Base64.GZIP);
 		} catch (Throwable e) {
 			throw new Error("Error serializing EntityNBT.", e);
 		}
@@ -258,7 +263,7 @@ public class EntityNBT {
 	public static EntityNBT unserialize(String serializedData) {
 		try {
 			int i = serializedData.indexOf(',');
-			EntityType entityType = EntityType.fromName(serializedData.substring(0, i));
+			EntityType entityType = EntityTypeMap.getByName(serializedData.substring(0, i));
 			return fromEntityType(entityType, NBTTagCompoundWrapper.unserialize(Base64.decode(serializedData.substring(i + 1))));
 		} catch (Throwable e) {
 			throw new Error("Error unserializing EntityNBT.", e);

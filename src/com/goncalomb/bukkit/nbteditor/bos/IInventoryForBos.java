@@ -14,7 +14,7 @@ import com.goncalomb.bukkit.lang.Lang;
 
 abstract class IInventoryForBos extends CustomInventory {
 	
-	protected final static ItemStack _itemFiller = UtilsMc.newItem(Material.PISTON_MOVING_PIECE, Lang._("nbt.bos.inv.nothing"));
+	protected final static ItemStack _itemFiller = UtilsMc.newItem(Material.TRIPWIRE, Lang._("nbt.bos.inv.nothing"));
 	
 	private HashMap<Integer, ItemStack> _placeholders;
 	

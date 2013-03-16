@@ -8,6 +8,10 @@ nbt:
       title: "Define o item aqui..."
       pholder: "§6O item vai aqui."
       done: "§aItem definido."
+    potion:
+      title: "Define a poção aqui..."
+      pholder: "§6A poção vai aqui."
+      done: "§aPoção definida."
     mob:
       title: "Inventário da entidade"
       pholder:
@@ -36,7 +40,7 @@ nbt:
       holding: "§cDeves estar a segurar um 'Book of Souls'!"
       give: "§aDesfruta o teu 'Book of Souls'."
       no-variable: "§cEssa entidade não tem a variável {0}!"
-      no-inventory: "§cEssa entidade deve um Monstro ou um Item!"
+      no-inventory: "§cEssa entidade deve um 'Mob', 'Item' ou 'ThrownPotion'!"
       no-villager: "§cEssa entidade deve ser um Aldeão!"
       no-mob: "§cEssa entidade deve um Monstro!"
       villager-info: "§eCada coluna representa uma offerta."

@@ -20,13 +20,6 @@ public class XPOrbNBT extends EntityNBT {
 	
 	@Override
 	public Entity spawn(final Location location) {
-		/*ExperienceOrb entity = (ExperienceOrb) location.getWorld().spawnEntity(location, getEntityType());
-		NBTUtils.setEntityNBTTagCompound(entity, _data);
-		if (_data.hasKey("Value")) {
-			entity.setExperience(_data.getShort("Value"));
-		}
-		location.getWorld();
-		return entity;*/
 		ExperienceOrb entity = WorldUtils.spawnXPOrb(location, (_data.hasKey("Value") ? _data.getShort("Value") : 0));
 		NBTUtils.setEntityNBTTagCompound(entity, _data);
 		return entity;

@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import com.goncalomb.bukkit.EntityTypeMap;
 import com.goncalomb.bukkit.Utils;
 import com.goncalomb.bukkit.UtilsMc;
 import com.goncalomb.bukkit.betterplugin.BetterCommand;
@@ -72,9 +73,9 @@ public class CommandNBTSpawner extends BetterCommand {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
 		Location loc = spawner.getLocation();
 		sender.sendMessage(ChatColor.GREEN + "Spawner Information (" + loc.getX() + ", " + loc.getY() + ", " + loc.getZ() + ")");
-		sender.sendMessage("Current Entity: " + ChatColor.AQUA + spawner.getCurrentEntity().getName());
+		sender.sendMessage("Current Entity: " + ChatColor.AQUA + EntityTypeMap.getName(spawner.getCurrentEntity()));
 		for (SpawnerEntityNBT spawnerEntityNbt : spawner.getEntities()) {
-			sender.sendMessage("   " + ChatColor.AQUA + spawnerEntityNbt.getEntityType().getName() + ", weight: " + spawnerEntityNbt.getWeight());
+			sender.sendMessage("   " + ChatColor.AQUA + EntityTypeMap.getName(spawnerEntityNbt.getEntityType()) + ", weight: " + spawnerEntityNbt.getWeight());
 		}
 		sender.sendMessage(ChatColor.GREEN + "Variables:");
 		for (NBTVariable variable : spawner.getVariables()) {
@@ -112,21 +113,22 @@ public class CommandNBTSpawner extends BetterCommand {
 	public boolean addCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		if (args.length >= 1) {
 			SpawnerNBTWrapper spawner = getSpawner((Player) sender);
-			if (SpawnerEntityNBT.isValidCreature(args[0])) {
+			EntityType entityType = EntityType.fromName(args[0]);
+			if (entityType != null && entityType.isAlive()) {
 				int weight = parseWeight(args, 1);
-				spawner.addEntity(new SpawnerEntityNBT(args[0], weight));
+				spawner.addEntity(new SpawnerEntityNBT(entityType, weight));
 				spawner.save();
 				sender.sendMessage(Lang._("nbt.cmds.nbts.entity-added"));
 				return true;
 			}
 			sender.sendMessage(Lang._("nbt.invalid-entity"));
 		}
-		sender.sendMessage(Lang._("nbt.entities-sufix") + UtilsMc.entityTypeArrayToString(EntityNBT.getValidEntityTypes()));
+		sender.sendMessage(Lang._("nbt.entities-sufix") + EntityTypeMap.getLivingEntityNames());
 		return false;
 	}
 	
 	@SubCommand(args = "additem", type = BetterSubCommandType.PLAYER_ONLY, maxargs = 1, usage = "[weight]")
-	public boolean addfireworkCommand(CommandSender sender, String[] args) throws BetterCommandException {
+	public boolean additemCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
 		ItemStack item = ((Player) sender).getItemInHand();
 		if (item.getType() == Material.MONSTER_EGG) {
@@ -197,7 +199,7 @@ public class CommandNBTSpawner extends BetterCommand {
 	}
 	
 	@SubCommand(args = "clear", type = BetterSubCommandType.PLAYER_ONLY)
-	public boolean clearentitiesCommand(CommandSender sender, String[] args) throws BetterCommandException {
+	public boolean clearCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
 		spawner.clearEntities();
 		spawner.save();

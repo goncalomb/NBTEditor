@@ -8,6 +8,10 @@ nbt:
       title: "Define the item here..."
       pholder: "§6The item goes here."
       done: "§aItem set."
+    potion:
+      title: "Define the potion here..."
+      pholder: "§6The potion goes here."
+      done: "§aPotion set."
     mob:
       title: "Entity inventory"
       pholder:
@@ -36,7 +40,7 @@ nbt:
       holding: "§cYou must be holding a Book of Souls!"
       give: "§aEnjoy your Book of Souls."
       no-variable: "§cThat Entity doesn''t have the variable {0}!"
-      no-inventory: "§cThat must be a Mob or Item entity!"
+      no-inventory: "§cThat must be a Mob, Item or ThrownPotion entity!"
       no-villager: "§cThat must be a Villager entity!"
       no-mob: "§cThat must be a Mob entity!"
       villager-info: "§eEach column represents one offer."

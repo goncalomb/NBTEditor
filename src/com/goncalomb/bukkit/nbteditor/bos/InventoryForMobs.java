@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;
 import com.goncalomb.bukkit.lang.Lang;
 
-public class InventoryForMobs extends IInventoryForBos {
+public final class InventoryForMobs extends IInventoryForBos {
 	
 	private static HashMap<Integer, ItemStack> _placeholders = new HashMap<Integer, ItemStack>();
 	
