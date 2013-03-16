@@ -14,11 +14,11 @@ public final class EntityTypeMap {
 	static {
 		List<EntityType> livingEntitiesTypes = new ArrayList<EntityType>(32);
 		for (EntityType type : EntityType.values()) {
-			if (type.isAlive()) {
+			if (type.isAlive() && type != EntityType.PLAYER) {
 				livingEntitiesTypes.add(type);
 			}
 		}
-		StringUtils.join(livingEntitiesTypes, ", ");
+		_livingEntitiesNames = getEntityNames(livingEntitiesTypes);
 	}
 	
 	private EntityTypeMap() { }

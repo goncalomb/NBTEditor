@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 
 import org.bukkit.Location;
 import org.bukkit.entity.ExperienceOrb;
+import org.bukkit.entity.ThrownPotion;
 
 public final class WorldUtils {
 	
@@ -23,6 +24,9 @@ public final class WorldUtils {
 	// Minecraft's EntityExperienceOrb Class
 	private static Constructor<?> _xpOrbConstructor;
 	
+	// Minecraft's EntityPotion Class
+	private static Constructor<?> _potionConstructor;
+	
 	public static void prepareReflection() {
 		if (!_isPrepared) {
 			try {
@@ -38,6 +42,9 @@ public final class WorldUtils {
 				
 				Class<?> minecraftEntityExperienceOrbClass = BukkitReflect.getMinecraftClass("EntityExperienceOrb");
 				_xpOrbConstructor = minecraftEntityExperienceOrbClass.getConstructor(minecraftWorldClass, double.class, double.class, double.class, int.class);
+				
+				Class<?> minecraftEntityPotionClass = BukkitReflect.getMinecraftClass("EntityPotion");
+				_potionConstructor = minecraftEntityPotionClass.getConstructor(minecraftWorldClass, double.class, double.class, double.class, BukkitReflect.getMinecraftClass("ItemStack"));
 			} catch (Exception e) {
 				throw new Error("Error while preparing WorldUtils.", e);
 			}
@@ -54,6 +61,14 @@ public final class WorldUtils {
 		BukkitReflect.invokeMethod(entity, _setPositionRotation, location.getBlockX() + 0.5, location.getBlockY(), location.getZ(), 0, 0);
 		BukkitReflect.invokeMethod(world, _addEntity, entity);
 		return (ExperienceOrb) BukkitReflect.invokeMethod(entity, _getBukkitEntity);
+	}
+	
+	public static ThrownPotion spawnPotion(Location location, NBTTagCompoundWrapper data) {
+		Object world = BukkitReflect.invokeMethod(location.getWorld(), _getHandle);
+		Object entity = BukkitReflect.newInstance(_potionConstructor, world, location.getBlockX() + 0.5, location.getBlockY(), location.getZ(), null);
+		NBTUtils.setMineEntityNBTTagCompound(entity, data);
+		BukkitReflect.invokeMethod(world, _addEntity, entity);
+		return (ThrownPotion) BukkitReflect.invokeMethod(entity, _getBukkitEntity);
 	}
 	
 }

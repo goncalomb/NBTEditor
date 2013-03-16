@@ -80,19 +80,26 @@ public final class NBTUtils {
 		return data;
 	}
 	
-	public static NBTTagCompoundWrapper getEntityNBTTagCompound(Entity entity) {
+	public static NBTTagCompoundWrapper getMineEntityNBTTagCompound(Object minecraftEntity) {
 		NBTBaseWrapper.prepareReflection();
 		NBTTagCompoundWrapper data = new NBTTagCompoundWrapper();
-		BukkitReflect.invokeMethod(BukkitReflect.invokeMethod(entity, _getHandle), _e0, data._nbtBaseObject);
+		BukkitReflect.invokeMethod(minecraftEntity, _e0, data._nbtBaseObject);
 		return data;
 	}
 	
-	public static void setEntityNBTTagCompound(Entity entity, NBTTagCompoundWrapper data) {
-		NBTTagCompoundWrapper entityData = getEntityNBTTagCompound(entity);
+	static void setMineEntityNBTTagCompound(Object minecraftEntity, NBTTagCompoundWrapper data) {
+		NBTTagCompoundWrapper entityData = getMineEntityNBTTagCompound(minecraftEntity);
 		entityData.merge(data);
-		Object entityHandle = BukkitReflect.invokeMethod(entity, _getHandle);
-		BukkitReflect.invokeMethod(entityHandle, _f0, entityData._nbtBaseObject);
-		BukkitReflect.invokeMethod(entityHandle, _a0, entityData._nbtBaseObject);
+		BukkitReflect.invokeMethod(minecraftEntity, _f0, entityData._nbtBaseObject);
+		BukkitReflect.invokeMethod(minecraftEntity, _a0, entityData._nbtBaseObject);
+	}
+	
+	public static NBTTagCompoundWrapper getEntityNBTTagCompound(Entity entity) {
+		return getMineEntityNBTTagCompound(BukkitReflect.invokeMethod(entity, _getHandle));
+	}
+	
+	public static void setEntityNBTTagCompound(Entity entity, NBTTagCompoundWrapper data) {
+		setMineEntityNBTTagCompound(BukkitReflect.invokeMethod(entity, _getHandle), data);
 	}
 	
 	public static NBTTagListWrapper effectsListFromPotion(ItemStack potion) {
