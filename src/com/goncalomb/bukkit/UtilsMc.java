@@ -6,13 +6,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
@@ -54,14 +52,6 @@ public final class UtilsMc {
 			return -1;
 		}
 		return duration;
-	}
-	
-	public static String entityTypeArrayToString(EntityType[] types) {
-		String[] names = new String[types.length];
-		for (int i = 0, l = types.length; i < l; ++i) {
-			names[i] = types[i].getName();
-		}
-		return StringUtils.join(names, ", ");
 	}
 	
 	public static Location airLocation(Location loc) {
