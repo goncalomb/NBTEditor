@@ -17,13 +17,13 @@ final class InternalCommand extends Command {
 	}
 
 	@Override
-	public boolean execute(CommandSender sender, String commandLabel, String[] args) {
+	public boolean execute(CommandSender sender, String label, String[] args) {
 		if (_command._plugin != null && _command._plugin.isEnabled()) {
 			if (_command.hasPermission(sender)) {
-				String result = _command.invokeSubCommand(_command, sender, args, 0);
-				if (result != null) {
-					sender.sendMessage("/" + commandLabel + " " + result);
+				for (int i = 0, l = args.length; i < l; ++i) {
+					args[i] = args[i].toLowerCase();
 				}
+				_command.invokeSubCommand(sender, label, args, 0);
 			} else {
 				sender.sendMessage(Lang._("general.commands.no-perm"));
 			}
