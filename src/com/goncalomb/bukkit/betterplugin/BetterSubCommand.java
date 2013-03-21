@@ -79,7 +79,7 @@ class BetterSubCommand {
 		if (argsIndex == args.length) {
 			invokeThis(sender, label, args, argsIndex);
 		} else {
-			BetterSubCommand subCommand = _subCommands.get(args[argsIndex]);
+			BetterSubCommand subCommand = _subCommands.get(args[argsIndex].toLowerCase());
 			if (subCommand != null) {
 				subCommand.invokeSubCommand(sender, label, args, argsIndex + 1);
 			} else {
