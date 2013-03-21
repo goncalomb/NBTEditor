@@ -63,9 +63,9 @@ public final class InventoryForVillagers extends IInventoryForBos {
 
 		Player player = (Player)event.getPlayer();
 		if (invalidOffer) {
-			player.sendMessage(Lang._("nbt.bos.offers.done"));
+			player.sendMessage(Lang._("nbt.bos.offers.invalid"));
 		}
-		player.sendMessage(Lang._("nbt.bos.offers.invalid"));
+		player.sendMessage(Lang._("nbt.bos.offers.done"));
 	}
 
 }
