@@ -89,7 +89,9 @@ public final class NBTUtils {
 	
 	static void setMineEntityNBTTagCompound(Object minecraftEntity, NBTTagCompoundWrapper data) {
 		NBTTagCompoundWrapper entityData = getMineEntityNBTTagCompound(minecraftEntity);
+		NBTTagListWrapper pos = entityData.getList("Pos"); // Save the position.
 		entityData.merge(data);
+		entityData.setList("Pos", pos);
 		BukkitReflect.invokeMethod(minecraftEntity, _f0, entityData._nbtBaseObject);
 		BukkitReflect.invokeMethod(minecraftEntity, _a0, entityData._nbtBaseObject);
 	}
