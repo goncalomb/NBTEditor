@@ -26,6 +26,7 @@ public abstract class CustomFirework extends CustomItem {
 			details.consumeItem();
 			Location loc = event.getClickedBlock().getLocation();
 			fire(loc.add(UtilsMc.faceToDelta(event.getBlockFace())), details, null);
+			event.setCancelled(true);
 		}
 	}
 	

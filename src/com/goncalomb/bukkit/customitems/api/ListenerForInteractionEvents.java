@@ -41,7 +41,6 @@ final class ListenerForInteractionEvents extends CustomItemListener<CustomItem> 
 			}
 			CustomItem customItem = get(event.getItem());
 			if (customItem != null) {
-				event.setCancelled(true);
 				if (verifyCustomItem(customItem, event.getPlayer(), false)) {
 					if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
 						customItem.onRightClick(event, new PlayerDetails(event));
