@@ -9,16 +9,16 @@ import com.goncalomb.bukkit.reflect.NBTUtils;
 
 public abstract class TileNBTWrapper {
 	
-	private Block _block;
+	protected Block _block;
 	protected NBTTagCompoundWrapper _data;
 	
 	public static final boolean allowsCustomName(Material mat) {
 		return (mat == Material.CHEST || mat == Material.CAULDRON || mat == Material.FURNACE || mat == Material.DISPENSER || mat == Material.DROPPER || mat == Material.ENCHANTMENT_TABLE || mat == Material.COMMAND);
 	}
 	
-	protected TileNBTWrapper(Block block) {
+	public TileNBTWrapper(Block block) {
 		_block = block;
-		_data = NBTUtils.getTileEntityNBTTagCompound(block);
+		_data = NBTUtils.getTileEntityNBTTagCompound(_block);
 	}
 	
 	public final boolean allowsCustomName() {

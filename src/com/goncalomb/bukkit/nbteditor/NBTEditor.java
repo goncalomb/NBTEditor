@@ -1,3 +1,4 @@
+
 package com.goncalomb.bukkit.nbteditor;
 
 import java.util.logging.Level;

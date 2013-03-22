@@ -80,6 +80,10 @@ nbt:
       info: "§eUse level = 0 to remove potion effects."
     nbtt:
       description: "Used to edit entidades bloco (excepting spawners)."
+      jukebox:
+        no-sight: "§cNo jukebox in sight!"
+        set: "§aRecord set."
+        cleared: "§aRecord cleared."
     nbts:
       description: "Used to edit spawners."
       no-sight: "§cNo spawner in sight!"
