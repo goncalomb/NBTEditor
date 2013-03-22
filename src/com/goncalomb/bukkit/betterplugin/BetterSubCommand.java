@@ -55,8 +55,8 @@ class BetterSubCommand {
 			if (_type.isValidSender(sender)) {
 				int argsLeft = args.length - argsIndex;
 				if (argsLeft >= _minArgs && argsLeft <= _maxArgs) {
-					args = Arrays.copyOfRange(args, argsIndex, args.length);
-					if (_main.invokeMethod(_method, sender, args)) {
+					String[] argsCopy = Arrays.copyOfRange(args, argsIndex, args.length);
+					if (_main.invokeMethod(_method, sender, argsCopy)) {
 						return;
 					}
 				}
