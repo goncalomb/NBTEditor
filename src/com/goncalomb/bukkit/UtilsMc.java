@@ -1,10 +1,8 @@
 package com.goncalomb.bukkit;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -20,19 +18,15 @@ import org.bukkit.util.Vector;
 
 public final class UtilsMc {
 	
-	public static Set<Material> NON_SOLID_MATERIALS;
-	private static HashSet<Byte> NON_SOLID_MATERIALS_IDS = new HashSet<Byte>();
+	private static HashSet<Byte> NON_SOLID_BLOCK_IDS = new HashSet<Byte>();
 	
 	static {
-		HashSet<Material> nonSolidMaterials = new HashSet<Material>();
-		NON_SOLID_MATERIALS_IDS.add((byte) 0);
+		NON_SOLID_BLOCK_IDS.add((byte) 0);
 		for (Material mat : Material.values()) {
-			if (mat.isBlock() && !mat.isOccluding()) {
-				nonSolidMaterials.add(mat);
-				NON_SOLID_MATERIALS_IDS.add((byte) mat.getId());
+			if (mat.isBlock() && !mat.isSolid()) {
+				NON_SOLID_BLOCK_IDS.add((byte) mat.getId());
 			}
 		}
-		NON_SOLID_MATERIALS = Collections.unmodifiableSet(nonSolidMaterials);
 	}
 	
 	private UtilsMc() { }
@@ -60,7 +54,7 @@ public final class UtilsMc {
 		int y = loc.getBlockY();
 		int z = loc.getBlockZ();
 		int maxY = world.getMaxHeight();
-		while (y < maxY && !NON_SOLID_MATERIALS.contains(world.getBlockAt(x, y, z).getType())) {
+		while (y < maxY && !NON_SOLID_BLOCK_IDS.contains(world.getBlockAt(x, y, z).getTypeId())) {
 			y++;
 		}
 		return new Location(world, x + 0.5, y + 0.2, z + 0.5);
@@ -71,7 +65,7 @@ public final class UtilsMc {
 	}
 	
 	public static Block getTargetBlock(Player player, int distance) {
-		List<Block> blocks = player.getLastTwoTargetBlocks(NON_SOLID_MATERIALS_IDS, distance);
+		List<Block> blocks = player.getLastTwoTargetBlocks(NON_SOLID_BLOCK_IDS, distance);
 		return blocks.get(blocks.size() - 1);
 	}
 	
