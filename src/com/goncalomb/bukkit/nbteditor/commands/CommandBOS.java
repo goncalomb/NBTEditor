@@ -64,7 +64,7 @@ public class CommandBOS extends BetterCommand {
 			}
 			sender.sendMessage(Lang._("nbt.invalid-entity"));
 		}
-		sender.sendMessage(Lang._("nbt.entities-sufix") + EntityTypeMap.getEntityNames(EntityNBT.getValidEntityTypes()));
+		sender.sendMessage(Lang._("nbt.entities-prefix") + EntityTypeMap.getEntityNames(EntityNBT.getValidEntityTypes()));
 		return false;
 	}
 	

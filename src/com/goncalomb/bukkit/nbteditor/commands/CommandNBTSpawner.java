@@ -101,7 +101,7 @@ public class CommandNBTSpawner extends BetterCommand {
 				sender.sendMessage(Lang._format("nbt.cmds.nbts.no-variable", args[0]));
 			}
 		}
-		sender.sendMessage(Lang._("nbt.variables-sufix") + StringUtils.join(spawner.getVariables().getVarNames(), ", "));
+		sender.sendMessage(Lang._("nbt.variables-prefix") + StringUtils.join(spawner.getVariables().getVarNames(), ", "));
 		return false;
 	}
 	
@@ -119,7 +119,7 @@ public class CommandNBTSpawner extends BetterCommand {
 			}
 			sender.sendMessage(Lang._("nbt.invalid-entity"));
 		}
-		sender.sendMessage(Lang._("nbt.entities-sufix") + EntityTypeMap.getLivingEntityNames());
+		sender.sendMessage(Lang._("nbt.entities-prefix") + EntityTypeMap.getLivingEntityNames());
 		return false;
 	}
 	

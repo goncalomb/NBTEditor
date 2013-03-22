@@ -99,10 +99,10 @@ nbt:
       no-copy: "§cYou must copy a spawner first!"
   
   invalid-entity: "§cInvalid entity!"
-  entities-sufix: "§7Entities: "
-  enchants-sufix: "§7Enchantments: "
-  effects-sufix: "§7Effects: "
-  variables-sufix: "§7Variables: "
+  entities-prefix: "§7Entities: "
+  enchants-prefix: "§7Enchantments: "
+  effects-prefix: "§7Effects: "
+  variables-prefix: "§7Variables: "
   
   invalid-level: "§cInvalid level. The level is an integer between 1 and 32767."
   invalid-index: "§cInvalid index. The index is an integer greater than 0."

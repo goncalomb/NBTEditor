@@ -66,7 +66,7 @@ public class CommandNBTPotion extends BetterCommand {
 				return true;
 			}
 		}
-		sender.sendMessage(Lang._("nbt.effects-sufix") + PotionEffectsMap.getStringList());
+		sender.sendMessage(Lang._("nbt.effects-prefix") + PotionEffectsMap.getStringList());
 		sender.sendMessage(Lang._("nbt.cmds.nbtp.info"));
 		return false;
 	}

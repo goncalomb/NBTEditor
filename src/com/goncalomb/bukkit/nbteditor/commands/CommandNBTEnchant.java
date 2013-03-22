@@ -56,7 +56,7 @@ public class CommandNBTEnchant extends BetterCommand {
 				return true;
 			}
 		}
-		sender.sendMessage(Lang._("nbt.enchants-sufix") + EnchantmentsMap.getStringList());
+		sender.sendMessage(Lang._("nbt.enchants-prefix") + EnchantmentsMap.getStringList());
 		sender.sendMessage(Lang._("nbt.cmds.nbte.info"));
 		return false;
 	}

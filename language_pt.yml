@@ -99,10 +99,10 @@ nbt:
       no-copy: "§cDeves primeiro copiar um gerador de monstros!"
   
   invalid-entity: "§cEntidade inválida!"
-  entities-sufix: "§7Entidades: "
-  enchants-sufix: "§7Encantamentos: "
-  effects-sufix: "§7Efeitos de poção: "
-  variables-sufix: "§7Variáveis: "
+  entities-prefix: "§7Entidades: "
+  enchants-prefix: "§7Encantamentos: "
+  effects-prefix: "§7Efeitos de poção: "
+  variables-prefix: "§7Variáveis: "
   
   invalid-level: "§cNível inválido. O nível é um inteiro entre 1 e 32767."
   invalid-index: "§cÍndice inválido. O Índice é um inteiro maior que 0."
