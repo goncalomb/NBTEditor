@@ -33,8 +33,10 @@ public abstract class CustomInventory {
 					@EventHandler
 					private void pluginDisable(PluginDisableEvent event) {
 						HashSet<CustomInventory> invs = _openedInvsByPlugin.remove(event.getPlugin());
-						for (CustomInventory inv : invs) {
-							inv.closeSilently();
+						if (invs != null) {
+							for (CustomInventory inv : invs) {
+								inv.closeSilently();
+							}
 						}
 						
 						if (_plugin == event.getPlugin()) {
