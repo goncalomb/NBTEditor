@@ -12,7 +12,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.plugin.Plugin;
 
 import com.goncalomb.bukkit.EntityTypeMap;
 import com.goncalomb.bukkit.Utils;
@@ -30,17 +29,14 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 
 public class CommandNBTSpawner extends BetterCommand {
 	
-	private Plugin _plugin;
-	
-	public CommandNBTSpawner(Plugin plugin) {
+	public CommandNBTSpawner() {
 		super("nbtspawner", "nbteditor.spawner");
-		_plugin = plugin;
 		setAlises("nbts");
 		setDescription(Lang._("nbt.cmds.nbts.description"));
 	}
 	
 	private static SpawnerNBTWrapper getSpawner(Player player) throws BetterCommandException {
-		Block block = UtilsMc.getTargetBlock(player);
+		Block block = UtilsMc.getTargetBlock(player, 5);
 		if (block.getType() != Material.MOB_SPAWNER) {
 			throw new BetterCommandException(Lang._("nbt.cmds.nbts.no-sight"));
 		}
@@ -211,7 +207,7 @@ public class CommandNBTSpawner extends BetterCommand {
 	public boolean copyCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		Player player = (Player) sender;
 		SpawnerNBTWrapper clipboard = getSpawner(player);
-		player.setMetadata("NBTEditor-spawner", new FixedMetadataValue(_plugin, clipboard));
+		player.setMetadata("NBTEditor-spawner", new FixedMetadataValue(getPlugin(), clipboard));
 		sender.sendMessage(Lang._("nbt.cmds.nbts.copy"));
 		return true;
 	}

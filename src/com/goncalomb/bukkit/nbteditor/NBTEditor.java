@@ -33,7 +33,7 @@ public final class NBTEditor extends BetterPlugin {
 		}
 		
 		registerCommand(new CommandBOS());
-		registerCommand(new CommandNBTSpawner(this));
+		registerCommand(new CommandNBTSpawner());
 		registerCommand(new CommandNBTItem());
 		registerCommand(new CommandNBTEnchant());
 		registerCommand(new CommandNBTBook());
