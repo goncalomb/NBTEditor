@@ -78,6 +78,8 @@ nbt:
       added: "§aEfeito de poção adicionado."
       removed: "§aEfeito de poção removido."
       info: "§eUsa nível = 0 para remover efeitos de poção."
+    nbtt:
+      description: "Usado para editar entidades bloco (exceto geradores de monstros)."
     nbts:
       description: "Usado para editar geradores de monstros."
       no-sight: "§cNenhum gerador de monstros visível!"

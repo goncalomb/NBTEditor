@@ -2,6 +2,7 @@ package com.goncalomb.bukkit.nbteditor;
 
 import java.util.logging.Level;
 
+import com.goncalomb.bukkit.betterplugin.BetterPlugin;
 import com.goncalomb.bukkit.customitems.api.CustomItemManager;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.commands.CommandBOS;
@@ -11,9 +12,9 @@ import com.goncalomb.bukkit.nbteditor.commands.CommandNBTHead;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTItem;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTPotion;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTSpawner;
+import com.goncalomb.bukkit.nbteditor.commands.CommandNBTTile;
 import com.goncalomb.bukkit.nbteditor.tools.MobInspectorTool;
 import com.goncalomb.bukkit.nbteditor.tools.MobRemoverTool;
-import com.goncalomb.bukkit.betterplugin.BetterPlugin;
 import com.goncalomb.bukkit.reflect.NBTBaseWrapper;
 import com.goncalomb.bukkit.reflect.WorldUtils;
 
@@ -39,6 +40,7 @@ public final class NBTEditor extends BetterPlugin {
 		registerCommand(new CommandNBTBook());
 		registerCommand(new CommandNBTPotion());
 		registerCommand(new CommandNBTHead());
+		registerCommand(new CommandNBTTile());
 		
 		CustomItemManager itemManager =  CustomItemManager.getInstance(this);
 		BookOfSouls.initialize(this, itemManager);

@@ -78,6 +78,8 @@ nbt:
       added: "§aPotion effect added."
       removed: "§aPotion effect removed."
       info: "§eUse level = 0 to remove potion effects."
+    nbtt:
+      description: "Used to edit entidades bloco (excepting spawners)."
     nbts:
       description: "Used to edit spawners."
       no-sight: "§cNo spawner in sight!"

@@ -15,4 +15,5 @@ permissions:
       nbteditor.book: true
       nbteditor.head: true
       nbteditor.spawner: true
+      nbteditor.tile: true
       nbteditor.bookofsouls: true
