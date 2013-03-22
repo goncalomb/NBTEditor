@@ -117,7 +117,7 @@ nbt:
       float: "Decimal entre {0} e {1}."
       string: "Cadeia de caracteres (tamanho máximo: 64)."
       block: "'block id' e 'data' válidos, 'id:data'."
-      vector: "Conjunto de 3 números decimais, '0.00;0.00;0.00'."
+      vector: "Conjunto de 3 números decimais, '0.00 0.00 0.00'."
   
   meta-error:
     format: "§cDeves estar a segurar {0}."

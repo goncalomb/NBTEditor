@@ -1,10 +1,7 @@
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import com.goncalomb.bukkit.reflect.NBTTagCompoundWrapper;
 import com.goncalomb.bukkit.lang.Lang;
+import com.goncalomb.bukkit.reflect.NBTTagCompoundWrapper;
 
 public final class VectorVariable extends NBTGenericVariable{
 
@@ -13,13 +10,13 @@ public final class VectorVariable extends NBTGenericVariable{
 	}
 	
 	boolean set(NBTTagCompoundWrapper data, String value) {
-		Matcher matcher = Pattern.compile("^(-?\\d+.?\\d*);(-?\\d+.?\\d*);(-?\\d+.?\\d*)$").matcher(value);
-		if (matcher.find()) {
+		String[] pieces = value.replace(',', '.').split("\\s+", 3);
+		if (pieces.length == 3) {
 			Object[] vector = new Object[3];
 			try {
-				vector[0] = Double.parseDouble(matcher.group(1));
-				vector[1] = Double.parseDouble(matcher.group(2));
-				vector[2] = Double.parseDouble(matcher.group(3));
+				vector[0] = Double.parseDouble(pieces[0]);
+				vector[1] = Double.parseDouble(pieces[1]);
+				vector[2] = Double.parseDouble(pieces[2]);
 			} catch (NumberFormatException e) {
 				return false;
 			}
