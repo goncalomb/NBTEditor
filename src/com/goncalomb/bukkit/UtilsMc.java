@@ -67,7 +67,11 @@ public final class UtilsMc {
 	}
 	
 	public static Block getTargetBlock(Player player) {
-		List<Block> blocks = player.getLastTwoTargetBlocks(NON_SOLID_MATERIALS_IDS, 50);
+		return getTargetBlock(player, 50);
+	}
+	
+	public static Block getTargetBlock(Player player, int distance) {
+		List<Block> blocks = player.getLastTwoTargetBlocks(NON_SOLID_MATERIALS_IDS, distance);
 		return blocks.get(blocks.size() - 1);
 	}
 	
