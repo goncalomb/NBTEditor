@@ -4,7 +4,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-import com.goncalomb.bukkit.lang.Lang;
+import com.goncalomb.bukkit.betterplugin.Lang;
 
 abstract class CustomItemListener<T extends CustomItem> extends CustomItemContainer<T> implements Listener {
 	

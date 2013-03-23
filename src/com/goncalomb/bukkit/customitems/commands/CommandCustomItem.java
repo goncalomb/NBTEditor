@@ -12,9 +12,9 @@ import com.goncalomb.bukkit.Utils;
 import com.goncalomb.bukkit.betterplugin.BetterCommand;
 import com.goncalomb.bukkit.betterplugin.BetterCommandException;
 import com.goncalomb.bukkit.betterplugin.BetterSubCommandType;
+import com.goncalomb.bukkit.betterplugin.Lang;
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.CustomItemManager;
-import com.goncalomb.bukkit.lang.Lang;
 
 public final class CommandCustomItem extends BetterCommand {
 	
