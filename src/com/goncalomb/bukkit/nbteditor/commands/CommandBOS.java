@@ -54,7 +54,7 @@ public class CommandBOS extends BetterCommand {
 					sender.sendMessage(Lang._("general.inventory-full"));
 					return true;
 				}
-				BookOfSouls bos = new BookOfSouls(entityType);
+				BookOfSouls bos = new BookOfSouls(EntityNBT.fromEntityType(entityType));
 				inv.addItem(bos.getBook());
 				sender.sendMessage(Lang._("nbt.cmds.bos.give"));
 				if (entityType == EntityType.ENDERMAN) {

@@ -6,7 +6,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -16,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.Plugin;
 
+import com.goncalomb.bukkit.BookSerialize;
 import com.goncalomb.bukkit.EntityTypeMap;
 import com.goncalomb.bukkit.UtilsMc;
 import com.goncalomb.bukkit.betterplugin.Lang;
@@ -34,8 +34,7 @@ public class BookOfSouls {
 	
 	private static final String _title = ChatColor.AQUA + "Book of Souls";
 	private static final String _author = ChatColor.GOLD + "The Creator";
-	private static final String _metaPageTitle = "" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Soul Data v0.1" + ChatColor.BLACK + "\n";
-	private static final String _metaPagePre = ChatColor.MAGIC.toString();
+	private static final String _dataTitle = "" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Soul Data v0.1" + ChatColor.BLACK + "\n";
 	
 	private static Plugin _plugin = null;
 	private static final String[] _mobEquipSlotName = new String[] { "Head Equipment", "Chest Equipment", "Legs Equipment", "Feet Equipment", "Hand Item" };
@@ -81,37 +80,19 @@ public class BookOfSouls {
 				return;
 			};
 			
-			@Override
-			public ItemStack getItem() {
-				return null;
-			}
-			
 		}, plugin);
 	}
 	
-	public BookOfSouls(EntityType entityType) {
-		_entityNbt = EntityNBT.fromEntityType(entityType);
+	public BookOfSouls(EntityNBT entityNBT) {
+		_entityNbt = entityNBT;
 	}
 	
 	public BookOfSouls(ItemStack book) {
 		_book = book;
 		if (isValidBook(book)) {
-			BookMeta meta = (BookMeta)_book.getItemMeta();
-			int pageCount = meta.getPageCount();
-			if (pageCount >= 1) {
-				StringBuilder serializedData = new StringBuilder();
-				for (int i = 1; i <= pageCount; ++i) {
-					String page = meta.getPage(i);
-					if (page.startsWith(_metaPageTitle)) {
-						serializedData.append(page.substring(_metaPageTitle.length() + _metaPagePre.length()));
-						for (++i; i <= pageCount; ++i) {
-							serializedData.append(meta.getPage(i).substring(_metaPagePre.length()));
-						}
-						try {
-							_entityNbt = EntityNBT.unserialize(serializedData.toString());
-						} catch (Error e) { }
-					}
-				}
+			String data = BookSerialize.loadData((BookMeta) _book.getItemMeta(), _dataTitle);
+			if (data != null) {
+				_entityNbt = EntityNBT.unserialize(data);
 			}
 		}
 	}
@@ -119,7 +100,7 @@ public class BookOfSouls {
 	public static boolean isValidBook(ItemStack book) {
 		if (book != null && book.getType() == Material.WRITTEN_BOOK) {
 			ItemMeta meta = book.getItemMeta();
-			if (meta != null && ((BookMeta) meta).getTitle() != null && ((BookMeta) meta).getTitle().startsWith(_title)) {
+			if (meta != null && ((BookMeta) meta).getTitle() != null && ((BookMeta) meta).getTitle().equals(_title)) {
 				return true;
 			}
 		}
@@ -213,7 +194,6 @@ public class BookOfSouls {
 		}
 		meta.addPage(sb.toString());
 		
-		
 
 		if (_entityNbt instanceof MobNBT) {
 			MobNBT mob = (MobNBT) _entityNbt;
@@ -246,14 +226,7 @@ public class BookOfSouls {
 			
 		}
 		
-		
-		String serializedData = _entityNbt.serialize();
-		int max;
-		int true_max = 255 - _metaPagePre.length();
-		for (int i = 0, l = serializedData.length(); i < l; i += max) {
-			max = (i == 0 ? true_max - _metaPageTitle.length() : true_max);
-			meta.addPage((i == 0 ? _metaPageTitle : "") + _metaPagePre + serializedData.substring(i, (i + max > l ? l : i + max)));
-		}
+		BookSerialize.saveToBook(meta, _entityNbt.serialize(), _dataTitle);
 		
 		_book.setItemMeta(meta);
 	}
