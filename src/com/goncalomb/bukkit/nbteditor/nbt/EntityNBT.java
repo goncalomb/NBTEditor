@@ -255,6 +255,18 @@ public class EntityNBT {
 		}
 	}
 	
+	public EntityNBT getRiding() {
+		NBTTagCompoundWrapper ridingData = _data.getCompound("Riding");
+		if (ridingData != null) {
+			return fromEntityType(EntityTypeMap.getByName(ridingData.getString("id")), ridingData);
+		}
+		return null;
+	}
+	
+	public void setRiding(EntityNBT riding) {
+		_data.setCompound("Riding", riding._data.clone());
+	}
+	
 	public static EntityNBT unserialize(String serializedData) {
 		try {
 			NBTTagCompoundWrapper data = NBTTagCompoundWrapper.unserialize(Base64.decode(serializedData));
