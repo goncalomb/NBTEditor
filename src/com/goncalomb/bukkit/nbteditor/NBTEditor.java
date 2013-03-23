@@ -1,4 +1,3 @@
-
 package com.goncalomb.bukkit.nbteditor;
 
 import java.util.logging.Level;
@@ -22,9 +21,7 @@ import com.goncalomb.bukkit.reflect.WorldUtils;
 public final class NBTEditor extends BetterPlugin {
 	
 	@Override
-	public void onEnable() {
-		super.onEnable();
-		
+	public void onBetterEnable() {
 		try {
 			NBTBaseWrapper.prepareReflection();
 			WorldUtils.prepareReflection();
@@ -51,9 +48,4 @@ public final class NBTEditor extends BetterPlugin {
 		getLogger().info("NBTEditor has been enabled.");
 	}
 	
-	@Override
-	public void onDisable() {
-		super.onDisable();
-		getLogger().info("NBTEditor has been disabled.");
-	}
 }
