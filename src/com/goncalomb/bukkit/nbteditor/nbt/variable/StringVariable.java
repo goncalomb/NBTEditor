@@ -1,6 +1,6 @@
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
-import com.goncalomb.bukkit.lang.Lang;
+import com.goncalomb.bukkit.betterplugin.Lang;
 import com.goncalomb.bukkit.reflect.NBTTagCompoundWrapper;
 
 public class StringVariable extends NBTGenericVariable {

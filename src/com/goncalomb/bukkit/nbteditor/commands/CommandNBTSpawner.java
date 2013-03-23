@@ -19,7 +19,7 @@ import com.goncalomb.bukkit.UtilsMc;
 import com.goncalomb.bukkit.betterplugin.BetterCommand;
 import com.goncalomb.bukkit.betterplugin.BetterCommandException;
 import com.goncalomb.bukkit.betterplugin.BetterSubCommandType;
-import com.goncalomb.bukkit.lang.Lang;
+import com.goncalomb.bukkit.betterplugin.Lang;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.FireworkNBT;

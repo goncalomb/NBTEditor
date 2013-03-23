@@ -1,7 +1,7 @@
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
 import com.goncalomb.bukkit.reflect.NBTTagCompoundWrapper;
-import com.goncalomb.bukkit.lang.Lang;
+import com.goncalomb.bukkit.betterplugin.Lang;
 
 public final class FloatVariable extends NBTGenericVariable {
 	

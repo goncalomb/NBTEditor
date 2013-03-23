@@ -8,7 +8,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.nbteditor.nbt.DroppedItemNBT;
-import com.goncalomb.bukkit.lang.Lang;
+import com.goncalomb.bukkit.betterplugin.Lang;
 
 public class InventoryForDroppedItems extends InventoryForSingleItem {
 	

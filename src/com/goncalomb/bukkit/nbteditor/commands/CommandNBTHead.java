@@ -8,7 +8,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import com.goncalomb.bukkit.betterplugin.BetterCommand;
 import com.goncalomb.bukkit.betterplugin.BetterSubCommandType;
-import com.goncalomb.bukkit.lang.Lang;
+import com.goncalomb.bukkit.betterplugin.Lang;
 
 public class CommandNBTHead extends BetterCommand {
 	

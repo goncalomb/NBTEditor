@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.CustomInventory;
 import com.goncalomb.bukkit.UtilsMc;
-import com.goncalomb.bukkit.lang.Lang;
+import com.goncalomb.bukkit.betterplugin.Lang;
 
 abstract class IInventoryForBos extends CustomInventory {
 	

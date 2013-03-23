@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBTOffer;
-import com.goncalomb.bukkit.lang.Lang;
+import com.goncalomb.bukkit.betterplugin.Lang;
 
 public final class InventoryForVillagers extends IInventoryForBos {
 	

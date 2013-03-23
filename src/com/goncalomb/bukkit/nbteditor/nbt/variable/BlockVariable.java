@@ -3,7 +3,7 @@ package com.goncalomb.bukkit.nbteditor.nbt.variable;
 import org.bukkit.Material;
 
 import com.goncalomb.bukkit.reflect.NBTTagCompoundWrapper;
-import com.goncalomb.bukkit.lang.Lang;
+import com.goncalomb.bukkit.betterplugin.Lang;
 
 public final class BlockVariable extends NBTGenericVariable2X {
 	

@@ -18,10 +18,10 @@ import org.bukkit.plugin.Plugin;
 
 import com.goncalomb.bukkit.EntityTypeMap;
 import com.goncalomb.bukkit.UtilsMc;
+import com.goncalomb.bukkit.betterplugin.Lang;
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.CustomItemManager;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
-import com.goncalomb.bukkit.lang.Lang;
 import com.goncalomb.bukkit.nbteditor.nbt.DroppedItemNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;

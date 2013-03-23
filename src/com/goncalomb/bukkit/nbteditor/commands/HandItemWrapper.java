@@ -8,7 +8,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 
 import com.goncalomb.bukkit.betterplugin.BetterCommandException;
-import com.goncalomb.bukkit.lang.Lang;
+import com.goncalomb.bukkit.betterplugin.Lang;
 
 public abstract class HandItemWrapper<T extends ItemMeta> {
 	

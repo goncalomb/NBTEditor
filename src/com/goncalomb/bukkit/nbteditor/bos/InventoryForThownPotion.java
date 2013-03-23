@@ -8,7 +8,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.goncalomb.bukkit.lang.Lang;
+import com.goncalomb.bukkit.betterplugin.Lang;
 import com.goncalomb.bukkit.nbteditor.nbt.ThrownPotionNBT;
 
 public class InventoryForThownPotion extends InventoryForSingleItem {

@@ -1,6 +1,6 @@
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
-import com.goncalomb.bukkit.lang.Lang;
+import com.goncalomb.bukkit.betterplugin.Lang;
 
 public abstract class NumericVariable extends NBTGenericVariable {
 	
