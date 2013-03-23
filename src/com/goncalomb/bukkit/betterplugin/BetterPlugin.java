@@ -1,5 +1,6 @@
 package com.goncalomb.bukkit.betterplugin;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,7 +16,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 public abstract class BetterPlugin extends JavaPlugin {
 
 	private static SimpleCommandMap _commandMap;
+	private static File _gmbConfigFolder;
+	
 	private List<BetterCommand> _commands = new ArrayList<BetterCommand>();
+	//private File _betterConfigFolder;
+	
+	public static File getGmbConfigFolder() {
+		return _gmbConfigFolder;
+	}
 	
 	protected BetterPlugin() {
 		if (_commandMap == null) {
@@ -37,15 +45,28 @@ public abstract class BetterPlugin extends JavaPlugin {
 	}
 	
 	@Override
-	public void onEnable() {
-		Lang.registerPlugin(this);
+	public final void onLoad() {
+		if (_gmbConfigFolder == null) {
+			_gmbConfigFolder = new File(getDataFolder().getParentFile(), "gmbConfig");
+		}
+		//_betterConfigFolder = new File(_gmbConfigFolder, getName());
 	}
 	
 	@Override
-	public void onDisable() {
+	public final void onEnable() {
+		Lang.registerPlugin(this);
+		onBetterEnable();
+	}
+	
+	public abstract void onBetterEnable();
+	
+	@Override
+	public final void onDisable() {
 		Collection<Command> commands = _commandMap.getCommands();
 		for (BetterCommand command : _commands) {
 			while (commands.remove(command._internalCommand));
 		}
+		getLogger().info(getName() + " has been disabled.");
+		Lang.unregisterPlugin(this);
 	}
 }

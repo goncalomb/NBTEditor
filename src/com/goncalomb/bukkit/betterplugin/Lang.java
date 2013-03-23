@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -15,25 +14,21 @@ import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.plugin.Plugin;
 
 public final class Lang {
 
 	private static Logger _logger;
-	private static Plugin _plugin;
 	private static String _lang;
 	private static boolean _useFiles;
-	private static HashMap<Plugin, FileConfiguration> _data;
-	private static HashMap<String, MessageFormat> _formatCache;
+	private static HashMap<Plugin, FileConfiguration> _data = new HashMap<Plugin, FileConfiguration>();
+	private static HashMap<String, MessageFormat> _formatCache = new HashMap<String, MessageFormat>();
 	
 	static {
 		_logger = new Logger(null, null) {
 			@Override
 			public void log(LogRecord logRecord) {
-				logRecord.setMessage("[XptoLang] " + logRecord.getMessage());
+				logRecord.setMessage("[gmbLang] " + logRecord.getMessage());
 				super.log(logRecord);
 			}
 		};
@@ -43,19 +38,21 @@ public final class Lang {
 	
 	private Lang() { }
 	
-	public static void registerPlugin(Plugin plugin) {
-		if (_plugin == null) {
-			getLanguage(plugin);
-			_data = new HashMap<Plugin, FileConfiguration>();
-			_formatCache = new HashMap<String, MessageFormat>();
-			bindToPlugin(plugin);
+	static void registerPlugin(BetterPlugin plugin) {
+		if (_data.size() == 0) {
+			getLanguage();
 		}
 		_formatCache.clear();
 		loadLanguage(plugin);
 	}
 	
-	private static void getLanguage(Plugin plugin) {
-		File configFile = new File(plugin.getDataFolder().getParent(), "XptoLang/config.yml");
+	static void unregisterPlugin(BetterPlugin plugin) {
+		_data.remove(plugin);
+		_formatCache.clear();
+	}
+	
+	private static void getLanguage() {
+		File configFile = new File(BetterPlugin.getGmbConfigFolder(), "language_config.yml");
 		FileConfiguration config = (configFile.exists() ? YamlConfiguration.loadConfiguration(configFile) : new YamlConfiguration());
 		config.options().copyDefaults(true);
 		config.addDefault("language", "en");
@@ -112,32 +109,6 @@ public final class Lang {
 		_data.put(plugin, lang);
 	}
 	
-	private static void bindToPlugin(Plugin plugin) {
-		Bukkit.getServer().getPluginManager().registerEvents(new Listener() {
-			@EventHandler
-			private void onPluginDisable(PluginDisableEvent event) {
-				if (_data.remove(event.getPlugin()) != null) {
-					_formatCache.clear();
-					if (event.getPlugin() == _plugin) {
-						_plugin = null;
-						if (_data.size() > 1) {
-							Iterator<Plugin> it = _data.keySet().iterator();
-							Plugin plugin;
-							while ((plugin = it.next()) == null);
-							bindToPlugin(plugin);
-						} else {
-							_lang = null;
-							_useFiles = false;
-							_data = null;
-							_formatCache = null;
-						}
-					}
-				}
-			}
-		}, plugin);
-		_plugin = plugin;
-	}
-	
 	public static String _(String key) {
 		String result = (String) get(key, false);
 		return (result == null ? key : result);
@@ -163,11 +134,6 @@ public final class Lang {
 	}
 	
 	private static Object get(String key, boolean asList) {
-		if (_plugin == null) {
-			_logger.warning("XptoLang not initialized!");
-			return null;
-		}
-		
 		boolean found = false;
 		Object result = null;
 		if (asList) {
