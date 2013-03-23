@@ -1,7 +1,11 @@
 package com.goncalomb.bukkit.nbteditor.bos;
 
 import java.util.List;
+import java.util.logging.Level;
 
+import net.iharder.Base64;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -29,12 +33,14 @@ import com.goncalomb.bukkit.nbteditor.nbt.ThrownPotionNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
+import com.goncalomb.bukkit.reflect.NBTTagCompoundWrapper;
 
 public class BookOfSouls {
 	
 	private static final String _title = ChatColor.AQUA + "Book of Souls";
 	private static final String _author = ChatColor.GOLD + "The Creator";
-	private static final String _dataTitle = "" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Soul Data v0.1" + ChatColor.BLACK + "\n";
+	private static final String _dataTitle = "" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Soul Data v0.2" + ChatColor.BLACK + "\n";
+	private static final String _dataTitleOLD = "" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Soul Data v0.1" + ChatColor.BLACK + "\n";
 	
 	private static Plugin _plugin = null;
 	private static final String[] _mobEquipSlotName = new String[] { "Head Equipment", "Chest Equipment", "Legs Equipment", "Feet Equipment", "Hand Item" };
@@ -69,11 +75,11 @@ public class BookOfSouls {
 				if (location != null) {
 					BookOfSouls bos = new BookOfSouls(event.getItem());
 					if (bos.isValid()) {
-						event.setCancelled(true);
 						bos.getEntityNBT().spawn(location);
 					} else {
 						player.sendMessage(Lang._("nbt.bos.corrupted"));
 					}
+					event.setCancelled(true);
 				} else {
 					player.sendMessage(Lang._("general.no-sight"));
 				}
@@ -90,9 +96,24 @@ public class BookOfSouls {
 	public BookOfSouls(ItemStack book) {
 		_book = book;
 		if (isValidBook(book)) {
-			String data = BookSerialize.loadData((BookMeta) _book.getItemMeta(), _dataTitle);
-			if (data != null) {
-				_entityNbt = EntityNBT.unserialize(data);
+			try {
+				String data = BookSerialize.loadData((BookMeta) _book.getItemMeta(), _dataTitle);
+				if (data == null) {
+					// This is not a BoS v0.2, is BoS v0.1?
+					data = BookSerialize.loadData((BookMeta) _book.getItemMeta(), _dataTitleOLD);
+					if (data != null) {
+						// Yes, it is v0.1, do a dirty conversion.
+						int i = data.indexOf(',');
+						NBTTagCompoundWrapper nbtData = NBTTagCompoundWrapper.unserialize(Base64.decode(data.substring(i + 1)));
+						nbtData.setString("id", data.substring(0, i));
+						data = Base64.encodeBytes(nbtData.serialize(), Base64.GZIP);
+					}
+				}
+				if (data != null) {
+					_entityNbt = EntityNBT.unserialize(data);
+				}
+			} catch (Throwable e) {
+				Bukkit.getLogger().log(Level.SEVERE, "Book of Souls corrupted.", e);
 			}
 		}
 	}

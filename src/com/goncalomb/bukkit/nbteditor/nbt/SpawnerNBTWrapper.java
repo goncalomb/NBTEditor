@@ -50,9 +50,9 @@ public final class SpawnerNBTWrapper {
 				if (entityType != null) {
 					EntityNBT entityNbt;
 					if (potential.hasKey("Properties")) {
-						entityNbt = EntityNBT.fromAnyEntityType(entityType, potential.getCompound("Properties"));
+						entityNbt = EntityNBT.fromEntityType(entityType, potential.getCompound("Properties"));
 					} else {
-						entityNbt = EntityNBT.fromAnyEntityType(entityType);
+						entityNbt = EntityNBT.fromEntityType(entityType);
 					}
 					_entities.add(new SpawnerEntityNBT(entityNbt, potential.getInt("Weight")));
 				}

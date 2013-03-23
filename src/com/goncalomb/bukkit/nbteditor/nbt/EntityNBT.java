@@ -160,7 +160,7 @@ public class EntityNBT {
 		_entityTypes.put(entityClass, entityType);
 	}
 	
-	private static EntityNBT fromEntityType(EntityType entityType, NBTTagCompoundWrapper data) {
+	private static EntityNBT newInstance(EntityType entityType, NBTTagCompoundWrapper data) {
 		Class<? extends EntityNBT> entityClass = _entityClasses.get(entityType);
 		EntityNBT instance;
 		try {
@@ -168,8 +168,7 @@ public class EntityNBT {
 		} catch (Exception e) {
 			throw new Error("Error when instantiating " + entityClass.getName() + ".", e);
 		}
-		instance._entityType = entityType;
-		instance._data = data;
+		instance.initialize(entityType, data);
 		return instance;
 	}
 	
@@ -182,40 +181,36 @@ public class EntityNBT {
 	}
 	
 	public static EntityNBT fromEntityType(EntityType entityType) {
-		if (!isValidType(entityType)) throw new IllegalArgumentException("Invalid argument entityType, " + entityType.getName() + ".");
-		return fromEntityType(entityType, new NBTTagCompoundWrapper());
-	}
-	
-	static EntityNBT fromAnyEntityType(EntityType entityType) {
-		return fromAnyEntityType(entityType, new NBTTagCompoundWrapper());
-	}
-	
-	static EntityNBT fromAnyEntityType(EntityType entityType, NBTTagCompoundWrapper data) {
 		if (_entityClasses.containsKey(entityType)) {
-			return fromEntityType(entityType, data);
+			return newInstance(entityType, new NBTTagCompoundWrapper());
+		}
+		return null;
+	}
+	
+	static EntityNBT fromEntityType(EntityType entityType, NBTTagCompoundWrapper data) {
+		if (_entityClasses.containsKey(entityType)) {
+			return newInstance(entityType, data);
 		} else {
 			return new EntityNBT(entityType, data);
 		}
 	}
 	
 	public static EntityNBT fromEntity(Entity entity) {
-		if (!_entityClasses.containsKey(entity.getType())) throw new IllegalArgumentException("Invalid argument entity.");
 		return fromEntityType(entity.getType(), NBTUtils.getEntityNBTTagCompound(entity));
 	}
 	
 	protected EntityNBT() {
-		_entityType = _entityTypes.get(this.getClass());
-		_data = new NBTTagCompoundWrapper();
-	}
-	
-	protected EntityNBT(EntityType entityType) {
-		_entityType = entityType;
-		_data = new NBTTagCompoundWrapper();
+		initialize(_entityTypes.get(this.getClass()), new NBTTagCompoundWrapper());
 	}
 	
 	private EntityNBT(EntityType entityType, NBTTagCompoundWrapper data) {
+		initialize(entityType, new NBTTagCompoundWrapper());
+	}
+	
+	private void initialize(EntityType entityType, NBTTagCompoundWrapper data) {
 		_entityType = entityType;
 		_data = data;
+		_data.setString("id", EntityTypeMap.getName(_entityType));
 	}
 	
 	public void setPos(double x, double y, double z) {
@@ -254,7 +249,7 @@ public class EntityNBT {
 	
 	public String serialize() {
 		try {
-			return EntityTypeMap.getName(_entityType) + "," + Base64.encodeBytes(_data.serialize(), Base64.GZIP);
+			return Base64.encodeBytes(_data.serialize(), Base64.GZIP);
 		} catch (Throwable e) {
 			throw new Error("Error serializing EntityNBT.", e);
 		}
@@ -262,9 +257,8 @@ public class EntityNBT {
 	
 	public static EntityNBT unserialize(String serializedData) {
 		try {
-			int i = serializedData.indexOf(',');
-			EntityType entityType = EntityTypeMap.getByName(serializedData.substring(0, i));
-			return fromEntityType(entityType, NBTTagCompoundWrapper.unserialize(Base64.decode(serializedData.substring(i + 1))));
+			NBTTagCompoundWrapper data = NBTTagCompoundWrapper.unserialize(Base64.decode(serializedData));
+			return fromEntityType(EntityTypeMap.getByName(data.getString("id")), data);
 		} catch (Throwable e) {
 			throw new Error("Error unserializing EntityNBT.", e);
 		}

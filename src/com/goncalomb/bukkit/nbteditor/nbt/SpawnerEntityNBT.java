@@ -20,7 +20,7 @@ public class SpawnerEntityNBT {
 	
 	public SpawnerEntityNBT(EntityType entityType, int weight) {
 		_weight = weight;
-		_entityNbt = EntityNBT.fromAnyEntityType(entityType);
+		_entityNbt = EntityNBT.fromEntityType(entityType);
 	}
 	
 	public SpawnerEntityNBT(EntityNBT entityNbt) {
