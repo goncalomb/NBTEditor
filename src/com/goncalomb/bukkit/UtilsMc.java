@@ -54,7 +54,7 @@ public final class UtilsMc {
 		int y = loc.getBlockY();
 		int z = loc.getBlockZ();
 		int maxY = world.getMaxHeight();
-		while (y < maxY && !NON_SOLID_BLOCK_IDS.contains(world.getBlockAt(x, y, z).getTypeId())) {
+		while (y < maxY && !NON_SOLID_BLOCK_IDS.contains((byte) world.getBlockAt(x, y, z).getTypeId())) {
 			y++;
 		}
 		return new Location(world, x + 0.5, y + 0.2, z + 0.5);
