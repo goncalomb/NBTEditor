@@ -20,9 +20,7 @@ import com.goncalomb.bukkit.customitems.items.WitherBow;
 public final class CustomItems extends BetterPlugin {
 	
 	@Override
-	public void onEnable() {
-		super.onEnable();
-		
+	public void onBetterEnable() {
 		CustomItemManager manager = CustomItemManager.getInstance(this);
 		manager.registerNew(new BatBomb(), this);
 		manager.registerNew(new FireBomb(), this);
@@ -43,9 +41,4 @@ public final class CustomItems extends BetterPlugin {
 		getLogger().info("CustomItems has been enabled.");
 	}
 	
-	@Override
-	public void onDisable() {
-		super.onDisable();
-		getLogger().info("CustomItems has been disabled.");
-	}
 }

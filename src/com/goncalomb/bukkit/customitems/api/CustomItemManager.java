@@ -20,6 +20,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
+import com.goncalomb.bukkit.betterplugin.BetterPlugin;
+
 public final class CustomItemManager {
 	
 	private static List<String> _allowedPlugins = Arrays.asList(new String[] { "NBTEditor" });
@@ -172,7 +174,7 @@ public final class CustomItemManager {
 	}
 	
 	File getDataFolder() {
-		return new File(_plugin.getDataFolder().getParent(), "CustomItems");
+		return new File(BetterPlugin.getGmbConfigFolder(), "CustomItems");
 	}
 	
 	Logger getLogger() {
