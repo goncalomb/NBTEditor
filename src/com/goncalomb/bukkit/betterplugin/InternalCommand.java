@@ -5,7 +5,6 @@ import java.util.List;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import com.goncalomb.bukkit.lang.Lang;
 
 final class InternalCommand extends Command {
 	

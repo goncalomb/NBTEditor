@@ -11,7 +11,6 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 
 import com.goncalomb.bukkit.betterplugin.BetterCommand.SubCommand;
-import com.goncalomb.bukkit.lang.Lang;
 
 class BetterSubCommand {	
 	

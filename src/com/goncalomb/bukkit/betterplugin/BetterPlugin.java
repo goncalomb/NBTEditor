@@ -11,7 +11,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.goncalomb.bukkit.lang.Lang;
 
 public abstract class BetterPlugin extends JavaPlugin {
 

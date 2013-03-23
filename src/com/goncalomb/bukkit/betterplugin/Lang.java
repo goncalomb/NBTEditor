@@ -1,4 +1,4 @@
-package com.goncalomb.bukkit.lang;
+package com.goncalomb.bukkit.betterplugin;
 
 import java.io.File;
 import java.io.IOException;
