@@ -80,6 +80,12 @@ nbt:
       info: "§eUse level = 0 to remove potion effects."
     nbtt:
       description: "Used to edit entidades bloco (excepting spawners)."
+      beacon:
+        no-sight: "§cNo beacon in sight!"
+        invalid-effect: "§cInvalid effect!"
+        info: "§eUse 'clear' as affect clear the effect."
+        set: "§aEffect set ({0})."
+        cleared: "§aEffect cleared ({0})."
       jukebox:
         no-sight: "§cNo jukebox in sight!"
         set: "§aRecord set."

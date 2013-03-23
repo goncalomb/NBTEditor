@@ -80,6 +80,12 @@ nbt:
       info: "§eUsa nível = 0 para remover efeitos de poção."
     nbtt:
       description: "Usado para editar entidades bloco (exceto geradores de monstros)."
+      beacon:
+        no-sight: "§cNenhum sinal luminoso visível!"
+        invalid-effect: "§cEfeito inválido!"
+        info: "§eUsa 'clear' como efeito para remover o efeito."
+        set: "§aEfeito definido ({0})."
+        cleared: "§aEfeito removido ({0})."
       jukebox:
         no-sight: "§cNenhuma jukebox visível!"
         set: "§aDisco definido."
