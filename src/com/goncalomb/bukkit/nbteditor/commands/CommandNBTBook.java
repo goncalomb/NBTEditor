@@ -33,7 +33,7 @@ public class CommandNBTBook extends BetterCommand {
 			item.meta.setPage(i, UtilsMc.parseColors(item.meta.getPage(i)));
 		}
 		item.save();
-		sender.sendMessage(Lang._("nbt.cmd.nbtb.colors"));
+		sender.sendMessage(Lang._("nbt.cmds.nbtb.colors"));
 		return true;
 	}
 	
@@ -42,7 +42,7 @@ public class CommandNBTBook extends BetterCommand {
 		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
 		item.meta.setTitle(UtilsMc.parseColors(UtilsMc.parseColors(StringUtils.join(args, " "))));
 		item.save();
-		sender.sendMessage(Lang._("nbt.cmd.nbtb.title"));
+		sender.sendMessage(Lang._("nbt.cmds.nbtb.title"));
 		return true;
 	}
 	
@@ -51,7 +51,7 @@ public class CommandNBTBook extends BetterCommand {
 		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
 		item.meta.setAuthor(UtilsMc.parseColors(UtilsMc.parseColors(StringUtils.join(args, " "))));
 		item.save();
-		sender.sendMessage(Lang._("nbt.cmd.nbtb.author"));
+		sender.sendMessage(Lang._("nbt.cmds.nbtb.author"));
 		return true;
 	}
 	
@@ -62,7 +62,7 @@ public class CommandNBTBook extends BetterCommand {
 		item.meta.setAuthor(null);
 		item.item.setType(Material.BOOK_AND_QUILL);
 		item.save();
-		sender.sendMessage(Lang._("nbt.cmd.nbtb.unsign"));
+		sender.sendMessage(Lang._("nbt.cmds.nbtb.unsign"));
 		return true;
 	}
 	

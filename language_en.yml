@@ -57,10 +57,10 @@ nbt:
         set: "§aDrop chance set."
     nbtb:
       description: "Used to help book writing."
-      colors: "Color codes have been replaced."
-      title: "Book title set."
-      author: "Book author set."
-      unsign: "Book unsigned."
+      colors: "§aColor codes have been replaced."
+      title: "§aBook title set."
+      author: "§aBook author set."
+      unsign: "§aBook unsigned."
     nbte:
       description: "Used to enchant any item without limitation. Also used to edit enchanted books."
       invalid-enchant: "§cInvalid enchantment."

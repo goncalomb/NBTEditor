@@ -57,10 +57,10 @@ nbt:
         set: "§a'Drop chance' definida."
     nbtb:
       description: "Usado para ajudar na escrita de livros."
-      colors: "Códigos das cores foram subtituídos."
-      title: "Título do livro definido."
-      author: "Autor do livro definido."
-      unsign: "Livro foi aberto."
+      colors: "§aOs códigos das cores foram subtituídos."
+      title: "§aTítulo do livro definido."
+      author: "§aAutor do livro definido."
+      unsign: "§aLivro foi aberto."
     nbte:
       description: "Usado para encantar qualquer item sem limitação. Tem usado para editar livros encantados."
       invalid-enchant: "§cEncantamento inválido."
