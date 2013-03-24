@@ -21,7 +21,12 @@ public abstract class BookSerialize {
 			if (page.startsWith(dataTitle)) {
 				dataSB.append(page.substring(dataTitle.length() + _dataPre.length()));
 				for (++i; i <= pageCount; ++i) {
-					dataSB.append(meta.getPage(i).substring(_dataPre.length()));
+					page = meta.getPage(i);
+					if (page.startsWith(_dataPre)) {
+						dataSB.append(page.substring(_dataPre.length()));
+					} else {
+						break;
+					}
 				}
 				return dataSB.toString();
 			}
@@ -31,9 +36,9 @@ public abstract class BookSerialize {
 	
 	public static void saveToBook(BookMeta meta, String data, String dataTitle) {
 		int max;
-		int page_max = 255 - _dataPre.length();
+		int pageMax = 255 - _dataPre.length();
 		for (int i = 0, l = data.length(); i < l; i += max) {
-			max = (i == 0 ? page_max - dataTitle.length() : page_max);
+			max = (i == 0 ? pageMax - dataTitle.length() : pageMax);
 			meta.addPage((i == 0 ? dataTitle : "") + _dataPre + data.substring(i, (i + max > l ? l : i + max)));
 		}
 	}
