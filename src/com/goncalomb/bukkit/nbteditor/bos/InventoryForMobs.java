@@ -23,7 +23,7 @@ public final class InventoryForMobs extends IInventoryForBos {
 		_placeholders.put(2, createPlaceholder(Material.PAPER, Lang._("nbt.bos.mob.pholder.legs")));
 		_placeholders.put(3, createPlaceholder(Material.PAPER, Lang._("nbt.bos.mob.pholder.feet")));
 		_placeholders.put(4, createPlaceholder(Material.PAPER, Lang._("nbt.bos.mob.pholder.hand")));
-		_placeholders.put(8, createPlaceholder(Material.PAPER, Lang._("nbt.bos.mob.pholder.effects"), Lang._("nbt.bos.mob.pholder.effects-lore")));
+		_placeholders.put(8, createPlaceholder(Material.GLASS_BOTTLE, Lang._("nbt.bos.mob.pholder.effects"), Lang._("nbt.bos.mob.pholder.effects-lore")));
 	}
 	
 	private BookOfSouls _bos;

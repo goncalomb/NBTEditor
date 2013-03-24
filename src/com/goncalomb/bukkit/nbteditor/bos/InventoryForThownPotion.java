@@ -11,12 +11,12 @@ import org.bukkit.inventory.ItemStack;
 import com.goncalomb.bukkit.betterplugin.Lang;
 import com.goncalomb.bukkit.nbteditor.nbt.ThrownPotionNBT;
 
-public class InventoryForThownPotion extends InventoryForSingleItem {
+public final class InventoryForThownPotion extends InventoryForSingleItem {
 	
 	private static HashMap<Integer, ItemStack> _placeholders = new HashMap<Integer, ItemStack>();
 	
 	static {
-		_placeholders.put(4, createPlaceholder(Material.PAPER, Lang._("nbt.bos.potion.pholder")));
+		_placeholders.put(4, createPlaceholder(Material.GLASS_BOTTLE, Lang._("nbt.bos.potion.pholder")));
 	}
 	
 	private BookOfSouls _bos;

@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import com.goncalomb.bukkit.nbteditor.nbt.DroppedItemNBT;
 import com.goncalomb.bukkit.betterplugin.Lang;
 
-public class InventoryForDroppedItems extends InventoryForSingleItem {
+public final class InventoryForDroppedItems extends InventoryForSingleItem {
 	
 	private static HashMap<Integer, ItemStack> _placeholders = new HashMap<Integer, ItemStack>();
 	

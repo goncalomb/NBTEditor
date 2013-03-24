@@ -4,6 +4,13 @@ nbt:
       nothing: "Nada aqui!"
       pholder: "§oEste é um item temporário, não será guardado!"
     corrupted: "§cEsse 'Book of Souls' está corrompido!"
+    riding:
+      title: "Define as entidates aqui..."
+      pholder: "§6Põe 'Books of Souls' aqui, para adicionar entidates."
+      pholder-lore: "§bLembra-te, o livro que estás a segurar é a entidade do topo."
+      only-bos: "§cApenas podes por 'Books of Souls'!"
+      has-riding: "§cEsse livro ja tem entidades montadas!"
+      done: "§aEntidates montadas definidas."
     item:
       title: "Define o item aqui..."
       pholder: "§6O item vai aqui."

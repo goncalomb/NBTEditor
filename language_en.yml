@@ -4,6 +4,13 @@ nbt:
       nothing: "Nothing here!"
       pholder: "§oThis is a placeholder item, it will not be saved!"
     corrupted: "§cThat Book of Souls is corrupted!"
+    riding:
+      title: "Define the entities here..."
+      pholder: "§6Put Books of Souls here, to add entities."
+      pholder-lore: "§bRemember, the book that you're holding is the top entity."
+      only-bos: "§cYou can only put Books of Souls."
+      has-riding: "§cThat book already has riding entities."
+      done: "§aRiding entities set."
     item:
       title: "Define the item here..."
       pholder: "§6The item goes here."
