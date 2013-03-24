@@ -1,6 +1,7 @@
 package com.goncalomb.bukkit.nbteditor.bos;
 
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 
 import net.iharder.Base64;
@@ -75,7 +76,7 @@ public class BookOfSouls {
 				if (location != null) {
 					BookOfSouls bos = new BookOfSouls(event.getItem());
 					if (bos.isValid()) {
-						bos.getEntityNBT().spawn(location);
+						bos.getEntityNBT().spawnStack(location);
 					} else {
 						player.sendMessage(Lang._("nbt.bos.corrupted"));
 					}
@@ -89,18 +90,13 @@ public class BookOfSouls {
 		}, plugin);
 	}
 	
-	public BookOfSouls(EntityNBT entityNBT) {
-		_entityNbt = entityNBT;
-	}
-	
-	public BookOfSouls(ItemStack book) {
-		_book = book;
+	public static EntityNBT toEntityNBT(ItemStack book) {
 		if (isValidBook(book)) {
 			try {
-				String data = BookSerialize.loadData((BookMeta) _book.getItemMeta(), _dataTitle);
+				String data = BookSerialize.loadData((BookMeta) book.getItemMeta(), _dataTitle);
 				if (data == null) {
 					// This is not a BoS v0.2, is BoS v0.1?
-					data = BookSerialize.loadData((BookMeta) _book.getItemMeta(), _dataTitleOLD);
+					data = BookSerialize.loadData((BookMeta) book.getItemMeta(), _dataTitleOLD);
 					if (data != null) {
 						// Yes, it is v0.1, do a dirty conversion.
 						int i = data.indexOf(',');
@@ -110,12 +106,22 @@ public class BookOfSouls {
 					}
 				}
 				if (data != null) {
-					_entityNbt = EntityNBT.unserialize(data);
+					return EntityNBT.unserialize(data);
 				}
 			} catch (Throwable e) {
 				Bukkit.getLogger().log(Level.SEVERE, "Book of Souls corrupted.", e);
 			}
 		}
+		return null;
+	}
+	
+	public BookOfSouls(EntityNBT entityNBT) {
+		_entityNbt = entityNBT;
+	}
+	
+	public BookOfSouls(ItemStack book) {
+		_book = book;
+		_entityNbt = toEntityNBT(book);
 	}
 	
 	public static boolean isValidBook(ItemStack book) {
@@ -152,6 +158,10 @@ public class BookOfSouls {
 			return true;
 		}
 		return false;
+	}
+	
+	public void openRidingInventory(Player player) {
+		(new InventoryForRiding(this, player)).openInventory(player, _plugin);
 	}
 	
 	public boolean setMobDropChance(float head, float chest, float legs, float feet, float hand) {
@@ -248,6 +258,8 @@ public class BookOfSouls {
 		}
 		
 		BookSerialize.saveToBook(meta, _entityNbt.serialize(), _dataTitle);
+		
+		meta.addPage("RandomId: " + Integer.toHexString((new Random()).nextInt()));
 		
 		_book.setItemMeta(meta);
 	}

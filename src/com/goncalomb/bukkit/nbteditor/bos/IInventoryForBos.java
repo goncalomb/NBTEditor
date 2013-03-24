@@ -17,6 +17,7 @@ abstract class IInventoryForBos extends CustomInventory {
 	protected final static ItemStack _itemFiller = UtilsMc.newItem(Material.TRIPWIRE, Lang._("nbt.bos.inv.nothing"));
 	
 	private HashMap<Integer, ItemStack> _placeholders;
+	private boolean _allowBos;
 	
 	protected final static ItemStack createPlaceholder(Material material, String name) {
 		return UtilsMc.newItem(material, name, Lang._("nbt.bos.inv.pholder"));
@@ -27,8 +28,13 @@ abstract class IInventoryForBos extends CustomInventory {
 	}
 	
 	public IInventoryForBos(Player owner, int size, String title, HashMap<Integer, ItemStack> placeholders) {
+		this(owner, size, title, placeholders, false);
+	}
+	
+	public IInventoryForBos(Player owner, int size, String title, HashMap<Integer, ItemStack> placeholders, boolean allowBos) {
 		super(owner, size, title);
 		_placeholders = placeholders;
+		_allowBos = allowBos;
 		for (Entry<Integer, ItemStack> entry : _placeholders.entrySet()) {
 			_inventory.setItem(entry.getKey(), entry.getValue());
 		}
@@ -56,7 +62,7 @@ abstract class IInventoryForBos extends CustomInventory {
 		if (slot > 0 && slot < getInventory().getSize() && isPlaceholder(slot)) {
 			event.setCurrentItem(new ItemStack(Material.AIR));
 		}
-		if (BookOfSouls.isValidBook(event.getCurrentItem())) {
+		if (!_allowBos && BookOfSouls.isValidBook(event.getCurrentItem())) {
 			event.setCancelled(true);
 		}
 	}

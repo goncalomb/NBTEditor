@@ -2,6 +2,7 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import net.iharder.Base64;
 
@@ -204,7 +205,7 @@ public class EntityNBT {
 	}
 	
 	private EntityNBT(EntityType entityType, NBTTagCompoundWrapper data) {
-		initialize(entityType, new NBTTagCompoundWrapper());
+		initialize(entityType, data);
 	}
 	
 	private void initialize(EntityType entityType, NBTTagCompoundWrapper data) {
@@ -239,6 +240,23 @@ public class EntityNBT {
 		return entity;
 	}
 	
+	public Entity spawnStack(Location location) {
+		LinkedList<Entity> entities = new LinkedList<Entity>();
+		entities.addFirst(this.spawn(location));
+		EntityNBT entityNBT = this;
+		while ((entityNBT = entityNBT.getRiding()) != null) {
+			entities.addFirst(entityNBT.spawn(location));
+		}
+		Entity last = null;
+		for (Entity entity : entities) {
+			if (last != null) {
+				last.setPassenger(entity);
+			}
+			last = entity;
+		}
+		return last;
+	}
+	
 	public NBTVariableContainer[] getAllVariables() {
 		return EntityNBTVariableManager.getAllVariables(this);
 	}
@@ -263,8 +281,17 @@ public class EntityNBT {
 		return null;
 	}
 	
-	public void setRiding(EntityNBT riding) {
-		_data.setCompound("Riding", riding._data.clone());
+	public void setRiding(EntityNBT... riding) {
+		if (riding == null || riding.length == 0) {
+			_data.remove("Riding");
+			return;
+		}
+		NBTTagCompoundWrapper rider = _data;
+		for (EntityNBT ride : riding) {
+			NBTTagCompoundWrapper rideData = ride._data.clone();
+			rider.setCompound("Riding", rideData);
+			rider = rideData;
+		}
 	}
 	
 	public static EntityNBT unserialize(String serializedData) {
@@ -277,6 +304,6 @@ public class EntityNBT {
 	}
 	
 	public EntityNBT clone() {
-		return new EntityNBT(_entityType, _data.clone());
+		return fromEntityType(_entityType, _data.clone());
 	}
 }

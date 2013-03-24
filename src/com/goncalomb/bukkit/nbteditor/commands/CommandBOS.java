@@ -104,6 +104,14 @@ public class CommandBOS extends BetterCommand {
 		return true;
 	}
 	
+	@SubCommand(args = "riding", type = BetterSubCommandType.PLAYER_ONLY)
+	public boolean ridingCommand(CommandSender sender, String[] args) throws BetterCommandException {
+		Player player = (Player) sender;
+		BookOfSouls bos = getBos(player);
+		bos.openRidingInventory(player);
+		return true;
+	}
+	
 	@SubCommand(args = "items", type = BetterSubCommandType.PLAYER_ONLY)
 	public boolean itemsCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		Player player = (Player) sender;
