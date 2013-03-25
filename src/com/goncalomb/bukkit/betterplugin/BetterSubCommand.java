@@ -60,7 +60,7 @@ class BetterSubCommand {
 					}
 				}
 			} else {
-				sender.sendMessage(Lang._("general.commands.invalid-sender"));
+				sender.sendMessage(_type.getInvalidSenderMessage());
 				return;
 			}
 		}
@@ -69,8 +69,19 @@ class BetterSubCommand {
 		if (_method != null) {
 			sender.sendMessage(argsJoined + _usage);
 		}
-		for (String name : getSubCommandNames(sender, "")) {
-			sender.sendMessage(argsJoined + name);
+		printAllSubCommands(sender, this, argsJoined);
+	}
+	
+	private static void printAllSubCommands(CommandSender sender, BetterSubCommand command, String prefix) {
+		for (Entry<String, BetterSubCommand> subCommandEntry : command._subCommands.entrySet()) {
+			BetterSubCommand subCommand = subCommandEntry.getValue();
+			if (subCommand._type.isValidSender(sender)) {
+				String newPrefix = prefix + subCommandEntry.getKey() + " ";
+				if (subCommand._method != null) {
+					sender.sendMessage(newPrefix + subCommand._usage);
+				}
+				printAllSubCommands(sender, subCommand, newPrefix);
+			}
 		}
 	}
 	
