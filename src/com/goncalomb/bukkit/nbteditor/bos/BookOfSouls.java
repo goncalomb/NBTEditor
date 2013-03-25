@@ -13,6 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
@@ -26,6 +27,7 @@ import com.goncalomb.bukkit.UtilsMc;
 import com.goncalomb.bukkit.betterplugin.Lang;
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.CustomItemManager;
+import com.goncalomb.bukkit.customitems.api.DispenserDetails;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 import com.goncalomb.bukkit.nbteditor.nbt.DroppedItemNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
@@ -86,6 +88,20 @@ public class BookOfSouls {
 				}
 				return;
 			};
+			
+			@Override
+			public void onDispense(BlockDispenseEvent event, DispenserDetails details) {
+				BookOfSouls bos = new BookOfSouls(event.getItem());
+				if (bos.isValid()) {
+					bos.getEntityNBT().spawnStack(details.getLocation());
+				}
+				event.setCancelled(true);
+			}
+			
+			@Override
+			public ItemStack getItem() {
+				return null;
+			}
 			
 		}, plugin);
 	}
