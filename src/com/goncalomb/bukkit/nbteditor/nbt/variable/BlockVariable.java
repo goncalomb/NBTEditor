@@ -48,7 +48,7 @@ public final class BlockVariable extends NBTGenericVariable2X {
 				data.setShort(_nbtKey, (short) (material.getId() & 0xFF));
 				data.setShort(_nbtKey2, (short) (blockData & 0xFF));
 			} else {
-				data.setByte(_nbtKey, (byte) (material.getId() & 0xFF));
+				data.setInt(_nbtKey, material.getId());
 				data.setByte(_nbtKey2, (byte) (blockData & 0xFF));
 			}
 			return true;
@@ -63,7 +63,7 @@ public final class BlockVariable extends NBTGenericVariable2X {
 				materialId = data.getShort(_nbtKey) & 0xFF;
 				materialData = data.getShort(_nbtKey2) & 0xFF;
 			} else {
-				materialId = data.getByte(_nbtKey) & 0xFF;
+				materialId = data.getInt(_nbtKey);
 				materialData = data.getByte(_nbtKey2) & 0xFF;
 			}
 			return Material.getMaterial(materialId).name() + ":" + materialData;

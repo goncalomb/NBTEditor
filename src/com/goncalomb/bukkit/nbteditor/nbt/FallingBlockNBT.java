@@ -16,7 +16,7 @@ public class FallingBlockNBT extends EntityNBT {
 	
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("FallingBlock");
-		variables.add("block", new BlockVariable("Tile", "Data"));
+		variables.add("block", new BlockVariable("TileID", "Data"));
 		variables.add("time", new ByteVariable("Time", (byte)0));
 		variables.add("drop-item", new BooleanVariable("DropItem"));
 		variables.add("hurt-entities", new BooleanVariable("HurtEntities"));
@@ -27,7 +27,7 @@ public class FallingBlockNBT extends EntityNBT {
 
 	@Override
 	public Entity spawn(Location location) {
-		int blockId = (_data.hasKey("Tile") ? _data.getByte("Tile") & 0xFF : Material.SAND.getId());
+		int blockId = (_data.hasKey("TileID") ? _data.getInt("TileID") : Material.SAND.getId());
 		byte blockData = (_data.hasKey("Data") ? _data.getByte("Data") : 0);
 		Entity entity = location.getWorld().spawnFallingBlock(location, blockId, blockData);
 		NBTUtils.setEntityNBTTagCompound(entity, _data);
