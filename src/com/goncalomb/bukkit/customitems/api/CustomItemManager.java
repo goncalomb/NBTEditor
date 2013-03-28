@@ -50,7 +50,7 @@ public final class CustomItemManager {
 			return null;
 			//return (_instance != null && _isBondToCustomItems ? _instance : null); // API is private, for now.
 		} else if (_instance == null) {
-			_isBondToCustomItems = plugin.getName().equals("CustomItems");
+			_isBondToCustomItems = plugin.getName().equals("CustomItemsAPI");
 			if (_isBondToCustomItems || _allowedPlugins.contains(plugin.getName())) {
 				_instance = new CustomItemManager(plugin);
 			}

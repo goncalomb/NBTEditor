@@ -17,7 +17,7 @@ import com.goncalomb.bukkit.customitems.items.SunStick;
 import com.goncalomb.bukkit.customitems.items.TorchBow;
 import com.goncalomb.bukkit.customitems.items.WitherBow;
 
-public final class CustomItems extends BetterPlugin {
+public final class CustomItemsAPI extends BetterPlugin {
 	
 	@Override
 	public void onBetterEnable() {
@@ -38,7 +38,7 @@ public final class CustomItems extends BetterPlugin {
 		
 		registerCommand(new CommandCustomItem(manager));
 		
-		getLogger().info("CustomItems has been enabled.");
+		getLogger().info("CustomItemsAPI has been enabled.");
 	}
 	
 }
