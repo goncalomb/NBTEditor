@@ -142,6 +142,7 @@ nbt:
     format: "§cDeves estar a segurar {0}."
     item: "um Item"
     potion: "uma Poção"
+    leatherarmor: "Armadura de Couro"
     book: "um Livro e Pena ou um Livro Escrito"
     book-quill: "um Livro e Pena"
     book-written: "um Livro Escrito"

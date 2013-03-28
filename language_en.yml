@@ -142,6 +142,7 @@ nbt:
     format: "§cYou must be holding {0}."
     item: "an Item"
     potion: "a Potion"
+    leatherarmor: "Leather Armor"
     book: "a Book an Quill or a Written Book"
     book-quill: "a Book an Quill"
     book-written: "a Written Book"

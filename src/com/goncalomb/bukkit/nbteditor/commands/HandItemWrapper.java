@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 
 import com.goncalomb.bukkit.betterplugin.BetterCommandException;
@@ -37,6 +38,14 @@ public abstract class HandItemWrapper<T extends ItemMeta> {
 			if (meta == null) {
 				throw new BetterCommandException(Lang._format("nbt.meta-error.format", Lang._("nbt.meta-error.book-" + (bookType == BookType.BOOK_AND_QUILL ? "quill" : "written"))));
 			}
+		}
+		
+	}
+	
+	public static final class LeatherArmor extends HandItemWrapper<LeatherArmorMeta> {
+		
+		public LeatherArmor(Player player) throws BetterCommandException {
+			super(LeatherArmorMeta.class, player, true);
 		}
 		
 	}
