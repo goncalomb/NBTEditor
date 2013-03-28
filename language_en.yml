@@ -2,10 +2,10 @@ citems:
   cmds:
     citem:
       description: "Used to get custom items."
-      no-item: "§cNo such item! Use '/citem list' to get the list of all items."
-      ok: "§aEnjoy your custom item."
-      invalid: "§eThis item cannot be obtained using the citem command. The owner plugin may provide a way to obtain it!"
+      no-item: "Â§cNo such item! Use '/citem list' to get the list of all items."
+      ok: "Â§aEnjoy your custom item."
+      invalid: "Â§eThis item cannot be obtained using the citem command. The owner plugin may provide a way to obtain it!"
   
-  crown-found: "§6{0} §fhas been crown §6King§f!"
-  crown-lost: "§6{0} §fhas lost his crown!"
-  crown-despawn: "The §6King's Crown§f has been lost forever!"
+  crown-found: "Â§6{0} Â§fhas been crown Â§6KingÂ§f!"
+  crown-lost: "Â§6{0} Â§fhas lost his crown!"
+  crown-despawn: "The Â§6King's CrownÂ§f has been lost forever!"
