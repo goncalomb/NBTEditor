@@ -95,6 +95,7 @@ public final class Lang {
 	private static void loadLanguage(Plugin plugin) {
 		if (_data.size() == 0) {
 			String fileName = "general_" + _lang + ".yml";
+			_logger.info("Loading general language file (" + _lang + ").");
 			FileConfiguration lang = loadLanguage(plugin, Lang.class.getPackage().getName().replace('.', '/') + "/" + fileName, fileName);
 			if (lang == null) {
 				_logger.warning("Missing general language file (" + _lang + ")!");
@@ -102,6 +103,7 @@ public final class Lang {
 			_data.put(null, lang);
 		}
 		
+		_logger.info("Loading language file (" + _lang + ") for " + plugin.getName() + ".");
 		FileConfiguration lang = loadLanguage(plugin, "language_" + _lang + ".yml", plugin.getName() + "/" + _lang + ".yml");
 		if (lang == null) {
 			_logger.warning("Missing language file (" + _lang + ") for " + plugin.getName() + "!");

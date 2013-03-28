@@ -1,19 +1,19 @@
 general:
   commands:
-    no-perm: "§cYou don't have permission to do this command!"
+    no-perm: "Â§cYou don't have permission to do this command!"
     invalid-sender:
-      PLAYER_ONLY: "§cThis command can only be used by players."
-      NO_PLAYER: "§cThis command cannot be used by players."
-      CONSOLE_ONLY: "§cThis command can only be used on the console."
-      BLOCK_ONLY: "§cThis command can only be used on a command block."
-  inventory-full: "§cInventory full!"
-  no-perm: "§cYou don't have permission to do that!"
-  no-sight: "§cNo block in sight!"
-  invalid-duration: "§cInvalid duration. Use value in ticks or 0000d00h00m00s."
+      PLAYER_ONLY: "Â§cThis command can only be used by players."
+      NO_PLAYER: "Â§cThis command cannot be used by players."
+      CONSOLE_ONLY: "Â§cThis command can only be used on the console."
+      BLOCK_ONLY: "Â§cThis command can only be used on a command block."
+  inventory-full: "Â§cInventory full!"
+  no-perm: "Â§cYou don't have permission to do that!"
+  no-sight: "Â§cNo block in sight!"
+  invalid-duration: "Â§cInvalid duration. Use value in ticks or 0000d00h00m00s."
 
 # The NBTEditor contains the CustomItems API (the NBTEditor does not depend on the CustomItems being installed),
 # these strings are used by the shared API, and are used by both plugins.
 citems:
-  disabled: "§cThis item is disabled!"
-  invalid-world: "§cThis item is disabled on this world!"
-  no-perm: "§cYou don't have permission to use this item!"
+  disabled: "Â§cThis item is disabled!"
+  invalid-world: "Â§cThis item is disabled on this world!"
+  no-perm: "Â§cYou don't have permission to use this item!"
