@@ -3,7 +3,7 @@ name: NBTEditor
 main: com.goncalomb.bukkit.nbteditor.NBTEditor
 version: 0.0.3
 author: goncalomb
-softdepend: [CustomItems]
+softdepend: [CustomItemsAPI]
 
 permissions:
   nbteditor.*:
