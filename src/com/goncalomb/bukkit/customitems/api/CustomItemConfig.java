@@ -37,7 +37,6 @@ final class CustomItemConfig {
 					"Note regarding allowed-worlds/blocked-worlds:\n" +
 					"  allowed-worlds, when not empty, acts like a whitelist and only\n" +
 					"  on worlds from this list the item will be enabled!\n");
-			saveConfig();
 		} else {
 			_config = YamlConfiguration.loadConfiguration(_configFile);
 		}
@@ -53,14 +52,18 @@ final class CustomItemConfig {
 	public void configureItem(CustomItem item) {
 		if (!_itemsSection.isSet(item.getSlug())) {
 			_itemsSection.createSection(item.getSlug(), item._defaultConfig);
-			saveConfig();
 		} else {
 			_defaultItemSection.createSection(item.getSlug(), item._defaultConfig);
 		}
 		item.applyConfig(_itemsSection.getConfigurationSection(item.getSlug()));
 	}
 	
-	private void saveConfig() {
+	public void removeItem(CustomItem item) {
+		_itemsSection.set(item.getSlug(), null);
+		_defaultItemSection.set(item.getSlug(), null);
+	}
+	
+	public void saveToFile() {
 		try {
 			_config.save(_configFile);
 		} catch (IOException e) {

@@ -1,5 +1,6 @@
 package com.goncalomb.bukkit.customitems.api;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -22,8 +23,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.Plugin;
 
-import com.goncalomb.bukkit.Utils;
-
 public abstract class CustomItem {
 	
 	Plugin _owner;
@@ -43,27 +42,22 @@ public abstract class CustomItem {
 		_name = name;
 		_material = material;
 		_item = _material.toItemStack(1);
-		setItemName(_item, _name);
 		if (_material.getItemType().getMaxDurability() > 0) {
 			_material.setData((byte) 0);
 		}
 		setDefaultConfig("enabled", true);
-		setDefaultConfig("allowed-worlds", "");
-		setDefaultConfig("blocked-worlds", "");
+		setDefaultConfig("name", _name);
+		setDefaultConfig("lore", new ArrayList<String>());
+		setDefaultConfig("allowed-worlds", new ArrayList<String>());
+		setDefaultConfig("blocked-worlds", new ArrayList<String>());
 	}
 	
 	protected final void setLore(List<String> lore) {
-		if (_owner == null) {
-			ItemMeta meta = _item.getItemMeta();
-			meta.setLore(lore);
-			_item.setItemMeta(meta);
-		}
+		setDefaultConfig("lore", lore);
 	}
 	
 	protected final void setLore(String... lore) {
-		if (_owner == null) {
-			setLore(Arrays.asList(lore));
-		}
+		setDefaultConfig("lore", Arrays.asList(lore));
 	}
 	
 	protected final void addEnchantment(Enchantment enchantment, int level) {
@@ -102,13 +96,24 @@ public abstract class CustomItem {
 	
 	protected void applyConfig(ConfigurationSection section) {
 		_enabled = section.getBoolean("enabled");
-		String[] allowedWorlds = Utils.split(section.getString("allowed-worlds"), Utils.SplitType.COMMAS);
-		if (allowedWorlds.length == 0) {
-			String[] blockedWorlds = Utils.split(section.getString("blocked-worlds"), Utils.SplitType.COMMAS);
-			_blockedWorlds = (blockedWorlds.length > 0 ? new HashSet<String>(Arrays.asList(blockedWorlds)) : null);
+		_name = section.getString("name");
+		
+		ItemMeta meta = _item.getItemMeta();
+		if (meta instanceof BookMeta) {
+			((BookMeta) meta).setTitle(_name);
+		} else {
+			meta.setDisplayName(_name);
+		}
+		meta.setLore(section.getStringList("lore"));
+		_item.setItemMeta(meta);
+		
+		List<String> allowedWorlds = section.getStringList("allowed-worlds");
+		if (allowedWorlds == null || allowedWorlds.size() == 0) {
+			List<String> blockedWorlds = section.getStringList("blocked-worlds");
+			_blockedWorlds = (blockedWorlds.size() > 0 ? new HashSet<String>(blockedWorlds) : null);
 			_allowedWorlds = null;
 		} else {
-			_allowedWorlds = new HashSet<String>(Arrays.asList(allowedWorlds));
+			_allowedWorlds = new HashSet<String>(allowedWorlds);
 		}
 	};
 	
@@ -141,17 +146,6 @@ public abstract class CustomItem {
 		} else {
 			return _allowedWorlds.contains(wName);
 		}
-	}
-	
-	static ItemStack setItemName(ItemStack item, String name) {
-		ItemMeta meta = item.getItemMeta();
-		if (meta instanceof BookMeta) {
-			((BookMeta) meta).setTitle(name);
-		} else {
-			meta.setDisplayName(name);
-		}
-		item.setItemMeta(meta);
-		return item;
 	}
 	
 	static String getItemName(ItemStack item) {

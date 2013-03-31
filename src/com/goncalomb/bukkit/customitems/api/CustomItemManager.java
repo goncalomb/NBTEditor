@@ -67,7 +67,7 @@ public final class CustomItemManager {
 				
 				@Override
 				public void log(LogRecord logRecord) {
-					logRecord.setMessage("[CustomItems] " + logRecord.getMessage());
+					logRecord.setMessage("[CustomItemsAPI] " + logRecord.getMessage());
 					super.log(logRecord);
 				}
 				
@@ -187,6 +187,12 @@ public final class CustomItemManager {
 			return false;
 		}
 		
+		CustomItemConfig config = _configsByPlugin.get(plugin);
+		if (config == null) {
+			config = new CustomItemConfig(this, plugin);
+		}
+		config.configureItem(customItem);
+		
 		boolean yep = false;
 		yep |= _interactionEventsListener.put(customItem);
 		yep |= _itemEventsListener.put(customItem);
@@ -197,15 +203,12 @@ public final class CustomItemManager {
 		}
 		if (!yep) {
 			_logger.warning(customItem.getSlug() + " does not override any event methods!");
+			config.removeItem(customItem);
 			return false;
 		}
 		
-		CustomItemConfig config = _configsByPlugin.get(plugin);
-		if (config == null) {
-			config = new CustomItemConfig(this, plugin);
-			_configsByPlugin.put(plugin, config);
-		}
-		config.configureItem(customItem);
+		config.saveToFile();
+		_configsByPlugin.put(plugin, config);
 		
 		customItem._owner = plugin;
 		
