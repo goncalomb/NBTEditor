@@ -47,6 +47,8 @@ final class ListenerForInteractionEvents extends CustomItemListener<CustomItem> 
 					} else if (action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK) {
 						customItem.onLeftClick(event, new PlayerDetails(event));
 					}
+				} else {
+					event.setCancelled(true);
 				}
 			}
 		}
