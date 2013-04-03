@@ -183,7 +183,7 @@ public final class CustomItemManager {
 	}
 	
 	File getDataFolder() {
-		return new File(BetterPlugin.getGmbConfigFolder(), "CustomItems");
+		return new File(BetterPlugin.getGmbConfigFolder(), "CustomItemsAPI");
 	}
 	
 	Logger getLogger() {
