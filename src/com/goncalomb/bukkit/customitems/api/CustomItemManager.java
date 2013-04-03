@@ -17,6 +17,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
@@ -31,6 +32,8 @@ public final class CustomItemManager {
 	Plugin _plugin;
 	private Listener _mainListener;
 	private Logger _logger;
+	private Permission _usePermission;
+	private Permission _worldOverridePermission;
 	
 	private CustomItemContainer<CustomItem> _generalContainer = new CustomItemContainer<CustomItem>();
 	
@@ -74,6 +77,12 @@ public final class CustomItemManager {
 			};
 			_logger.setLevel(Level.ALL);
 			_logger.setParent(Bukkit.getLogger());
+			_usePermission = new Permission("customitemsapi.use.*");
+			_usePermission.addParent("customitemsapi.*", true);
+			Bukkit.getPluginManager().addPermission(_usePermission);
+			_worldOverridePermission = new Permission("customitemsapi.world-override.*");
+			_worldOverridePermission.addParent("customitemsapi.*", true);
+			Bukkit.getPluginManager().addPermission(_worldOverridePermission);
 		} else {
 			_logger = plugin.getLogger();
 		}
@@ -211,6 +220,9 @@ public final class CustomItemManager {
 		_configsByPlugin.put(plugin, config);
 		
 		customItem._owner = plugin;
+		
+		(new Permission("customitemsapi.use." + customItem.getSlug())).addParent("customitemsapi.use.*", true);
+		(new Permission("customitemsapi.world-override." + customItem.getSlug())).addParent("customitemsapi.world-override.*", true);
 		
 		_generalContainer.put(customItem);
 		_customItemsBySlug.put(customItem.getSlug(), customItem);

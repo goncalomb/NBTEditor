@@ -17,21 +17,17 @@ abstract class CustomItemListener<T extends CustomItem> extends CustomItemContai
 	}
 	
 	protected final boolean verifyCustomItem(CustomItem customItem, World world) {
-		return verifyCustomItem(customItem, world, null, true);
+		return (customItem != null && customItem.isEnabled() && customItem.isValidWorld(world));
 	}
 	
 	protected final boolean verifyCustomItem(CustomItem customItem, Player player, boolean silent) {
-		return verifyCustomItem(customItem, player.getWorld(), player, silent);
-	}
-	
-	protected final boolean verifyCustomItem(CustomItem customItem, World world, Player player, boolean silent) {
 		if (customItem != null) {
 			if (!customItem.isEnabled()) {
-				if (!silent && player != null) player.sendMessage(Lang._("citems.disabled"));
-			} else if (player != null && !player.hasPermission("customitemx.item." + customItem.getSlug() + ".use")) {
+				if (!silent) player.sendMessage(Lang._("citems.disabled"));
+			} else if (player != null && !player.hasPermission("customitemsapi.use." + customItem.getSlug())) {
 				if (!silent) player.sendMessage(Lang._("citems.no-perm"));
-			} else if (!customItem.isValidWorld(world)) {
-				if (!silent && player != null) player.sendMessage(Lang._("citems.invalid-world"));
+			} else if (!customItem.isValidWorld(player.getWorld()) && !player.hasPermission("customitemsapi.world-override." + customItem.getSlug())) {
+				if (!silent) player.sendMessage(Lang._("citems.invalid-world"));
 			} else {
 				return true;
 			}
