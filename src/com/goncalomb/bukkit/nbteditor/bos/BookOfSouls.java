@@ -40,10 +40,10 @@ import com.goncalomb.bukkit.reflect.NBTTagCompoundWrapper;
 
 public class BookOfSouls {
 	
-	private static final String _title = ChatColor.AQUA + "Book of Souls";
 	private static final String _author = ChatColor.GOLD + "The Creator";
 	private static final String _dataTitle = "" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Soul Data v0.2" + ChatColor.BLACK + "\n";
 	private static final String _dataTitleOLD = "" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Soul Data v0.1" + ChatColor.BLACK + "\n";
+	private static CustomItem _bosCustomItem;
 	
 	private static Plugin _plugin = null;
 	private static final String[] _mobEquipSlotName = new String[] { "Head Equipment", "Chest Equipment", "Legs Equipment", "Feet Equipment", "Hand Item" };
@@ -55,7 +55,7 @@ public class BookOfSouls {
 		if (_plugin != null) return;
 		_plugin = plugin;
 		
-		itemManager.registerNew(new CustomItem("bos", _title, new MaterialData(Material.WRITTEN_BOOK)) {
+		_bosCustomItem = new CustomItem("bos", ChatColor.AQUA + "Book of Souls", new MaterialData(Material.WRITTEN_BOOK)) {
 			
 			@Override
 			public void onLeftClick(PlayerInteractEvent event, PlayerDetails details) {
@@ -103,7 +103,8 @@ public class BookOfSouls {
 				return null;
 			}
 			
-		}, plugin);
+		};
+		itemManager.registerNew(_bosCustomItem, plugin);
 	}
 	
 	public static EntityNBT toEntityNBT(ItemStack book) {
@@ -143,7 +144,7 @@ public class BookOfSouls {
 	public static boolean isValidBook(ItemStack book) {
 		if (book != null && book.getType() == Material.WRITTEN_BOOK) {
 			ItemMeta meta = book.getItemMeta();
-			if (meta != null && ((BookMeta) meta).getTitle() != null && ((BookMeta) meta).getTitle().equals(_title)) {
+			if (meta != null && ((BookMeta) meta).getTitle() != null && ((BookMeta) meta).getTitle().equals(_bosCustomItem.getName())) {
 				return true;
 			}
 		}
@@ -203,18 +204,24 @@ public class BookOfSouls {
 	public ItemStack getBook() {
 		if (_book == null) {
 			_book = new ItemStack(Material.WRITTEN_BOOK);
-			saveBook();
+			saveBook(true);
 		}
 		return _book;
 	}
 	
 	public void saveBook() {
+		saveBook(false);
+	}
+	
+	public void saveBook(boolean resetName) {
 		BookMeta meta = (BookMeta)_book.getItemMeta();
 		String entityName = EntityTypeMap.getName(_entityNbt.getEntityType());
 		
-		meta.setDisplayName(_title + ChatColor.RESET + " (" + ChatColor.RED + entityName + ChatColor.RESET + ")");
-		meta.setTitle(_title);
-		meta.setAuthor(_author);
+		if (resetName) {
+			meta.setDisplayName(_bosCustomItem.getName() + ChatColor.RESET + " (" + ChatColor.RED + entityName + ChatColor.RESET + ")");
+			meta.setTitle(_bosCustomItem.getName());
+			meta.setAuthor(_author);
+		}
 		
 		meta.setPages((List<String>)null);
 		
