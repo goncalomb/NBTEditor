@@ -3,12 +3,12 @@ nbt:
     inv:
       nothing: "Nada aqui!"
       pholder: "§oEste é um item temporário, não será guardado!"
-    corrupted: "§cEsse 'Book of Souls' está corrompido!"
+    corrupted: "§cEsse Livro das Almas está corrompido!"
     riding:
       title: "Define as entidates aqui..."
-      pholder: "§6Põe 'Books of Souls' aqui, para adicionar entidates."
+      pholder: "§6Põe Livros das Almas aqui, para adicionar entidates."
       pholder-lore: "§bLembra-te, o livro que estás a segurar é a entidade do topo."
-      only-bos: "§cApenas podes por 'Books of Souls'!"
+      only-bos: "§cApenas podes por Livros das Almas!"
       has-riding: "§cEsse livro ja tem entidades montadas!"
       done: "§aEntidates montadas definidas."
     item:
@@ -17,10 +17,10 @@ nbt:
       done: "§aItem definido."
     potion:
       title: "Define a poção aqui..."
-      pholder: "§6A poção vai aqui."
+      pholder: "§6Poção aqui."
       done: "§aPoção definida."
     mob:
-      title: "Inventário da entidade"
+      title: "Inventário"
       pholder:
         head: "§6Equipamento da cabeça"
         chest: "§6Equipamento do torso"
@@ -43,13 +43,13 @@ nbt:
   
   cmds:
     bos:
-      description: "Usado para criar e editar 'Books of Souls'."
-      holding: "§cDeves estar a segurar um 'Book of Souls'!"
-      give: "§aDesfruta o teu 'Book of Souls'."
+      description: "Usado para criar e editar Livros das Almas."
+      holding: "§cDeves estar a segurar um Livro das Almas!"
+      give: "§aDesfruta o teu Livro das Almas."
       no-variable: "§cEssa entidade não tem a variável {0}!"
       no-inventory: "§cEssa entidade deve um 'Mob', 'Item' ou 'ThrownPotion'!"
-      no-villager: "§cEssa entidade deve ser um Aldeão!"
-      no-mob: "§cEssa entidade deve um Monstro!"
+      no-villager: "§cEssa entidade deve ser um 'Villager'!"
+      no-mob: "§cEssa entidade deve um 'Mob'!"
       villager-info: "§eCada coluna representa uma offerta."
       drop-chance:
         cleared: "§a'Drop chance' reposta."

@@ -2,11 +2,9 @@ package com.goncalomb.bukkit.nbteditor.bos;
 
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Level;
 
 import net.iharder.Base64;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -43,17 +41,21 @@ public class BookOfSouls {
 	private static final String _author = ChatColor.GOLD + "The Creator";
 	private static final String _dataTitle = "" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Soul Data v0.2" + ChatColor.BLACK + "\n";
 	private static final String _dataTitleOLD = "" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Soul Data v0.1" + ChatColor.BLACK + "\n";
+	private static CustomItem _bosEmptyCustomItem;
 	private static CustomItem _bosCustomItem;
 	
 	private static Plugin _plugin = null;
 	private static final String[] _mobEquipSlotName = new String[] { "Head Equipment", "Chest Equipment", "Legs Equipment", "Feet Equipment", "Hand Item" };
 
-	private EntityNBT _entityNbt;
 	private ItemStack _book;
+	private EntityNBT _entityNbt;
 	
 	public static void initialize(Plugin plugin, CustomItemManager itemManager) {
 		if (_plugin != null) return;
 		_plugin = plugin;
+		
+		_bosEmptyCustomItem = new BookOfSoulsEmptyCI();
+		itemManager.registerNew(_bosEmptyCustomItem, plugin);
 		
 		_bosCustomItem = new CustomItem("bos", ChatColor.AQUA + "Book of Souls", new MaterialData(Material.WRITTEN_BOOK)) {
 			
@@ -62,6 +64,12 @@ public class BookOfSouls {
 				Player player = event.getPlayer();
 				if (!player.hasPermission("nbteditor.bookofsouls")) {
 					player.sendMessage(Lang._("general.no-perm"));
+					return;
+				}
+				
+				BookOfSouls bos = BookOfSouls.getFromBook(event.getItem());
+				if (bos == null) {
+					player.sendMessage(Lang._("nbt.bos.corrupted"));
 					return;
 				}
 				
@@ -76,12 +84,7 @@ public class BookOfSouls {
 				}
 				
 				if (location != null) {
-					BookOfSouls bos = new BookOfSouls(event.getItem());
-					if (bos.isValid()) {
-						bos.getEntityNBT().spawnStack(location);
-					} else {
-						player.sendMessage(Lang._("nbt.bos.corrupted"));
-					}
+					bos.getEntityNBT().spawnStack(location);
 					event.setCancelled(true);
 				} else {
 					player.sendMessage(Lang._("general.no-sight"));
@@ -90,13 +93,13 @@ public class BookOfSouls {
 			};
 			
 			@Override
-			public void onDispense(BlockDispenseEvent event, DispenserDetails details) {
-				BookOfSouls bos = new BookOfSouls(event.getItem());
-				if (bos.isValid()) {
+            public void onDispense(BlockDispenseEvent event, DispenserDetails details) {
+				BookOfSouls bos = BookOfSouls.getFromBook(event.getItem());
+				if (bos != null) {
 					bos.getEntityNBT().spawnStack(details.getLocation());
 				}
 				event.setCancelled(true);
-			}
+            }
 			
 			@Override
 			public ItemStack getItem() {
@@ -107,7 +110,7 @@ public class BookOfSouls {
 		itemManager.registerNew(_bosCustomItem, plugin);
 	}
 	
-	public static EntityNBT toEntityNBT(ItemStack book) {
+	static EntityNBT bookToEntityNBT(ItemStack book) {
 		if (isValidBook(book)) {
 			try {
 				String data = BookSerialize.loadData((BookMeta) book.getItemMeta(), _dataTitle);
@@ -126,33 +129,42 @@ public class BookOfSouls {
 					return EntityNBT.unserialize(data);
 				}
 			} catch (Throwable e) {
-				Bukkit.getLogger().log(Level.SEVERE, "Book of Souls corrupted.", e);
+				return null;
 			}
 		}
 		return null;
 	}
 	
-	public BookOfSouls(EntityNBT entityNBT) {
-		_entityNbt = entityNBT;
+	public static BookOfSouls getFromBook(ItemStack book) {
+		EntityNBT entityNbt = bookToEntityNBT(book);
+		if (entityNbt != null) {
+			return new BookOfSouls(book, entityNbt);
+		}
+		return null;
 	}
 	
-	public BookOfSouls(ItemStack book) {
+	public static ItemStack getEmpty() {
+		return _bosEmptyCustomItem.getItem();
+	}
+	
+	public BookOfSouls(EntityNBT entityNBT) {
+		this(null, entityNBT);
+	}
+	
+	private BookOfSouls(ItemStack book, EntityNBT entityNBT) {
 		_book = book;
-		_entityNbt = toEntityNBT(book);
+		_entityNbt = entityNBT;
 	}
 	
 	public static boolean isValidBook(ItemStack book) {
 		if (book != null && book.getType() == Material.WRITTEN_BOOK) {
 			ItemMeta meta = book.getItemMeta();
-			if (meta != null && ((BookMeta) meta).getTitle() != null && ((BookMeta) meta).getTitle().equals(_bosCustomItem.getName())) {
+			String title = ((BookMeta) meta).getTitle();
+			if (meta != null && title != null && title.equals(_bosCustomItem.getName())) {
 				return true;
 			}
 		}
 		return false;
-	}
-	
-	public boolean isValid() {
-		return (_entityNbt != null);
 	}
 	
 	public boolean openInventory(Player player) {
@@ -218,14 +230,13 @@ public class BookOfSouls {
 		String entityName = EntityTypeMap.getName(_entityNbt.getEntityType());
 		
 		if (resetName) {
-			meta.setDisplayName(_bosCustomItem.getName() + ChatColor.RESET + " (" + ChatColor.RED + entityName + ChatColor.RESET + ")");
+			meta.setDisplayName(_bosCustomItem.getName() + ChatColor.RESET + " - " + ChatColor.RED + entityName);
 			meta.setTitle(_bosCustomItem.getName());
 			meta.setAuthor(_author);
 		}
 		
 		meta.setPages((List<String>)null);
-		
-		
+
 		StringBuilder sb = new StringBuilder();
 		sb.append("This book contains the soul of a " + ChatColor.RED + ChatColor.BOLD + entityName + "\n\n");
 		int var_i = 7;
@@ -277,13 +288,10 @@ public class BookOfSouls {
 				sb.append("" + ChatColor.BLACK + ChatColor.ITALIC + "not defined,\ndefault 0.85");
 			}
 			meta.addPage(sb.toString());
-			
 		}
 		
 		BookSerialize.saveToBook(meta, _entityNbt.serialize(), _dataTitle);
-		
 		meta.addPage("RandomId: " + Integer.toHexString((new Random()).nextInt()));
-		
 		_book.setItemMeta(meta);
 	}
 	

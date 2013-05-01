@@ -49,7 +49,7 @@ public final class InventoryForRiding extends IInventoryForBos {
 				event.setCancelled(true);
 				player.sendMessage(Lang._("nbt.bos.riding.only-bos"));
 			} else {
-				EntityNBT entityNbt = BookOfSouls.toEntityNBT(item);
+				EntityNBT entityNbt = BookOfSouls.bookToEntityNBT(item);
 				if (entityNbt == null) {
 					player.sendMessage(Lang._("nbt.bos.corrupted"));
 					event.setCancelled(true);
@@ -67,7 +67,7 @@ public final class InventoryForRiding extends IInventoryForBos {
 		ItemStack[] items = getContents();
 		for (ItemStack item : items) {
 			if (BookOfSouls.isValidBook(item)) {
-				rides.add(BookOfSouls.toEntityNBT(item));
+				rides.add(BookOfSouls.bookToEntityNBT(item));
 			}
 		}
 		_bos.getEntityNBT().setRiding(rides.toArray(new EntityNBT[rides.size()]));

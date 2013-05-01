@@ -20,7 +20,7 @@ nbt:
       pholder: "§6The potion goes here."
       done: "§aPotion set."
     mob:
-      title: "Entity inventory"
+      title: "Inventory"
       pholder:
         head: "§6Head Equipment"
         chest: "§6Chest Equipment"

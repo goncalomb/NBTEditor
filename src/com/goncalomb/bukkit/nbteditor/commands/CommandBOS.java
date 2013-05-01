@@ -33,8 +33,8 @@ public class CommandBOS extends BetterCommand {
 	static BookOfSouls getBos(Player player, boolean nullIfMissing) throws BetterCommandException {
 		ItemStack item = player.getItemInHand();
 		if (BookOfSouls.isValidBook(item)) {
-			BookOfSouls bos = new BookOfSouls(item);
-			if (bos.isValid()) {
+			BookOfSouls bos = BookOfSouls.getFromBook(item);
+			if (bos != null) {
 				return bos;
 			}
 			throw new BetterCommandException(Lang._("nbt.bos.corrupted"));
@@ -66,6 +66,18 @@ public class CommandBOS extends BetterCommand {
 		}
 		sender.sendMessage(Lang._("nbt.entities-prefix") + EntityTypeMap.getEntityNames(EntityNBT.getValidEntityTypes()));
 		return false;
+	}
+	
+	@SubCommand(args = "getempty", type = BetterSubCommandType.PLAYER_ONLY)
+	public boolean getemptyCommand(CommandSender sender, String[] args) {
+		PlayerInventory inv = ((Player) sender).getInventory();
+		if (inv.firstEmpty() == -1) {
+			sender.sendMessage(Lang._("general.inventory-full"));
+			return true;
+		}
+		inv.addItem(BookOfSouls.getEmpty());
+		sender.sendMessage(Lang._("nbt.cmds.bos.give"));
+		return true;
 	}
 	
 	@SubCommand(args = "var", type = BetterSubCommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<variable> [value]")
