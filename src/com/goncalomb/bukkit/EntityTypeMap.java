@@ -30,13 +30,21 @@ public final class EntityTypeMap {
 	public static EntityType getByName(String name) {
 		if (name.equalsIgnoreCase("ThrownPotion")) {
 			return EntityType.SPLASH_POTION;
+		} else if (name.equalsIgnoreCase("MinecartSpawner")) {
+			return EntityType.MINECART_MOB_SPAWNER;
 		} else {
 			return EntityType.fromName(name);
 		}
 	}
 	
 	public static String getName(EntityType type) {
-		return (type == EntityType.SPLASH_POTION ? "ThrownPotion" : type.getName());
+		if (type == EntityType.SPLASH_POTION) {
+			return "ThrownPotion";
+		} else if (type == EntityType.MINECART_MOB_SPAWNER) {
+			return "MinecartSpawner";
+		} else {
+			return type.getName();
+		}
 	}
 	
 	public static String getEntityNames(Collection<EntityType> types) {
