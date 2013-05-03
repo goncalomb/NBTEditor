@@ -4,6 +4,8 @@ nbt:
       nothing: "Nothing here!"
       pholder: "§oThis is a placeholder item, it will not be saved!"
     corrupted: "§cThat Book of Souls is corrupted!"
+    minecart-to: "§aVariables and entities copied from the spawner."
+    minecart-from: "§aVariables and entities copied to the spawner."
     riding:
       title: "Define the entities here..."
       pholder: "§6Put Books of Souls here, to add entities."

@@ -84,7 +84,7 @@ public class EntityNBT {
 		registerEntity(EntityType.MINECART_CHEST, MinecartNBT.class);
 		registerEntity(EntityType.MINECART_FURNACE, MinecartNBT.class);
 		registerEntity(EntityType.MINECART_HOPPER, MinecartNBT.class);
-		registerEntity(EntityType.MINECART_MOB_SPAWNER, MinecartNBT.class);
+		registerEntity(EntityType.MINECART_MOB_SPAWNER, MinecartSpawnerNBT.class);
 		registerEntity(EntityType.MINECART_TNT, MinecartNBT.class);
 		
 		
@@ -161,15 +161,6 @@ public class EntityNBT {
 		variables.add("fuel", new ShortVariable("Fuel", (short) 0));
 		EntityNBTVariableManager.registerVariables(EntityType.MINECART_FURNACE, variables);
 		*/
-		variables = new NBTGenericVariableContainer("MinecartSpawner");
-		variables.add("count", new ShortVariable("SpawnCount", (short) 0));
-		variables.add("range", new ShortVariable("SpawnRange", (short) 0));
-		variables.add("delay", new ShortVariable("Delay", (short) 0));
-		variables.add("min-delay", new ShortVariable("MinSpawnDelay", (short) 0));
-		variables.add("max-delay", new ShortVariable("MaxSpawnDelay", (short) 0));
-		variables.add("max-entities", new ShortVariable("MaxNearbyEntities", (short) 0));
-		variables.add("player-range", new ShortVariable("RequiredPlayerRange", (short) 0));
-		EntityNBTVariableManager.registerVariables(EntityType.MINECART_MOB_SPAWNER, variables);
 	}
 	
 	private static void registerEntity(EntityType entityType, Class<? extends EntityNBT> entityClass) {

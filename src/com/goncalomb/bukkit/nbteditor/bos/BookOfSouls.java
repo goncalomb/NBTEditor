@@ -6,29 +6,20 @@ import java.util.Random;
 import net.iharder.Base64;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockDispenseEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.Plugin;
 
 import com.goncalomb.bukkit.BookSerialize;
 import com.goncalomb.bukkit.EntityTypeMap;
-import com.goncalomb.bukkit.UtilsMc;
-import com.goncalomb.bukkit.betterplugin.Lang;
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.CustomItemManager;
-import com.goncalomb.bukkit.customitems.api.DispenserDetails;
-import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 import com.goncalomb.bukkit.nbteditor.nbt.DroppedItemNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
+import com.goncalomb.bukkit.nbteditor.nbt.MinecartSpawnerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.ThrownPotionNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBT;
@@ -57,56 +48,7 @@ public class BookOfSouls {
 		_bosEmptyCustomItem = new BookOfSoulsEmptyCI();
 		itemManager.registerNew(_bosEmptyCustomItem, plugin);
 		
-		_bosCustomItem = new CustomItem("bos", ChatColor.AQUA + "Book of Souls", new MaterialData(Material.WRITTEN_BOOK)) {
-			
-			@Override
-			public void onLeftClick(PlayerInteractEvent event, PlayerDetails details) {
-				Player player = event.getPlayer();
-				if (!player.hasPermission("nbteditor.bookofsouls")) {
-					player.sendMessage(Lang._("general.no-perm"));
-					return;
-				}
-				
-				BookOfSouls bos = BookOfSouls.getFromBook(event.getItem());
-				if (bos == null) {
-					player.sendMessage(Lang._("nbt.bos.corrupted"));
-					return;
-				}
-				
-				Location location = null;
-				if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
-					location = event.getClickedBlock().getLocation().add(UtilsMc.faceToDelta(event.getBlockFace(), 0.5));
-				} else {
-					Block block = UtilsMc.getTargetBlock(player);
-					if (block.getType() != Material.AIR) {
-						location = UtilsMc.airLocation(block.getLocation());
-					}
-				}
-				
-				if (location != null) {
-					bos.getEntityNBT().spawnStack(location);
-					event.setCancelled(true);
-				} else {
-					player.sendMessage(Lang._("general.no-sight"));
-				}
-				return;
-			};
-			
-			@Override
-            public void onDispense(BlockDispenseEvent event, DispenserDetails details) {
-				BookOfSouls bos = BookOfSouls.getFromBook(event.getItem());
-				if (bos != null) {
-					bos.getEntityNBT().spawnStack(details.getLocation());
-				}
-				event.setCancelled(true);
-            }
-			
-			@Override
-			public ItemStack getItem() {
-				return null;
-			}
-			
-		};
+		_bosCustomItem = new BookOfSoulsCI();
 		itemManager.registerNew(_bosCustomItem, plugin);
 	}
 	
@@ -226,7 +168,7 @@ public class BookOfSouls {
 	}
 	
 	public void saveBook(boolean resetName) {
-		BookMeta meta = (BookMeta)_book.getItemMeta();
+		BookMeta meta = (BookMeta) _book.getItemMeta();
 		String entityName = EntityTypeMap.getName(_entityNbt.getEntityType());
 		
 		if (resetName) {
@@ -239,19 +181,27 @@ public class BookOfSouls {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("This book contains the soul of a " + ChatColor.RED + ChatColor.BOLD + entityName + "\n\n");
-		int var_i = 7;
+		
+		int x = 7;
+		if (_entityNbt instanceof MinecartSpawnerNBT) {
+			sb.append(ChatColor.BLACK + "Left-click a existing spawner to copy the entities and variables from the spawner, left-click while sneaking to copy them back to the spawner.");
+			meta.addPage(sb.toString());
+			sb = new StringBuilder();
+			x = 11;
+		}
+		
 		for (NBTVariableContainer vc : _entityNbt.getAllVariables()) {
-			if (var_i - 1 == 0) {
+			if (x == 1) {
 				meta.addPage(sb.toString());
 				sb = new StringBuilder();
-				var_i = 11;
+				x = 11;
 			}
 			sb.append("" + ChatColor.DARK_PURPLE + ChatColor.ITALIC + vc.getName() + ":\n");
 			for (NBTVariable var : vc) {
-				if (--var_i == 0) {
+				if (--x == 0) {
 					meta.addPage(sb.toString());
 					sb = new StringBuilder();
-					var_i = 10;
+					x = 10;
 				}
 				String value = var.getValue();
 				sb.append("  " + ChatColor.DARK_BLUE + var.getName() + ": " + ChatColor.BLACK + (value != null ? value : ChatColor.ITALIC + "-") + "\n");

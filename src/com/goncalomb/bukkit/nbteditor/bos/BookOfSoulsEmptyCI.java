@@ -13,7 +13,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 final class BookOfSoulsEmptyCI extends CustomItem {
 
 	public BookOfSoulsEmptyCI() {
-		super("bos-empty", ChatColor.AQUA + "Book of Souls" + ChatColor.RESET + " - " + ChatColor.RED + "Empty", new MaterialData(Material.BOOK));
+		super("bos-empty", ChatColor.GREEN + "Book of Souls" + ChatColor.RESET + " - " + ChatColor.RED + "Empty", new MaterialData(Material.BOOK));
 		setLore("§bThis is a empty Book of Souls.",
 				"§bLeft-click on an existing entity to capture his soul.");
 	}

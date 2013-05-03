@@ -4,6 +4,8 @@ nbt:
       nothing: "Nada aqui!"
       pholder: "§oEste é um item temporário, não será guardado!"
     corrupted: "§cEsse Livro das Almas está corrompido!"
+    minecart-to: "§aVariáveis e entidades copiadas do gerador de monstros."
+    minecart-from: "§aVariáveis e entidades copiadas para o gerador de monstros."
     riding:
       title: "Define as entidates aqui..."
       pholder: "§6Põe Livros das Almas aqui, para adicionar entidates."
