@@ -75,6 +75,7 @@ public class EntityNBT {
 		registerEntity(EntityType.FALLING_BLOCK, FallingBlockNBT.class);
 		registerEntity(EntityType.DROPPED_ITEM, DroppedItemNBT.class);
 		registerEntity(EntityType.EXPERIENCE_ORB, XPOrbNBT.class);
+		registerEntity(EntityType.ENDER_CRYSTAL, EntityNBT.class);
 		
 		registerEntity(EntityType.SPLASH_POTION, ThrownPotionNBT.class);
 		
