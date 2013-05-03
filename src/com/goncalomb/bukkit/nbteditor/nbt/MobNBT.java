@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
 import com.goncalomb.bukkit.reflect.NBTTagCompoundWrapper;
 import com.goncalomb.bukkit.reflect.NBTTagListWrapper;
 import com.goncalomb.bukkit.reflect.NBTUtils;
@@ -24,6 +25,7 @@ public class MobNBT extends EntityNBT {
 		variables.add("death-time", new ShortVariable("DeathTime"));
 		variables.add("pick-loot", new BooleanVariable("CanPickUpLoot"));
 		variables.add("persistent", new BooleanVariable("PersistenceRequired"));
+		variables.add("name", new StringVariable("CustomName"));
 		variables.add("name-visible", new BooleanVariable("CustomNameVisible"));
 		EntityNBTVariableManager.registerVariables(MobNBT.class, variables);
 	}

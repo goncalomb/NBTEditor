@@ -8,14 +8,20 @@ import com.goncalomb.bukkit.betterplugin.Lang;
 public final class BlockVariable extends NBTGenericVariable2X {
 	
 	private boolean _asShort;
+	private boolean _dataAsInt;
 	
 	public BlockVariable(String blockNbtKey, String dataNbtKey) {
 		this(blockNbtKey, dataNbtKey, false);
 	}
 	
 	public BlockVariable(String blockNbtKey, String dataNbtKey, boolean asShort) {
+		this(blockNbtKey, dataNbtKey, asShort, false);
+	}
+	
+	public BlockVariable(String blockNbtKey, String dataNbtKey, boolean asShort, boolean dataAsInt) {
 		super(blockNbtKey, dataNbtKey);
 		_asShort = asShort;
+		_dataAsInt = dataAsInt;
 	}
 	
 	boolean set(NBTTagCompoundWrapper data, String value) {
@@ -49,7 +55,11 @@ public final class BlockVariable extends NBTGenericVariable2X {
 				data.setShort(_nbtKey2, (short) (blockData & 0xFF));
 			} else {
 				data.setInt(_nbtKey, material.getId());
-				data.setByte(_nbtKey2, (byte) (blockData & 0xFF));
+				if (_dataAsInt) {
+					data.setInt(_nbtKey2, (byte) (blockData & 0xFF));
+				} else {
+					data.setByte(_nbtKey2, (byte) (blockData & 0xFF));
+				}
 			}
 			return true;
 		}
@@ -64,7 +74,11 @@ public final class BlockVariable extends NBTGenericVariable2X {
 				materialData = data.getShort(_nbtKey2) & 0xFF;
 			} else {
 				materialId = data.getInt(_nbtKey);
-				materialData = data.getByte(_nbtKey2) & 0xFF;
+				if (_dataAsInt) {
+					materialData = data.getInt(_nbtKey2) & 0xFF;
+				} else {
+					materialData = data.getByte(_nbtKey2) & 0xFF;
+				}
 			}
 			return Material.getMaterial(materialId).name() + ":" + materialData;
 		}

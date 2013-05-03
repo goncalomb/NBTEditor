@@ -20,7 +20,6 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.VectorVariable;
 import com.goncalomb.bukkit.reflect.NBTTagCompoundWrapper;
 import com.goncalomb.bukkit.reflect.NBTUtils;
@@ -79,6 +78,15 @@ public class EntityNBT {
 		
 		registerEntity(EntityType.SPLASH_POTION, ThrownPotionNBT.class);
 		
+		registerEntity(EntityType.BOAT, EntityNBT.class);
+		
+		registerEntity(EntityType.MINECART, MinecartNBT.class);
+		registerEntity(EntityType.MINECART_CHEST, MinecartNBT.class);
+		registerEntity(EntityType.MINECART_FURNACE, MinecartNBT.class);
+		registerEntity(EntityType.MINECART_HOPPER, MinecartNBT.class);
+		registerEntity(EntityType.MINECART_MOB_SPAWNER, MinecartNBT.class);
+		registerEntity(EntityType.MINECART_TNT, MinecartNBT.class);
+		
 		
 		NBTGenericVariableContainer variables = null;
 		
@@ -89,7 +97,6 @@ public class EntityNBT {
 		variables.add("fire", new ShortVariable("Fire"));
 		variables.add("air", new ShortVariable("Air", (short) 0, (short) 200));
 		variables.add("invulnerable", new BooleanVariable("Invulnerable"));
-		variables.add("name", new StringVariable("CustomName"));
 		EntityNBTVariableManager.registerVariables(EntityNBT.class, variables);
 		
 		variables = new NBTGenericVariableContainer("Pig");
@@ -148,6 +155,21 @@ public class EntityNBT {
 		variables = new NBTGenericVariableContainer("PrimedTNT");
 		variables.add("fuse", new ByteVariable("Fuse", (byte) 0));
 		EntityNBTVariableManager.registerVariables(EntityType.PRIMED_TNT, variables);
+		
+		/*
+		variables = new NBTGenericVariableContainer("MinecartFurnace");
+		variables.add("fuel", new ShortVariable("Fuel", (short) 0));
+		EntityNBTVariableManager.registerVariables(EntityType.MINECART_FURNACE, variables);
+		*/
+		variables = new NBTGenericVariableContainer("MinecartSpawner");
+		variables.add("count", new ShortVariable("SpawnCount", (short) 0));
+		variables.add("range", new ShortVariable("SpawnRange", (short) 0));
+		variables.add("delay", new ShortVariable("Delay", (short) 0));
+		variables.add("min-delay", new ShortVariable("MinSpawnDelay", (short) 0));
+		variables.add("max-delay", new ShortVariable("MaxSpawnDelay", (short) 0));
+		variables.add("max-entities", new ShortVariable("MaxNearbyEntities", (short) 0));
+		variables.add("player-range", new ShortVariable("RequiredPlayerRange", (short) 0));
+		EntityNBTVariableManager.registerVariables(EntityType.MINECART_MOB_SPAWNER, variables);
 	}
 	
 	private static void registerEntity(EntityType entityType, Class<? extends EntityNBT> entityClass) {
