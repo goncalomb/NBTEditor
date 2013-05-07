@@ -9,20 +9,20 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.betterplugin.Lang;
-import com.goncalomb.bukkit.nbteditor.nbt.ThrownPotionNBT;
+import com.goncalomb.bukkit.nbteditor.nbt.FireworkNBT;
 
-public final class InventoryForThownPotion extends InventoryForSingleItem {
+public final class InventoryForFirework extends InventoryForSingleItem {
 	
 	private static HashMap<Integer, ItemStack> _placeholders = new HashMap<Integer, ItemStack>();
 	
 	static {
-		_placeholders.put(4, createPlaceholder(Material.GLASS_BOTTLE, Lang._("nbt.bos.potion.pholder")));
+		_placeholders.put(4, createPlaceholder(Material.PAPER, Lang._("nbt.bos.firework.pholder")));
 	}
 	
 	private BookOfSouls _bos;
 	
-	public InventoryForThownPotion(BookOfSouls bos, Player owner) {
-		super(Lang._("nbt.bos.potion.title"), _placeholders, ((ThrownPotionNBT) bos.getEntityNBT()).getPotion(), bos, owner);
+	public InventoryForFirework(BookOfSouls bos, Player owner) {
+		super(Lang._("nbt.bos.firework.title"), _placeholders, ((FireworkNBT) bos.getEntityNBT()).getFirework(), bos, owner);
 		_bos = bos;
 	}
 	
@@ -30,17 +30,17 @@ public final class InventoryForThownPotion extends InventoryForSingleItem {
 	protected void inventoryClick(InventoryClickEvent event) {
 		super.inventoryClick(event);
 		ItemStack itemToCheck = getItemToCheck(event);
-		if (itemToCheck != null && itemToCheck.getType() != Material.POTION) {
-			((Player)event.getWhoClicked()).sendMessage(Lang._("nbt.bos.mob.potion"));
+		if (itemToCheck != null && itemToCheck.getType() != Material.FIREWORK) {
+			((Player)event.getWhoClicked()).sendMessage(Lang._("nbt.bos.firework.nop"));
 			event.setCancelled(true);
 		}
 	}
 	
 	@Override
 	protected void inventoryClose(InventoryCloseEvent event) {
-		((ThrownPotionNBT) _bos.getEntityNBT()).setPotion(getContents()[4]);
+		((FireworkNBT) _bos.getEntityNBT()).setFirework(getContents()[4]);
 		_bos.saveBook();
-		((Player)event.getPlayer()).sendMessage(Lang._("nbt.bos.potion.done"));
+		((Player)event.getPlayer()).sendMessage(Lang._("nbt.bos.firework.done"));
 	}
 
 }

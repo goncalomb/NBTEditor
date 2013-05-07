@@ -36,8 +36,6 @@ public class EntityNBT {
 		_entityClasses = new HashMap<EntityType, Class<? extends EntityNBT>>();
 		_entityTypes = new HashMap<Class<? extends EntityNBT>, EntityType>();
 		
-		registerEntity(EntityType.FIREWORK, FireworkNBT.class, true);
-		
 		registerEntity(EntityType.PIG, BreedNBT.class);
 		registerEntity(EntityType.SHEEP, BreedNBT.class);
 		registerEntity(EntityType.COW, BreedNBT.class);
@@ -77,6 +75,7 @@ public class EntityNBT {
 		registerEntity(EntityType.EXPERIENCE_ORB, XPOrbNBT.class);
 		registerEntity(EntityType.ENDER_CRYSTAL, EntityNBT.class);
 		
+		registerEntity(EntityType.FIREWORK, FireworkNBT.class);
 		registerEntity(EntityType.SPLASH_POTION, ThrownPotionNBT.class);
 		
 		registerEntity(EntityType.BOAT, EntityNBT.class);
@@ -165,13 +164,7 @@ public class EntityNBT {
 	}
 	
 	private static void registerEntity(EntityType entityType, Class<? extends EntityNBT> entityClass) {
-		registerEntity(entityType, entityClass, false);
-	}
-	
-	private static void registerEntity(EntityType entityType, Class<? extends EntityNBT> entityClass, boolean dontInstantiate) {
-		if(!dontInstantiate) {
-			_entityClasses.put(entityType, entityClass);
-		}
+		_entityClasses.put(entityType, entityClass);
 		_entityTypes.put(entityClass, entityType);
 	}
 	

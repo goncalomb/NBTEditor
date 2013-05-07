@@ -19,6 +19,7 @@ import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.CustomItemManager;
 import com.goncalomb.bukkit.nbteditor.nbt.DroppedItemNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
+import com.goncalomb.bukkit.nbteditor.nbt.FireworkNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MinecartSpawnerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.ThrownPotionNBT;
@@ -118,6 +119,9 @@ public class BookOfSouls {
 			return true;
 		} else if (_entityNbt instanceof ThrownPotionNBT) {
 			(new InventoryForThownPotion(this, player)).openInventory(player, _plugin);
+			return true;
+		}else if (_entityNbt instanceof FireworkNBT) {
+			(new InventoryForFirework(this, player)).openInventory(player, _plugin);
 			return true;
 		}
 		return false;

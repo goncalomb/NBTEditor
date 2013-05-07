@@ -21,6 +21,11 @@ nbt:
       title: "Define the potion here..."
       pholder: "§6The potion goes here."
       done: "§aPotion set."
+    firework:
+      title: "Define the firework here..."
+      pholder: "§6The firework rocket goes here."
+      done: "§aFirework rocket set."
+      nop: "§cThat must be a firework rocket!"
     mob:
       title: "Inventory"
       pholder:

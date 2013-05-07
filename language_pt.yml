@@ -15,12 +15,17 @@ nbt:
       done: "§aEntidates montadas definidas."
     item:
       title: "Define o item aqui..."
-      pholder: "§6O item vai aqui."
+      pholder: "§6O item aqui."
       done: "§aItem definido."
     potion:
       title: "Define a poção aqui..."
-      pholder: "§6Poção aqui."
+      pholder: "§6A poção aqui."
       done: "§aPoção definida."
+    firework:
+      title: "DDefine o fogo de artifício aqui..."
+      pholder: "§6O foguete de artifício aqui."
+      done: "§aFoguete de artifício definido."
+      nop: "§cIsso deve ser um foguete de artifício!"
     mob:
       title: "Inventário"
       pholder:
