@@ -20,6 +20,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.VectorVariable;
 import com.goncalomb.bukkit.reflect.NBTTagCompoundWrapper;
 import com.goncalomb.bukkit.reflect.NBTUtils;
@@ -74,8 +75,11 @@ public class EntityNBT {
 		registerEntity(EntityType.DROPPED_ITEM, DroppedItemNBT.class);
 		registerEntity(EntityType.EXPERIENCE_ORB, XPOrbNBT.class);
 		registerEntity(EntityType.ENDER_CRYSTAL, EntityNBT.class);
-		
 		registerEntity(EntityType.FIREWORK, FireworkNBT.class);
+
+		registerEntity(EntityType.ARROW, EntityNBT.class);
+		registerEntity(EntityType.ENDER_PEARL, EntityNBT.class);
+		registerEntity(EntityType.THROWN_EXP_BOTTLE, EntityNBT.class);
 		registerEntity(EntityType.SPLASH_POTION, ThrownPotionNBT.class);
 		
 		registerEntity(EntityType.BOAT, EntityNBT.class);
@@ -107,7 +111,6 @@ public class EntityNBT {
 		variables.add("sheared", new BooleanVariable("Saddle"));
 		variables.add("color", new ByteVariable("Color", (byte) 0, (byte) 15));
 		EntityNBTVariableManager.registerVariables(EntityType.SHEEP, variables);
-		
 		
 		variables = new NBTGenericVariableContainer("Wolf");
 		variables.add("angry", new BooleanVariable("Angry"));
@@ -156,11 +159,16 @@ public class EntityNBT {
 		variables.add("fuse", new ByteVariable("Fuse", (byte) 0));
 		EntityNBTVariableManager.registerVariables(EntityType.PRIMED_TNT, variables);
 		
-		/*
-		variables = new NBTGenericVariableContainer("MinecartFurnace");
-		variables.add("fuel", new ShortVariable("Fuel", (short) 0));
-		EntityNBTVariableManager.registerVariables(EntityType.MINECART_FURNACE, variables);
-		*/
+		
+		variables = new NBTGenericVariableContainer("Arrow");
+		variables.add("pickup", new ByteVariable("pickup", (byte) 0, (byte) 2));
+		variables.add("player", new BooleanVariable("player"));
+		EntityNBTVariableManager.registerVariables(EntityType.ARROW, variables);
+		
+		variables = new NBTGenericVariableContainer("Enderpearl");
+		variables.add("owner", new StringVariable("ownerName"));
+		EntityNBTVariableManager.registerVariables(EntityType.ENDER_PEARL, variables);
+		
 	}
 	
 	private static void registerEntity(EntityType entityType, Class<? extends EntityNBT> entityClass) {
