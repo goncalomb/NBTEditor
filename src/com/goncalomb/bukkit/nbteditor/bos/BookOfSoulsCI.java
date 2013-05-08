@@ -28,11 +28,6 @@ final class BookOfSoulsCI extends CustomItem {
 	@Override
 	public void onLeftClick(PlayerInteractEvent event, PlayerDetails details) {
 		Player player = event.getPlayer();
-		if (!player.hasPermission("nbteditor.bookofsouls")) {
-			player.sendMessage(Lang._("general.no-perm"));
-			return;
-		}
-		
 		BookOfSouls bos = BookOfSouls.getFromBook(event.getItem());
 		if (bos == null) {
 			player.sendMessage(Lang._("nbt.bos.corrupted"));
