@@ -35,7 +35,10 @@ public abstract class CustomInventory {
 						HashSet<CustomInventory> invs = _openedInvsByPlugin.remove(event.getPlugin());
 						if (invs != null) {
 							for (CustomInventory inv : invs) {
-								inv.closeSilently();
+								for (HumanEntity human : inv._inventory.getViewers().toArray(new HumanEntity[0])) {
+									_openedInvsByPlayer.remove(human);
+									human.closeInventory();
+								}
 							}
 						}
 						
@@ -102,18 +105,13 @@ public abstract class CustomInventory {
 		return _inventory;
 	}
 	
-	private final void closeSilently() {
-		if (_owner != null) {
-			for (HumanEntity human : _inventory.getViewers()) {
-				_openedInvsByPlayer.remove(human);
-				human.closeInventory();
-			}
-		}
+	public Plugin getPlugin() {
+		return _owner;
 	}
 	
 	public final void close() {
 		if (_owner != null) {
-			for (HumanEntity human : _inventory.getViewers()) {
+			for (HumanEntity human : _inventory.getViewers().toArray(new HumanEntity[0])) {
 				human.closeInventory();
 			}
 		}
