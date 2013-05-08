@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 import org.bukkit.Location;
+import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.ThrownPotion;
 
@@ -27,6 +28,9 @@ public final class WorldUtils {
 	// Minecraft's EntityPotion Class
 	private static Constructor<?> _potionConstructor;
 	
+	// Minecraft's EntityEnderPearl Class
+	private static Constructor<?> _enderPearlConstructor;
+	
 	public static void prepareReflection() {
 		if (!_isPrepared) {
 			try {
@@ -45,6 +49,10 @@ public final class WorldUtils {
 				
 				Class<?> minecraftEntityPotionClass = BukkitReflect.getMinecraftClass("EntityPotion");
 				_potionConstructor = minecraftEntityPotionClass.getConstructor(minecraftWorldClass, double.class, double.class, double.class, BukkitReflect.getMinecraftClass("ItemStack"));
+				
+				Class<?> minecraftEntityEnderPearl = BukkitReflect.getMinecraftClass("EntityEnderPearl");
+				_enderPearlConstructor = minecraftEntityEnderPearl.getConstructor(minecraftWorldClass);
+				
 			} catch (Exception e) {
 				throw new Error("Error while preparing WorldUtils.", e);
 			}
@@ -69,6 +77,15 @@ public final class WorldUtils {
 		NBTUtils.setMineEntityNBTTagCompound(entity, data);
 		BukkitReflect.invokeMethod(world, _addEntity, entity);
 		return (ThrownPotion) BukkitReflect.invokeMethod(entity, _getBukkitEntity);
+	}
+	
+	public static EnderPearl spawnEnderpearl(Location location, NBTTagCompoundWrapper data) {
+		Object world = BukkitReflect.invokeMethod(location.getWorld(), _getHandle);
+		Object entity = BukkitReflect.newInstance(_enderPearlConstructor, world);
+		BukkitReflect.invokeMethod(entity, _setPositionRotation, location.getBlockX() + 0.5, location.getBlockY(), location.getZ(), 0, 0);
+		NBTUtils.setMineEntityNBTTagCompound(entity, data);
+		BukkitReflect.invokeMethod(world, _addEntity, entity);
+		return (EnderPearl) BukkitReflect.invokeMethod(entity, _getBukkitEntity);
 	}
 	
 }
