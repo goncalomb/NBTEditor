@@ -20,7 +20,6 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.VectorVariable;
 import com.goncalomb.bukkit.reflect.NBTTagCompoundWrapper;
 import com.goncalomb.bukkit.reflect.NBTUtils;
@@ -78,7 +77,7 @@ public class EntityNBT {
 		registerEntity(EntityType.FIREWORK, FireworkNBT.class);
 
 		registerEntity(EntityType.ARROW, EntityNBT.class);
-		registerEntity(EntityType.ENDER_PEARL, EntityNBT.class);
+		registerEntity(EntityType.ENDER_PEARL, EnderPearlNBT.class);
 		registerEntity(EntityType.THROWN_EXP_BOTTLE, EntityNBT.class);
 		registerEntity(EntityType.SPLASH_POTION, ThrownPotionNBT.class);
 		
@@ -164,10 +163,6 @@ public class EntityNBT {
 		variables.add("pickup", new ByteVariable("pickup", (byte) 0, (byte) 2));
 		variables.add("player", new BooleanVariable("player"));
 		EntityNBTVariableManager.registerVariables(EntityType.ARROW, variables);
-		
-		variables = new NBTGenericVariableContainer("Enderpearl");
-		variables.add("owner", new StringVariable("ownerName"));
-		EntityNBTVariableManager.registerVariables(EntityType.ENDER_PEARL, variables);
 		
 	}
 	
