@@ -203,6 +203,14 @@ public class CommandNBTSpawner extends BetterCommand {
 		return true;
 	}
 	
+	@SubCommand(args = "see", type = BetterSubCommandType.PLAYER_ONLY)
+	public boolean seeCommand(CommandSender sender, String[] args) throws BetterCommandException {
+		Player player = (Player) sender;
+		SpawnerNBTWrapper spawner = getSpawner(player);
+		(new InventoryForSpawnerEntities(player, spawner)).openInventory(player, getPlugin());
+		return true;
+	}
+	
 	@SubCommand(args = "copy", type = BetterSubCommandType.PLAYER_ONLY)
 	public boolean copyCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		Player player = (Player) sender;
