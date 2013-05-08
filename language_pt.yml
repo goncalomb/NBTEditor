@@ -54,7 +54,7 @@ nbt:
       holding: "§cDeves estar a segurar um Livro das Almas!"
       give: "§aDesfruta o teu Livro das Almas."
       no-variable: "§cEssa entidade não tem a variável {0}!"
-      no-inventory: "§cEssa entidade deve um 'Mob', 'Item' ou 'ThrownPotion'!"
+      no-inventory: "§cEssa entidade deve um 'Mob', 'Item', 'ThrownPotion' ou 'FireworkRocket'!"
       no-villager: "§cEssa entidade deve ser um 'Villager'!"
       no-mob: "§cEssa entidade deve um 'Mob'!"
       villager-info: "§eCada coluna representa uma offerta."

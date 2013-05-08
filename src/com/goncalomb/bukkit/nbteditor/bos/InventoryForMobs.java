@@ -29,7 +29,7 @@ public final class InventoryForMobs extends IInventoryForBos {
 	private BookOfSouls _bos;
 	
 	public InventoryForMobs(BookOfSouls bos, Player owner) {
-		super(owner, 9, Lang._("nbt.bos.mob.title") + " (" + ChatColor.BLACK + bos.getEntityNBT().getEntityType().getName().toLowerCase() + ChatColor.RESET + ")", _placeholders);
+		super(owner, 9, Lang._("nbt.bos.mob.title") + " - " + ChatColor.BLACK + bos.getEntityNBT().getEntityType().getName(), _placeholders);
 		_bos = bos;
 		Inventory inv = getInventory();
 		MobNBT mob = (MobNBT) _bos.getEntityNBT();
