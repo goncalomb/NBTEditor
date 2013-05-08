@@ -1,5 +1,6 @@
 package com.goncalomb.bukkit.customitems.api;
 
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockDispenseEvent;
 
@@ -19,6 +20,9 @@ final class ListenerForDispenseEvent extends CustomItemListener<CustomItem> {
 	
 	@EventHandler
 	private void blockDispense(BlockDispenseEvent event) {
+		if (event.getBlock().getType() != Material.DISPENSER) {
+			return;
+		}
 		CustomItem customItem = get(event.getItem());
 		if (customItem != null) {
 			if (verifyCustomItem(customItem, event.getBlock().getWorld())) {
