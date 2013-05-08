@@ -16,6 +16,7 @@ import com.goncalomb.bukkit.betterplugin.Lang;
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.DispenserDetails;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
+import com.goncalomb.bukkit.nbteditor.nbt.MinecartContainerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MinecartSpawnerNBT;
 
 final class BookOfSoulsCI extends CustomItem {
@@ -39,9 +40,9 @@ final class BookOfSoulsCI extends CustomItem {
 		}
 		
 		Location location = null;
-		if (event.getAction() == Action.LEFT_CLICK_BLOCK && bos.getEntityNBT() instanceof MinecartSpawnerNBT) {
+		if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
 			Block block = event.getClickedBlock();
-			if (block.getType() == Material.MOB_SPAWNER) {
+			if (bos.getEntityNBT() instanceof MinecartSpawnerNBT && block.getType() == Material.MOB_SPAWNER) {
 				if (event.getPlayer().isSneaking()) {
 					((MinecartSpawnerNBT) bos.getEntityNBT()).copyToSpawner(block);
 					player.sendMessage(Lang._("nbt.bos.minecart-from"));
@@ -52,12 +53,24 @@ final class BookOfSoulsCI extends CustomItem {
 				}
 				event.setCancelled(true);
 				return;
+			} else if (bos.getEntityNBT() instanceof MinecartContainerNBT && block.getType() == Material.CHEST) {
+				if (event.getPlayer().isSneaking()) {
+					((MinecartContainerNBT) bos.getEntityNBT()).copyToChest(block);
+					player.sendMessage(Lang._("nbt.bos.chest-from"));
+				} else {
+					((MinecartContainerNBT) bos.getEntityNBT()).copyFromChest(block);
+					bos.saveBook();
+					player.sendMessage(Lang._("nbt.bos.chest-to"));
+				}
+				event.setCancelled(true);
+				return;
 			}
+			
 			location = event.getClickedBlock().getLocation().add(UtilsMc.faceToDelta(event.getBlockFace(), 0.5));
 		} else {
 			Block block = UtilsMc.getTargetBlock(player);
 			if (block.getType() != Material.AIR) {
-				location = UtilsMc.airLocation(block.getLocation());
+				location = UtilsMc.airLocation(block.getLocation()).add(0.0, 0.5, 0.0);
 			}
 		}
 		

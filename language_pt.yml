@@ -6,6 +6,8 @@ nbt:
     corrupted: "§cEsse Livro das Almas está corrompido!"
     minecart-to: "§aVariáveis e entidades copiadas do gerador de monstros."
     minecart-from: "§aVariáveis e entidades copiadas para o gerador de monstros."
+    chest-to: "§aItems copiados do baú."
+    chest-from: "§aItems copiados para o baú."
     riding:
       title: "Define as entidates aqui..."
       pholder: "§6Põe Livros das Almas aqui, para adicionar entidates."

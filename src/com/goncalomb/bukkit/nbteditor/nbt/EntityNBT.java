@@ -85,9 +85,9 @@ public class EntityNBT {
 		registerEntity(EntityType.BOAT, EntityNBT.class);
 		
 		registerEntity(EntityType.MINECART, MinecartNBT.class);
-		registerEntity(EntityType.MINECART_CHEST, MinecartNBT.class);
+		registerEntity(EntityType.MINECART_CHEST, MinecartChestNBT.class);
 		registerEntity(EntityType.MINECART_FURNACE, MinecartNBT.class);
-		registerEntity(EntityType.MINECART_HOPPER, MinecartNBT.class);
+		registerEntity(EntityType.MINECART_HOPPER, MinecartHopperNBT.class);
 		registerEntity(EntityType.MINECART_MOB_SPAWNER, MinecartSpawnerNBT.class);
 		registerEntity(EntityType.MINECART_TNT, MinecartNBT.class);
 		

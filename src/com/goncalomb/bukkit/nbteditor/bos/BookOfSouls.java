@@ -20,6 +20,7 @@ import com.goncalomb.bukkit.customitems.api.CustomItemManager;
 import com.goncalomb.bukkit.nbteditor.nbt.DroppedItemNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.FireworkNBT;
+import com.goncalomb.bukkit.nbteditor.nbt.MinecartContainerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MinecartSpawnerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.ThrownPotionNBT;
@@ -187,8 +188,12 @@ public class BookOfSouls {
 		sb.append("This book contains the soul of a " + ChatColor.RED + ChatColor.BOLD + entityName + "\n\n");
 		
 		int x = 7;
-		if (_entityNbt instanceof MinecartSpawnerNBT) {
-			sb.append(ChatColor.BLACK + "Left-click a existing spawner to copy the entities and variables from the spawner, left-click while sneaking to copy them back to the spawner.");
+		if (_entityNbt instanceof MinecartSpawnerNBT || _entityNbt instanceof MinecartContainerNBT) {
+			if (_entityNbt instanceof MinecartSpawnerNBT) {
+				sb.append(ChatColor.BLACK + "Left-click a existing spawner to copy the entities and variables from the spawner, left-click while sneaking to copy them back to the spawner.");
+			} else {
+				sb.append(ChatColor.BLACK + "Left-click a chest to copy the items from it, left-click while sneaking to copy them back to the chest.");
+			}
 			meta.addPage(sb.toString());
 			sb = new StringBuilder();
 			x = 11;
