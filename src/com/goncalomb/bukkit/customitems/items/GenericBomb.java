@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 import org.bukkit.util.Vector;
 
@@ -40,19 +39,15 @@ public abstract class GenericBomb extends CustomItem {
 	public final void onLeftClick(PlayerInteractEvent event, PlayerDetails details) {
 		details.consumeItem();
 		Player player = event.getPlayer();
-		
 		Location loc = player.getEyeLocation();
 		trigger(createItem(loc, loc.getDirection()));
+		event.setCancelled(true);
 	}
 	
 	@Override
 	public final void onDrop(PlayerDropItemEvent event) {
 		if (_triggerOnDrop) {
-			Item drop = event.getItemDrop();
-			ItemStack item = drop.getItemStack();
-			item.setAmount(64);
-			drop.setItemStack(item);
-			trigger(drop);
+			trigger(event.getItemDrop());
 		}
 	}
 	
@@ -64,7 +59,7 @@ public abstract class GenericBomb extends CustomItem {
 	}
 	
 	private Item createItem(Location loc, Vector vel) {
-		Item item = loc.getWorld().dropItem(loc, getMaterial().toItemStack(64));
+		Item item = loc.getWorld().dropItem(loc, getItem());
 		item.setVelocity(vel);
 		item.setPickupDelay(Integer.MAX_VALUE);
 		return item;

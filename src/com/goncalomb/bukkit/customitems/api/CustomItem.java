@@ -13,6 +13,7 @@ import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -130,6 +131,8 @@ public abstract class CustomItem {
 	public void onDrop(PlayerDropItemEvent event) { };
 	
 	public void onDespawn(ItemDespawnEvent event) { };
+	
+	public void onDropperPickup(InventoryPickupItemEvent event) { };
 	
 	public void onDispense(BlockDispenseEvent event, DispenserDetails details) { };
 	

@@ -9,8 +9,10 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
+import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.material.MaterialData;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 
@@ -40,8 +42,16 @@ public final class BatBomb extends GenericBomb {
 	}
 	
 	@Override
+	public void onDropperPickup(InventoryPickupItemEvent event) {
+		if (event.getItem().hasMetadata("is-active")) {
+			event.setCancelled(true);
+		}
+	}
+	
+	@Override
 	public void onTrigger(Item item) {
 		Entity bat = item.getWorld().spawnEntity(item.getLocation(), EntityType.BAT);
+		item.setMetadata("is-active", new FixedMetadataValue(getPlugin(), true));
 		item.setPassenger(bat);
 	}
 	
