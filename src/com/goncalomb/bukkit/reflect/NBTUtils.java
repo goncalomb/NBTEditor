@@ -1,5 +1,6 @@
 package com.goncalomb.bukkit.reflect;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Collection;
 
@@ -17,10 +18,12 @@ public final class NBTUtils {
 	private static Method _createStack;
 	private static Method _save;
 	private static Method _getTag;
+	private static Method _setTag;
 	
 	// CraftItemStack Class;
 	private static Method _asBukkitCopy;
 	private static Method _asNMSCopy;
+	private static Field _handle;
 	
 	// Minecraft's Entity Class;
 	private static Method _e0; // Save data to NBTTagCompound.
@@ -37,17 +40,20 @@ public final class NBTUtils {
 	// CraftWorld
 	private static Method _getTileEntity;
 	
-	static void prepareReflection() throws SecurityException, NoSuchMethodException {
+	static void prepareReflection() throws SecurityException, NoSuchMethodException, NoSuchFieldException {
 		Class<?> nbtTagCompoundClass = BukkitReflect.getMinecraftClass("NBTTagCompound");
 		
 		Class<?> minecraftItemStackClass = BukkitReflect.getMinecraftClass("ItemStack");
 		_createStack = minecraftItemStackClass.getMethod("createStack", nbtTagCompoundClass);
 		_save = minecraftItemStackClass.getMethod("save", nbtTagCompoundClass);
 		_getTag = minecraftItemStackClass.getMethod("getTag");
+		_setTag = minecraftItemStackClass.getMethod("setTag", nbtTagCompoundClass);
 		
 		Class<?> craftItemStackClass = BukkitReflect.getCraftBukkitClass("inventory.CraftItemStack");
 		_asBukkitCopy = craftItemStackClass.getMethod("asBukkitCopy", minecraftItemStackClass);
 		_asNMSCopy = craftItemStackClass.getMethod("asNMSCopy", ItemStack.class);
+		_handle = craftItemStackClass.getDeclaredField("handle");
+		_handle.setAccessible(true);
 		
 		Class<?> minecraftEntityClass = BukkitReflect.getMinecraftClass("Entity");
 		_e0 = minecraftEntityClass.getMethod("e", nbtTagCompoundClass);
@@ -152,5 +158,17 @@ public final class NBTUtils {
 	public static void setTileEntityNBTTagCompound(Block block, NBTTagCompoundWrapper data) {
 		NBTBaseWrapper.prepareReflection();
 		BukkitReflect.invokeMethod(getTileEntity(block), _a1, data._nbtBaseObject);
+	}
+	
+	public static void setItemStackFakeEnchantment(ItemStack item) {
+		try {
+			Object handle = _handle.get(item);
+			Object tag = BukkitReflect.invokeMethod(handle, _getTag);
+			NBTTagCompoundWrapper data = (tag == null ? new NBTTagCompoundWrapper() : new NBTTagCompoundWrapper(tag));
+			data.setList("ench", new NBTTagListWrapper());
+			BukkitReflect.invokeMethod(handle, _setTag, data._nbtBaseObject);
+		} catch (Exception e) {
+			throw new Error("Error while applying fake enchantment.", e);
+		}
 	}
 }
