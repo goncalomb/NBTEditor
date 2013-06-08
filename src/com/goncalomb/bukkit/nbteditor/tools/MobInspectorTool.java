@@ -27,11 +27,6 @@ public class MobInspectorTool extends CustomItem {
 	@Override
 	public  void onInteractEntity(PlayerInteractEntityEvent event, PlayerDetails details) {
 		Player player = event.getPlayer();
-		
-		if (!player.hasPermission("nbt.misc")) {
-			player.sendMessage(ChatColor.RED + "You don't have permission to do that!");
-			return;
-		}
 		Entity entity = event.getRightClicked();
 		if (EntityNBT.isValidType(entity.getType())) {
 			EntityNBT entityNBT = EntityNBT.fromEntity(entity);
