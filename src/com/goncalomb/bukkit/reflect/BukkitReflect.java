@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Server;
 import org.bukkit.command.SimpleCommandMap;
 
 public final class BukkitReflect {
@@ -43,11 +42,16 @@ public final class BukkitReflect {
 	
 	public static void prepareReflection() {
 		if (!_isPrepared) {
-			Server server = Bukkit.getServer();
-			_craftBukkitPackage = new CachedPackage(server.getClass().getPackage().getName());
-			
+			Class<?> craftServerClass = Bukkit.getServer().getClass();
 			try {
-				Class<?> craftServerClass = server.getClass();
+				Class.forName("org.libigot.LibigotServer");
+				// Libigot server, use org.bukkit.craftbukkit.
+				_craftBukkitPackage = new CachedPackage("org.bukkit.craftbukkit");
+			} catch (ClassNotFoundException e) {
+				// Not a Libigot server find the CraftBukkit package using the CraftServer class (varies by version).
+				_craftBukkitPackage = new CachedPackage(craftServerClass.getPackage().getName());
+			}
+			try {
 				Method getHandle = craftServerClass.getMethod("getHandle");
 				_minecraftPackage = new CachedPackage(getHandle.getReturnType().getPackage().getName());
 				_getCommandMap = craftServerClass.getMethod("getCommandMap");
