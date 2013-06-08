@@ -51,7 +51,7 @@ public class CommandBOS extends BetterCommand {
 			if (entityType != null && EntityNBT.isValidType(entityType)) {
 				PlayerInventory inv = ((Player) sender).getInventory();
 				if (inv.firstEmpty() == -1) {
-					sender.sendMessage(Lang._("general.inventory-full"));
+					sender.sendMessage(Lang._("common.inventory-full"));
 					return true;
 				}
 				BookOfSouls bos = new BookOfSouls(EntityNBT.fromEntityType(entityType));
@@ -72,7 +72,7 @@ public class CommandBOS extends BetterCommand {
 	public boolean getemptyCommand(CommandSender sender, String[] args) {
 		PlayerInventory inv = ((Player) sender).getInventory();
 		if (inv.firstEmpty() == -1) {
-			sender.sendMessage(Lang._("general.inventory-full"));
+			sender.sendMessage(Lang._("common.inventory-full"));
 			return true;
 		}
 		inv.addItem(BookOfSouls.getEmpty());

@@ -1,0 +1,146 @@
+nbt.bos.inv.nothing=Nada aqui!
+nbt.bos.inv.pholder=§oEste é um item temporário, não será guardado!
+
+nbt.bos.corrupted=§cEsse Livro das Almas está corrompido!
+
+nbt.bos.minecart-to=§aVariáveis e entidades copiadas do gerador de monstros.
+nbt.bos.minecart-from=§aVariáveis e entidades copiadas para o gerador de monstros.
+
+nbt.bos.chest-to=§aItems copiados do baú.
+nbt.bos.chest-from=§aItems copiados para o baú.
+
+nbt.bos.riding.title=Define as entidates aqui...
+nbt.bos.riding.pholder=§6Põe Livros das Almas aqui, para adicionar entidates.
+nbt.bos.riding.pholder-lore=§bLembra-te, o livro que estás a segurar é a entidade do topo.
+nbt.bos.riding.only-bos=§cApenas podes por Livros das Almas!
+nbt.bos.riding.has-riding=§cEsse livro ja tem entidades montadas!
+nbt.bos.riding.done=§aEntidates montadas definidas.
+
+nbt.bos.item.title=Define o item aqui...
+nbt.bos.item.pholder=§6O item aqui.
+nbt.bos.item.done=§aItem definido.
+
+nbt.bos.potion.title=Define a poção aqui...
+nbt.bos.potion.pholder=§6A poção aqui.
+nbt.bos.potion.done=§aPoção definida.
+
+nbt.bos.firework.title=DDefine o fogo de artifício aqui...
+nbt.bos.firework.pholder=§6O foguete de artifício aqui.
+nbt.bos.firework.done=§aFoguete de artifício definido.
+nbt.bos.firework.nop=§cIsso deve ser um foguete de artifício!
+
+nbt.bos.mob.title=Inventário
+nbt.bos.mob.pholder.head=§6Equipamento da cabeça
+nbt.bos.mob.pholder.chest=§6Equipamento do torso
+nbt.bos.mob.pholder.legs=§6Equipamento das pernas
+nbt.bos.mob.pholder.feet=§6Equipamento dos pés
+nbt.bos.mob.pholder.hand=§6Item na mão
+nbt.bos.mob.pholder.effects=§6Efeitos
+nbt.bos.mob.pholder.effects-lore=§bPoção aqui para aplicar os effeitos.
+nbt.bos.mob.done=§aItems definidos.
+nbt.bos.mob.potion=§cIsso deve ser uma poção!
+
+nbt.bos.offers.title=Offertas do Aldeão
+nbt.bos.offers.pholder.buy1=§6Item de compra 1
+nbt.bos.offers.pholder.buy2=§6Item de compra 2
+nbt.bos.offers.pholder.sell=§6Item de venda
+nbt.bos.offers.pholder.optional=§bIsto é opcional.
+nbt.bos.offers.done=§aOfertas do Aldeão definidas.
+nbt.bos.offers.invalid=§eAlgumas ofertas são inválidas.
+
+nbt.cmds.bos.description=Usado para criar e editar Livros das Almas.
+nbt.cmds.bos.holding=§cDeves estar a segurar um Livro das Almas!
+nbt.cmds.bos.give=§aDesfruta o teu Livro das Almas.
+nbt.cmds.bos.no-variable=§cEssa entidade não tem a variável {0}!
+nbt.cmds.bos.no-inventory=§cEssa entidade deve um 'Mob', 'Item', 'ThrownPotion' ou 'FireworkRocket'!
+nbt.cmds.bos.no-villager=§cEssa entidade deve ser um 'Villager'!
+nbt.cmds.bos.no-mob=§cEssa entidade deve um 'Mob'!
+nbt.cmds.bos.villager-info=§eCada coluna representa uma offerta.
+nbt.cmds.bos.drop-chance.cleared=§a'Drop chance' reposta.
+nbt.cmds.bos.drop-chance.invalid=§cTodos os valores devem ser entre 1 e 0 inclusivamente.
+nbt.cmds.bos.drop-chance.set=§a'Drop chance' definida.
+
+nbt.cmds.nbtb.description=Usado para ajudar na escrita de livros.
+nbt.cmds.nbtb.colors=§aOs códigos das cores foram subtituídos.
+nbt.cmds.nbtb.title=§aTítulo do livro definido.
+nbt.cmds.nbtb.author=§aAutor do livro definido.
+nbt.cmds.nbtb.unsign=§aLivro foi aberto.
+
+nbt.cmds.nbte.description=Usado para encantar qualquer item sem limitação. Tem usado para editar livros encantados.
+nbt.cmds.nbte.invalid-enchant=§cEncantamento inválido.
+nbt.cmds.nbte.added=§aEncantamento adicionado.
+nbt.cmds.nbte.removed=§aEncantamento removido.
+nbt.cmds.nbte.info=§eUsa nível = 0 para remover encantamentos.
+
+nbt.cmds.nbth.description=Usado para obter cabeças de jogadores.
+nbt.cmds.nbth.done=§aDesfruta da tua nova cabeça.
+nbt.cmds.nbth.invalid=§cNome do jogadore demasiado longo!
+
+nbt.cmds.nbti.description=Usado para editar nome e história de items.
+nbt.cmds.nbti.renamed=§aItem renomeado.
+nbt.cmds.nbti.name-removed=§aNome do item removido.
+nbt.cmds.nbti.lore-added=§aFrase da história do item adicionada.
+nbt.cmds.nbti.lore-removed=§aFrase da história do item removida.
+nbt.cmds.nbti.lore-nop=§cLFrase da história com índice {0} não exite!
+nbt.cmds.nbti.lore-cleared=§cHistória do item removida.
+
+nbt.cmds.nbtp.description=Usado para editar poções.
+nbt.cmds.nbtp.invalid-effect=§cEfeito de poção inválido!
+nbt.cmds.nbtp.added=§aEfeito de poção adicionado.
+nbt.cmds.nbtp.removed=§aEfeito de poção removido.
+nbt.cmds.nbtp.info=§eUsa nível = 0 para remover efeitos de poção.
+
+nbt.cmds.nbtt.description=Usado para editar entidades bloco (exceto geradores de monstros).
+nbt.cmds.nbtt.beacon.no-sight=§cNenhum sinal luminoso visível!
+nbt.cmds.nbtt.beacon.invalid-effect=§cEfeito inválido!
+nbt.cmds.nbtt.beacon.info=§eUsa 'clear' como efeito para remover o efeito.
+nbt.cmds.nbtt.beacon.set=§aEfeito definido ({0}).
+nbt.cmds.nbtt.beacon.cleared=§aEfeito removido ({0}).
+nbt.cmds.nbtt.jukebox.no-sight=§cNenhuma jukebox visível!
+nbt.cmds.nbtt.jukebox.set=§aDisco definido.
+nbt.cmds.nbtt.jukebox.cleared=§aDisco removido.
+
+nbt.cmds.nbts.description=Usado para editar geradores de monstros.
+nbt.cmds.nbts.no-sight=§cNenhum gerador de monstros visível!
+nbt.cmds.nbts.invalid-weight=§cPeso inválido. O peso e um inteiro entre 1 e 2147483647.
+nbt.cmds.nbts.entity-nop=§cEntidade com índice {0} não exite!
+nbt.cmds.nbts.no-variable=§cGeradores de monstros não têm a variável {0}!
+nbt.cmds.nbts.entity-added=§aEntidade adicionada ao gerador de monstros.
+nbt.cmds.nbts.firework-added=§aFoguete adicionado ao gerador de monstros.
+nbt.cmds.nbts.no-item=§cDeves estar a segurar um 'Book of Souls', Foguete ou um Ovo de Monstro!
+nbt.cmds.nbts.bos-added=§aEntidade do 'Book of Souls' adicionada ao gerador de monstros.
+nbt.cmds.nbts.entity-removed=§aEntidade removida do geradore de monstros.
+nbt.cmds.nbts.invalid-egg=§cOvo de monstro inválido!
+nbt.cmds.nbts.invalid-positon=§cPosição inválida!
+nbt.cmds.nbts.position-set=§aPosição definida para {0}.
+nbt.cmds.nbts.position-set-all=§aPosição definida para todas as entidades.
+nbt.cmds.nbts.cleared=§aEntidades removidas.
+nbt.cmds.nbts.copy=§aGerador de monstros copiado.
+nbt.cmds.nbts.paste=§aGerador de monstros colado.
+nbt.cmds.nbts.no-copy=§cDeves primeiro copiar um gerador de monstros!
+
+nbt.invalid-entity=§cEntidade inválida!
+nbt.entities-prefix=§7Entidades: 
+nbt.enchants-prefix=§7Encantamentos: 
+nbt.effects-prefix=§7Efeitos de poção: 
+nbt.variables-prefix=§7Variáveis: 
+nbt.invalid-level=§cNível inválido. O nível é um inteiro entre 1 e 32767.
+nbt.invalid-index=§cÍndice inválido. O Índice é um inteiro maior que 0.
+
+nbt.variable.updated=§aVariável atualizada.
+nbt.variable.cleared=§aVariável reposta.
+nbt.variable.invalid-format=§cFormato da variável {0} inválido!
+nbt.variable.formats.boolean=Variável binária 'true' ou 'false'.
+nbt.variable.formats.integer=Inteiro entre {0} e {1}.
+nbt.variable.formats.float=Decimal entre {0} e {1}.
+nbt.variable.formats.string=Cadeia de caracteres (tamanho máximo: 64).
+nbt.variable.formats.block='block id' e 'data' válidos, 'id:data'.
+nbt.variable.formats.vector=Conjunto de 3 números decimais, '0.00 0.00 0.00'.
+
+nbt.meta-error.format=§cDeves estar a segurar {0}.
+nbt.meta-error.item=um Item
+nbt.meta-error.potion=uma Poção
+nbt.meta-error.leatherarmor=Armadura de Couro
+nbt.meta-error.book=um Livro e Pena ou um Livro Escrito
+nbt.meta-error.book-quill=um Livro e Pena
+nbt.meta-error.book-written=um Livro Escrito

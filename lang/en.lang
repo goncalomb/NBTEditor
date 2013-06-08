@@ -1,0 +1,146 @@
+nbt.bos.inv.nothing=Nothing here!
+nbt.bos.inv.pholder=§oThis is a placeholder item, it will not be saved!
+
+nbt.bos.corrupted=§cThat Book of Souls is corrupted!
+
+nbt.bos.minecart-to=§aVariables and entities copied from the spawner.
+nbt.bos.minecart-from=§aVariables and entities copied to the spawner.
+
+nbt.bos.chest-to=§aItems copied from the chest.
+nbt.bos.chest-from=§aItems copied to the chest.
+
+nbt.bos.riding.title=Define the entities here...
+nbt.bos.riding.pholder=§6Put Books of Souls here, to add entities.
+nbt.bos.riding.pholder-lore=§bRemember, the book that you're holding is the top entity.
+nbt.bos.riding.only-bos=§cYou can only put Books of Souls.
+nbt.bos.riding.has-riding=§cThat book already has riding entities.
+nbt.bos.riding.done=§aRiding entities set.
+
+nbt.bos.item.title=Define the item here...
+nbt.bos.item.pholder=§6The item goes here.
+nbt.bos.item.done=§aItem set.
+
+nbt.bos.potion.title=Define the potion here...
+nbt.bos.potion.pholder=§6The potion goes here.
+nbt.bos.potion.done=§aPotion set.
+
+nbt.bos.firework.title=Define the firework here...
+nbt.bos.firework.pholder=§6The firework rocket goes here.
+nbt.bos.firework.done=§aFirework rocket set.
+nbt.bos.firework.nop=§cThat must be a firework rocket!
+
+nbt.bos.mob.title=Inventory
+nbt.bos.mob.pholder.head=§6Head Equipment
+nbt.bos.mob.pholder.chest=§6Chest Equipment
+nbt.bos.mob.pholder.legs=§6Legs Equipment
+nbt.bos.mob.pholder.feet=§6Feet Equipment
+nbt.bos.mob.pholder.hand=§6Hand Item
+nbt.bos.mob.pholder.effects=§6Effects
+nbt.bos.mob.pholder.effects-lore=§bPotion here to apply the effects.
+nbt.bos.mob.done=§aItems set.
+nbt.bos.mob.potion=§cThat must be a potion!
+
+nbt.bos.offers.title=Villager Offers
+nbt.bos.offers.pholder.buy1=§6Buy item 1
+nbt.bos.offers.pholder.buy2=§6Buy item 2
+nbt.bos.offers.pholder.sell=§6Sell item
+nbt.bos.offers.pholder.optional=§bThis is optional.
+nbt.bos.offers.done=§aVillager offers set.
+nbt.bos.offers.invalid=§eSome offers were invalid.
+
+nbt.cmds.bos.description=Used to create and edit Books of Souls.
+nbt.cmds.bos.holding=§cYou must be holding a Book of Souls!
+nbt.cmds.bos.give=§aEnjoy your Book of Souls.
+nbt.cmds.bos.no-variable=§cThat Entity doesn''t have the variable {0}!
+nbt.cmds.bos.no-inventory=§cThat must be a Mob, Item, ThrownPotion or FireworkRocket entity!
+nbt.cmds.bos.no-villager=§cThat must be a Villager entity!
+nbt.cmds.bos.no-mob=§cThat must be a Mob entity!
+nbt.cmds.bos.villager-info=§eEach column represents one offer.
+nbt.cmds.bos.drop-chance.cleared=§aDrop chance cleared.
+nbt.cmds.bos.drop-chance.invalid=§cAll values must be between 1 and 0 inclusive.
+nbt.cmds.bos.drop-chance.set=§aDrop chance set.
+
+nbt.cmds.nbtb.description=Used to help book writing.
+nbt.cmds.nbtb.colors=§aColor codes have been replaced.
+nbt.cmds.nbtb.title=§aBook title set.
+nbt.cmds.nbtb.author=§aBook author set.
+nbt.cmds.nbtb.unsign=§aBook unsigned.
+
+nbt.cmds.nbte.description=Used to enchant any item without limitation. Also used to edit enchanted books.
+nbt.cmds.nbte.invalid-enchant=§cInvalid enchantment.
+nbt.cmds.nbte.added=§aEnchantment added.
+nbt.cmds.nbte.removed=§aEnchantment removed.
+nbt.cmds.nbte.info=§eUse level = 0 to remove enchantments.
+
+nbt.cmds.nbth.description=Used to get players heads (skulls).
+nbt.cmds.nbth.done=§aEnjoy your new head.
+nbt.cmds.nbth.invalid=§cPlayer name too long!
+
+nbt.cmds.nbti.description=Used to edit item''s name and lore.
+nbt.cmds.nbti.renamed=§aItem renamed.
+nbt.cmds.nbti.name-removed=§aItem name removed.
+nbt.cmds.nbti.lore-added=§aItem lore line added.
+nbt.cmds.nbti.lore-removed=§aItem lore line removed.
+nbt.cmds.nbti.lore-nop=§cLore line with index {0} doesn''t exist!
+nbt.cmds.nbti.lore-cleared=§aItem lore cleared.
+
+nbt.cmds.nbtp.description=Used to edit potions.
+nbt.cmds.nbtp.invalid-effect=§cInvalid potion effect!
+nbt.cmds.nbtp.added=§aPotion effect added.
+nbt.cmds.nbtp.removed=§aPotion effect removed.
+nbt.cmds.nbtp.info=§eUse level = 0 to remove potion effects.
+
+nbt.cmds.nbtt.description=Used to edit entidades bloco (excepting spawners).
+nbt.cmds.nbtt.beacon.no-sight=§cNo beacon in sight!
+nbt.cmds.nbtt.beacon.invalid-effect=§cInvalid effect!
+nbt.cmds.nbtt.beacon.info=§eUse 'clear' as affect clear the effect.
+nbt.cmds.nbtt.beacon.set=§aEffect set ({0}).
+nbt.cmds.nbtt.beacon.cleared=§aEffect cleared ({0}).
+nbt.cmds.nbtt.jukebox.no-sight=§cNo jukebox in sight!
+nbt.cmds.nbtt.jukebox.set=§aRecord set.
+nbt.cmds.nbtt.jukebox.cleared=§aRecord cleared.
+
+nbt.cmds.nbts.description=Used to edit spawners.
+nbt.cmds.nbts.no-sight=§cNo spawner in sight!
+nbt.cmds.nbts.invalid-weight=§cInvalid weight. The weight is an integer between 1 and 2147483647.
+nbt.cmds.nbts.entity-nop=§cEntity with index {0} doesn''t exist!
+nbt.cmds.nbts.no-variable=§cSpawners don''t have the variable {0}!
+nbt.cmds.nbts.entity-added=§aEntity added to the spawner.
+nbt.cmds.nbts.firework-added=§aFirework rocket added to the spawner.
+nbt.cmds.nbts.no-item=§cYou must be holding a Book of Souls, Firework Rocket or a Spawn Egg!
+nbt.cmds.nbts.bos-added=§aEntity from the Book of Souls added to the spawner.
+nbt.cmds.nbts.entity-removed=§aEntity removed.
+nbt.cmds.nbts.invalid-egg=§cInvalid spawn egg!
+nbt.cmds.nbts.invalid-positon=§cInvalid position!
+nbt.cmds.nbts.position-set=§aPosition set for {0}.
+nbt.cmds.nbts.position-set-all=§aPostition set for all entities.
+nbt.cmds.nbts.cleared=§aEntities cleared.
+nbt.cmds.nbts.copy=§aSpawner copied.
+nbt.cmds.nbts.paste=§aSpawner pasted.
+nbt.cmds.nbts.no-copy=§cYou must copy a spawner first!
+
+nbt.invalid-entity=§cInvalid entity!
+nbt.entities-prefix=§7Entities: 
+nbt.enchants-prefix=§7Enchantments: 
+nbt.effects-prefix=§7Effects: 
+nbt.variables-prefix=§7Variables: 
+nbt.invalid-level=§cInvalid level. The level is an integer between 1 and 32767.
+nbt.invalid-index=§cInvalid index. The index is an integer greater than 0.
+
+nbt.variable.updated=§aVariable updated.
+nbt.variable.cleared=§aVariable cleared.
+nbt.variable.invalid-format=§cInvalid format for variable {0}!
+nbt.variable.formats.boolean=Boolean value 'true' or 'false'.
+nbt.variable.formats.integer=Integer between {0} and {1}.
+nbt.variable.formats.float=Decimal between {0} and {1}.
+nbt.variable.formats.string=String (max length: 64).
+nbt.variable.formats.block=Valid block id and data, 'id:data'.
+nbt.variable.formats.vector=Set of 3 decimal numbers, '0.00 0.00 0.00'.
+
+nbt.meta-error.format=§cYou must be holding {0}.
+nbt.meta-error.item=an Item
+nbt.meta-error.potion=a Potion
+nbt.meta-error.leatherarmor=Leather Armor
+nbt.meta-error.book=a Book an Quill or a Written Book
+nbt.meta-error.book-quill=a Book an Quill
+nbt.meta-error.book-written=a Written Book

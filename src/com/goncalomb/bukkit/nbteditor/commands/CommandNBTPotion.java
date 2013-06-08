@@ -43,7 +43,7 @@ public class CommandNBTPotion extends BetterCommand {
 				if (args.length == 3) {
 					duration = UtilsMc.parseTickDuration(args[2]);
 					if (duration == -1) {
-						sender.sendMessage(Lang._("general.invalid-duration"));
+						sender.sendMessage(Lang._("common.invalid-duration"));
 						return true;
 					}
 				}

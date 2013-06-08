@@ -25,7 +25,7 @@ public class CommandNBTHead extends BetterCommand {
 		if (meta.setOwner(args[0])) {
 			head.setItemMeta(meta);
 			if (((Player) sender).getInventory().addItem(head).size() != 0) {
-				sender.sendMessage(Lang._("general.inventory-full"));
+				sender.sendMessage(Lang._("common.inventory-full"));
 			} else {
 				sender.sendMessage(Lang._("nbt.cmds.nbth.done"));
 			}

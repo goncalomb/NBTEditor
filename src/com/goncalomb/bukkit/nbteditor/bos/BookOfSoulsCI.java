@@ -73,7 +73,7 @@ final class BookOfSoulsCI extends CustomItem {
 			bos.getEntityNBT().spawnStack(location);
 			event.setCancelled(true);
 		} else {
-			player.sendMessage(Lang._("general.no-sight"));
+			player.sendMessage(Lang._("common.no-sight"));
 		}
 		return;
 	};
