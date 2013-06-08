@@ -90,6 +90,11 @@ nbt.cmds.nbtp.added=§aEfeito de poção adicionado.
 nbt.cmds.nbtp.removed=§aEfeito de poção removido.
 nbt.cmds.nbtp.info=§eUsa nível = 0 para remover efeitos de poção.
 
+nbt.cmds.nbta.description=Usado para definir a cor da armadura de couro.
+nbt.cmds.nbta.info=§eA cor tem o formato RGB, #FFFFFF (ex. #FF0000 para vermelho).
+nbt.cmds.nbta.ok=§aCor definida.
+nbt.cmds.nbta.nop=§cFormato inválido de cor.
+
 nbt.cmds.nbtt.description=Usado para editar entidades bloco (exceto geradores de monstros).
 nbt.cmds.nbtt.beacon.no-sight=§cNenhum sinal luminoso visível!
 nbt.cmds.nbtt.beacon.invalid-effect=§cEfeito inválido!

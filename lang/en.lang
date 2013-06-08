@@ -76,7 +76,7 @@ nbt.cmds.nbth.description=Used to get players heads (skulls).
 nbt.cmds.nbth.done=§aEnjoy your new head.
 nbt.cmds.nbth.invalid=§cPlayer name too long!
 
-nbt.cmds.nbti.description=Used to edit item''s name and lore.
+nbt.cmds.nbti.description=Used to edit item's name and lore.
 nbt.cmds.nbti.renamed=§aItem renamed.
 nbt.cmds.nbti.name-removed=§aItem name removed.
 nbt.cmds.nbti.lore-added=§aItem lore line added.
@@ -90,7 +90,12 @@ nbt.cmds.nbtp.added=§aPotion effect added.
 nbt.cmds.nbtp.removed=§aPotion effect removed.
 nbt.cmds.nbtp.info=§eUse level = 0 to remove potion effects.
 
-nbt.cmds.nbtt.description=Used to edit entidades bloco (excepting spawners).
+nbt.cmds.nbta.description=Used to set the color of leather armor.
+nbt.cmds.nbta.info=§eThe color as the RGB format, #FFFFFF (e.g. #FF0000 for red).
+nbt.cmds.nbta.ok=§aColor set.
+nbt.cmds.nbta.nop=§cInvalid color format.
+
+nbt.cmds.nbtt.description=Used to edit tile entitites (excepting spawners).
 nbt.cmds.nbtt.beacon.no-sight=§cNo beacon in sight!
 nbt.cmds.nbtt.beacon.invalid-effect=§cInvalid effect!
 nbt.cmds.nbtt.beacon.info=§eUse 'clear' as affect clear the effect.

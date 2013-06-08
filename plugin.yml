@@ -12,6 +12,7 @@ permissions:
       nbteditor.item: true
       nbteditor.enchant: true
       nbteditor.potion: true
+      nbteditor.armor: true
       nbteditor.book: true
       nbteditor.head: true
       nbteditor.spawner: true

@@ -6,6 +6,7 @@ import com.goncalomb.bukkit.betterplugin.BetterPlugin;
 import com.goncalomb.bukkit.customitems.api.CustomItemManager;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.commands.CommandBOS;
+import com.goncalomb.bukkit.nbteditor.commands.CommandNBTArmor;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTBook;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTEnchant;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTHead;
@@ -37,10 +38,11 @@ public final class NBTEditor extends BetterPlugin {
 		registerCommand(new CommandNBTEnchant());
 		registerCommand(new CommandNBTBook());
 		registerCommand(new CommandNBTPotion());
+		registerCommand(new CommandNBTArmor());
 		registerCommand(new CommandNBTHead());
 		registerCommand(new CommandNBTTile());
 		
-		CustomItemManager itemManager =  CustomItemManager.getInstance(this);
+		CustomItemManager itemManager = CustomItemManager.getInstance(this);
 		BookOfSouls.initialize(this, itemManager);
 		itemManager.registerNew(new MobInspectorTool(), this);
 		itemManager.registerNew(new MobRemoverTool(), this);
