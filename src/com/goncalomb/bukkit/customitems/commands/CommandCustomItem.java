@@ -33,7 +33,7 @@ public final class CommandCustomItem extends BetterCommand {
 		if (customItem == null) {
 			throw new BetterCommandException(Lang._("citems.cmds.citem.no-item"));
 		} else if (intAmount < 1) {
-			throw new BetterCommandException(Lang._("general.invalid-amount"));
+			throw new BetterCommandException(Lang._("common.invalid-amount"));
 		} else {
 			ItemStack item = customItem.getItem();
 			if (item == null) {
@@ -41,7 +41,7 @@ public final class CommandCustomItem extends BetterCommand {
 			} else {
 				item.setAmount(intAmount);
 				if (player.getInventory().addItem(item).size() > 0) {
-					throw new BetterCommandException(Lang._("general.inventory-full"));
+					throw new BetterCommandException(Lang._("common.inventory-full"));
 				} else {
 					player.sendMessage(Lang._("citems.cmds.citem.ok"));
 				}
@@ -59,7 +59,7 @@ public final class CommandCustomItem extends BetterCommand {
 	public boolean giveCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		Player player = Bukkit.getPlayer(args[0]);
 		if (player == null) {
-			throw new BetterCommandException("Player not found!");
+			throw new BetterCommandException(Lang._("common.player-not-found"));
 		}
 		giveCustomItem(player, args[1], (args.length == 3 ? args[2] : null));
 		return true;

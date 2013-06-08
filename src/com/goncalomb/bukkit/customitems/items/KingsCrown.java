@@ -32,7 +32,7 @@ public class KingsCrown extends CustomItem {
 			inv.setHelmet(event.getItem().getItemStack());
 			event.getItem().remove();
 			event.setCancelled(true);
-			UtilsMc.broadcastToWorld(event.getPlayer().getWorld(), Lang._format("citems.crown-found", event.getPlayer().getName()));
+			UtilsMc.broadcastToWorld(event.getPlayer().getWorld(), Lang._format("citems.crown.found", event.getPlayer().getName()));
 		}
 	}
 	
@@ -43,7 +43,7 @@ public class KingsCrown extends CustomItem {
 	
 	@Override
 	public void onDespawn(ItemDespawnEvent event) {
-		UtilsMc.broadcastToWorld(event.getEntity().getWorld(), Lang._("citems.crown-despawn"));
+		UtilsMc.broadcastToWorld(event.getEntity().getWorld(), Lang._("citems.crown.despawn"));
 	}
 	
 	@Override
@@ -52,7 +52,7 @@ public class KingsCrown extends CustomItem {
 	}
 	
 	private void lostCrown(Player player) {
-		UtilsMc.broadcastToWorld(player.getWorld(), Lang._format("citems.crown-lost", player.getName()));
+		UtilsMc.broadcastToWorld(player.getWorld(), Lang._format("citems.crown.lost", player.getName()));
 	}
 	
 }

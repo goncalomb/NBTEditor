@@ -1,0 +1,8 @@
+citems.cmds.citem.description=Usado para obter items modificados.
+citems.cmds.citem.no-item=§cEsse item não existe! Usa '/citem list' para obter a lista do items.
+citems.cmds.citem.ok=§aDesfruta do teu item.
+citems.cmds.citem.invalid=§eEste item não pode ser obtido usando o commando citem. O plugin dono poderá fornecer uma forma de o obter!
+
+citems.crown.found=§6{0} §ffoi coroado §6Rei§f!
+citems.crown.lost=§6{0} §fperdeu a sua coroa!
+citems.crown.despawn=A §6Coroa Real§f foi perdida para sempre!
