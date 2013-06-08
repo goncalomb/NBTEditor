@@ -70,7 +70,9 @@ nbt.cmds.nbte.description=Usado para encantar qualquer item sem limitação. Tem
 nbt.cmds.nbte.invalid-enchant=§cEncantamento inválido.
 nbt.cmds.nbte.added=§aEncantamento adicionado.
 nbt.cmds.nbte.removed=§aEncantamento removido.
-nbt.cmds.nbte.info=§eUsa nível = 0 para remover encantamentos.
+nbt.cmds.nbte.info=§eUsa nível = 0 para remover encantamentos. Usa 'glow' como nome do encantamento para aplicar apenas o brilho.
+nbt.cmds.nbte.glow=§aBrilho adicionado.
+nbt.cmds.nbte.cleared=§aTodos os encahntamentos removidos.
 
 nbt.cmds.nbth.description=Usado para obter cabeças de jogadores.
 nbt.cmds.nbth.done=§aDesfruta da tua nova cabeça.

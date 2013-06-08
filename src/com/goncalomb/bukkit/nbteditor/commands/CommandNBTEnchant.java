@@ -12,6 +12,7 @@ import com.goncalomb.bukkit.betterplugin.BetterCommand;
 import com.goncalomb.bukkit.betterplugin.BetterCommandException;
 import com.goncalomb.bukkit.betterplugin.BetterSubCommandType;
 import com.goncalomb.bukkit.betterplugin.Lang;
+import com.goncalomb.bukkit.reflect.NBTUtils;
 
 public class CommandNBTEnchant extends BetterCommand {
 	
@@ -25,6 +26,11 @@ public class CommandNBTEnchant extends BetterCommand {
 	public boolean enchantCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		if (args.length > 0) {
 			HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
+			if (args[0].equalsIgnoreCase("glow")) {
+				NBTUtils.setItemStackFakeEnchantment(item.item);
+				sender.sendMessage(Lang._("nbt.cmds.nbte.glow"));
+				return true;
+			}
 			Enchantment enchant = EnchantmentsMap.getByName(args[0]);
 			if (enchant == null) {
 				sender.sendMessage(Lang._("nbt.cmds.nbte.invalid-enchant"));
@@ -59,6 +65,17 @@ public class CommandNBTEnchant extends BetterCommand {
 		sender.sendMessage(Lang._("nbt.enchants-prefix") + EnchantmentsMap.getStringList());
 		sender.sendMessage(Lang._("nbt.cmds.nbte.info"));
 		return false;
+	}
+	
+	@SubCommand(args = "clear", type = BetterSubCommandType.PLAYER_ONLY)
+	public boolean enchant_clearCommand(CommandSender sender, String[] args) throws BetterCommandException {
+		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
+		for (Enchantment ench : item.meta.getEnchants().keySet()) {
+			item.meta.removeEnchant(ench);
+		}
+		item.save();
+		sender.sendMessage(Lang._("nbt.cmds.nbte.cleared"));
+		return true;
 	}
 	
 }

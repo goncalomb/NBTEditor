@@ -70,7 +70,9 @@ nbt.cmds.nbte.description=Used to enchant any item without limitation. Also used
 nbt.cmds.nbte.invalid-enchant=§cInvalid enchantment.
 nbt.cmds.nbte.added=§aEnchantment added.
 nbt.cmds.nbte.removed=§aEnchantment removed.
-nbt.cmds.nbte.info=§eUse level = 0 to remove enchantments.
+nbt.cmds.nbte.info=§eUse level = 0 to remove enchantments. Use 'glow' as enchantment name to apply only the glow effect.
+nbt.cmds.nbte.glow=§aGlow added.
+nbt.cmds.nbte.cleared=§aAll enchantments removed.
 
 nbt.cmds.nbth.description=Used to get players heads (skulls).
 nbt.cmds.nbth.done=§aEnjoy your new head.
