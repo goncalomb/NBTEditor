@@ -21,7 +21,7 @@ final class InternalCommand extends Command {
 			if (_command.hasPermission(sender)) {
 				_command.invokeSubCommand(sender, label, args, 0);
 			} else {
-				sender.sendMessage(Lang._("general.commands.no-perm"));
+				sender.sendMessage(Lang._("common.commands.no-perm"));
 			}
 		} else {
 			sender.sendMessage("Nop!");

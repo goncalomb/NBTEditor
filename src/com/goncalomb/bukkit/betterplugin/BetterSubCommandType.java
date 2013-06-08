@@ -30,6 +30,6 @@ public enum BetterSubCommandType {
 	}
 	
 	public String getInvalidSenderMessage() {
-		return Lang._("general.commands.invalid-sender." + this.toString());
+		return Lang._("common.commands.invalid-sender." + this.toString());
 	}
 }

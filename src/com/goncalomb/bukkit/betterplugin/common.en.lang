@@ -1,0 +1,15 @@
+common.commands.no-perm=§cYou don't have permission to do this command!
+common.commands.invalid-sender.PLAYER_ONLY=§cThis command can only be used by players.
+common.commands.invalid-sender.NO_PLAYER=§cThis command cannot be used by players.
+common.commands.invalid-sender.CONSOLE_ONLY=§cThis command can only be used on the console.
+common.commands.invalid-sender.BLOCK_ONLY=§cThis command can only be used on a command block.
+
+common.player-not-found=§cPlayer not found!
+common.inventory-full=§cInventory full!
+common.no-perm=§cYou don't have permission to do that!
+common.no-sight=§cNo block in sight!
+common.invalid-duration=§cInvalid duration. Use value in ticks or 0000d00h00m00s.
+
+citems.disabled=§cThis item is disabled!
+citems.invalid-world=§cThis item is disabled on this world!
+citems.no-perm=§cYou don't have permission to use this item!

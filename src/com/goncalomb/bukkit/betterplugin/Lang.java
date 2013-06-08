@@ -1,12 +1,15 @@
 package com.goncalomb.bukkit.betterplugin;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
@@ -14,6 +17,7 @@ import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.libs.jline.internal.InputStreamReader;
 import org.bukkit.plugin.Plugin;
 
 public final class Lang {
@@ -21,14 +25,14 @@ public final class Lang {
 	private static Logger _logger;
 	private static String _lang;
 	private static boolean _useFiles;
-	private static HashMap<Plugin, FileConfiguration> _data = new HashMap<Plugin, FileConfiguration>();
+	private static LinkedHashMap<Plugin, HashMap<String, String>> _data = new LinkedHashMap<Plugin, HashMap<String, String>>();
 	private static HashMap<String, MessageFormat> _formatCache = new HashMap<String, MessageFormat>();
 	
 	static {
 		_logger = new Logger(null, null) {
 			@Override
 			public void log(LogRecord logRecord) {
-				logRecord.setMessage("[gmbLang] " + logRecord.getMessage());
+				logRecord.setMessage("[com.goncalomb] " + logRecord.getMessage());
 				super.log(logRecord);
 			}
 		};
@@ -48,11 +52,14 @@ public final class Lang {
 	
 	static void unregisterPlugin(BetterPlugin plugin) {
 		_data.remove(plugin);
+		if (_data.size() == 1) {
+			_data.clear();
+		}
 		_formatCache.clear();
 	}
 	
 	private static void getLanguage() {
-		File configFile = new File(BetterPlugin.getGmbConfigFolder(), "language_config.yml");
+		File configFile = new File(BetterPlugin.getGmbConfigFolder(), "lang-config.yml");
 		FileConfiguration config = (configFile.exists() ? YamlConfiguration.loadConfiguration(configFile) : new YamlConfiguration());
 		config.options().copyDefaults(true);
 		config.addDefault("language", "en");
@@ -66,58 +73,101 @@ public final class Lang {
 		}
 	}
 	
-	private static FileConfiguration loadLanguage(Plugin plugin, String internalFile, String externalFile) {
-		InputStream stream = plugin.getResource(internalFile);
-		FileConfiguration lang = null;
-		
-		if (_useFiles) {
-			File langFile = new File(plugin.getDataFolder().getParent(), "XptoLang/" + externalFile);
-			if (langFile.exists()) {
-				lang = YamlConfiguration.loadConfiguration(langFile);
-				if (stream != null) {
-					lang.setDefaults(YamlConfiguration.loadConfiguration(stream));
+	private static HashMap<String, String> readPairs(File file) {
+		try {
+			return readPairs(new FileInputStream(file));
+		} catch (FileNotFoundException e) {
+			return null;
+		}
+	}
+	
+	private static HashMap<String, String> readPairs(InputStream stream) {
+		if (stream == null) {
+			return null;
+		}
+		HashMap<String, String> pairs = new HashMap<String, String>();
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+			String line;
+			while ((line = reader.readLine()) != null) {
+				int i = line.indexOf('=');
+				if (i >= 0) {
+					String key = line.substring(0, i).trim();
+					String value = line.substring(i + 1);
+					if (key.length() > 0 && value.length() > 0 && key.charAt(0) != '#') {
+						pairs.put(key, value);
+					}
 				}
-			} else if (stream != null) {
-				lang = YamlConfiguration.loadConfiguration(stream);
-				_logger.info("Creating language file (" + _lang + ") for " + plugin.getName() + ".");
+			}
+			reader.close();
+		} catch (IOException e) {
+			return null;
+		}
+		return pairs;
+	}
+	
+	private static HashMap<String, String> loadLanguage(Plugin plugin, String internalFile, String externalFile) {
+		HashMap<String, String> pairs = readPairs(plugin.getResource(internalFile));
+		if (pairs != null && _useFiles) {
+			File langFile = new File(BetterPlugin.getGmbConfigFolder(), "lang/" + externalFile);
+			if (langFile.exists()) {
+				HashMap<String, String> filePairs = readPairs(langFile);
+				if (filePairs != null) {
+					for (String key : pairs.keySet()) {
+						if (filePairs.containsKey(key)) {
+							pairs.put(key, filePairs.get(key));
+						}
+					}
+				}
+			} else {
+				_logger.info("Creating language file (" + _lang + ").");
 				try {
-					lang.save(langFile);
+					langFile.getParentFile().mkdirs();
+					InputStream inStream = plugin.getResource(internalFile);
+					FileOutputStream outStream = new FileOutputStream(langFile);
+					byte[] buffer = new byte[1024];
+					int length;
+					while ((length = inStream.read(buffer)) > 0) {
+					   outStream.write(buffer, 0, length);
+					}
+					outStream.close();
 				} catch (IOException e) {
 					_logger.log(Level.SEVERE, "Could not save language file to " + langFile, e);
 				}
 			}
-		} else if (stream != null) {
-			lang = YamlConfiguration.loadConfiguration(stream);
 		}
-		return lang;
+		return pairs;
 	}
 	
 	private static void loadLanguage(Plugin plugin) {
 		if (_data.size() == 0) {
-			String fileName = "general_" + _lang + ".yml";
-			_logger.info("Loading general language file (" + _lang + ").");
-			FileConfiguration lang = loadLanguage(plugin, Lang.class.getPackage().getName().replace('.', '/') + "/" + fileName, fileName);
-			if (lang == null) {
-				_logger.warning("Missing general language file (" + _lang + ")!");
+			_logger.info("Loading common language file (" + _lang + ").");
+			String fileName = "common." + _lang + ".lang";
+			HashMap<String, String> pairs = loadLanguage(plugin, Lang.class.getPackage().getName().replace('.', '/') + "/" + fileName, fileName);
+			if (pairs == null) {
+				_logger.warning("Missing common language file (" + _lang + ")!");
+			} else {
+				_data.put(null, pairs);
 			}
-			_data.put(null, lang);
 		}
 		
 		_logger.info("Loading language file (" + _lang + ") for " + plugin.getName() + ".");
-		FileConfiguration lang = loadLanguage(plugin, "language_" + _lang + ".yml", plugin.getName() + "/" + _lang + ".yml");
-		if (lang == null) {
+		String fileName = _lang + ".lang";
+		HashMap<String, String> pairs = loadLanguage(plugin, "lang/" + fileName, plugin.getName() + "/" + fileName);
+		if (pairs == null) {
 			_logger.warning("Missing language file (" + _lang + ") for " + plugin.getName() + "!");
+		} else {
+			_data.put(plugin, pairs);
 		}
-		_data.put(plugin, lang);
 	}
 	
 	public static String _(String key) {
-		String result = (String) get(key, false);
+		String result = get(key);
 		return (result == null ? key : result);
 	}
 	
 	public static String _format(String key, Object... objects) {
-		String format = (String) get(key, false);
+		String format = get(key);
 		if (format != null) {
 			MessageFormat msgFormat = _formatCache.get(key);
 			if (msgFormat == null) {
@@ -129,46 +179,15 @@ public final class Lang {
 		return key;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public static List<String> _list(String key) {
-		List<String> result = (List<String>) get(key, true);
-		return (result == null ? Arrays.asList(key) : result);
-	}
-	
-	private static Object get(String key, boolean asList) {
-		boolean found = false;
-		Object result = null;
-		if (asList) {
-			for (FileConfiguration file : _data.values()) {
-				if (file != null && file.contains(key)) {
-					found = true;
-					List<String> resultList = file.getStringList(key);
-					if (resultList != null && resultList.size() > 0) {
-						result = resultList;
-					}
-					break;
-				}
-			}
-		} else {
-			for (FileConfiguration file : _data.values()) {
-				if (file != null && file.contains(key)) {
-					found = true;
-					if (file.isString(key)) {
-						result = file.getString(key);
-					}
-					break;
-				}
+	private static String get(String key) {
+		for (HashMap<String, String> pairs : _data.values()) {
+			String result = pairs.get(key);
+			if (result != null) {
+				return result;
 			}
 		}
-		
-		if (!found) {
-			_logger.warning("Translation key not found, " + key + "!");
-		} else {
-			if (result == null) {
-				_logger.warning("Invalid type for translation key " + key + ", expecting String" + (asList ? " List" : "") + "!");
-			}
-		}
-		return result;
+		_logger.warning("Translation key not found, " + key + "!");
+		return null;
 	}
 	
 }
