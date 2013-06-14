@@ -9,7 +9,7 @@ import com.goncalomb.bukkit.nbteditor.commands.HandItemWrapper.Book.BookType;
 import com.goncalomb.bukkit.UtilsMc;
 import com.goncalomb.bukkit.betterplugin.BetterCommand;
 import com.goncalomb.bukkit.betterplugin.BetterCommandException;
-import com.goncalomb.bukkit.betterplugin.BetterSubCommandType;
+import com.goncalomb.bukkit.betterplugin.BetterCommandType;
 import com.goncalomb.bukkit.betterplugin.Lang;
 
 public class CommandNBTBook extends BetterCommand {
@@ -20,7 +20,7 @@ public class CommandNBTBook extends BetterCommand {
 		setDescription(Lang._("nbt.cmds.nbtb.description"));
 	}
 	
-	@SubCommand(args = "colors", type = BetterSubCommandType.PLAYER_ONLY)
+	@Command(args = "colors", type = BetterCommandType.PLAYER_ONLY)
 	public boolean colorsCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.BOTH);
 		if (item.meta.hasTitle()) {
@@ -37,7 +37,7 @@ public class CommandNBTBook extends BetterCommand {
 		return true;
 	}
 	
-	@SubCommand(args = "title", type = BetterSubCommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<title>")
+	@Command(args = "title", type = BetterCommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<title>")
 	public boolean titleCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
 		item.meta.setTitle(UtilsMc.parseColors(UtilsMc.parseColors(StringUtils.join(args, " "))));
@@ -46,7 +46,7 @@ public class CommandNBTBook extends BetterCommand {
 		return true;
 	}
 	
-	@SubCommand(args = "author", type = BetterSubCommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<author>")
+	@Command(args = "author", type = BetterCommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<author>")
 	public boolean authorCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
 		item.meta.setAuthor(UtilsMc.parseColors(UtilsMc.parseColors(StringUtils.join(args, " "))));
@@ -55,7 +55,7 @@ public class CommandNBTBook extends BetterCommand {
 		return true;
 	}
 	
-	@SubCommand(args = "unsign", type = BetterSubCommandType.PLAYER_ONLY)
+	@Command(args = "unsign", type = BetterCommandType.PLAYER_ONLY)
 	public boolean unsignCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
 		item.meta.setTitle(null);

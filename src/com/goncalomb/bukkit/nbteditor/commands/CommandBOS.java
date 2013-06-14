@@ -15,7 +15,7 @@ import com.goncalomb.bukkit.EntityTypeMap;
 import com.goncalomb.bukkit.UtilsMc;
 import com.goncalomb.bukkit.betterplugin.BetterCommand;
 import com.goncalomb.bukkit.betterplugin.BetterCommandException;
-import com.goncalomb.bukkit.betterplugin.BetterSubCommandType;
+import com.goncalomb.bukkit.betterplugin.BetterCommandType;
 import com.goncalomb.bukkit.betterplugin.Lang;
 
 public class CommandBOS extends BetterCommand {
@@ -44,7 +44,7 @@ public class CommandBOS extends BetterCommand {
 		return null;
 	}
 	
-	@SubCommand(args = "get", type = BetterSubCommandType.PLAYER_ONLY, maxargs = 1, usage = "<entity>")
+	@Command(args = "get", type = BetterCommandType.PLAYER_ONLY, maxargs = 1, usage = "<entity>")
 	public boolean getCommand(CommandSender sender, String[] args) {
 		if (args.length == 1) {
 			EntityType entityType = EntityTypeMap.getByName(args[0]); // We use EntityTypeMap.getByName(...) instead of EntityType.fromName(...) to catch ThrownPotions.
@@ -68,7 +68,7 @@ public class CommandBOS extends BetterCommand {
 		return false;
 	}
 	
-	@SubCommand(args = "getempty", type = BetterSubCommandType.PLAYER_ONLY)
+	@Command(args = "getempty", type = BetterCommandType.PLAYER_ONLY)
 	public boolean getemptyCommand(CommandSender sender, String[] args) {
 		PlayerInventory inv = ((Player) sender).getInventory();
 		if (inv.firstEmpty() == -1) {
@@ -80,7 +80,7 @@ public class CommandBOS extends BetterCommand {
 		return true;
 	}
 	
-	@SubCommand(args = "var", type = BetterSubCommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<variable> [value]")
+	@Command(args = "var", type = BetterCommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<variable> [value]")
 	public boolean varCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		BookOfSouls bos = getBos((Player) sender);
 		NBTVariable variable = bos.getEntityNBT().getVariable(args[0]);
@@ -102,7 +102,7 @@ public class CommandBOS extends BetterCommand {
 		return true;
 	}
 	
-	@SubCommand(args = "clearvar", type = BetterSubCommandType.PLAYER_ONLY, minargs = 1, usage = "<variable>")
+	@Command(args = "clearvar", type = BetterCommandType.PLAYER_ONLY, minargs = 1, usage = "<variable>")
 	public boolean clearvarCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		BookOfSouls bos = getBos((Player) sender);
 		NBTVariable variable = bos.getEntityNBT().getVariable(args[0]);
@@ -116,7 +116,7 @@ public class CommandBOS extends BetterCommand {
 		return true;
 	}
 	
-	@SubCommand(args = "riding", type = BetterSubCommandType.PLAYER_ONLY)
+	@Command(args = "riding", type = BetterCommandType.PLAYER_ONLY)
 	public boolean ridingCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		Player player = (Player) sender;
 		BookOfSouls bos = getBos(player);
@@ -124,7 +124,7 @@ public class CommandBOS extends BetterCommand {
 		return true;
 	}
 	
-	@SubCommand(args = "items", type = BetterSubCommandType.PLAYER_ONLY)
+	@Command(args = "items", type = BetterCommandType.PLAYER_ONLY)
 	public boolean itemsCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		Player player = (Player) sender;
 		BookOfSouls bos = getBos(player);
@@ -134,7 +134,7 @@ public class CommandBOS extends BetterCommand {
 		return true;
 	}
 	
-	@SubCommand(args = "offers", type = BetterSubCommandType.PLAYER_ONLY)
+	@Command(args = "offers", type = BetterCommandType.PLAYER_ONLY)
 	public boolean offersCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		Player player = (Player) sender;
 		if (!getBos(player).openOffersInventory(player)) {
@@ -145,7 +145,7 @@ public class CommandBOS extends BetterCommand {
 		return true;
 	}
 	
-	@SubCommand(args = "dropchance", type = BetterSubCommandType.PLAYER_ONLY, maxargs = 5, usage = "[<head> <chest> <legs> <feet> <hand>]")
+	@Command(args = "dropchance", type = BetterCommandType.PLAYER_ONLY, maxargs = 5, usage = "[<head> <chest> <legs> <feet> <hand>]")
 	public boolean dropchanceCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		Player player = (Player) sender;
 		if (args.length == 0) {

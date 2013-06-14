@@ -12,7 +12,7 @@ import com.goncalomb.bukkit.Utils;
 import com.goncalomb.bukkit.UtilsMc;
 import com.goncalomb.bukkit.betterplugin.BetterCommand;
 import com.goncalomb.bukkit.betterplugin.BetterCommandException;
-import com.goncalomb.bukkit.betterplugin.BetterSubCommandType;
+import com.goncalomb.bukkit.betterplugin.BetterCommandType;
 import com.goncalomb.bukkit.betterplugin.Lang;
 
 public class CommandNBTPotion extends BetterCommand {
@@ -23,7 +23,7 @@ public class CommandNBTPotion extends BetterCommand {
 		setDescription(Lang._("nbt.cmds.nbtp.description"));
 	}
 	
-	@SubCommand(args = "", type = BetterSubCommandType.PLAYER_ONLY, maxargs = 3, usage = "<effect> [level] [duration]")
+	@Command(args = "", type = BetterCommandType.PLAYER_ONLY, maxargs = 3, usage = "<effect> [level] [duration]")
 	public boolean potionCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		if (args.length > 0) {
 			HandItemWrapper.Potion item = new HandItemWrapper.Potion((Player) sender);

@@ -18,7 +18,7 @@ import com.goncalomb.bukkit.Utils;
 import com.goncalomb.bukkit.UtilsMc;
 import com.goncalomb.bukkit.betterplugin.BetterCommand;
 import com.goncalomb.bukkit.betterplugin.BetterCommandException;
-import com.goncalomb.bukkit.betterplugin.BetterSubCommandType;
+import com.goncalomb.bukkit.betterplugin.BetterCommandType;
 import com.goncalomb.bukkit.betterplugin.Lang;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
@@ -64,7 +64,7 @@ public class CommandNBTSpawner extends BetterCommand {
 		return index;
 	}
 	
-	@SubCommand(args = "info", type = BetterSubCommandType.PLAYER_ONLY)
+	@Command(args = "info", type = BetterCommandType.PLAYER_ONLY)
 	public boolean infoCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
 		Location loc = spawner.getLocation();
@@ -80,7 +80,7 @@ public class CommandNBTSpawner extends BetterCommand {
 		return true;
 	}
 	
-	@SubCommand(args = "var", type = BetterSubCommandType.PLAYER_ONLY, maxargs = 2, usage = "<variable> <value>")
+	@Command(args = "var", type = BetterCommandType.PLAYER_ONLY, maxargs = 2, usage = "<variable> <value>")
 	public boolean varCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
 		if(args.length > 0) {
@@ -105,7 +105,7 @@ public class CommandNBTSpawner extends BetterCommand {
 		return false;
 	}
 	
-	@SubCommand(args = "add", type = BetterSubCommandType.PLAYER_ONLY, maxargs = 2, usage = "<entity> [weight]")
+	@Command(args = "add", type = BetterCommandType.PLAYER_ONLY, maxargs = 2, usage = "<entity> [weight]")
 	public boolean addCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		if (args.length >= 1) {
 			SpawnerNBTWrapper spawner = getSpawner((Player) sender);
@@ -123,7 +123,7 @@ public class CommandNBTSpawner extends BetterCommand {
 		return false;
 	}
 	
-	@SubCommand(args = "additem", type = BetterSubCommandType.PLAYER_ONLY, maxargs = 1, usage = "[weight]")
+	@Command(args = "additem", type = BetterCommandType.PLAYER_ONLY, maxargs = 1, usage = "[weight]")
 	public boolean additemCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
 		ItemStack item = ((Player) sender).getItemInHand();
@@ -156,7 +156,7 @@ public class CommandNBTSpawner extends BetterCommand {
 		return true;
 	}
 	
-	@SubCommand(args = "del", type = BetterSubCommandType.PLAYER_ONLY, minargs = 1, usage = "<index>")
+	@Command(args = "del", type = BetterCommandType.PLAYER_ONLY, minargs = 1, usage = "<index>")
 	public boolean delCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
 		int index = parseIndex(args[0], spawner.getEntities());
@@ -166,7 +166,7 @@ public class CommandNBTSpawner extends BetterCommand {
 		return true;
 	}
 	
-	@SubCommand(args = "setpos", type = BetterSubCommandType.PLAYER_ONLY, minargs = 3, maxargs = 4, usage = "<x> <y> <z> [index]")
+	@Command(args = "setpos", type = BetterCommandType.PLAYER_ONLY, minargs = 3, maxargs = 4, usage = "<x> <y> <z> [index]")
 	public boolean setposCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
 		double x, y, z;
@@ -194,7 +194,7 @@ public class CommandNBTSpawner extends BetterCommand {
 		return true;
 	}
 	
-	@SubCommand(args = "clear", type = BetterSubCommandType.PLAYER_ONLY)
+	@Command(args = "clear", type = BetterCommandType.PLAYER_ONLY)
 	public boolean clearCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
 		spawner.clearEntities();
@@ -203,7 +203,7 @@ public class CommandNBTSpawner extends BetterCommand {
 		return true;
 	}
 	
-	@SubCommand(args = "see", type = BetterSubCommandType.PLAYER_ONLY)
+	@Command(args = "see", type = BetterCommandType.PLAYER_ONLY)
 	public boolean seeCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		Player player = (Player) sender;
 		SpawnerNBTWrapper spawner = getSpawner(player);
@@ -211,7 +211,7 @@ public class CommandNBTSpawner extends BetterCommand {
 		return true;
 	}
 	
-	@SubCommand(args = "copy", type = BetterSubCommandType.PLAYER_ONLY)
+	@Command(args = "copy", type = BetterCommandType.PLAYER_ONLY)
 	public boolean copyCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		Player player = (Player) sender;
 		SpawnerNBTWrapper clipboard = getSpawner(player);
@@ -220,7 +220,7 @@ public class CommandNBTSpawner extends BetterCommand {
 		return true;
 	}
 	
-	@SubCommand(args = "paste", type = BetterSubCommandType.PLAYER_ONLY)
+	@Command(args = "paste", type = BetterCommandType.PLAYER_ONLY)
 	public boolean pasteCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		Player player = (Player) sender;
 		if (player.hasMetadata("NBTEditor-spawner")) {

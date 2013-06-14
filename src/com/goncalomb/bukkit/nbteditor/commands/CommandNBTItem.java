@@ -11,7 +11,7 @@ import com.goncalomb.bukkit.Utils;
 import com.goncalomb.bukkit.UtilsMc;
 import com.goncalomb.bukkit.betterplugin.BetterCommand;
 import com.goncalomb.bukkit.betterplugin.BetterCommandException;
-import com.goncalomb.bukkit.betterplugin.BetterSubCommandType;
+import com.goncalomb.bukkit.betterplugin.BetterCommandType;
 import com.goncalomb.bukkit.betterplugin.Lang;
 
 public class CommandNBTItem extends BetterCommand {
@@ -22,7 +22,7 @@ public class CommandNBTItem extends BetterCommand {
 		setDescription(Lang._("nbt.cmds.nbti.description"));
 	}
 	
-	@SubCommand(args = "name", type = BetterSubCommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "<new-name>")
+	@Command(args = "name", type = BetterCommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "<new-name>")
 	public boolean nameCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		item.meta.setDisplayName(args.length == 0 ? null : UtilsMc.parseColors(StringUtils.join(args, " ")));
@@ -31,7 +31,7 @@ public class CommandNBTItem extends BetterCommand {
 		return true;
 	}
 	
-	@SubCommand(args = "lore add", type = BetterSubCommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<new-lore>")
+	@Command(args = "lore add", type = BetterCommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<new-lore>")
 	public boolean lore_addCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		List<String> lores = item.meta.getLore();
@@ -45,7 +45,7 @@ public class CommandNBTItem extends BetterCommand {
 		return true;
 	}
 	
-	@SubCommand(args = "lore del", type = BetterSubCommandType.PLAYER_ONLY, minargs = 1, usage = "<index>")
+	@Command(args = "lore del", type = BetterCommandType.PLAYER_ONLY, minargs = 1, usage = "<index>")
 	public boolean lore_delCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		List<String> lores = item.meta.getLore();
@@ -63,7 +63,7 @@ public class CommandNBTItem extends BetterCommand {
 		return true;
 	}
 	
-	@SubCommand(args = "lore delall", type = BetterSubCommandType.PLAYER_ONLY)
+	@Command(args = "lore delall", type = BetterCommandType.PLAYER_ONLY)
 	public boolean lore_delallCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		item.meta.setLore(null);

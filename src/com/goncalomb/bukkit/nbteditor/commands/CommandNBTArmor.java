@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 import com.goncalomb.bukkit.betterplugin.BetterCommand;
 import com.goncalomb.bukkit.betterplugin.BetterCommandException;
-import com.goncalomb.bukkit.betterplugin.BetterSubCommandType;
+import com.goncalomb.bukkit.betterplugin.BetterCommandType;
 import com.goncalomb.bukkit.betterplugin.Lang;
 
 public class CommandNBTArmor extends BetterCommand {
@@ -18,7 +18,7 @@ public class CommandNBTArmor extends BetterCommand {
 		setDescription(Lang._("nbt.cmds.nbta.description"));
 	}
 	
-	@SubCommand(args = "", type = BetterSubCommandType.PLAYER_ONLY, maxargs = 1, usage = "<color>")
+	@Command(args = "", type = BetterCommandType.PLAYER_ONLY, maxargs = 1, usage = "<color>")
 	public boolean potionCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		if (args.length > 0) {
 			HandItemWrapper.LeatherArmor item = new HandItemWrapper.LeatherArmor((Player) sender);

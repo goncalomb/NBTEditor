@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import com.goncalomb.bukkit.betterplugin.BetterCommand;
-import com.goncalomb.bukkit.betterplugin.BetterSubCommandType;
+import com.goncalomb.bukkit.betterplugin.BetterCommandType;
 import com.goncalomb.bukkit.betterplugin.Lang;
 
 public class CommandNBTHead extends BetterCommand {
@@ -18,7 +18,7 @@ public class CommandNBTHead extends BetterCommand {
 		setDescription(Lang._("nbt.cmds.nbth.description"));
 	}
 	
-	@SubCommand(args = "", type = BetterSubCommandType.PLAYER_ONLY, minargs = 1, usage = "<player-name>")
+	@Command(args = "", type = BetterCommandType.PLAYER_ONLY, minargs = 1, usage = "<player-name>")
 	public boolean headCommand(CommandSender sender, String[] args) {
 		ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 		SkullMeta meta = (SkullMeta) head.getItemMeta();

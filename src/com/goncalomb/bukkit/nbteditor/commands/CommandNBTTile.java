@@ -11,7 +11,7 @@ import com.goncalomb.bukkit.PotionEffectsMap;
 import com.goncalomb.bukkit.UtilsMc;
 import com.goncalomb.bukkit.betterplugin.BetterCommand;
 import com.goncalomb.bukkit.betterplugin.BetterCommandException;
-import com.goncalomb.bukkit.betterplugin.BetterSubCommandType;
+import com.goncalomb.bukkit.betterplugin.BetterCommandType;
 import com.goncalomb.bukkit.betterplugin.Lang;
 import com.goncalomb.bukkit.nbteditor.nbt.BeaconNBTWrapper;
 import com.goncalomb.bukkit.nbteditor.nbt.JukeboxNBTWrapper;
@@ -40,7 +40,7 @@ public class CommandNBTTile extends BetterCommand {
 		return new JukeboxNBTWrapper(block);
 	}
 	
-	@SubCommand(args = "beacon", type = BetterSubCommandType.PLAYER_ONLY, minargs = 0, maxargs = 2, usage = "<primary|secondary> <effect>")
+	@Command(args = "beacon", type = BetterCommandType.PLAYER_ONLY, minargs = 0, maxargs = 2, usage = "<primary|secondary> <effect>")
 	public boolean beaconEffectCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		if (args.length == 2 && (args[0].equalsIgnoreCase("primary") || args[0].equalsIgnoreCase("secondary"))) {
 			BeaconNBTWrapper beacon = getBeacon((Player) sender);
@@ -68,7 +68,7 @@ public class CommandNBTTile extends BetterCommand {
 		return false;
 	}
 	
-	@SubCommand(args = "record", type = BetterSubCommandType.PLAYER_ONLY)
+	@Command(args = "record", type = BetterCommandType.PLAYER_ONLY)
 	public boolean setRecordCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		JukeboxNBTWrapper jukebox = getJukebox((Player) sender);
 		ItemStack item = ((Player) sender).getItemInHand();
