@@ -6,7 +6,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-public enum BetterSubCommandType {
+public enum BetterCommandType {
 	DEFAULT, // All
 	PLAYER_ONLY, // Player
 	NO_PLAYER, // Console, Remote, Block

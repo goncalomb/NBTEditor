@@ -18,11 +18,10 @@ final class InternalCommand extends Command {
 	@Override
 	public boolean execute(CommandSender sender, String label, String[] args) {
 		if (_command._plugin != null && _command._plugin.isEnabled()) {
-			if (_command.hasPermission(sender)) {
-				_command.invokeSubCommand(sender, label, args, 0);
-			} else {
-				sender.sendMessage(Lang._("common.commands.no-perm"));
+			if (!testPermission(sender)) {
+				return true;
 			}
+			_command.execute(sender, label, args);
 		} else {
 			sender.sendMessage("Nop!");
 		}
@@ -31,11 +30,8 @@ final class InternalCommand extends Command {
 	
 	@Override
 	public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
-		if (_command.hasPermission(sender)) {
-			BetterSubCommand subCommandEx = _command.getSubCommand(args, 0);
-			if (subCommandEx != null) {
-				return subCommandEx.getSubCommandNames(sender, args[args.length - 1]);
-			}
+		if (_command._plugin != null && _command._plugin.isEnabled() && testPermissionSilent(sender)) {
+			return _command.tabComplete(sender, args);
 		}
 		return null;
 	}

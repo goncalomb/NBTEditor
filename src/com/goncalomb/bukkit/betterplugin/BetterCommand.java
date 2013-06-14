@@ -1,7 +1,5 @@
 package com.goncalomb.bukkit.betterplugin;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -10,22 +8,9 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
-import com.goncalomb.bukkit.Utils;
-import com.goncalomb.bukkit.Utils.SplitType;
-
-public abstract class BetterCommand extends BetterSubCommand {
-	
-	@Retention(RetentionPolicy.RUNTIME)
-	protected @interface SubCommand {
-		String args();
-		BetterSubCommandType type() default BetterSubCommandType.DEFAULT;
-		String usage() default "";
-		int minargs() default 0;
-		int maxargs() default 0;
-	}
+public abstract class BetterCommand extends SubCommand {
 	
 	InternalCommand _internalCommand;
-	private String _permission;
 	Plugin _plugin;
 	
 	public BetterCommand(String name) {
@@ -33,17 +18,18 @@ public abstract class BetterCommand extends BetterSubCommand {
 	}
 	
 	public BetterCommand(String name, String permission) {
-		_main = this;
+		_base = this;
 		_internalCommand = new InternalCommand(this, name);
-		_permission = permission;
+		_internalCommand.setPermission(permission);
+		_internalCommand.setPermissionMessage(Lang._("common.commands.no-perm"));
 		
 		Method[] methods = this.getClass().getDeclaredMethods();
 		for (Method method : methods) {
-			SubCommand config = method.getAnnotation(SubCommand.class);
+			Command config = method.getAnnotation(Command.class);
 			if (config != null) {
 				Class<?>[] params = method.getParameterTypes();
 				if (params.length == 2 && method.getReturnType() == boolean.class && params[0] == CommandSender.class && params[1] == String[].class) {
-					addSubCommand(Utils.split(config.args().toLowerCase(), SplitType.WHITE_SPACES), 0, config, method);
+					addSubCommand(config, method);
 				}
 			}
 		}
@@ -61,20 +47,13 @@ public abstract class BetterCommand extends BetterSubCommand {
 		_internalCommand.setAliases(aliases);
 	}
 	
-	public boolean hasPermission(CommandSender sender) {
-		return (_permission == null || sender.hasPermission(_permission));
-	}
-	
 	public Plugin getPlugin() {
 		return _plugin;
 	}
 	
 	boolean invokeMethod(Method method, CommandSender sender, String[] args) {
 		try {
-			if (!(Boolean) method.invoke(this, sender, args)) {
-				return false;
-			}
-			return true;
+			return (Boolean) method.invoke(this, sender, args);
 		} catch (InvocationTargetException e) {
 			if (e.getCause() instanceof BetterCommandException) {
 				sender.sendMessage(e.getCause().getMessage());
