@@ -12,8 +12,8 @@ public abstract class RadiusBomb extends GenericBomb {
 	
 	private int _radius;
 	
-	protected RadiusBomb(String slug, String name, MaterialData material, boolean triggerOnDrop) {
-		super(slug, name, material, triggerOnDrop);
+	protected RadiusBomb(String slug, String name, MaterialData material) {
+		super(slug, name, material);
 	}
 	
 	protected int getRadius() {

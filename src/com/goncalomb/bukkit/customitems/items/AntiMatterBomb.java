@@ -1,13 +1,16 @@
 package com.goncalomb.bukkit.customitems.items;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Item;
 import org.bukkit.material.MaterialData;
@@ -15,16 +18,26 @@ import org.bukkit.util.Vector;
 
 public final class AntiMatterBomb extends GenericBomb {
 	
+	private boolean _cleanup;
+	
 	public AntiMatterBomb() {
-		super("anti-matter-bomb", ChatColor.GREEN + "Anti-Matter Bomb", new MaterialData(Material.ENDER_PEARL), false);
+		super("anti-matter-bomb", ChatColor.GREEN + "Anti-Matter Bomb", new MaterialData(Material.ENDER_PEARL));
 		setLore("§c§k----- §c§lCaution! §r§c§k-----");
 		setDefaultConfig("enabled", false);
 		setDefaultConfig("fuse", 60);
+		setDefaultConfig("cleanup", true);
+	}
+	
+	@Override
+	public void applyConfig(ConfigurationSection section) {
+		super.applyConfig(section);
+		_cleanup = section.getBoolean("cleanup", true);
 	}
 	
 	@Override
 	public void onExplode(Item item, Location location) {
 		World world = location.getWorld();
+		Random rand = new Random();
 		int radiusSquared = 25;
 		final ArrayList<FallingBlock> fallingBlocks = new ArrayList<FallingBlock>();
 		for (int x = -5; x < 5; ++x) {
@@ -35,9 +48,12 @@ public final class AntiMatterBomb extends GenericBomb {
 						Location loc = location.clone().add(v);
 						Block block = loc.getBlock();
 						if (!block.isEmpty() && !block.isLiquid() && block.getType() != Material.BEDROCK) {
+							Vector vel = location.toVector().subtract(loc.toVector()).normalize();
+							vel.add(new Vector(rand.nextFloat() - 0.5, 0, rand.nextFloat() - 0.5)).normalize();
+							vel.multiply(1 + rand.nextFloat());
 							FallingBlock fallingBlock = world.spawnFallingBlock(loc, block.getTypeId(), block.getData());
 							fallingBlock.setDropItem(false);
-							fallingBlock.setVelocity(Vector.getRandom().multiply(2).subtract(new Vector(1, 1, 1)).normalize().multiply(2));
+							fallingBlock.setVelocity(vel);
 							fallingBlocks.add(fallingBlock);
 							block.setType(Material.AIR);
 						}
@@ -45,19 +61,23 @@ public final class AntiMatterBomb extends GenericBomb {
 				}
 			}
 		}
-		Bukkit.getScheduler().runTaskLater(getPlugin(), new Runnable() {
-			@Override
-			public void run() {
-				for (FallingBlock fallingBlock : fallingBlocks) {
-					Block b = fallingBlock.getLocation().getBlock();
-					if (b.getTypeId() == fallingBlock.getBlockId() && b.getData() == fallingBlock.getBlockData()) {
-						b.setType(Material.AIR);
+		if (fallingBlocks.size() > 0) {
+			world.playSound(location, Sound.BAT_TAKEOFF, 5, 0.1f);
+			if (_cleanup) {
+				Bukkit.getScheduler().runTaskLater(getPlugin(), new Runnable() {
+					@Override
+					public void run() {
+						for (FallingBlock fallingBlock : fallingBlocks) {
+							Block b = fallingBlock.getLocation().getBlock();
+							if (b.getTypeId() == fallingBlock.getBlockId() && b.getData() == fallingBlock.getBlockData()) {
+								b.setType(Material.AIR);
+							}
+							fallingBlock.remove();
+						}
 					}
-					fallingBlock.remove();
-				}
+				}, 5*20);
 			}
-		}, 5*20);
-		
+		}
 	}
 	
 }

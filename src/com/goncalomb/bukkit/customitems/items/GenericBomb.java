@@ -17,12 +17,13 @@ import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 
 public abstract class GenericBomb extends CustomItem {
 	
-	private boolean _triggerOnDrop;
 	private int _fuse;
+	private boolean _triggerOnDrop;
 	
-	protected GenericBomb(String slug, String name, MaterialData material, boolean triggerOnDrop) {
+	protected GenericBomb(String slug, String name, MaterialData material) {
 		super(slug, name, material);
-		_triggerOnDrop = triggerOnDrop;
+		setDefaultConfig("fuse", 40);
+		setDefaultConfig("trigger-on-drop", false);
 	}
 	
 	protected int getFuse() {
@@ -33,6 +34,7 @@ public abstract class GenericBomb extends CustomItem {
 	public void applyConfig(ConfigurationSection section) {
 		super.applyConfig(section);
 		_fuse = section.getInt("fuse", 40);
+		_triggerOnDrop = section.getBoolean("trigger-on-drop", false);
 	}
 	
 	@Override

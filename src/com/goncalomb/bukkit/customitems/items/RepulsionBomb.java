@@ -19,7 +19,7 @@ public final class RepulsionBomb extends RadiusBomb {
 	private double _force;
 	
 	public RepulsionBomb() {
-		super("repulsion-bomb", ChatColor.YELLOW + "Repulsion Bomb", new MaterialData(Material.COAL), true);
+		super("repulsion-bomb", ChatColor.YELLOW + "Repulsion Bomb", new MaterialData(Material.COAL));
 		setLore("§bLeft-click key to throw the bomb.",
 				"§bThe bomb will explode after a few seconds.");
 		setDefaultConfig("fuse", 45);
