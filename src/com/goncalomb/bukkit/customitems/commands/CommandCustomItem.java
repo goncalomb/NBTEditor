@@ -11,7 +11,7 @@ import org.bukkit.plugin.Plugin;
 import com.goncalomb.bukkit.Utils;
 import com.goncalomb.bukkit.betterplugin.BetterCommand;
 import com.goncalomb.bukkit.betterplugin.BetterCommandException;
-import com.goncalomb.bukkit.betterplugin.BetterSubCommandType;
+import com.goncalomb.bukkit.betterplugin.BetterCommandType;
 import com.goncalomb.bukkit.betterplugin.Lang;
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.CustomItemManager;
@@ -49,13 +49,13 @@ public final class CommandCustomItem extends BetterCommand {
 		}
 	}
 	
-	@SubCommand(args = "get", type = BetterSubCommandType.PLAYER_ONLY, minargs = 1, maxargs = 2, usage = "<item> [amount]")
+	@Command(args = "get", type = BetterCommandType.PLAYER_ONLY, minargs = 1, maxargs = 2, usage = "<item> [amount]")
 	public boolean getCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		giveCustomItem((Player) sender, args[0], (args.length == 2 ? args[1] : null));
 		return true;
 	}
 	
-	@SubCommand(args = "give", type = BetterSubCommandType.DEFAULT, minargs = 2, maxargs = 3, usage = "<player> <item> [amount]")
+	@Command(args = "give", type = BetterCommandType.DEFAULT, minargs = 2, maxargs = 3, usage = "<player> <item> [amount]")
 	public boolean giveCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		Player player = Bukkit.getPlayer(args[0]);
 		if (player == null) {
@@ -65,7 +65,7 @@ public final class CommandCustomItem extends BetterCommand {
 		return true;
 	}
 	
-	@SubCommand(args = "list", type = BetterSubCommandType.DEFAULT)
+	@Command(args = "list", type = BetterCommandType.DEFAULT)
 	public boolean listCommand(CommandSender sender, String[] args) {
 		World world = (sender instanceof Player ? ((Player) sender).getWorld() : null);
 		for (Plugin plugin : _manager.getOwningPlugins()) {
