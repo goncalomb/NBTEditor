@@ -27,14 +27,12 @@ import com.goncalomb.bukkit.reflect.NBTUtils;
 public class EntityNBT {
 	
 	private static HashMap<EntityType, Class<? extends EntityNBT>> _entityClasses;
-	private static HashMap<Class<? extends EntityNBT>, EntityType> _entityTypes;
 	
 	private EntityType _entityType;
 	protected NBTTagCompoundWrapper _data;
 	
 	static {
 		_entityClasses = new HashMap<EntityType, Class<? extends EntityNBT>>();
-		_entityTypes = new HashMap<Class<? extends EntityNBT>, EntityType>();
 		
 		registerEntity(EntityType.PIG, BreedNBT.class);
 		registerEntity(EntityType.SHEEP, BreedNBT.class);
@@ -79,7 +77,13 @@ public class EntityNBT {
 		registerEntity(EntityType.ARROW, EntityNBT.class);
 		registerEntity(EntityType.ENDER_PEARL, EnderPearlNBT.class);
 		registerEntity(EntityType.THROWN_EXP_BOTTLE, EntityNBT.class);
+		registerEntity(EntityType.SNOWBALL, EntityNBT.class);
+		//registerEntity(EntityType.EGG, EntityNBT.class); // Eggs thrown eggs cannot be put in spawners, missing internal EntityId.
 		registerEntity(EntityType.SPLASH_POTION, ThrownPotionNBT.class);
+		//registerEntity(EntityType.ENDER_SIGNAL, EntityNBT.class); // Broken cannot get it to work.
+		registerEntity(EntityType.FIREBALL, FireballNBT.class);
+		registerEntity(EntityType.SMALL_FIREBALL, FireballNBT.class);
+		registerEntity(EntityType.WITHER_SKULL, FireballNBT.class);
 		
 		registerEntity(EntityType.BOAT, EntityNBT.class);
 		
@@ -164,14 +168,17 @@ public class EntityNBT {
 		variables.add("player", new BooleanVariable("player"));
 		EntityNBTVariableManager.registerVariables(EntityType.ARROW, variables);
 		
+		variables = new NBTGenericVariableContainer("LargeFireball");
+		variables.add("explosion-power", new IntegerVariable("ExplosionPower", 0, 25)); // Limited to 25
+		EntityNBTVariableManager.registerVariables(EntityType.FIREBALL, variables);
+		
 	}
 	
 	private static void registerEntity(EntityType entityType, Class<? extends EntityNBT> entityClass) {
 		_entityClasses.put(entityType, entityClass);
-		_entityTypes.put(entityClass, entityType);
 	}
 	
-	private static EntityNBT newInstance(EntityType entityType, NBTTagCompoundWrapper data) {
+	private static EntityNBT newInstance(EntityType entityType) {
 		Class<? extends EntityNBT> entityClass = _entityClasses.get(entityType);
 		EntityNBT instance;
 		try {
@@ -179,7 +186,6 @@ public class EntityNBT {
 		} catch (Exception e) {
 			throw new Error("Error when instantiating " + entityClass.getName() + ".", e);
 		}
-		instance.initialize(entityType, data);
 		return instance;
 	}
 	
@@ -193,14 +199,18 @@ public class EntityNBT {
 	
 	public static EntityNBT fromEntityType(EntityType entityType) {
 		if (_entityClasses.containsKey(entityType)) {
-			return newInstance(entityType, new NBTTagCompoundWrapper());
+			EntityNBT entityNbt = newInstance(entityType);
+			entityNbt.initialize(entityType, null);
+			return entityNbt;
 		}
 		return null;
 	}
 	
 	static EntityNBT fromEntityType(EntityType entityType, NBTTagCompoundWrapper data) {
 		if (_entityClasses.containsKey(entityType)) {
-			return newInstance(entityType, data);
+			EntityNBT entityNbt = newInstance(entityType);
+			entityNbt.initialize(entityType, data);
+			return entityNbt;
 		} else {
 			return new EntityNBT(entityType, data);
 		}
@@ -211,7 +221,7 @@ public class EntityNBT {
 	}
 	
 	protected EntityNBT() {
-		initialize(_entityTypes.get(this.getClass()), new NBTTagCompoundWrapper());
+		_data = new NBTTagCompoundWrapper();
 	}
 	
 	private EntityNBT(EntityType entityType, NBTTagCompoundWrapper data) {
@@ -220,7 +230,9 @@ public class EntityNBT {
 	
 	private void initialize(EntityType entityType, NBTTagCompoundWrapper data) {
 		_entityType = entityType;
-		_data = data;
+		if (data != null) {
+			_data = data;
+		}
 		_data.setString("id", EntityTypeMap.getName(_entityType));
 	}
 	
