@@ -7,13 +7,16 @@ import org.bukkit.block.Block;
 import com.goncalomb.bukkit.reflect.NBTTagCompoundWrapper;
 import com.goncalomb.bukkit.reflect.NBTUtils;
 
-public abstract class TileNBTWrapper {
+public class TileNBTWrapper {
 	
 	protected Block _block;
 	protected NBTTagCompoundWrapper _data;
 	
 	public static final boolean allowsCustomName(Material mat) {
-		return (mat == Material.CHEST || mat == Material.CAULDRON || mat == Material.FURNACE || mat == Material.DISPENSER || mat == Material.DROPPER || mat == Material.ENCHANTMENT_TABLE || mat == Material.COMMAND);
+		return (mat == Material.CHEST || mat == Material.FURNACE
+				|| mat == Material.DISPENSER || mat == Material.DROPPER
+				|| mat == Material.HOPPER || mat == Material.BREWING_STAND
+				|| mat == Material.ENCHANTMENT_TABLE || mat == Material.COMMAND);
 	}
 	
 	public TileNBTWrapper(Block block) {
@@ -28,7 +31,7 @@ public abstract class TileNBTWrapper {
 	public final void setCustomName(String name) {
 		if (allowsCustomName()) {
 			if (name == null) {
-				_data.remove("CustomName");
+				_data.setString("CustomName", "");
 			} else {
 				_data.setString("CustomName", name);
 			}

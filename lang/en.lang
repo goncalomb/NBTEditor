@@ -106,6 +106,9 @@ nbt.cmds.nbtt.beacon.cleared=§aEffect cleared ({0}).
 nbt.cmds.nbtt.jukebox.no-sight=§cNo jukebox in sight!
 nbt.cmds.nbtt.jukebox.set=§aRecord set.
 nbt.cmds.nbtt.jukebox.cleared=§aRecord cleared.
+nbt.cmds.nbtt.name.no-sight=§cYou must be looking at a Chest, Furnace, Dispenser, Dropper, Hopper, Brewing Stand, Enchantment Table or Commmand Block!
+nbt.cmds.nbtt.name.set=§aName set.
+nbt.cmds.nbtt.name.cleared=§aName cleared.
 
 nbt.cmds.nbts.description=Used to edit spawners.
 nbt.cmds.nbts.no-sight=§cNo spawner in sight!

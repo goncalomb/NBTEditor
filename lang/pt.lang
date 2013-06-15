@@ -106,6 +106,9 @@ nbt.cmds.nbtt.beacon.cleared=§aEfeito removido ({0}).
 nbt.cmds.nbtt.jukebox.no-sight=§cNenhuma jukebox visível!
 nbt.cmds.nbtt.jukebox.set=§aDisco definido.
 nbt.cmds.nbtt.jukebox.cleared=§aDisco removido.
+nbt.cmds.nbtt.name.no-sight=§cDeves estar a olhar para um Chest, Furnace, Dispenser, Dropper, Hopper, Brewing Stand, Enchantment Table ou Commmand Block!
+nbt.cmds.nbtt.name.set=§aNome definido.
+nbt.cmds.nbtt.name.cleared=§aNome removido.
 
 nbt.cmds.nbts.description=Usado para editar geradores de monstros.
 nbt.cmds.nbts.no-sight=§cNenhum gerador de monstros visível!

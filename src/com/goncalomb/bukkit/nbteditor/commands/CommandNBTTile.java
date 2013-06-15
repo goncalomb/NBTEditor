@@ -1,5 +1,6 @@
 package com.goncalomb.bukkit.nbteditor.commands;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
@@ -15,6 +16,7 @@ import com.goncalomb.bukkit.betterplugin.BetterCommandType;
 import com.goncalomb.bukkit.betterplugin.Lang;
 import com.goncalomb.bukkit.nbteditor.nbt.BeaconNBTWrapper;
 import com.goncalomb.bukkit.nbteditor.nbt.JukeboxNBTWrapper;
+import com.goncalomb.bukkit.nbteditor.nbt.TileNBTWrapper;
 
 public class CommandNBTTile extends BetterCommand {
 	
@@ -78,6 +80,20 @@ public class CommandNBTTile extends BetterCommand {
 			sender.sendMessage(Lang._("nbt.cmds.nbtt.jukebox.cleared"));
 		} else {
 			sender.sendMessage(Lang._("nbt.cmds.nbtt.jukebox.set"));
+		}
+		return true;
+	}
+	
+	@Command(args = "name", type = BetterCommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "[name]")
+	public boolean nameCommand(CommandSender sender, String[] args) throws BetterCommandException {
+		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
+		if (TileNBTWrapper.allowsCustomName(block.getType())) {
+			TileNBTWrapper tile = new TileNBTWrapper(block);
+			tile.setCustomName(args.length == 0 ? null : UtilsMc.parseColors(StringUtils.join(args, " ")));
+			tile.save();
+			sender.sendMessage(args.length == 0 ? Lang._("nbt.cmds.nbtt.name.cleared") : Lang._("nbt.cmds.nbtt.name.set"));
+		} else {
+			sender.sendMessage(Lang._("nbt.cmds.nbtt.name.no-sight"));
 		}
 		return true;
 	}
