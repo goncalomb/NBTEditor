@@ -22,7 +22,7 @@ public class CommandNBTItem extends BetterCommand {
 		setDescription(Lang._("nbt.cmds.nbti.description"));
 	}
 	
-	@Command(args = "name", type = BetterCommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "<new-name>")
+	@Command(args = "name", type = BetterCommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "[name]")
 	public boolean nameCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		item.meta.setDisplayName(args.length == 0 ? null : UtilsMc.parseColors(StringUtils.join(args, " ")));
@@ -31,7 +31,7 @@ public class CommandNBTItem extends BetterCommand {
 		return true;
 	}
 	
-	@Command(args = "lore add", type = BetterCommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<new-lore>")
+	@Command(args = "lore add", type = BetterCommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<lore>")
 	public boolean lore_addCommand(CommandSender sender, String[] args) throws BetterCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		List<String> lores = item.meta.getLore();

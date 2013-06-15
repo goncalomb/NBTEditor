@@ -28,7 +28,7 @@ final class InventoryForSpawnerEntities extends CustomInventory {
 	@Override
 	protected void inventoryClick(final InventoryClickEvent event) {
 		final int slot = event.getRawSlot();
-		if (slot > 0 && slot < 54) {
+		if (slot >= 0 && slot < 54) {
 			final ItemStack item = event.getCurrentItem().clone();
 			if (event.isShiftClick()) {
 				Bukkit.getScheduler().runTask(getPlugin(), new Runnable() {
@@ -43,6 +43,8 @@ final class InventoryForSpawnerEntities extends CustomInventory {
 				}
 				event.setCancelled(true);
 			}
+		} else if (event.getCursor().getType() == Material.AIR) {
+			event.setCancelled(true);
 		}
 	}
 
