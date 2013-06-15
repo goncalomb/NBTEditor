@@ -26,7 +26,7 @@ class SubCommand {
 	
 	protected BetterCommand _base;
 	private Method _method = null;
-	private BetterCommandType _type;
+	private BetterCommandType _type = BetterCommandType.DEFAULT;
 	private String _usage;
 	private int _minArgs;
 	private int _maxArgs;
