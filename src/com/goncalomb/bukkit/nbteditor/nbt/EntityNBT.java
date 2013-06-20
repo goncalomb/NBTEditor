@@ -14,6 +14,7 @@ import com.goncalomb.bukkit.EntityTypeMap;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BlockVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ByteVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.DoubleVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.FloatVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
@@ -166,6 +167,7 @@ public class EntityNBT {
 		variables = new NBTGenericVariableContainer("Arrow");
 		variables.add("pickup", new ByteVariable("pickup", (byte) 0, (byte) 2));
 		variables.add("player", new BooleanVariable("player"));
+		variables.add("damage", new DoubleVariable("damage"));
 		EntityNBTVariableManager.registerVariables(EntityType.ARROW, variables);
 		
 		variables = new NBTGenericVariableContainer("LargeFireball");
@@ -221,6 +223,11 @@ public class EntityNBT {
 	}
 	
 	protected EntityNBT() {
+		this(null);
+	}
+	
+	protected EntityNBT(EntityType entityType) {
+		_entityType = entityType;
 		_data = new NBTTagCompoundWrapper();
 	}
 	

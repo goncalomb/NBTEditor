@@ -1,6 +1,7 @@
 package com.goncalomb.bukkit.nbteditor.nbt;
 
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 
@@ -17,9 +18,12 @@ public final class FireworkNBT extends EntityNBT {
 		EntityNBTVariableManager.registerVariables(FireworkNBT.class, variables);
 	}
 	
-	public FireworkNBT() { }
+	public FireworkNBT() {
+		super(EntityType.FIREWORK);
+	}
 	
 	public FireworkNBT(ItemStack firework) {
+		this();
 		if (firework.getType() != Material.FIREWORK) throw new IllegalArgumentException("Invalid argument firework.");
 		_data.setInt("Life", 0);
 		_data.setCompound("FireworksItem", NBTUtils.nbtTagCompoundFromItemStack(firework));

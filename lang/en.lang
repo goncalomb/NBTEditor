@@ -143,6 +143,7 @@ nbt.variable.invalid-format=§cInvalid format for variable {0}!
 nbt.variable.formats.boolean=Boolean value 'true' or 'false'.
 nbt.variable.formats.integer=Integer between {0} and {1}.
 nbt.variable.formats.float=Decimal between {0} and {1}.
+nbt.variable.formats.double=Decimal.
 nbt.variable.formats.string=String (max length: 64).
 nbt.variable.formats.block=Valid block id and data, 'id:data'.
 nbt.variable.formats.vector=Set of 3 decimal numbers, '0.00 0.00 0.00'.
