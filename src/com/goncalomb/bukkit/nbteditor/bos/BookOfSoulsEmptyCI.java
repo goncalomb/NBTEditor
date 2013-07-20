@@ -20,7 +20,6 @@ final class BookOfSoulsEmptyCI extends CustomItem {
 	
 	@Override
 	public void onInteractEntity(final PlayerInteractEntityEvent event, PlayerDetails details) {
-		System.out.println("sadasdasds");
 		if (EntityNBT.isValidType(event.getRightClicked().getType())) {
 			details.consumeItem();
 			Bukkit.getScheduler().runTask(getPlugin(), new Runnable() {

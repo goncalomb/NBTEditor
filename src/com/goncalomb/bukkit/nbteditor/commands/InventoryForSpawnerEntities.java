@@ -39,7 +39,7 @@ final class InventoryForSpawnerEntities extends CustomInventory {
 				});
 			} else {
 				if (event.getCursor().getType() == Material.AIR) {
-					event.setCursor(item);
+					event.getView().setCursor(item);
 				}
 				event.setCancelled(true);
 			}

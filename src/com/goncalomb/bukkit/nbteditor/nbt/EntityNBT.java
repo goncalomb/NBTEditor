@@ -44,6 +44,7 @@ public class EntityNBT {
 		
 		registerEntity(EntityType.WOLF, TamedNBT.class);
 		registerEntity(EntityType.OCELOT, TamedNBT.class);
+		registerEntity(EntityType.HORSE, HorseNBT.class);
 		
 		registerEntity(EntityType.VILLAGER, VillagerNBT.class);
 		registerEntity(EntityType.IRON_GOLEM, MobNBT.class);
