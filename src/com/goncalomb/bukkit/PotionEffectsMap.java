@@ -31,6 +31,9 @@ public final class PotionEffectsMap {
 		_potionEffectNames.put("water-breathing", PotionEffectType.WATER_BREATHING);
 		_potionEffectNames.put("weakness", PotionEffectType.WEAKNESS);
 		_potionEffectNames.put("wither", PotionEffectType.WITHER);
+		_potionEffectNames.put("health-boost", PotionEffectType.HEALTH_BOOST);
+		_potionEffectNames.put("absorption", PotionEffectType.ABSORPTION);
+		_potionEffectNames.put("saturation", PotionEffectType.SATURATION);
 		
 		_potionEffectStringList = StringUtils.join(_potionEffectNames.keySet(), ", ");
 	}
