@@ -1,6 +1,7 @@
 package com.goncalomb.bukkit.nbteditor.nbt;
 
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.HorseVariantVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
@@ -14,7 +15,7 @@ public final class HorseNBT extends BreedNBT {
 		variables.add("chested", new BooleanVariable("ChestedHorse"));
 		variables.add("eating", new BooleanVariable("EatingHaystack"));
 		variables.add("owner", new StringVariable("OwnerName"));
-		variables.add("variant", new IntegerVariable("Variant"));
+		variables.add("variant", new HorseVariantVariable());
 		EntityNBTVariableManager.registerVariables(HorseNBT.class, variables);
 	}
 	
