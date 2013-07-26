@@ -160,15 +160,28 @@ public final class NBTUtils {
 		BukkitReflect.invokeMethod(getTileEntity(block), _a1, data._nbtBaseObject);
 	}
 	
-	public static void setItemStackFakeEnchantment(ItemStack item) {
+	public static NBTTagCompoundWrapper getItemStackTag(ItemStack item) {
 		try {
 			Object handle = _handle.get(item);
 			Object tag = BukkitReflect.invokeMethod(handle, _getTag);
-			NBTTagCompoundWrapper data = (tag == null ? new NBTTagCompoundWrapper() : new NBTTagCompoundWrapper(tag));
-			data.setList("ench", new NBTTagListWrapper());
-			BukkitReflect.invokeMethod(handle, _setTag, data._nbtBaseObject);
+			return (tag == null ? new NBTTagCompoundWrapper() : new NBTTagCompoundWrapper(tag));
 		} catch (Exception e) {
-			throw new Error("Error while applying fake enchantment.", e);
+			throw new Error("Error while getting item tag.", e);
 		}
+	}
+	
+	public static void setItemStackTag(ItemStack item, NBTTagCompoundWrapper tag) {
+		try {
+			Object handle = _handle.get(item);
+			BukkitReflect.invokeMethod(handle, _setTag, tag._nbtBaseObject);
+		} catch (Exception e) {
+			throw new Error("Error while setting item tag.", e);
+		}
+	}
+	
+	public static void setItemStackFakeEnchantment(ItemStack item) {
+		NBTTagCompoundWrapper tag = getItemStackTag(item);
+		tag.setList("ench", new NBTTagListWrapper());
+		setItemStackTag(item, tag);
 	}
 }
