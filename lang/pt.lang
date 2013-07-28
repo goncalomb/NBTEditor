@@ -59,6 +59,12 @@ nbt.cmds.bos.villager-info=§eCada coluna representa uma offerta.
 nbt.cmds.bos.drop-chance.cleared=§a'Drop chance' reposta.
 nbt.cmds.bos.drop-chance.invalid=§cTodos os valores devem ser entre 1 e 0 inclusivamente.
 nbt.cmds.bos.drop-chance.set=§a'Drop chance' definida.
+nbt.cmds.bos.attr-invalid=§cAtributo inválido!
+nbt.cmds.bos.attr-add=§aAttributo da entidade adicionado.
+nbt.cmds.bos.attr-del=§aAttributo da entidade removido.
+nbt.cmds.bos.attr-invalid-base=§c'Base' deve ser um número!
+nbt.cmds.bos.attr-nop=§cEsta entidade não tem o attributo {0}!
+nbt.cmds.bos.attr-cleared=§aAttributos apagados.
 
 nbt.cmds.nbtb.description=Usado para ajudar na escrita de livros.
 nbt.cmds.nbtb.colors=§aOs códigos das cores foram subtituídos.

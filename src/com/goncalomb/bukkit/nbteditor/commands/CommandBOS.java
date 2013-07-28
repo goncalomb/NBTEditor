@@ -8,15 +8,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
-import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 import com.goncalomb.bukkit.EntityTypeMap;
 import com.goncalomb.bukkit.UtilsMc;
 import com.goncalomb.bukkit.betterplugin.BetterCommand;
 import com.goncalomb.bukkit.betterplugin.BetterCommandException;
 import com.goncalomb.bukkit.betterplugin.BetterCommandType;
 import com.goncalomb.bukkit.betterplugin.Lang;
+import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
+import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
+import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;
+import com.goncalomb.bukkit.nbteditor.nbt.attributes.Attribute;
+import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeType;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 
 public class CommandBOS extends BetterCommand {
 	
@@ -185,6 +189,82 @@ public class CommandBOS extends BetterCommand {
 			return true;
 		}
 		return false;
+	}
+	
+	@Command(args = "attr add", type = BetterCommandType.PLAYER_ONLY, maxargs = 2, usage = "<attribute> <base>")
+	public boolean attr_addCommand(CommandSender sender, String[] args) throws BetterCommandException {
+		if (args.length == 2) {
+			BookOfSouls bos = getBos((Player) sender);
+			EntityNBT entityNbt = bos.getEntityNBT();
+			if (!(entityNbt instanceof MobNBT)) {
+				sender.sendMessage(Lang._("nbt.cmds.bos.no-mob"));
+				return true;
+			} else {
+				AttributeType attributeType = AttributeType.getByName(args[0]);
+				if (attributeType == null) {
+					sender.sendMessage(Lang._("nbt.cmds.bos.attr-invalid"));
+				} else {
+					double base;
+					try {
+						base = Double.parseDouble(args[1]);
+					} catch (NumberFormatException e) {
+						sender.sendMessage(Lang._("nbt.cmds.bos.attr-invalid-base"));
+						return true;
+					}
+					AttributeContainer attributes = ((MobNBT) entityNbt).getAttributes();
+					attributes.setAttribute(new Attribute(attributeType, base));
+					((MobNBT) entityNbt).setAttributes(attributes);
+					bos.saveBook();
+					sender.sendMessage(Lang._("nbt.cmds.bos.attr-add"));
+					return true;
+				}
+			}
+		}
+		sender.sendMessage(Lang._("nbt.attributes-prefix") + StringUtils.join(AttributeType.values(), ", "));
+		return false;
+	}
+	
+	@Command(args = "attr del", type = BetterCommandType.PLAYER_ONLY, maxargs = 1, usage = "<attribute>")
+	public boolean attr_delCommand(CommandSender sender, String[] args) throws BetterCommandException {
+		if (args.length == 1) {
+			BookOfSouls bos = getBos((Player) sender);
+			EntityNBT entityNbt = bos.getEntityNBT();
+			if (!(entityNbt instanceof MobNBT)) {
+				sender.sendMessage(Lang._("nbt.cmds.bos.no-mob"));
+				return true;
+			} else {
+				AttributeType attributeType = AttributeType.getByName(args[0]);
+				if (attributeType == null) {
+					sender.sendMessage(Lang._("nbt.cmds.bos.attr-invalid"));
+				} else {
+					AttributeContainer attributes = ((MobNBT) entityNbt).getAttributes();
+					if (attributes.removeAttribute(attributeType) != null) {
+						((MobNBT) entityNbt).setAttributes(attributes);
+						bos.saveBook();
+						sender.sendMessage(Lang._("nbt.cmds.bos.attr-del"));
+						return true;
+					}
+					sender.sendMessage(Lang._format("nbt.cmds.bos.attr-nop", attributeType.toString()));
+					return true;
+				}
+			}
+		}
+		sender.sendMessage(Lang._("nbt.attributes-prefix") + StringUtils.join(AttributeType.values(), ", "));
+		return false;
+	}
+	
+	@Command(args = "attr delall", type = BetterCommandType.PLAYER_ONLY)
+	public boolean attr_delallCommand(CommandSender sender, String[] args) throws BetterCommandException {
+		BookOfSouls bos = getBos((Player) sender);
+		EntityNBT entityNbt = bos.getEntityNBT();
+		if (entityNbt instanceof MobNBT) {
+			((MobNBT) entityNbt).setAttributes(null);
+			bos.saveBook();
+			sender.sendMessage(Lang._("nbt.cmds.bos.attr-cleared"));
+			return true;
+		}
+		sender.sendMessage(Lang._("nbt.cmds.bos.no-mob"));
+		return true;
 	}
 	
 }

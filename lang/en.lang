@@ -59,6 +59,12 @@ nbt.cmds.bos.villager-info=§eEach column represents one offer.
 nbt.cmds.bos.drop-chance.cleared=§aDrop chance cleared.
 nbt.cmds.bos.drop-chance.invalid=§cAll values must be between 1 and 0 inclusive.
 nbt.cmds.bos.drop-chance.set=§aDrop chance set.
+nbt.cmds.bos.attr-invalid=§cInvalid attribute!
+nbt.cmds.bos.attr-add=§aEntity attribute added.
+nbt.cmds.bos.attr-del=§aEntity attribute removed.
+nbt.cmds.bos.attr-invalid-base=§cBase must be a number!
+nbt.cmds.bos.attr-nop=§cThis entity does no have the attribute {0}!
+nbt.cmds.bos.attr-cleared=§aEntity attributes cleared.
 
 nbt.cmds.nbtb.description=Used to help book writing.
 nbt.cmds.nbtb.colors=§aColor codes have been replaced.

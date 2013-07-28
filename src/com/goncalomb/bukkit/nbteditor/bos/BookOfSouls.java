@@ -1,5 +1,6 @@
 package com.goncalomb.bukkit.nbteditor.bos;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -25,6 +26,8 @@ import com.goncalomb.bukkit.nbteditor.nbt.MinecartSpawnerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.ThrownPotionNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBT;
+import com.goncalomb.bukkit.nbteditor.nbt.attributes.Attribute;
+import com.goncalomb.bukkit.nbteditor.nbt.attributes.Modifier;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
 import com.goncalomb.bukkit.reflect.NBTTagCompoundWrapper;
@@ -223,6 +226,44 @@ public class BookOfSouls {
 			MobNBT mob = (MobNBT) _entityNbt;
 			
 			sb = new StringBuilder();
+			sb.append("" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Attributes:\n");
+			Collection<Attribute> attributes = mob.getAttributes().values();
+			if (attributes.size() == 0) {
+				sb.append("  " + ChatColor.BLACK + ChatColor.ITALIC +"none\n");
+			} else {
+				x = 11;
+				for (Attribute attribute : attributes) {
+					if (x <= 3) {
+						meta.addPage(sb.toString());
+						sb = new StringBuilder();
+						x = 11;
+					}
+					sb.append("" + ChatColor.DARK_PURPLE + ChatColor.ITALIC + attribute.getType().getName() + ":\n");
+					sb.append("  " + ChatColor.DARK_BLUE + "Base: " + ChatColor.BLACK + attribute.getBase() + "\n");
+					sb.append("  " + ChatColor.DARK_BLUE + "Modifiers:\n");
+					x -= 3;
+					List<Modifier> modifiers = attribute.getModifiers();
+					if (modifiers.size() == 0) {
+						sb.append("    " + ChatColor.BLACK + ChatColor.ITALIC +"none\n");
+					} else {
+						for (Modifier modifier : modifiers) {
+							if (x <= 3) {
+								meta.addPage(sb.toString());
+								sb = new StringBuilder();
+								x = 11;
+							}
+							sb.append("    " + ChatColor.RED + modifier.getName() + ChatColor.DARK_GREEN + " Op: " + ChatColor.BLACK + modifier.getOperation() + "\n");
+							sb.append("      " + ChatColor.DARK_GREEN + "Amount: " + ChatColor.BLACK + modifier.getAmount() + "\n");
+							x -= 3;
+						}
+					}
+					sb.append("\n");
+					--x;
+				}
+			}
+			meta.addPage(sb.toString());
+			
+			sb = new StringBuilder();
 			sb.append("" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Equipment:\n");
 			ItemStack[] items = mob.getEquipment();
 			for (int i = 0; i < 5; ++i) {
@@ -250,7 +291,8 @@ public class BookOfSouls {
 		}
 		
 		BookSerialize.saveToBook(meta, _entityNbt.serialize(), _dataTitle);
-		meta.addPage("RandomId: " + Integer.toHexString((new Random()).nextInt()));
+		meta.addPage("RandomId: " + Integer.toHexString((new Random()).nextInt()) + "\n\n\n"
+				+ ChatColor.DARK_BLUE + ChatColor.BOLD + "      The END.");
 		_book.setItemMeta(meta);
 	}
 	

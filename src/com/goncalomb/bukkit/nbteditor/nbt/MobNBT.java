@@ -5,7 +5,9 @@ import java.util.Arrays;
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.inventory.ItemStack;
 
+import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.FloatVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
@@ -19,7 +21,8 @@ public class MobNBT extends EntityNBT {
 	
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Mob");
-		variables.add("health", new ShortVariable("Health", (short) 0));
+		variables.add("health", new FloatVariable("HealF", 0.0f));
+		variables.add("old-health", new ShortVariable("Health", (short) 0));
 		variables.add("attack-time", new ShortVariable("AttackTime"));
 		variables.add("hurt-time", new ShortVariable("HurtTime"));
 		variables.add("death-time", new ShortVariable("DeathTime"));
@@ -97,6 +100,21 @@ public class MobNBT extends EntityNBT {
 			return NBTUtils.getGenericPotionFromEffectList(_data.getList("ActiveEffects"));
 		}
 		return null;
+	}
+	
+	public AttributeContainer getAttributes() {
+		if (_data.hasKey("Attributes")) {
+			return AttributeContainer.fromNBT(_data.getList("Attributes"));
+		}
+		return new AttributeContainer();
+	}
+	
+	public void setAttributes(AttributeContainer container) {
+		if (container == null || container.size() == 0) {
+			_data.remove("Attributes");
+		} else {
+			_data.setList("Attributes", container.toNBT());
+		}
 	}
 	
 }
