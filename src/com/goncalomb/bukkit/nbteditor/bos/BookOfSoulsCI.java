@@ -16,6 +16,7 @@ import com.goncalomb.bukkit.betterplugin.Lang;
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.DispenserDetails;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
+import com.goncalomb.bukkit.nbteditor.nbt.FallingBlockNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MinecartContainerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MinecartSpawnerNBT;
 
@@ -57,6 +58,12 @@ final class BookOfSoulsCI extends CustomItem {
 					bos.saveBook();
 					player.sendMessage(Lang._("nbt.bos.chest-to"));
 				}
+				event.setCancelled(true);
+				return;
+			} else if (event.getPlayer().isSneaking() && bos.getEntityNBT() instanceof FallingBlockNBT) {
+				((FallingBlockNBT) bos.getEntityNBT()).copyFromTileEntity(block);
+				bos.saveBook();
+				player.sendMessage(Lang._("nbt.bos.from-block"));
 				event.setCancelled(true);
 				return;
 			}

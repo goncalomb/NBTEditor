@@ -8,6 +8,7 @@ nbt.bos.minecart-from=§aVariables and entities copied to the spawner.
 
 nbt.bos.chest-to=§aItems copied from the chest.
 nbt.bos.chest-from=§aItems copied to the chest.
+nbt.bos.from-block=§aBlock copied.
 
 nbt.bos.riding.title=Define the entities here...
 nbt.bos.riding.pholder=§6Put Books of Souls here, to add entities.
@@ -65,6 +66,7 @@ nbt.cmds.bos.attr-del=§aEntity attribute removed.
 nbt.cmds.bos.attr-invalid-base=§cBase must be a number!
 nbt.cmds.bos.attr-nop=§cThis entity does no have the attribute {0}!
 nbt.cmds.bos.attr-cleared=§aEntity attributes cleared.
+nbt.cmds.bos.falling-block-nop=§eThis BoS has special block data associated, you cannot change the 'block' variable.
 
 nbt.cmds.nbtb.description=Used to help book writing.
 nbt.cmds.nbtb.colors=§aColor codes have been replaced.

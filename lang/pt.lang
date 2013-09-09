@@ -8,6 +8,7 @@ nbt.bos.minecart-from=§aVariáveis e entidades copiadas para o gerador de monst
 
 nbt.bos.chest-to=§aItems copiados do baú.
 nbt.bos.chest-from=§aItems copiados para o baú.
+nbt.bos.from-block=§aBloco copiado.
 
 nbt.bos.riding.title=Define as entidates aqui...
 nbt.bos.riding.pholder=§6Põe Livros das Almas aqui, para adicionar entidates.
@@ -65,6 +66,7 @@ nbt.cmds.bos.attr-del=§aAttributo da entidade removido.
 nbt.cmds.bos.attr-invalid-base=§c'Base' deve ser um número!
 nbt.cmds.bos.attr-nop=§cEsta entidade não tem o attributo {0}!
 nbt.cmds.bos.attr-cleared=§aAttributos apagados.
+nbt.cmds.bos.falling-block-nop=§eEste BoS tem associado informação especial relativa ao bloco, não podes mudar a variável 'block'.
 
 nbt.cmds.nbtb.description=Usado para ajudar na escrita de livros.
 nbt.cmds.nbtb.colors=§aOs códigos das cores foram subtituídos.

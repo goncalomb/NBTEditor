@@ -16,6 +16,7 @@ import com.goncalomb.bukkit.betterplugin.BetterCommandType;
 import com.goncalomb.bukkit.betterplugin.Lang;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
+import com.goncalomb.bukkit.nbteditor.nbt.FallingBlockNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.Attribute;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeContainer;
@@ -90,6 +91,10 @@ public class CommandBOS extends BetterCommand {
 		NBTVariable variable = bos.getEntityNBT().getVariable(args[0]);
 		if (variable != null) {
 			if(args.length >= 2) {
+				if (bos.getEntityNBT() instanceof FallingBlockNBT && ((FallingBlockNBT) bos.getEntityNBT()).hasTileEntityData() && variable.getName().equals("block")) {
+					sender.sendMessage(Lang._("nbt.cmds.bos.falling-block-nop"));
+					return true;
+				}
 				String value = UtilsMc.parseColors(StringUtils.join(args, " ", 1, args.length));
 				if (variable.setValue(value)) {
 					bos.saveBook();

@@ -2,6 +2,7 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BlockVariable;
@@ -10,6 +11,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.ByteVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.FloatVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
+import com.goncalomb.bukkit.reflect.NBTTagCompoundWrapper;
 import com.goncalomb.bukkit.reflect.NBTUtils;
 
 public class FallingBlockNBT extends EntityNBT {
@@ -24,7 +26,22 @@ public class FallingBlockNBT extends EntityNBT {
 		variables.add("fall-hurt-max", new IntegerVariable("FallHurtMax", 0));
 		EntityNBTVariableManager.registerVariables(FallingBlockNBT.class, variables);
 	}
-
+	
+	public void copyFromTileEntity(Block block) {
+		_data.setInt("TileID", block.getTypeId());
+		_data.setByte("Data", block.getData());
+		NBTTagCompoundWrapper tileEntityData = NBTUtils.getTileEntityNBTTagCompound(block);
+		if (tileEntityData != null) {
+			_data.setCompound("TileEntityData", tileEntityData);
+		} else {
+			_data.remove("TileEntityData");
+		}
+	}
+	
+	public boolean hasTileEntityData() {
+		return _data.hasKey("TileEntityData");
+	}
+	
 	@Override
 	public Entity spawn(Location location) {
 		int blockId = (_data.hasKey("TileID") ? _data.getInt("TileID") : Material.SAND.getId());
