@@ -271,14 +271,16 @@ public class EntityNBT {
 	}
 	
 	public Entity spawnStack(Location location) {
-		LinkedList<Entity> entities = new LinkedList<Entity>();
-		entities.addFirst(this.spawn(location));
+		LinkedList<EntityNBT> entities = new LinkedList<EntityNBT>();
+		entities.addFirst(this);
 		EntityNBT entityNBT = this;
 		while ((entityNBT = entityNBT.getRiding()) != null) {
-			entities.addFirst(entityNBT.spawn(location));
+			entities.addFirst(entityNBT);
 		}
+		int i = 0;
 		Entity last = null;
-		for (Entity entity : entities) {
+		for (EntityNBT nbt : entities) {
+			Entity entity = nbt.spawn(location.add(0, i++, 0));
 			if (last != null) {
 				last.setPassenger(entity);
 			}
