@@ -150,14 +150,21 @@ public final class NBTUtils {
 	
 	public static NBTTagCompoundWrapper getTileEntityNBTTagCompound(Block block) {
 		NBTBaseWrapper.prepareReflection();
-		NBTTagCompoundWrapper data = new NBTTagCompoundWrapper();
-		BukkitReflect.invokeMethod(getTileEntity(block), _b1, data._nbtBaseObject);
-		return data;
+		Object tileEntity = getTileEntity(block);
+		if (tileEntity != null) {
+			NBTTagCompoundWrapper data = new NBTTagCompoundWrapper();
+			BukkitReflect.invokeMethod(tileEntity, _b1, data._nbtBaseObject);
+			return data;
+		}
+		return null;
 	}
 	
 	public static void setTileEntityNBTTagCompound(Block block, NBTTagCompoundWrapper data) {
 		NBTBaseWrapper.prepareReflection();
-		BukkitReflect.invokeMethod(getTileEntity(block), _a1, data._nbtBaseObject);
+		Object tileEntity = getTileEntity(block);
+		if (tileEntity != null) {
+			BukkitReflect.invokeMethod(tileEntity, _a1, data._nbtBaseObject);
+		}
 	}
 	
 	public static NBTTagCompoundWrapper getItemStackTag(ItemStack item) {
