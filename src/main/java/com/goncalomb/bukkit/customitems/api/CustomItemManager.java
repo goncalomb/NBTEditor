@@ -21,7 +21,7 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
-import com.goncalomb.bukkit.betterplugin.BetterPlugin;
+import com.goncalomb.bukkit.bkglib.betterplugin.BetterPlugin;
 
 public final class CustomItemManager {
 	

@@ -8,11 +8,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
-import com.goncalomb.bukkit.Utils;
-import com.goncalomb.bukkit.betterplugin.BetterCommand;
-import com.goncalomb.bukkit.betterplugin.BetterCommandException;
-import com.goncalomb.bukkit.betterplugin.BetterCommandType;
-import com.goncalomb.bukkit.betterplugin.Lang;
+import com.goncalomb.bukkit.bkglib.Utils;
+import com.goncalomb.bukkit.bkglib.betterplugin.BetterCommand;
+import com.goncalomb.bukkit.bkglib.betterplugin.BetterCommandException;
+import com.goncalomb.bukkit.bkglib.betterplugin.BetterCommandType;
+import com.goncalomb.bukkit.bkglib.betterplugin.Lang;
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.CustomItemManager;
 

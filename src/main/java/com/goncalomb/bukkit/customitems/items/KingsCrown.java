@@ -12,8 +12,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.material.MaterialData;
 
-import com.goncalomb.bukkit.UtilsMc;
-import com.goncalomb.bukkit.betterplugin.Lang;
+import com.goncalomb.bukkit.bkglib.UtilsMc;
+import com.goncalomb.bukkit.bkglib.betterplugin.Lang;
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.PlayerInventoryDetails;
 

@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.material.MaterialData;
 import org.bukkit.scheduler.BukkitTask;
 
-import com.goncalomb.bukkit.UtilsMc;
+import com.goncalomb.bukkit.bkglib.UtilsMc;
 
 public abstract class CustomFirework extends CustomItem {
 	

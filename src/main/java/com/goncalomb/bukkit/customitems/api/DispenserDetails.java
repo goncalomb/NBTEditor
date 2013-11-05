@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Dispenser;
 import org.bukkit.plugin.Plugin;
 
-import com.goncalomb.bukkit.UtilsMc;
+import com.goncalomb.bukkit.bkglib.UtilsMc;
 
 public final class DispenserDetails extends ItemDetails implements IConsumableDetails {
 	

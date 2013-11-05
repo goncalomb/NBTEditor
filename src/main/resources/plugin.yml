@@ -1,7 +1,6 @@
-# CustomItems by goncalomb - goncalomb.com
 name: CustomItemsAPI
 main: com.goncalomb.bukkit.customitems.CustomItemsAPI
-version: 0.0.5
+version: ${project.version}
 author: goncalomb
 
 permissions:

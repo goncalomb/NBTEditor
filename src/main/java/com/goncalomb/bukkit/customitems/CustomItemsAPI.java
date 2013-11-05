@@ -1,6 +1,6 @@
 package com.goncalomb.bukkit.customitems;
 
-import com.goncalomb.bukkit.betterplugin.BetterPlugin;
+import com.goncalomb.bukkit.bkglib.betterplugin.BetterPlugin;
 import com.goncalomb.bukkit.customitems.api.CustomItemManager;
 import com.goncalomb.bukkit.customitems.commands.CommandCustomItem;
 import com.goncalomb.bukkit.customitems.items.AntiMatterBomb;
