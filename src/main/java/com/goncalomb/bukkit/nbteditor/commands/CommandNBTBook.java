@@ -1,0 +1,69 @@
+package com.goncalomb.bukkit.nbteditor.commands;
+
+import org.apache.commons.lang.StringUtils;
+import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+import com.goncalomb.bukkit.nbteditor.commands.HandItemWrapper.Book.BookType;
+import com.goncalomb.bukkit.bkglib.UtilsMc;
+import com.goncalomb.bukkit.bkglib.betterplugin.BetterCommand;
+import com.goncalomb.bukkit.bkglib.betterplugin.BetterCommandException;
+import com.goncalomb.bukkit.bkglib.betterplugin.BetterCommandType;
+import com.goncalomb.bukkit.bkglib.betterplugin.Lang;
+
+public class CommandNBTBook extends BetterCommand {
+	
+	public CommandNBTBook() {
+		super("nbtbook", "nbteditor.book");
+		setAlises("nbtb");
+		setDescription(Lang._("nbt.cmds.nbtb.description"));
+	}
+	
+	@Command(args = "colors", type = BetterCommandType.PLAYER_ONLY)
+	public boolean colorsCommand(CommandSender sender, String[] args) throws BetterCommandException {
+		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.BOTH);
+		if (item.meta.hasTitle()) {
+			item.meta.setTitle(UtilsMc.parseColors(item.meta.getTitle()));
+		}
+		if (item.meta.hasAuthor()) {
+			item.meta.setAuthor(UtilsMc.parseColors(item.meta.getAuthor()));
+		}
+		for (int i = 1, l = item.meta.getPageCount(); i <= l; ++i) {
+			item.meta.setPage(i, UtilsMc.parseColors(item.meta.getPage(i)));
+		}
+		item.save();
+		sender.sendMessage(Lang._("nbt.cmds.nbtb.colors"));
+		return true;
+	}
+	
+	@Command(args = "title", type = BetterCommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<title>")
+	public boolean titleCommand(CommandSender sender, String[] args) throws BetterCommandException {
+		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
+		item.meta.setTitle(UtilsMc.parseColors(UtilsMc.parseColors(StringUtils.join(args, " "))));
+		item.save();
+		sender.sendMessage(Lang._("nbt.cmds.nbtb.title"));
+		return true;
+	}
+	
+	@Command(args = "author", type = BetterCommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<author>")
+	public boolean authorCommand(CommandSender sender, String[] args) throws BetterCommandException {
+		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
+		item.meta.setAuthor(UtilsMc.parseColors(UtilsMc.parseColors(StringUtils.join(args, " "))));
+		item.save();
+		sender.sendMessage(Lang._("nbt.cmds.nbtb.author"));
+		return true;
+	}
+	
+	@Command(args = "unsign", type = BetterCommandType.PLAYER_ONLY)
+	public boolean unsignCommand(CommandSender sender, String[] args) throws BetterCommandException {
+		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
+		item.meta.setTitle(null);
+		item.meta.setAuthor(null);
+		item.item.setType(Material.BOOK_AND_QUILL);
+		item.save();
+		sender.sendMessage(Lang._("nbt.cmds.nbtb.unsign"));
+		return true;
+	}
+	
+}
