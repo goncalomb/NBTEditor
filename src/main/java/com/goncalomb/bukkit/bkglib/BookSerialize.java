@@ -1,4 +1,4 @@
-package com.goncalomb.bukkit;
+package com.goncalomb.bukkit.bkglib;
 
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.meta.BookMeta;

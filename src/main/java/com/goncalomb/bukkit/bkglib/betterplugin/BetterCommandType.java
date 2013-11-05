@@ -1,4 +1,4 @@
-package com.goncalomb.bukkit.betterplugin;
+package com.goncalomb.bukkit.bkglib.betterplugin;
 
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;

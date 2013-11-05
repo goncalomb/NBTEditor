@@ -1,4 +1,4 @@
-package com.goncalomb.bukkit.reflect;
+package com.goncalomb.bukkit.bkglib.reflect;
 
 import java.lang.reflect.Method;
 

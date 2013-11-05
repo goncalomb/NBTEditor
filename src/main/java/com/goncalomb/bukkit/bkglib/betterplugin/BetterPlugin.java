@@ -1,4 +1,4 @@
-package com.goncalomb.bukkit.betterplugin;
+package com.goncalomb.bukkit.bkglib.betterplugin;
 
 import java.io.File;
 import java.lang.reflect.Method;

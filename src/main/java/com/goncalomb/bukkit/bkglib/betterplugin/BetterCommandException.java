@@ -1,4 +1,4 @@
-package com.goncalomb.bukkit.betterplugin;
+package com.goncalomb.bukkit.bkglib.betterplugin;
 
 @SuppressWarnings("serial")
 public class BetterCommandException extends Exception {

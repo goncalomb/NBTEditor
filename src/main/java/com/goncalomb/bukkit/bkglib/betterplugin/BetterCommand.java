@@ -1,4 +1,4 @@
-package com.goncalomb.bukkit.betterplugin;
+package com.goncalomb.bukkit.bkglib.betterplugin;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

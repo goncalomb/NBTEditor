@@ -1,4 +1,4 @@
-package com.goncalomb.bukkit.betterplugin;
+package com.goncalomb.bukkit.bkglib.betterplugin;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

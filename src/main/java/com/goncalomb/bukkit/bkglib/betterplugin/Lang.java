@@ -1,4 +1,4 @@
-package com.goncalomb.bukkit.betterplugin;
+package com.goncalomb.bukkit.bkglib.betterplugin;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -17,7 +18,6 @@ import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.libs.jline.internal.InputStreamReader;
 import org.bukkit.plugin.Plugin;
 
 public final class Lang {
@@ -142,8 +142,7 @@ public final class Lang {
 	private static void loadLanguage(Plugin plugin) {
 		if (_data.size() == 0) {
 			_logger.info("Loading common language file (" + _lang + ").");
-			String fileName = "common." + _lang + ".lang";
-			HashMap<String, String> pairs = loadLanguage(plugin, Lang.class.getPackage().getName().replace('.', '/') + "/" + fileName, fileName);
+			HashMap<String, String> pairs = loadLanguage(plugin, "lang/common/" + _lang + ".lang", "common." + _lang + ".lang");
 			if (pairs == null) {
 				_logger.warning("Missing common language file (" + _lang + ")!");
 			} else {
