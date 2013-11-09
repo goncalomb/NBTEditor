@@ -1,4 +1,4 @@
-package com.goncalomb.bukkit.bkglib;
+package com.goncalomb.bukkit.bkglib.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

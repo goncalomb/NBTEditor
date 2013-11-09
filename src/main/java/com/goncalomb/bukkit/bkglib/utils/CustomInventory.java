@@ -1,4 +1,4 @@
-package com.goncalomb.bukkit.bkglib;
+package com.goncalomb.bukkit.bkglib.utils;
 
 import java.util.HashMap;
 import java.util.HashSet;

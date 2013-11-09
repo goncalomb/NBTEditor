@@ -1,27 +1,27 @@
-package com.goncalomb.bukkit.bkglib.betterplugin;
+package com.goncalomb.bukkit.bkglib.bkgcommand;
 
 import java.util.List;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-
+import org.bukkit.plugin.Plugin;
 
 final class InternalCommand extends Command {
 	
-	private BetterCommand _command;
+	private BKgCommand _command;
 	
-	public InternalCommand(BetterCommand command, String name) {
+	public InternalCommand(BKgCommand command, String name) {
 		super(name);
 		_command = command;
 	}
 
 	@Override
 	public boolean execute(CommandSender sender, String label, String[] args) {
-		if (_command._plugin != null && _command._plugin.isEnabled()) {
+		if (getOwner().isEnabled()) {
 			if (!testPermission(sender)) {
 				return true;
 			}
-			_command.execute(sender, label, args);
+			_command.execute(sender, label, args, 0);
 		} else {
 			sender.sendMessage("Nop!");
 		}
@@ -30,10 +30,14 @@ final class InternalCommand extends Command {
 	
 	@Override
 	public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
-		if (_command._plugin != null && _command._plugin.isEnabled() && testPermissionSilent(sender)) {
-			return _command.tabComplete(sender, args);
+		if (getOwner().isEnabled() && testPermissionSilent(sender)) {
+			return _command.tabComplete(sender, args, 0);
 		}
 		return null;
+	}
+	
+	Plugin getOwner() {
+		return _command._owner;
 	}
 	
 }

@@ -1,15 +1,18 @@
-common.commands.no-perm=§cNão tens permissão para fazer este comando!
-common.commands.invalid-sender.PLAYER_ONLY=§cEste comando apenas pode ser utilizado por jogadores.
-common.commands.invalid-sender.NO_PLAYER=§cEste comando não pode ser utilizado por jogadores.
-common.commands.invalid-sender.CONSOLE_ONLY=§cEste comando apenas pode ser utilizado na consola.
-common.commands.invalid-sender.BLOCK_ONLY=§cEste comando apenas pode ser utilizado num bloco de comando.
+commands.no-perm=§cNão tens permissão para usar esse comando!
+commands.invalid-sender.PLAYER_ONLY=§cEste comando apenas pode ser utilizado por jogadores.
+commands.invalid-sender.NO_PLAYER=§cEste comando não pode ser utilizado por jogadores.
+commands.invalid-sender.CONSOLE_ONLY=§cEste comando apenas pode ser utilizado na consola.
+commands.invalid-sender.BLOCK_ONLY=§cEste comando apenas pode ser utilizado num bloco de comando.
 
-common.player-not-found=§cJogador não encontrado!
-common.inventory-full=§cInventário cheio!
-common.no-perm=§cNão tens permissão para fazer isso!
-common.no-sight=§cNenhum bloco visível!
-common.invalid-duration=§cDuração inválida. Usa um valor em ''ticks'' ou 0000d00h00m00s.
+player-not-found=§cJogador não encontrado!
+player-not-found.name=§Jogador §e{0} §cnão encontrado!
+inventory-full=§cInventário cheio!
+no-perm=§cNão tens permissão para fazer isso!
+no-sight=§cNenhum bloco visível!
+invalid-duration=§cDuração inválida. Usa um valor em 'ticks' ou 0000d00h00m00s.
 
-citems.disabled=§cEste item está desativado!
-citems.invalid-world=§cEste item está desativado neste mundo!
-citems.no-perm=§cNão tens permissão para usar este item!
+# These are here because NBTEditor when installed by itself it uses an
+# internal version of the CustomItemsAPI that requires these strings.
+customitemsapi.disabled=§cEste item está desativado!
+customitemsapi.invalid-world=§cEste item está desativado neste mundo!
+customitemsapi.no-perm=§cNão tens permissão para usar este item!
