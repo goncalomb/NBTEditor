@@ -4,7 +4,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-import com.goncalomb.bukkit.bkglib.betterplugin.Lang;
+import com.goncalomb.bukkit.bkglib.Lang;
 
 abstract class CustomItemListener<T extends CustomItem> extends CustomItemContainer<T> implements Listener {
 	
@@ -23,11 +23,11 @@ abstract class CustomItemListener<T extends CustomItem> extends CustomItemContai
 	protected final boolean verifyCustomItem(CustomItem customItem, Player player, boolean silent) {
 		if (customItem != null) {
 			if (!customItem.isEnabled()) {
-				if (!silent) player.sendMessage(Lang._("citems.disabled"));
+				if (!silent) player.sendMessage(Lang._(null, "customitemsapi.disabled"));
 			} else if (player != null && !player.hasPermission("customitemsapi.use." + customItem.getSlug())) {
-				if (!silent) player.sendMessage(Lang._("citems.no-perm"));
+				if (!silent) player.sendMessage(Lang._(null, "customitemsapi.no-perm"));
 			} else if (!customItem.isValidWorld(player.getWorld()) && !player.hasPermission("customitemsapi.world-override." + customItem.getSlug())) {
-				if (!silent) player.sendMessage(Lang._("citems.invalid-world"));
+				if (!silent) player.sendMessage(Lang._(null, "customitemsapi.invalid-world"));
 			} else {
 				return true;
 			}

@@ -12,8 +12,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.material.MaterialData;
 
-import com.goncalomb.bukkit.bkglib.UtilsMc;
-import com.goncalomb.bukkit.bkglib.betterplugin.Lang;
+import com.goncalomb.bukkit.bkglib.Lang;
+import com.goncalomb.bukkit.bkglib.utils.UtilsMc;
+import com.goncalomb.bukkit.customitems.CustomItemsAPI;
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.PlayerInventoryDetails;
 
@@ -32,7 +33,7 @@ public class KingsCrown extends CustomItem {
 			inv.setHelmet(event.getItem().getItemStack());
 			event.getItem().remove();
 			event.setCancelled(true);
-			UtilsMc.broadcastToWorld(event.getPlayer().getWorld(), Lang._format("citems.crown.found", event.getPlayer().getName()));
+			UtilsMc.broadcastToWorld(event.getPlayer().getWorld(), Lang._(CustomItemsAPI.class, "citems.crown.found", event.getPlayer().getName()));
 		}
 	}
 	
@@ -43,7 +44,7 @@ public class KingsCrown extends CustomItem {
 	
 	@Override
 	public void onDespawn(ItemDespawnEvent event) {
-		UtilsMc.broadcastToWorld(event.getEntity().getWorld(), Lang._("citems.crown.despawn"));
+		UtilsMc.broadcastToWorld(event.getEntity().getWorld(), Lang._(CustomItemsAPI.class, "citems.crown.despawn"));
 	}
 	
 	@Override
@@ -52,7 +53,7 @@ public class KingsCrown extends CustomItem {
 	}
 	
 	private void lostCrown(Player player) {
-		UtilsMc.broadcastToWorld(player.getWorld(), Lang._format("citems.crown.lost", player.getName()));
+		UtilsMc.broadcastToWorld(player.getWorld(), Lang._(CustomItemsAPI.class, "citems.crown.lost", player.getName()));
 	}
 	
 }

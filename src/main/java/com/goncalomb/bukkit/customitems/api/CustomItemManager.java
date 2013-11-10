@@ -3,6 +3,8 @@ package com.goncalomb.bukkit.customitems.api;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,7 +23,7 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
-import com.goncalomb.bukkit.bkglib.betterplugin.BetterPlugin;
+import com.goncalomb.bukkit.bkglib.BKgLib;
 
 public final class CustomItemManager {
 	
@@ -183,7 +185,7 @@ public final class CustomItemManager {
 	}
 	
 	File getDataFolder() {
-		return new File(BetterPlugin.getGmbConfigFolder(), "CustomItemsAPI");
+		return new File(BKgLib.getGlobalDataFolder(), "CustomItemsAPI");
 	}
 	
 	Logger getLogger() {
@@ -241,9 +243,13 @@ public final class CustomItemManager {
 		return _customItemsByPlugin.keySet().toArray(new Plugin[0]);
 	}
 	
-	public CustomItem[] getCustomItems(Plugin plugin) {
-		ArrayList<CustomItem> set = _customItemsByPlugin.get(plugin);
-		return (set == null ? new CustomItem[] { } : set.toArray(new CustomItem[0]));
+	public Collection<CustomItem> getCustomItems() {
+		return Collections.unmodifiableCollection(_customItemsBySlug.values());
+	}
+	
+	public Collection<CustomItem> getCustomItems(Plugin plugin) {
+		ArrayList<CustomItem> list = _customItemsByPlugin.get(plugin);
+		return Collections.unmodifiableCollection(list == null ? new ArrayList<CustomItem>() : list);
 	}
 	
 	public CustomItem getCustomItem(String slug) {

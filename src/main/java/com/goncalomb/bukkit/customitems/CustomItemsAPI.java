@@ -1,8 +1,10 @@
 package com.goncalomb.bukkit.customitems;
 
-import com.goncalomb.bukkit.bkglib.betterplugin.BetterPlugin;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import com.goncalomb.bukkit.bkglib.BKgLib;
 import com.goncalomb.bukkit.customitems.api.CustomItemManager;
-import com.goncalomb.bukkit.customitems.commands.CommandCustomItem;
+import com.goncalomb.bukkit.customitems.commands.CommandCustomItems;
 import com.goncalomb.bukkit.customitems.items.AntiMatterBomb;
 import com.goncalomb.bukkit.customitems.items.BatBomb;
 import com.goncalomb.bukkit.customitems.items.EnderBow;
@@ -17,10 +19,19 @@ import com.goncalomb.bukkit.customitems.items.SunStick;
 import com.goncalomb.bukkit.customitems.items.TorchBow;
 import com.goncalomb.bukkit.customitems.items.WitherBow;
 
-public final class CustomItemsAPI extends BetterPlugin {
+public final class CustomItemsAPI extends JavaPlugin {
+	
+	private static CustomItemsAPI _instance;
+	
+	public static CustomItemsAPI getInstance() {
+		return _instance;
+	}
 	
 	@Override
-	public void onBetterEnable() {
+	public void onEnable() {
+		_instance = this;
+		BKgLib.bind(this);
+		
 		CustomItemManager manager = CustomItemManager.getInstance(this);
 		manager.registerNew(new BatBomb(), this);
 		manager.registerNew(new FireBomb(), this);
@@ -36,9 +47,16 @@ public final class CustomItemsAPI extends BetterPlugin {
 		manager.registerNew(new TorchBow(), this);
 		manager.registerNew(new AntiMatterBomb(), this);
 		
-		registerCommand(new CommandCustomItem(manager));
+		BKgLib.registerCommands(new CommandCustomItems(), this);
+		BKgLib.setCommandAliases("customitem", "citem");
 		
 		getLogger().info("CustomItemsAPI has been enabled.");
+	}
+	
+	@Override
+	public void onDisable() {
+		BKgLib.unbind(this);
+		_instance = null;
 	}
 	
 }

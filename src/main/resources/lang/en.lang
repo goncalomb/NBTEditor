@@ -1,8 +1,8 @@
-citems.cmds.citem.description=Used to get custom items.
-citems.cmds.citem.no-item=§cNo such item! Use '/citem list' to get the list of all items.
-citems.cmds.citem.ok=§aEnjoy your custom item.
-citems.cmds.citem.invalid=§eThis item cannot be obtained using the citem command. The owner plugin may provide a way to obtain it!
+commands.customitem.description=Used to get custom items.
+commands.customitem.no-item=§cNo such item! Use '/citem list' to get the list of all items.
+commands.customitem.ok=§aEnjoy your custom item.
+commands.customitem.invalid=§eThis item cannot be obtained using the citem command. The owner plugin may provide a way to obtain it!
 
-citems.crown.found=§6{0} §fhas been crown §6King§f!
-citems.crown.lost=§6{0} §fhas lost his crown!
-citems.crown.despawn=The §6King's Crown§f has been lost forever!
+crown.found=§6{0} §fhas been crown §6King§f!
+crown.lost=§6{0} §fhas lost his crown!
+crown.despawn=The §6King's Crown§f has been lost forever!
