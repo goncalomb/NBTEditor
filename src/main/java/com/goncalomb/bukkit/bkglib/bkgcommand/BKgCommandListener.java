@@ -2,16 +2,44 @@ package com.goncalomb.bukkit.bkglib.bkgcommand;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.util.StringUtil;
 
 import com.goncalomb.bukkit.bkglib.Lang;
 
 public interface BKgCommandListener {
+	
+	public static final class CommandUtils {
+		
+		public static List<String> playerTabComplete(CommandSender sender, String prefix) {
+			Player senderPlayer = null;
+			if (sender instanceof Player) {
+				senderPlayer = (Player) sender;
+			}
+	        ArrayList<String> players = new ArrayList<String>();
+	        for (Player player : Bukkit.getOnlinePlayers()) {
+	            String name = player.getName();
+	            if ((senderPlayer == null || senderPlayer.canSee(player)) && StringUtil.startsWithIgnoreCase(name, prefix)) {
+	            	players.add(name);
+	            }
+	        }
+	        Collections.sort(players, String.CASE_INSENSITIVE_ORDER);
+			return players;
+		}
+		
+		private CommandUtils() { }
+	}
 	
 	public enum CmdType {
 		DEFAULT, // All
