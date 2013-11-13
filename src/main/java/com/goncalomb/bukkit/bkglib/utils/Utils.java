@@ -1,7 +1,12 @@
 package com.goncalomb.bukkit.bkglib.utils;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.bukkit.util.StringUtil;
 
 public final class Utils {
 	
@@ -48,6 +53,32 @@ public final class Utils {
 			}
 		}
 		return -1;
+	}
+	
+	public static List<String> getElementsWithPrefix(List<String> list, String prefix) {
+		return getElementsWithPrefix(list, prefix, false);
+	}
+	
+	public static List<String> getElementsWithPrefix(List<String> list, String prefix, boolean sort) {
+		if (prefix == null || prefix.isEmpty()) {
+			List<String> result = list;
+			if (sort) {
+				result = new ArrayList<String>(list);
+				Collections.sort(result, String.CASE_INSENSITIVE_ORDER);
+			}
+			return Collections.unmodifiableList(result);
+		} else {
+			List<String> result = new ArrayList<String>();
+			for (String string : list) {
+				if (StringUtil.startsWithIgnoreCase(string, prefix)) {
+					result.add(string);
+				}
+			}
+			if (sort) {
+				Collections.sort(result, String.CASE_INSENSITIVE_ORDER);
+			}
+			return Collections.unmodifiableList(result);
+		}
 	}
 	
 }

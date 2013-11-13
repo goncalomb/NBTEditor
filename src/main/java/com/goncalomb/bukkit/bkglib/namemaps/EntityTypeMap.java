@@ -2,6 +2,7 @@ package com.goncalomb.bukkit.bkglib.namemaps;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -9,23 +10,30 @@ import org.bukkit.entity.EntityType;
 
 public final class EntityTypeMap {
 	
-	private static String _livingEntitiesNames;
+	private final static List<String> _entityNames;
+	private final static List<String> _livingEntityNames;
+	private final static String _entityNamesAsString;
+	private final static String _livingEntityNamesAsString;
 	
 	static {
-		List<EntityType> livingEntitiesTypes = new ArrayList<EntityType>(32);
+		List<String> entityNames = new ArrayList<String>();
+		List<String> livingEntityNames = new ArrayList<String>();
 		for (EntityType type : EntityType.values()) {
-			if (type.isAlive() && type != EntityType.PLAYER) {
-				livingEntitiesTypes.add(type);
+			String name = getName(type);
+			if (name != null && type != EntityType.PLAYER) {
+				entityNames.add(name);
+				if (type.isAlive()) {
+					livingEntityNames.add(name);
+				}
 			}
 		}
-		_livingEntitiesNames = getEntityNames(livingEntitiesTypes);
+		_entityNames = Collections.unmodifiableList(entityNames);
+		_livingEntityNames = Collections.unmodifiableList(livingEntityNames);
+		_entityNamesAsString = StringUtils.join(_entityNames, ", ");
+		_livingEntityNamesAsString = StringUtils.join(_livingEntityNames, ", "); 
 	}
 	
 	private EntityTypeMap() { }
-	
-	public static String getLivingEntityNames() {
-		return _livingEntitiesNames;
-	}
 	
 	public static EntityType getByName(String name) {
 		if (name.equalsIgnoreCase("ThrownPotion")) {
@@ -47,13 +55,28 @@ public final class EntityTypeMap {
 		}
 	}
 	
-	public static String getEntityNames(Collection<EntityType> types) {
-		String[] names = new String[types.size()];
-		int i = 0;
+	public static List<String> getNames() {
+		return _entityNames;
+	}
+	
+	public static List<String> getNames(Collection<EntityType> types) {
+		ArrayList<String> names = new ArrayList<String>(types.size());
 		for (EntityType type : types) {
-			names[i++] = getName(type);
+			names.add(getName(type));
 		}
-		return StringUtils.join(names, ", ");
+		return names;
+	}
+	
+	public static String getNamesAsString() {
+		return _entityNamesAsString;
+	}
+	
+	public static List<String> getLivingNames() {
+		return _livingEntityNames;
+	}
+	
+	public static String getLivingNamesAsString() {
+		return _livingEntityNamesAsString;
 	}
 	
 }
