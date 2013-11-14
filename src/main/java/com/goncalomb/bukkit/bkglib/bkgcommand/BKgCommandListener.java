@@ -12,8 +12,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.util.StringUtil;
 
 import com.goncalomb.bukkit.bkglib.Lang;
@@ -41,7 +39,7 @@ public interface BKgCommandListener {
 		private CommandUtils() { }
 	}
 	
-	public enum CmdType {
+	public enum CommandType {
 		DEFAULT, // All
 		PLAYER_ONLY, // Player
 		NO_PLAYER, // Console, Remote, Block
@@ -70,16 +68,16 @@ public interface BKgCommandListener {
 	}
 	
 	@Retention(RetentionPolicy.RUNTIME)
-	public @interface Cmd {
+	public @interface Command {
 		String args();
-		CmdType type() default CmdType.DEFAULT;
+		CommandType type() default CommandType.DEFAULT;
 		String usage() default "";
 		int minargs() default 0;
 		int maxargs() default 0;
 	}
 	
 	@Retention(RetentionPolicy.RUNTIME)
-	public @interface CmdTab {
+	public @interface TabComplete {
 		String args();
 	}
 	

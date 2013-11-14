@@ -15,8 +15,6 @@ import org.bukkit.plugin.Plugin;
 
 import com.goncalomb.bukkit.bkglib.BKgLib;
 import com.goncalomb.bukkit.bkglib.Lang;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener.Cmd;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener.CmdTab;
 
 public final class BKgCommand extends BKgSubCommand {
 	
@@ -30,7 +28,7 @@ public final class BKgCommand extends BKgSubCommand {
 		Method[] methods = listener.getClass().getDeclaredMethods();
 		// Find all tab completion methods.
 		for (Method method : methods) {
-			CmdTab config = method.getAnnotation(CmdTab.class);
+			BKgCommandListener.TabComplete config = method.getAnnotation(BKgCommandListener.TabComplete.class);
 			if (config != null) {
 				// Verify parameter types.
 				Class<?>[] params = method.getParameterTypes();
@@ -43,7 +41,7 @@ public final class BKgCommand extends BKgSubCommand {
 		}
 		// Find all execution methods.
 		for (Method method : methods) {
-			Cmd config = method.getAnnotation(Cmd.class);
+			BKgCommandListener.Command config = method.getAnnotation(BKgCommandListener.Command.class);
 			if (config != null) {
 				// Verify parameter types.
 				Class<?>[] params = method.getParameterTypes();

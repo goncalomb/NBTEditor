@@ -15,8 +15,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;
 
 import com.goncalomb.bukkit.bkglib.Lang;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener.Cmd;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener.CmdType;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener.Command;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener.CommandType;
 
 class BKgSubCommand {
 	
@@ -24,7 +24,7 @@ class BKgSubCommand {
 	private BKgCommandListener _listener;
 	private Method _exeMethod = null;
 	private Method _tabMethod = null;
-	private CmdType _type = CmdType.DEFAULT;
+	private CommandType _type = CommandType.DEFAULT;
 	private String _usage;
 	private int _minArgs;
 	private int _maxArgs;
@@ -41,7 +41,7 @@ class BKgSubCommand {
 		parent.recalculatePermissibles();
 	}
 	
-	protected boolean addSubCommand(String[] args, int argsIndex, Cmd config, BKgCommandListener listener, Method exeMethod, Method tabMethod) {
+	protected boolean addSubCommand(String[] args, int argsIndex, Command config, BKgCommandListener listener, Method exeMethod, Method tabMethod) {
 		if (args.length == argsIndex) {
 			if (_exeMethod == null) {
 				_listener = listener;
