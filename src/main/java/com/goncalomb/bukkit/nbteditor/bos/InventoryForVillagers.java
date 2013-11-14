@@ -8,7 +8,8 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.goncalomb.bukkit.bkglib.betterplugin.Lang;
+import com.goncalomb.bukkit.bkglib.Lang;
+import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBTOffer;
 
@@ -17,15 +18,15 @@ public final class InventoryForVillagers extends IInventoryForBos {
 	private static HashMap<Integer, ItemStack> _placeholders = new HashMap<Integer, ItemStack>();
 	
 	static {
-		_placeholders.put(0, createPlaceholder(Material.PAPER, Lang._("nbt.bos.offers.pholder.buy1")));
-		_placeholders.put(9, createPlaceholder(Material.PAPER, Lang._("nbt.bos.offers.pholder.buy2"), Lang._("nbt.bos.offers.pholder.optional")));
-		_placeholders.put(18, createPlaceholder(Material.PAPER, Lang._("nbt.bos.offers.pholder.sell")));
+		_placeholders.put(0, createPlaceholder(Material.PAPER, Lang._(NBTEditor.class, "bos.offers.pholder.buy1")));
+		_placeholders.put(9, createPlaceholder(Material.PAPER, Lang._(NBTEditor.class, "bos.offers.pholder.buy2"), Lang._(NBTEditor.class, "bos.offers.pholder.optional")));
+		_placeholders.put(18, createPlaceholder(Material.PAPER, Lang._(NBTEditor.class, "bos.offers.pholder.sell")));
 	}
 	
 	private BookOfSouls _bos;
 	
 	public InventoryForVillagers(BookOfSouls bos, Player owner) {
-		super(owner, 27, Lang._("nbt.bos.offers.title"), _placeholders);
+		super(owner, 27, Lang._(NBTEditor.class, "bos.offers.title"), _placeholders);
 		_bos = bos;
 		Inventory inv = getInventory();
 		VillagerNBT villager = (VillagerNBT) _bos.getEntityNBT();
@@ -57,9 +58,9 @@ public final class InventoryForVillagers extends IInventoryForBos {
 
 		Player player = (Player)event.getPlayer();
 		if (invalidOffer) {
-			player.sendMessage(Lang._("nbt.bos.offers.invalid"));
+			player.sendMessage(Lang._(NBTEditor.class, "bos.offers.invalid"));
 		}
-		player.sendMessage(Lang._("nbt.bos.offers.done"));
+		player.sendMessage(Lang._(NBTEditor.class, "bos.offers.done"));
 	}
 
 }

@@ -10,7 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
-import com.goncalomb.bukkit.bkglib.EntityTypeMap;
+import com.goncalomb.bukkit.bkglib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
 import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BlockVariable;

@@ -5,21 +5,15 @@ import java.awt.Color;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.goncalomb.bukkit.bkglib.betterplugin.BetterCommand;
-import com.goncalomb.bukkit.bkglib.betterplugin.BetterCommandException;
-import com.goncalomb.bukkit.bkglib.betterplugin.BetterCommandType;
-import com.goncalomb.bukkit.bkglib.betterplugin.Lang;
+import com.goncalomb.bukkit.bkglib.Lang;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener;
+import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
-public class CommandNBTArmor extends BetterCommand {
+public class CommandNBTArmor implements BKgCommandListener {
 	
-	public CommandNBTArmor() {
-		super("nbtarmor", "nbteditor.armor");
-		setAlises("nbta");
-		setDescription(Lang._("nbt.cmds.nbta.description"));
-	}
-	
-	@Command(args = "", type = BetterCommandType.PLAYER_ONLY, maxargs = 1, usage = "<color>")
-	public boolean potionCommand(CommandSender sender, String[] args) throws BetterCommandException {
+	@Command(args = "nbtarmor", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "<color>")
+	public boolean potionCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		if (args.length > 0) {
 			HandItemWrapper.LeatherArmor item = new HandItemWrapper.LeatherArmor((Player) sender);
 			if (!args[0].startsWith("#")) {
@@ -30,14 +24,14 @@ public class CommandNBTArmor extends BetterCommand {
 					Color color = Color.decode(args[0]);
 					item.meta.setColor(org.bukkit.Color.fromRGB(color.getRed(), color.getGreen(), color.getBlue()));
 					item.save();
-					sender.sendMessage(Lang._("nbt.cmds.nbta.ok"));
+					sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtarmor.ok"));
 					return true;
 				} catch (NumberFormatException e) {
 				}
 			}
-			sender.sendMessage(Lang._("nbt.cmds.nbta.nop"));
+			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtarmor.nop"));
 		}
-		sender.sendMessage(Lang._("nbt.cmds.nbta.info"));
+		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtarmor.info"));
 		return false;
 	}
 }

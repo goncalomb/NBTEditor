@@ -5,23 +5,17 @@ import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.goncalomb.bukkit.bkglib.Lang;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener;
+import com.goncalomb.bukkit.bkglib.utils.UtilsMc;
+import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.commands.HandItemWrapper.Book.BookType;
-import com.goncalomb.bukkit.bkglib.UtilsMc;
-import com.goncalomb.bukkit.bkglib.betterplugin.BetterCommand;
-import com.goncalomb.bukkit.bkglib.betterplugin.BetterCommandException;
-import com.goncalomb.bukkit.bkglib.betterplugin.BetterCommandType;
-import com.goncalomb.bukkit.bkglib.betterplugin.Lang;
 
-public class CommandNBTBook extends BetterCommand {
+public class CommandNBTBook implements BKgCommandListener {
 	
-	public CommandNBTBook() {
-		super("nbtbook", "nbteditor.book");
-		setAlises("nbtb");
-		setDescription(Lang._("nbt.cmds.nbtb.description"));
-	}
-	
-	@Command(args = "colors", type = BetterCommandType.PLAYER_ONLY)
-	public boolean colorsCommand(CommandSender sender, String[] args) throws BetterCommandException {
+	@Command(args = "nbtbook colors", type = CommandType.PLAYER_ONLY)
+	public boolean colorsCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.BOTH);
 		if (item.meta.hasTitle()) {
 			item.meta.setTitle(UtilsMc.parseColors(item.meta.getTitle()));
@@ -33,36 +27,36 @@ public class CommandNBTBook extends BetterCommand {
 			item.meta.setPage(i, UtilsMc.parseColors(item.meta.getPage(i)));
 		}
 		item.save();
-		sender.sendMessage(Lang._("nbt.cmds.nbtb.colors"));
+		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtbook.colors"));
 		return true;
 	}
 	
-	@Command(args = "title", type = BetterCommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<title>")
-	public boolean titleCommand(CommandSender sender, String[] args) throws BetterCommandException {
+	@Command(args = "nbtbook title", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<title>")
+	public boolean titleCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
 		item.meta.setTitle(UtilsMc.parseColors(UtilsMc.parseColors(StringUtils.join(args, " "))));
 		item.save();
-		sender.sendMessage(Lang._("nbt.cmds.nbtb.title"));
+		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtbook.title"));
 		return true;
 	}
 	
-	@Command(args = "author", type = BetterCommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<author>")
-	public boolean authorCommand(CommandSender sender, String[] args) throws BetterCommandException {
+	@Command(args = "nbtbook author", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<author>")
+	public boolean authorCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
 		item.meta.setAuthor(UtilsMc.parseColors(UtilsMc.parseColors(StringUtils.join(args, " "))));
 		item.save();
-		sender.sendMessage(Lang._("nbt.cmds.nbtb.author"));
+		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtbook.author"));
 		return true;
 	}
 	
-	@Command(args = "unsign", type = BetterCommandType.PLAYER_ONLY)
-	public boolean unsignCommand(CommandSender sender, String[] args) throws BetterCommandException {
+	@Command(args = "nbtbook unsign", type = CommandType.PLAYER_ONLY)
+	public boolean unsignCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
 		item.meta.setTitle(null);
 		item.meta.setAuthor(null);
 		item.item.setType(Material.BOOK_AND_QUILL);
 		item.save();
-		sender.sendMessage(Lang._("nbt.cmds.nbtb.unsign"));
+		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtbook.unsign"));
 		return true;
 	}
 	

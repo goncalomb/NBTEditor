@@ -7,34 +7,28 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.goncalomb.bukkit.bkglib.Utils;
-import com.goncalomb.bukkit.bkglib.UtilsMc;
-import com.goncalomb.bukkit.bkglib.betterplugin.BetterCommand;
-import com.goncalomb.bukkit.bkglib.betterplugin.BetterCommandException;
-import com.goncalomb.bukkit.bkglib.betterplugin.BetterCommandType;
-import com.goncalomb.bukkit.bkglib.betterplugin.Lang;
+import com.goncalomb.bukkit.bkglib.Lang;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener;
+import com.goncalomb.bukkit.bkglib.utils.Utils;
+import com.goncalomb.bukkit.bkglib.utils.UtilsMc;
+import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeType;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.ItemModifier;
 
-public class CommandNBTItem extends BetterCommand {
+public class CommandNBTItem implements BKgCommandListener {
 	
-	public CommandNBTItem() {
-		super("nbtitem", "nbteditor.item");
-		setAlises("nbti");
-		setDescription(Lang._("nbt.cmds.nbti.description"));
-	}
-	
-	@Command(args = "name", type = BetterCommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "[name]")
-	public boolean nameCommand(CommandSender sender, String[] args) throws BetterCommandException {
+	@Command(args = "nbtitem name", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "[name]")
+	public boolean nameCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		item.meta.setDisplayName(args.length == 0 ? null : UtilsMc.parseColors(StringUtils.join(args, " ")));
 		item.save();
-		sender.sendMessage(args.length == 0 ? Lang._("nbt.cmds.nbti.name-removed") : Lang._("nbt.cmds.nbti.renamed"));
+		sender.sendMessage(args.length == 0 ? Lang._(NBTEditor.class, "commands.nbtitem.name-removed") : Lang._(NBTEditor.class, "commands.nbtitem.renamed"));
 		return true;
 	}
 	
-	@Command(args = "lore add", type = BetterCommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<lore>")
-	public boolean lore_addCommand(CommandSender sender, String[] args) throws BetterCommandException {
+	@Command(args = "nbtitem lore add", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<lore>")
+	public boolean lore_addCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		List<String> lores = item.meta.getLore();
 		if (lores == null) {
@@ -43,39 +37,39 @@ public class CommandNBTItem extends BetterCommand {
 		lores.add(UtilsMc.parseColors(StringUtils.join(args, " ")));
 		item.meta.setLore(lores);
 		item.save();
-		sender.sendMessage(Lang._("nbt.cmds.nbti.lore-added"));
+		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.lore-added"));
 		return true;
 	}
 	
-	@Command(args = "lore del", type = BetterCommandType.PLAYER_ONLY, minargs = 1, usage = "<index>")
-	public boolean lore_delCommand(CommandSender sender, String[] args) throws BetterCommandException {
+	@Command(args = "nbtitem lore del", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<index>")
+	public boolean lore_delCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		List<String> lores = item.meta.getLore();
 		int index = Utils.parseInt(args[0], -1);
 		if (index < 1) {
-			sender.sendMessage(Lang._("nbt.invalid-index"));
+			sender.sendMessage(Lang._(NBTEditor.class, "invalid-index"));
 		} else if (lores == null || index > lores.size()) {
-			sender.sendMessage(Lang._format("nbt.cmds.nbti.lore-nop", index));
+			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.lore-nop", index));
 		} else {
 			lores.remove(index - 1);
 			item.meta.setLore(lores);
 			item.save();
-			sender.sendMessage(Lang._("nbt.cmds.nbti.lore-removed"));
+			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.lore-removed"));
 		}
 		return true;
 	}
 	
-	@Command(args = "lore delall", type = BetterCommandType.PLAYER_ONLY)
-	public boolean lore_delallCommand(CommandSender sender, String[] args) throws BetterCommandException {
+	@Command(args = "nbtitem lore delall", type = CommandType.PLAYER_ONLY)
+	public boolean lore_delallCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		item.meta.setLore(null);
 		item.save();
-		sender.sendMessage(Lang._("nbt.cmds.nbti.lore-cleared"));
+		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.lore-cleared"));
 		return true;
 	}
 	
-	@Command(args = "mod list", type = BetterCommandType.PLAYER_ONLY)
-	public boolean mod_list(CommandSender sender, String[] args) throws BetterCommandException {
+	@Command(args = "nbtitem mod list", type = CommandType.PLAYER_ONLY)
+	public boolean mod_list(CommandSender sender, String[] args) throws BKgCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		List<ItemModifier> modifiers = ItemModifier.getItemStackModifiers(item.item);
 		sender.sendMessage("§bModifiers:");
@@ -91,24 +85,24 @@ public class CommandNBTItem extends BetterCommand {
 		return true;
 	}
 	
-	@Command(args = "mod add", type = BetterCommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "<attribute> <operation> <amount> [name ...]")
-	public boolean mod_add(CommandSender sender, String[] args) throws BetterCommandException {
+	@Command(args = "nbtitem mod add", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "<attribute> <operation> <amount> [name ...]")
+	public boolean mod_add(CommandSender sender, String[] args) throws BKgCommandException {
 		if (args.length >= 3) {
 			HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 			AttributeType attributeType = AttributeType.getByName(args[0]);
 			if (attributeType == null) {
-				sender.sendMessage(Lang._("nbt.cmds.nbti.mod-invalid-attr"));
+				sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.mod-invalid-attr"));
 			} else {
 				int operation = Utils.parseInt(args[1], 2, 0, -1);
 				if (operation == -1) {
-					sender.sendMessage(Lang._("nbt.cmds.nbti.mod-invalid-op"));
+					sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.mod-invalid-op"));
 					return true;
 				} else {
 					double amount;
 					try {
 						amount = Double.parseDouble(args[2]);
 					} catch (NumberFormatException e) {
-						sender.sendMessage(Lang._("nbt.cmds.nbti.mod-invalid-amount"));
+						sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.mod-invalid-amount"));
 						return true;
 					}
 					String name = "Modifier";
@@ -118,37 +112,37 @@ public class CommandNBTItem extends BetterCommand {
 					List<ItemModifier> modifiers = ItemModifier.getItemStackModifiers(item.item);
 					modifiers.add(new ItemModifier(attributeType, name, amount, operation));
 					ItemModifier.setItemStackModifiers(item.item, modifiers);
-					sender.sendMessage(Lang._("nbt.cmds.nbti.mod-added"));
+					sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.mod-added"));
 					return true;
 				}
 			}
 		}
-		sender.sendMessage(Lang._("nbt.attributes-prefix") + StringUtils.join(AttributeType.values(), ", "));
+		sender.sendMessage(Lang._(NBTEditor.class, "attributes-prefix") + StringUtils.join(AttributeType.values(), ", "));
 		return false;
 	}
 	
-	@Command(args = "mod del", type = BetterCommandType.PLAYER_ONLY, minargs = 1, usage = "<index>")
-	public boolean mod_delCommand(CommandSender sender, String[] args) throws BetterCommandException {
+	@Command(args = "nbtitem mod del", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<index>")
+	public boolean mod_delCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		List<ItemModifier> modifiers = ItemModifier.getItemStackModifiers(item.item);
 		int index = Utils.parseInt(args[0], -1);
 		if (index < 1) {
-			sender.sendMessage(Lang._("nbt.invalid-index"));
+			sender.sendMessage(Lang._(NBTEditor.class, "invalid-index"));
 		} else if (index > modifiers.size()) {
-			sender.sendMessage(Lang._format("nbt.cmds.nbti.mod-nop", index));
+			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.mod-nop", index));
 		} else {
 			modifiers.remove(index - 1);
 			ItemModifier.setItemStackModifiers(item.item, modifiers);
-			sender.sendMessage(Lang._("nbt.cmds.nbti.mod-removed"));
+			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.mod-removed"));
 		}
 		return true;
 	}
 	
-	@Command(args = "mod delall", type = BetterCommandType.PLAYER_ONLY)
-	public boolean mod_delallCommand(CommandSender sender, String[] args) throws BetterCommandException {
+	@Command(args = "nbtitem mod delall", type = CommandType.PLAYER_ONLY)
+	public boolean mod_delallCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		ItemModifier.setItemStackModifiers(item.item, new ArrayList<ItemModifier>());
-		sender.sendMessage(Lang._("nbt.cmds.nbti.mod-cleared"));
+		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.mod-cleared"));
 		return true;
 	}
 	

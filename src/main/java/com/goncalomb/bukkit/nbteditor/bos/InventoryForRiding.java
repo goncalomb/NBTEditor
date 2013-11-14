@@ -11,7 +11,8 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.goncalomb.bukkit.bkglib.betterplugin.Lang;
+import com.goncalomb.bukkit.bkglib.Lang;
+import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 
 public final class InventoryForRiding extends IInventoryForBos {
@@ -19,13 +20,13 @@ public final class InventoryForRiding extends IInventoryForBos {
 	private static HashMap<Integer, ItemStack> _placeholders = new HashMap<Integer, ItemStack>();
 	
 	static {
-		_placeholders.put(53, createPlaceholder(Material.PAPER, Lang._("nbt.bos.riding.pholder"), Lang._("nbt.bos.riding.pholder-lore")));
+		_placeholders.put(53, createPlaceholder(Material.PAPER, Lang._(NBTEditor.class, "bos.riding.pholder"), Lang._(NBTEditor.class, "bos.riding.pholder-lore")));
 	}
 	
 	private BookOfSouls _bos;
 	
 	public InventoryForRiding(BookOfSouls bos, Player owner) {
-		super(owner, 54, Lang._("nbt.bos.riding.title"), _placeholders, true);
+		super(owner, 54, Lang._(NBTEditor.class, "bos.riding.title"), _placeholders, true);
 		_bos = bos;
 		Inventory inv = getInventory();
 		int i = 0;
@@ -47,14 +48,14 @@ public final class InventoryForRiding extends IInventoryForBos {
 				event.setCancelled(true);
 			} else if (!BookOfSouls.isValidBook(item)) {
 				event.setCancelled(true);
-				player.sendMessage(Lang._("nbt.bos.riding.only-bos"));
+				player.sendMessage(Lang._(NBTEditor.class, "bos.riding.only-bos"));
 			} else {
 				EntityNBT entityNbt = BookOfSouls.bookToEntityNBT(item);
 				if (entityNbt == null) {
-					player.sendMessage(Lang._("nbt.bos.corrupted"));
+					player.sendMessage(Lang._(NBTEditor.class, "bos.corrupted"));
 					event.setCancelled(true);
 				} else if (entityNbt.getRiding() != null) {
-					player.sendMessage(Lang._("nbt.bos.riding.has-riding"));
+					player.sendMessage(Lang._(NBTEditor.class, "bos.riding.has-riding"));
 					event.setCancelled(true);
 				}
 			}
@@ -72,7 +73,7 @@ public final class InventoryForRiding extends IInventoryForBos {
 		}
 		_bos.getEntityNBT().setRiding(rides.toArray(new EntityNBT[rides.size()]));
 		_bos.saveBook();
-		((Player)event.getPlayer()).sendMessage(Lang._("nbt.bos.riding.done"));
+		((Player)event.getPlayer()).sendMessage(Lang._(NBTEditor.class, "bos.riding.done"));
 	}
 	
 }

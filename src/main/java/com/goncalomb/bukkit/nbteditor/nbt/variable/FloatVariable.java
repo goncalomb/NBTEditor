@@ -1,7 +1,8 @@
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
-import com.goncalomb.bukkit.bkglib.betterplugin.Lang;
+import com.goncalomb.bukkit.bkglib.Lang;
 import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public final class FloatVariable extends NBTGenericVariable {
 	
@@ -42,7 +43,7 @@ public final class FloatVariable extends NBTGenericVariable {
 
 	@Override
 	String getFormat() {
-		return Lang._format("nbt.variable.formats.float", _min, _max);
+		return Lang._(NBTEditor.class, "variable.formats.float", _min, _max);
 	}
 	
 }

@@ -2,8 +2,9 @@ package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
 import org.bukkit.Material;
 
-import com.goncalomb.bukkit.bkglib.betterplugin.Lang;
+import com.goncalomb.bukkit.bkglib.Lang;
 import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public final class BlockVariable extends NBTGenericVariable2X {
 	
@@ -86,7 +87,7 @@ public final class BlockVariable extends NBTGenericVariable2X {
 	}
 	
 	String getFormat() {
-		return Lang._("nbt.variable.formats.block");
+		return Lang._(NBTEditor.class, "variable.formats.block");
 	}
 	
 }

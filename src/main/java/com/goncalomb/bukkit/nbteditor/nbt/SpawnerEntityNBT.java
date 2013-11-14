@@ -2,7 +2,7 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 
 import org.bukkit.entity.EntityType;
 
-import com.goncalomb.bukkit.bkglib.EntityTypeMap;
+import com.goncalomb.bukkit.bkglib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
 
 public class SpawnerEntityNBT {

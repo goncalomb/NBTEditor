@@ -1,7 +1,8 @@
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
-import com.goncalomb.bukkit.bkglib.betterplugin.Lang;
+import com.goncalomb.bukkit.bkglib.Lang;
 import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public final class DoubleVariable extends NBTGenericVariable {
 	
@@ -27,7 +28,7 @@ public final class DoubleVariable extends NBTGenericVariable {
 
 	@Override
 	String getFormat() {
-		return Lang._format("nbt.variable.formats.double");
+		return Lang._(NBTEditor.class, "variable.formats.double");
 	}
 	
 }

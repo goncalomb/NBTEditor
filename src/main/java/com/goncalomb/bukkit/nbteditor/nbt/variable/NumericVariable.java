@@ -1,6 +1,7 @@
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
-import com.goncalomb.bukkit.bkglib.betterplugin.Lang;
+import com.goncalomb.bukkit.bkglib.Lang;
+import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public abstract class NumericVariable extends NBTGenericVariable {
 	
@@ -14,7 +15,7 @@ public abstract class NumericVariable extends NBTGenericVariable {
 	}
 	
 	String getFormat() {
-		return Lang._format("nbt.variable.formats.integer", _min, _max);
+		return Lang._(NBTEditor.class, "variable.formats.integer", _min, _max);
 	}
 	
 }

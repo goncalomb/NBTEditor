@@ -132,7 +132,7 @@
                 <filter>
                   <artifact>com.goncalomb.bukkit:customitemsapi</artifact>
                   <excludes>
-                    <exclude>com/goncalomb/bukkit/bkg/**</exclude><!-- Excludes duplicated BKg classes. -->
+                    <exclude>com/goncalomb/bukkit/bkglib/**</exclude><!-- Excludes duplicated BKg classes. -->
                   </excludes>
                 </filter>
               </filters>

@@ -7,7 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 
-import com.goncalomb.bukkit.bkglib.EntityTypeMap;
+import com.goncalomb.bukkit.bkglib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
 import com.goncalomb.bukkit.bkglib.reflect.NBTTagListWrapper;
 import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;

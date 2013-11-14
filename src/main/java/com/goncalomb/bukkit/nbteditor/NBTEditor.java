@@ -2,7 +2,9 @@ package com.goncalomb.bukkit.nbteditor;
 
 import java.util.logging.Level;
 
-import com.goncalomb.bukkit.bkglib.betterplugin.BetterPlugin;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import com.goncalomb.bukkit.bkglib.BKgLib;
 import com.goncalomb.bukkit.bkglib.reflect.NBTBaseWrapper;
 import com.goncalomb.bukkit.bkglib.reflect.WorldUtils;
 import com.goncalomb.bukkit.customitems.api.CustomItemManager;
@@ -19,10 +21,17 @@ import com.goncalomb.bukkit.nbteditor.commands.CommandNBTTile;
 import com.goncalomb.bukkit.nbteditor.tools.MobInspectorTool;
 import com.goncalomb.bukkit.nbteditor.tools.MobRemoverTool;
 
-public final class NBTEditor extends BetterPlugin {
+public final class NBTEditor extends JavaPlugin {
+	
+	private static NBTEditor _instance;
+	
+	public static NBTEditor getInstance() {
+		return _instance;
+	}
 	
 	@Override
-	public void onBetterEnable() {
+	public void onEnable() {
+		_instance = this;
 		try {
 			NBTBaseWrapper.prepareReflection();
 			WorldUtils.prepareReflection();
@@ -31,16 +40,26 @@ public final class NBTEditor extends BetterPlugin {
 			getLogger().warning("NBTEditor version not compatible with this version of Bukkit. Please install the apropriated version.");
 			return;
 		}
+		BKgLib.bind(this);
 		
-		registerCommand(new CommandBOS());
-		registerCommand(new CommandNBTSpawner());
-		registerCommand(new CommandNBTItem());
-		registerCommand(new CommandNBTEnchant());
-		registerCommand(new CommandNBTBook());
-		registerCommand(new CommandNBTPotion());
-		registerCommand(new CommandNBTArmor());
-		registerCommand(new CommandNBTHead());
-		registerCommand(new CommandNBTTile());
+		BKgLib.registerCommands(new CommandBOS(), this);
+		BKgLib.setCommandAliases("bookofsouls", "bos");
+		BKgLib.registerCommands(new CommandNBTSpawner(), this);
+		BKgLib.setCommandAliases("nbtspawner", "nbts");
+		BKgLib.registerCommands(new CommandNBTItem(), this);
+		BKgLib.setCommandAliases("nbtitem", "nbti");
+		BKgLib.registerCommands(new CommandNBTEnchant(), this);
+		BKgLib.setCommandAliases("nbtenchant", "nbte");
+		BKgLib.registerCommands(new CommandNBTBook(), this);
+		BKgLib.setCommandAliases("nbtbook", "nbtb");
+		BKgLib.registerCommands(new CommandNBTPotion(), this);
+		BKgLib.setCommandAliases("nbtpotion", "nbtp");
+		BKgLib.registerCommands(new CommandNBTArmor(), this);
+		BKgLib.setCommandAliases("nbtarmor", "nbta");
+		BKgLib.registerCommands(new CommandNBTHead(), this);
+		BKgLib.setCommandAliases("nbthead", "nbth");
+		BKgLib.registerCommands(new CommandNBTTile(), this);
+		BKgLib.setCommandAliases("nbttile", "nbtt");
 		
 		CustomItemManager itemManager = CustomItemManager.getInstance(this);
 		BookOfSouls.initialize(this, itemManager);
@@ -48,6 +67,12 @@ public final class NBTEditor extends BetterPlugin {
 		itemManager.registerNew(new MobRemoverTool(), this);
 		
 		getLogger().info("NBTEditor has been enabled.");
+	}
+	
+	@Override
+	public void onDisable() {
+		BKgLib.unbind(this);
+		_instance = null;
 	}
 	
 }
