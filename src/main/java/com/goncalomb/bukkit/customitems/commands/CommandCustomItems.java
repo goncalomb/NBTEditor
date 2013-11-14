@@ -57,18 +57,18 @@ public final class CommandCustomItems implements BKgCommandListener {
 		}
 	}
 	
-	@Cmd(args = "customitem get", type = CmdType.PLAYER_ONLY, minargs = 1, maxargs = 2, usage = "<item> [amount]")
+	@Command(args = "customitem get", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = 2, usage = "<item> [amount]")
 	public boolean customitem_get(CommandSender sender, String[] args) throws BKgCommandException {
 		giveCustomItem((Player) sender, args[0], (args.length == 2 ? args[1] : null));
 		return true;
 	}
 	
-	@CmdTab(args = "customitem get")
+	@TabComplete(args = "customitem get")
 	public List<String> customitem_get_Tab(CommandSender sender, String[] args) {
 		return (args.length == 1 ? getCustomItemNamesList(args[0]) : null);
 	}
 	
-	@Cmd(args = "customitem give", type = CmdType.DEFAULT, minargs = 2, maxargs = 3, usage = "<player> <item> [amount]")
+	@Command(args = "customitem give", type = CommandType.DEFAULT, minargs = 2, maxargs = 3, usage = "<player> <item> [amount]")
 	public boolean customitem_give(CommandSender sender, String[] args) throws BKgCommandException {
 		Player player = Bukkit.getPlayer(args[0]);
 		if (player == null) {
@@ -78,7 +78,7 @@ public final class CommandCustomItems implements BKgCommandListener {
 		return true;
 	}
 	
-	@CmdTab(args = "customitem give")
+	@TabComplete(args = "customitem give")
 	public List<String> customitem_give_Tab(CommandSender sender, String[] args) {
 		if (args.length == 1) {
 			return CommandUtils.playerTabComplete(sender, args[0]);
@@ -88,7 +88,7 @@ public final class CommandCustomItems implements BKgCommandListener {
 		return null;
 	}
 	
-	@Cmd(args = "customitem list", type = CmdType.DEFAULT)
+	@Command(args = "customitem list", type = CommandType.DEFAULT)
 	public boolean customitem_list(CommandSender sender, String[] args) {
 		CustomItemManager manager = CustomItemManager.getInstance(CustomItemsAPI.getInstance());
 		World world = (sender instanceof Player ? ((Player) sender).getWorld() : null);
