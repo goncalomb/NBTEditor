@@ -9,8 +9,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import com.goncalomb.bukkit.bkglib.Lang;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener;
 import com.goncalomb.bukkit.bkglib.namemaps.PotionEffectsMap;
 import com.goncalomb.bukkit.bkglib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
@@ -18,7 +18,11 @@ import com.goncalomb.bukkit.nbteditor.nbt.BeaconNBTWrapper;
 import com.goncalomb.bukkit.nbteditor.nbt.JukeboxNBTWrapper;
 import com.goncalomb.bukkit.nbteditor.nbt.TileNBTWrapper;
 
-public class CommandNBTTile implements BKgCommandListener {
+public class CommandNBTTile extends BKgCommand {
+	
+	public CommandNBTTile() {
+		super("nbttile", "nbtt");
+	}
 	
 	private static BeaconNBTWrapper getBeacon(Player player) throws BKgCommandException {
 		Block block = UtilsMc.getTargetBlock(player, 5);
@@ -36,7 +40,7 @@ public class CommandNBTTile implements BKgCommandListener {
 		return new JukeboxNBTWrapper(block);
 	}
 	
-	@Command(args = "nbttile beacon", type = CommandType.PLAYER_ONLY, minargs = 0, maxargs = 2, usage = "<primary|secondary> <effect>")
+	@Command(args = "beacon", type = CommandType.PLAYER_ONLY, minargs = 0, maxargs = 2, usage = "<primary|secondary> <effect>")
 	public boolean beaconEffectCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		if (args.length == 2 && (args[0].equalsIgnoreCase("primary") || args[0].equalsIgnoreCase("secondary"))) {
 			BeaconNBTWrapper beacon = getBeacon((Player) sender);
@@ -64,7 +68,7 @@ public class CommandNBTTile implements BKgCommandListener {
 		return false;
 	}
 	
-	@Command(args = "nbttile record", type = CommandType.PLAYER_ONLY)
+	@Command(args = "record", type = CommandType.PLAYER_ONLY)
 	public boolean setRecordCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		JukeboxNBTWrapper jukebox = getJukebox((Player) sender);
 		ItemStack item = ((Player) sender).getItemInHand();
@@ -78,7 +82,7 @@ public class CommandNBTTile implements BKgCommandListener {
 		return true;
 	}
 	
-	@Command(args = "nbttile name", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "[name]")
+	@Command(args = "name", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "[name]")
 	public boolean nameCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
 		if (TileNBTWrapper.allowsCustomName(block.getType())) {

@@ -14,8 +14,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import com.goncalomb.bukkit.bkglib.Lang;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener;
 import com.goncalomb.bukkit.bkglib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.bkglib.utils.Utils;
 import com.goncalomb.bukkit.bkglib.utils.UtilsMc;
@@ -27,7 +27,11 @@ import com.goncalomb.bukkit.nbteditor.nbt.SpawnerEntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.SpawnerNBTWrapper;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 
-public class CommandNBTSpawner implements BKgCommandListener {
+public class CommandNBTSpawner extends BKgCommand {
+	
+	public CommandNBTSpawner() {
+		super("nbtspawner", "nbts");
+	}
 	
 	private static SpawnerNBTWrapper getSpawner(Player player) throws BKgCommandException {
 		Block block = UtilsMc.getTargetBlock(player, 5);
@@ -58,7 +62,7 @@ public class CommandNBTSpawner implements BKgCommandListener {
 		return index;
 	}
 	
-	@Command(args = "nbtspawner info", type = CommandType.PLAYER_ONLY)
+	@Command(args = "info", type = CommandType.PLAYER_ONLY)
 	public boolean infoCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
 		Location loc = spawner.getLocation();
@@ -74,7 +78,7 @@ public class CommandNBTSpawner implements BKgCommandListener {
 		return true;
 	}
 	
-	@Command(args = "nbtspawner var", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<variable> <value>")
+	@Command(args = "var", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<variable> <value>")
 	public boolean varCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
 		if(args.length > 0) {
@@ -99,7 +103,7 @@ public class CommandNBTSpawner implements BKgCommandListener {
 		return false;
 	}
 	
-	@Command(args = "nbtspawner add", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<entity> [weight]")
+	@Command(args = "add", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<entity> [weight]")
 	public boolean addCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		if (args.length >= 1) {
 			SpawnerNBTWrapper spawner = getSpawner((Player) sender);
@@ -122,7 +126,7 @@ public class CommandNBTSpawner implements BKgCommandListener {
 		return false;
 	}
 	
-	@Command(args = "nbtspawner additem", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "[weight]")
+	@Command(args = "additem", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "[weight]")
 	public boolean additemCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
 		ItemStack item = ((Player) sender).getItemInHand();
@@ -166,7 +170,7 @@ public class CommandNBTSpawner implements BKgCommandListener {
 		return true;
 	}
 	
-	@Command(args = "nbtspawner del", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<index>")
+	@Command(args = "del", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<index>")
 	public boolean delCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
 		int index = parseIndex(args[0], spawner.getEntities());
@@ -176,7 +180,7 @@ public class CommandNBTSpawner implements BKgCommandListener {
 		return true;
 	}
 	
-	@Command(args = "nbtspawner setpos", type = CommandType.PLAYER_ONLY, minargs = 3, maxargs = 4, usage = "<x> <y> <z> [index]")
+	@Command(args = "setpos", type = CommandType.PLAYER_ONLY, minargs = 3, maxargs = 4, usage = "<x> <y> <z> [index]")
 	public boolean setposCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
 		double x, y, z;
@@ -204,7 +208,7 @@ public class CommandNBTSpawner implements BKgCommandListener {
 		return true;
 	}
 	
-	@Command(args = "nbtspawner clear", type = CommandType.PLAYER_ONLY)
+	@Command(args = "clear", type = CommandType.PLAYER_ONLY)
 	public boolean clearCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
 		spawner.clearEntities();
@@ -213,24 +217,24 @@ public class CommandNBTSpawner implements BKgCommandListener {
 		return true;
 	}
 	
-	@Command(args = "nbtspawner see", type = CommandType.PLAYER_ONLY)
+	@Command(args = "see", type = CommandType.PLAYER_ONLY)
 	public boolean seeCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		Player player = (Player) sender;
 		SpawnerNBTWrapper spawner = getSpawner(player);
-		(new InventoryForSpawnerEntities(player, spawner)).openInventory(player, NBTEditor.getInstance());
+		(new InventoryForSpawnerEntities(player, spawner)).openInventory(player, getOwner());
 		return true;
 	}
 	
-	@Command(args = "nbtspawner copy", type = CommandType.PLAYER_ONLY)
+	@Command(args = "copy", type = CommandType.PLAYER_ONLY)
 	public boolean copyCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		Player player = (Player) sender;
 		SpawnerNBTWrapper clipboard = getSpawner(player);
-		player.setMetadata("NBTEditor-spawner", new FixedMetadataValue(NBTEditor.getInstance(), clipboard));
+		player.setMetadata("NBTEditor-spawner", new FixedMetadataValue(getOwner(), clipboard));
 		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtspawner.copy"));
 		return true;
 	}
 	
-	@Command(args = "nbtspawner paste", type = CommandType.PLAYER_ONLY)
+	@Command(args = "paste", type = CommandType.PLAYER_ONLY)
 	public boolean pasteCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		Player player = (Player) sender;
 		if (player.hasMetadata("NBTEditor-spawner")) {

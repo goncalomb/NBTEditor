@@ -9,8 +9,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import com.goncalomb.bukkit.bkglib.Lang;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener;
 import com.goncalomb.bukkit.bkglib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.bkglib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
@@ -23,8 +23,12 @@ import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeType;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 
-public class CommandBOS implements BKgCommandListener {
+public class CommandBOS extends BKgCommand {
 	
+	public CommandBOS() {
+		super("bookofsouls", "bos");
+	}
+
 	static BookOfSouls getBos(Player player) throws BKgCommandException {
 		return getBos(player, false);
 	}
@@ -43,7 +47,7 @@ public class CommandBOS implements BKgCommandListener {
 		return null;
 	}
 	
-	@Command(args = "bookofsouls get", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "<entity>")
+	@Command(args = "get", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "<entity>")
 	public boolean getCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		if (args.length == 1) {
 			EntityType entityType = EntityTypeMap.getByName(args[0]);
@@ -63,14 +67,14 @@ public class CommandBOS implements BKgCommandListener {
 		return false;
 	}
 	
-	@Command(args = "bookofsouls getempty", type = CommandType.PLAYER_ONLY)
+	@Command(args = "getempty", type = CommandType.PLAYER_ONLY)
 	public boolean getemptyCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		CommandUtils.checkFullInventory((Player) sender).addItem(BookOfSouls.getEmpty());
 		sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.give"));
 		return true;
 	}
 	
-	@Command(args = "bookofsouls var", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<variable> [value]")
+	@Command(args = "var", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<variable> [value]")
 	public boolean varCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		BookOfSouls bos = getBos((Player) sender);
 		NBTVariable variable = bos.getEntityNBT().getVariable(args[0]);
@@ -96,7 +100,7 @@ public class CommandBOS implements BKgCommandListener {
 		return true;
 	}
 	
-	@Command(args = "bookofsouls clearvar", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<variable>")
+	@Command(args = "clearvar", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<variable>")
 	public boolean clearvarCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		BookOfSouls bos = getBos((Player) sender);
 		NBTVariable variable = bos.getEntityNBT().getVariable(args[0]);
@@ -110,7 +114,7 @@ public class CommandBOS implements BKgCommandListener {
 		return true;
 	}
 	
-	@Command(args = "bookofsouls riding", type = CommandType.PLAYER_ONLY)
+	@Command(args = "riding", type = CommandType.PLAYER_ONLY)
 	public boolean ridingCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		Player player = (Player) sender;
 		BookOfSouls bos = getBos(player);
@@ -118,7 +122,7 @@ public class CommandBOS implements BKgCommandListener {
 		return true;
 	}
 	
-	@Command(args = "bookofsouls items", type = CommandType.PLAYER_ONLY)
+	@Command(args = "items", type = CommandType.PLAYER_ONLY)
 	public boolean itemsCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		Player player = (Player) sender;
 		BookOfSouls bos = getBos(player);
@@ -128,7 +132,7 @@ public class CommandBOS implements BKgCommandListener {
 		return true;
 	}
 	
-	@Command(args = "bookofsouls offers", type = CommandType.PLAYER_ONLY)
+	@Command(args = "offers", type = CommandType.PLAYER_ONLY)
 	public boolean offersCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		Player player = (Player) sender;
 		if (!getBos(player).openOffersInventory(player)) {
@@ -139,7 +143,7 @@ public class CommandBOS implements BKgCommandListener {
 		return true;
 	}
 	
-	@Command(args = "bookofsouls dropchance", type = CommandType.PLAYER_ONLY, maxargs = 5, usage = "[<head> <chest> <legs> <feet> <hand>]")
+	@Command(args = "dropchance", type = CommandType.PLAYER_ONLY, maxargs = 5, usage = "[<head> <chest> <legs> <feet> <hand>]")
 	public boolean dropchanceCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		Player player = (Player) sender;
 		if (args.length == 0) {
@@ -181,7 +185,7 @@ public class CommandBOS implements BKgCommandListener {
 		return false;
 	}
 	
-	@Command(args = "bookofsouls attr add", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<attribute> <base>")
+	@Command(args = "attr add", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<attribute> <base>")
 	public boolean attr_addCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		if (args.length == 2) {
 			BookOfSouls bos = getBos((Player) sender);
@@ -214,7 +218,7 @@ public class CommandBOS implements BKgCommandListener {
 		return false;
 	}
 	
-	@Command(args = "bookofsouls attr del", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "<attribute>")
+	@Command(args = "attr del", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "<attribute>")
 	public boolean attr_delCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		if (args.length == 1) {
 			BookOfSouls bos = getBos((Player) sender);
@@ -243,7 +247,7 @@ public class CommandBOS implements BKgCommandListener {
 		return false;
 	}
 	
-	@Command(args = "bookofsouls attr delall", type = CommandType.PLAYER_ONLY)
+	@Command(args = "attr delall", type = CommandType.PLAYER_ONLY)
 	public boolean attr_delallCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		BookOfSouls bos = getBos((Player) sender);
 		EntityNBT entityNbt = bos.getEntityNBT();

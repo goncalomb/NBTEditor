@@ -8,17 +8,21 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.goncalomb.bukkit.bkglib.Lang;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener;
 import com.goncalomb.bukkit.bkglib.utils.Utils;
 import com.goncalomb.bukkit.bkglib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeType;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.ItemModifier;
 
-public class CommandNBTItem implements BKgCommandListener {
+public class CommandNBTItem extends BKgCommand {
 	
-	@Command(args = "nbtitem name", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "[name]")
+	public CommandNBTItem() {
+		super("nbtitem", "nbti");
+	}
+	
+	@Command(args = "name", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "[name]")
 	public boolean nameCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		item.meta.setDisplayName(args.length == 0 ? null : UtilsMc.parseColors(StringUtils.join(args, " ")));
@@ -27,7 +31,7 @@ public class CommandNBTItem implements BKgCommandListener {
 		return true;
 	}
 	
-	@Command(args = "nbtitem lore add", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<lore>")
+	@Command(args = "lore add", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<lore>")
 	public boolean lore_addCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		List<String> lores = item.meta.getLore();
@@ -41,7 +45,7 @@ public class CommandNBTItem implements BKgCommandListener {
 		return true;
 	}
 	
-	@Command(args = "nbtitem lore del", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<index>")
+	@Command(args = "lore del", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<index>")
 	public boolean lore_delCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		List<String> lores = item.meta.getLore();
@@ -59,7 +63,7 @@ public class CommandNBTItem implements BKgCommandListener {
 		return true;
 	}
 	
-	@Command(args = "nbtitem lore delall", type = CommandType.PLAYER_ONLY)
+	@Command(args = "lore delall", type = CommandType.PLAYER_ONLY)
 	public boolean lore_delallCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		item.meta.setLore(null);
@@ -68,7 +72,7 @@ public class CommandNBTItem implements BKgCommandListener {
 		return true;
 	}
 	
-	@Command(args = "nbtitem mod list", type = CommandType.PLAYER_ONLY)
+	@Command(args = "mod list", type = CommandType.PLAYER_ONLY)
 	public boolean mod_list(CommandSender sender, String[] args) throws BKgCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		List<ItemModifier> modifiers = ItemModifier.getItemStackModifiers(item.item);
@@ -85,7 +89,7 @@ public class CommandNBTItem implements BKgCommandListener {
 		return true;
 	}
 	
-	@Command(args = "nbtitem mod add", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "<attribute> <operation> <amount> [name ...]")
+	@Command(args = "mod add", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "<attribute> <operation> <amount> [name ...]")
 	public boolean mod_add(CommandSender sender, String[] args) throws BKgCommandException {
 		if (args.length >= 3) {
 			HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
@@ -121,7 +125,7 @@ public class CommandNBTItem implements BKgCommandListener {
 		return false;
 	}
 	
-	@Command(args = "nbtitem mod del", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<index>")
+	@Command(args = "mod del", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<index>")
 	public boolean mod_delCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		List<ItemModifier> modifiers = ItemModifier.getItemStackModifiers(item.item);
@@ -138,7 +142,7 @@ public class CommandNBTItem implements BKgCommandListener {
 		return true;
 	}
 	
-	@Command(args = "nbtitem mod delall", type = CommandType.PLAYER_ONLY)
+	@Command(args = "mod delall", type = CommandType.PLAYER_ONLY)
 	public boolean mod_delallCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		ItemModifier.setItemStackModifiers(item.item, new ArrayList<ItemModifier>());

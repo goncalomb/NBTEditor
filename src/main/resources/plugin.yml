@@ -3,17 +3,3 @@ main: com.goncalomb.bukkit.nbteditor.NBTEditor
 version: ${project.version}
 author: goncalomb
 softdepend: [CustomItemsAPI]
-
-permissions:
-  nbteditor.*:
-    default: op
-    children:
-      nbteditor.item: true
-      nbteditor.enchant: true
-      nbteditor.potion: true
-      nbteditor.armor: true
-      nbteditor.book: true
-      nbteditor.head: true
-      nbteditor.spawner: true
-      nbteditor.tile: true
-      nbteditor.bookofsouls: true

@@ -7,13 +7,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import com.goncalomb.bukkit.bkglib.Lang;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
-public class CommandNBTHead implements BKgCommandListener {
+public class CommandNBTHead extends BKgCommand {
 	
-	@Command(args = "nbthead", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<player-name>")
+	public CommandNBTHead() {
+		super("nbthead", "nbth");
+	}
+	
+	@Command(args = "", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<player-name>")
 	public boolean headCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 		SkullMeta meta = (SkullMeta) head.getItemMeta();

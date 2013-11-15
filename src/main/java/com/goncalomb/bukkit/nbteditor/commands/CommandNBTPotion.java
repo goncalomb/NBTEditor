@@ -8,14 +8,18 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.goncalomb.bukkit.bkglib.Lang;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener;
 import com.goncalomb.bukkit.bkglib.namemaps.PotionEffectsMap;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
-public class CommandNBTPotion implements BKgCommandListener {
+public class CommandNBTPotion extends BKgCommand {
 	
-	@Command(args = "nbtpotion", type = CommandType.PLAYER_ONLY, maxargs = 3, usage = "<effect> [level] [duration]")
+	public CommandNBTPotion() {
+		super("nbtpotion", "nbtp");
+	}
+	
+	@Command(args = "", type = CommandType.PLAYER_ONLY, maxargs = 3, usage = "<effect> [level] [duration]")
 	public boolean potionCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		if (args.length > 0) {
 			HandItemWrapper.Potion item = new HandItemWrapper.Potion((Player) sender);

@@ -6,13 +6,17 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.goncalomb.bukkit.bkglib.Lang;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
-public class CommandNBTArmor implements BKgCommandListener {
+public class CommandNBTArmor extends BKgCommand {
 	
-	@Command(args = "nbtarmor", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "<color>")
+	public CommandNBTArmor() {
+		super("nbtarmor", "nbta");
+	}
+	
+	@Command(args = "", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "<color>")
 	public boolean potionCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		if (args.length > 0) {
 			HandItemWrapper.LeatherArmor item = new HandItemWrapper.LeatherArmor((Player) sender);

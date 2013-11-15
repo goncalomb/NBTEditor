@@ -7,15 +7,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
 import com.goncalomb.bukkit.bkglib.Lang;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener;
 import com.goncalomb.bukkit.bkglib.namemaps.EnchantmentsMap;
 import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
-public class CommandNBTEnchant implements BKgCommandListener {
+public class CommandNBTEnchant extends BKgCommand {
 	
-	@Command(args = "nbtenchant", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<enchantment> [level]")
+	public CommandNBTEnchant() {
+		super("nbtencahnt", "nbte");
+	}
+	
+	@Command(args = "", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<enchantment> [level]")
 	public boolean enchantCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		if (args.length > 0) {
 			HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
@@ -56,7 +60,7 @@ public class CommandNBTEnchant implements BKgCommandListener {
 		return false;
 	}
 	
-	@Command(args = "nbtenchant clear", type = CommandType.PLAYER_ONLY)
+	@Command(args = "clear", type = CommandType.PLAYER_ONLY)
 	public boolean enchant_clearCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		for (Enchantment ench : item.meta.getEnchants().keySet()) {

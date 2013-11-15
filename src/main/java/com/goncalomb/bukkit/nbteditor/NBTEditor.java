@@ -23,15 +23,8 @@ import com.goncalomb.bukkit.nbteditor.tools.MobRemoverTool;
 
 public final class NBTEditor extends JavaPlugin {
 	
-	private static NBTEditor _instance;
-	
-	public static NBTEditor getInstance() {
-		return _instance;
-	}
-	
 	@Override
 	public void onEnable() {
-		_instance = this;
 		try {
 			NBTBaseWrapper.prepareReflection();
 			WorldUtils.prepareReflection();
@@ -42,24 +35,15 @@ public final class NBTEditor extends JavaPlugin {
 		}
 		BKgLib.bind(this);
 		
-		BKgLib.registerCommands(new CommandBOS(), this);
-		BKgLib.setCommandAliases("bookofsouls", "bos");
-		BKgLib.registerCommands(new CommandNBTSpawner(), this);
-		BKgLib.setCommandAliases("nbtspawner", "nbts");
-		BKgLib.registerCommands(new CommandNBTItem(), this);
-		BKgLib.setCommandAliases("nbtitem", "nbti");
-		BKgLib.registerCommands(new CommandNBTEnchant(), this);
-		BKgLib.setCommandAliases("nbtenchant", "nbte");
-		BKgLib.registerCommands(new CommandNBTBook(), this);
-		BKgLib.setCommandAliases("nbtbook", "nbtb");
-		BKgLib.registerCommands(new CommandNBTPotion(), this);
-		BKgLib.setCommandAliases("nbtpotion", "nbtp");
-		BKgLib.registerCommands(new CommandNBTArmor(), this);
-		BKgLib.setCommandAliases("nbtarmor", "nbta");
-		BKgLib.registerCommands(new CommandNBTHead(), this);
-		BKgLib.setCommandAliases("nbthead", "nbth");
-		BKgLib.registerCommands(new CommandNBTTile(), this);
-		BKgLib.setCommandAliases("nbttile", "nbtt");
+		BKgLib.registerCommand(new CommandBOS(), this);
+		BKgLib.registerCommand(new CommandNBTSpawner(), this);
+		BKgLib.registerCommand(new CommandNBTItem(), this);
+		BKgLib.registerCommand(new CommandNBTEnchant(), this);
+		BKgLib.registerCommand(new CommandNBTBook(), this);
+		BKgLib.registerCommand(new CommandNBTPotion(), this);
+		BKgLib.registerCommand(new CommandNBTArmor(), this);
+		BKgLib.registerCommand(new CommandNBTHead(), this);
+		BKgLib.registerCommand(new CommandNBTTile(), this);
 		
 		CustomItemManager itemManager = CustomItemManager.getInstance(this);
 		BookOfSouls.initialize(this, itemManager);
@@ -72,7 +56,6 @@ public final class NBTEditor extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		BKgLib.unbind(this);
-		_instance = null;
 	}
 	
 }
