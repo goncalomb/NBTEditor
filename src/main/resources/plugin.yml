@@ -2,9 +2,3 @@ name: CustomItemsAPI
 main: com.goncalomb.bukkit.customitems.CustomItemsAPI
 version: ${project.version}
 author: goncalomb
-
-permissions:
-  customitemsapi.*:
-    default: op
-    children:
-      customitemsapi.customitem: true

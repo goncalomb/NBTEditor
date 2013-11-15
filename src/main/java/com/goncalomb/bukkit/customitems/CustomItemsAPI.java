@@ -21,15 +21,8 @@ import com.goncalomb.bukkit.customitems.items.WitherBow;
 
 public final class CustomItemsAPI extends JavaPlugin {
 	
-	private static CustomItemsAPI _instance;
-	
-	public static CustomItemsAPI getInstance() {
-		return _instance;
-	}
-	
 	@Override
 	public void onEnable() {
-		_instance = this;
 		BKgLib.bind(this);
 		
 		CustomItemManager manager = CustomItemManager.getInstance(this);
@@ -47,8 +40,7 @@ public final class CustomItemsAPI extends JavaPlugin {
 		manager.registerNew(new TorchBow(), this);
 		manager.registerNew(new AntiMatterBomb(), this);
 		
-		BKgLib.registerCommands(new CommandCustomItems(), this);
-		BKgLib.setCommandAliases("customitem", "citem");
+		BKgLib.registerCommand(new CommandCustomItems(), this);
 		
 		getLogger().info("CustomItemsAPI has been enabled.");
 	}
@@ -56,7 +48,6 @@ public final class CustomItemsAPI extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		BKgLib.unbind(this);
-		_instance = null;
 	}
 	
 }
