@@ -12,9 +12,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.util.StringUtil;
 
 import com.goncalomb.bukkit.bkglib.Lang;
+import com.goncalomb.bukkit.bkglib.utils.Utils;
 
 public interface BKgCommandListener {
 	
@@ -34,6 +37,52 @@ public interface BKgCommandListener {
 	        }
 	        Collections.sort(players, String.CASE_INSENSITIVE_ORDER);
 			return players;
+		}
+		
+		public static Player findPlayer(String name) throws BKgCommandException {
+			Player player = Bukkit.getPlayer(name);
+			if (player == null) {
+				throw new BKgCommandException(Lang._(null, "player-not-found.name", name));
+			}
+			return player;
+		}
+		
+		public static PlayerInventory checkFullInventory(Player player) throws BKgCommandException {
+			PlayerInventory inv = player.getInventory();
+			if (inv.firstEmpty() == -1) {
+				throw new BKgCommandException(Lang._(null, "inventory-full"));
+			}
+			return inv;
+		}
+		
+		public static void giveItem(Player player, ItemStack item) throws BKgCommandException {
+			if (player.getInventory().addItem(item).size() > 0) {
+				throw new BKgCommandException(Lang._(null, "inventory-full"));
+			}
+		}
+		
+		public static int parseInt(String str) throws BKgCommandException {
+			int i = Utils.parseInt(str, -1);
+			if (i == -1) {
+				throw new BKgCommandException(Lang._(null, "invalid-int", str));
+			}
+			return i;
+		}
+		
+		public static int parseInt(String str, int max, int min) throws BKgCommandException {
+			int i = Utils.parseInt(str, max, min, -1);
+			if (i == -1) {
+				throw new BKgCommandException(Lang._(null, "invalid-int.bounds", str, min, max));
+			}
+			return i;
+		}
+		
+		public static int parseTimeDuration(String str) throws BKgCommandException {
+			int i = Utils.parseTimeDuration(str);
+			if (i == -1) {
+				throw new BKgCommandException(Lang._(null, "invalid-duration"));
+			}
+			return i;
 		}
 		
 		private CommandUtils() { }

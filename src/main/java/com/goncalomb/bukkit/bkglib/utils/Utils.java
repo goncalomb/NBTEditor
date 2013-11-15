@@ -10,23 +10,7 @@ import org.bukkit.util.StringUtil;
 
 public final class Utils {
 	
-	public enum SplitType {
-		WHITE_SPACES("\\s+"),
-		COMMAS("\\s*,\\s*");
-		
-		String _regex;
-		
-		private SplitType(String regex) {
-			_regex = regex;
-		}
-	}
-	
 	private Utils() { }
-	
-	public static String[] split(String str, SplitType type) {
-		String[] result = str.trim().split(type._regex);
-		return (result.length == 1 && result[0].isEmpty() ? new String[] { } : result);
-	}
 	
 	public static int parseInt(String str, int defaultValue) {
 		try {
