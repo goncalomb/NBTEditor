@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -15,7 +14,6 @@ import org.bukkit.plugin.Plugin;
 import com.goncalomb.bukkit.bkglib.Lang;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener;
-import com.goncalomb.bukkit.bkglib.utils.Utils;
 import com.goncalomb.bukkit.customitems.CustomItemsAPI;
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.CustomItemManager;
@@ -36,23 +34,18 @@ public final class CommandCustomItems implements BKgCommandListener {
 	}
 	
 	private void giveCustomItem(Player player, String slug, String amount) throws BKgCommandException {
+		int intAmount = (amount == null ? 1 : CommandUtils.parseInt(amount));
 		CustomItem customItem = CustomItemManager.getInstance(CustomItemsAPI.getInstance()).getCustomItem(slug);
-		int intAmount = (amount == null ? 1 : Utils.parseInt(amount, -1));
 		if (customItem == null) {
 			throw new BKgCommandException(Lang._(CustomItemsAPI.class, "commands.customitem.no-item"));
-		} else if (intAmount < 1) {
-			throw new BKgCommandException(Lang._(null, "invalid-amount"));
 		} else {
 			ItemStack item = customItem.getItem();
 			if (item == null) {
 				throw new BKgCommandException(Lang._(CustomItemsAPI.class, "commands.customitem.citem.invalid"));
 			} else {
 				item.setAmount(intAmount);
-				if (player.getInventory().addItem(item).size() > 0) {
-					throw new BKgCommandException(Lang._(null, "inventory-full"));
-				} else {
-					player.sendMessage(Lang._(CustomItemsAPI.class, "commands.customitem.ok"));
-				}
+				CommandUtils.giveItem(player, item);
+				player.sendMessage(Lang._(CustomItemsAPI.class, "commands.customitem.ok"));
 			}
 		}
 	}
@@ -70,10 +63,7 @@ public final class CommandCustomItems implements BKgCommandListener {
 	
 	@Command(args = "customitem give", type = CommandType.DEFAULT, minargs = 2, maxargs = 3, usage = "<player> <item> [amount]")
 	public boolean customitem_give(CommandSender sender, String[] args) throws BKgCommandException {
-		Player player = Bukkit.getPlayer(args[0]);
-		if (player == null) {
-			throw new BKgCommandException(Lang._(null, "player-not-found.name", args[0]));
-		}
+		Player player = CommandUtils.findPlayer(args[0]);
 		giveCustomItem(player, args[1], (args.length == 3 ? args[2] : null));
 		return true;
 	}
