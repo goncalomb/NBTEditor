@@ -17,7 +17,7 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.Plugin;
 
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandManager;
 
 public final class BKgLib {
 	
@@ -71,7 +71,7 @@ public final class BKgLib {
 	// Call this on Plugin.onDisable().
 	public static void unbind(Plugin plugin) {
 		if (_plugins.remove(plugin)) {
-			BKgCommand.unregisterAll(_commandMap, plugin);
+			BKgCommandManager.unregisterAll(_commandMap, plugin);
 			Lang.unload(plugin);
 			Permission perm = _topPermissions.get(plugin);
 			if (perm != null) {
@@ -80,14 +80,10 @@ public final class BKgLib {
 		}
 	}
 	
-	public static void registerCommands(BKgCommandListener listener, Plugin plugin) {
+	public static void registerCommand(BKgCommand command, Plugin plugin) {
 		if (_plugins.contains(plugin)) {
-			BKgCommand.register(_commandMap, listener, plugin);
+			BKgCommandManager.register(_commandMap, command, plugin);
 		}
-	}
-	
-	public static void setCommandAliases(String command, String... aliases) {
-		BKgCommand.setCommandAliases(_commandMap, command, aliases);
 	}
 	
 	public static File getDataFolder(Plugin plugin) {
@@ -110,7 +106,7 @@ public final class BKgLib {
 	public static Permission getTopPermission(Plugin plugin) {
 		Permission perm = _topPermissions.get(plugin);
 		if (perm == null) {
-			perm = new Permission(plugin.getName().toLowerCase());
+			perm = new Permission(plugin.getName().toLowerCase() + ".*");
 			_topPermissions.put(plugin, perm);
 			Bukkit.getPluginManager().addPermission(perm);
 		}

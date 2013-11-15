@@ -30,14 +30,18 @@ final class InternalCommand extends Command {
 	
 	@Override
 	public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
-		if (getOwner().isEnabled() && testPermissionSilent(sender)) {
+		if (getOwner().isEnabled()) {
 			return _command.tabComplete(sender, args, 0);
 		}
 		return null;
 	}
 	
 	Plugin getOwner() {
-		return _command._owner;
+		return _command.getOwner();
+	}
+	
+	BKgCommand getCommand() {
+		return _command;
 	}
 	
 }

@@ -15,13 +15,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;
 
 import com.goncalomb.bukkit.bkglib.Lang;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener.Command;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener.CommandType;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand.Command;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand.CommandType;
 
 class BKgSubCommand {
 	
 	private Permission _perm;
-	private BKgCommandListener _listener;
+	private BKgCommand _command;
 	private Method _exeMethod = null;
 	private Method _tabMethod = null;
 	private CommandType _type = CommandType.DEFAULT;
@@ -30,21 +30,40 @@ class BKgSubCommand {
 	private int _maxArgs;
 	private LinkedHashMap<String, BKgSubCommand> _subCommands = new LinkedHashMap<String, BKgSubCommand>();
 	
-	protected BKgSubCommand(String name, Permission parent) {
+	public BKgSubCommand() {
+		if (this instanceof BKgCommand) {
+			_command = (BKgCommand) this;
+		}
+	}
+	
+	private BKgSubCommand(BKgCommand command) {
+		_command = command;
+	}
+	
+	void setupPermissions(String name, Permission parent) {
 		String permName = parent.getName();
 		if (permName.endsWith(".*")) {
 			permName = permName.substring(0, permName.length() - 2);
 		}
 		_perm = new Permission(permName + "." + name);
 		_perm.addParent(parent, true);
+		for (Entry<String, BKgSubCommand> entry : _subCommands.entrySet()) {
+			entry.getValue().setupPermissions(entry.getKey(), _perm);
+		}
 		Bukkit.getPluginManager().addPermission(_perm);
 		parent.recalculatePermissibles();
 	}
 	
-	protected boolean addSubCommand(String[] args, int argsIndex, Command config, BKgCommandListener listener, Method exeMethod, Method tabMethod) {
+	void removePermissions() {
+		for (BKgSubCommand command : _subCommands.values()) {
+			command.removePermissions();
+		}
+		Bukkit.getPluginManager().removePermission(_perm);
+	}
+	
+	boolean addSubCommand(String[] args, int argsIndex, Command config, BKgCommand command, Method exeMethod, Method tabMethod) {
 		if (args.length == argsIndex) {
 			if (_exeMethod == null) {
-				_listener = listener;
 				_exeMethod = exeMethod;
 				_tabMethod = tabMethod;
 				_type = config.type();
@@ -60,10 +79,10 @@ class BKgSubCommand {
 		} else {
 			BKgSubCommand subCommand = _subCommands.get(args[argsIndex]);
 			if (subCommand == null) {
-				subCommand = new BKgSubCommand(args[argsIndex], _perm);
+				subCommand = new BKgSubCommand(command);
 				_subCommands.put(args[argsIndex], subCommand);
 			}
-			return subCommand.addSubCommand(args, argsIndex + 1, config, listener, exeMethod, tabMethod);
+			return subCommand.addSubCommand(args, argsIndex + 1, config, command, exeMethod, tabMethod);
 		}
 	}
 	
@@ -100,22 +119,26 @@ class BKgSubCommand {
 		if (_exeMethod != null && sender.hasPermission(_perm)) {
 			sender.sendMessage(ChatColor.RESET + prefix + _usage);
 		}
-		sendAllSubCommands(sender, this, prefix);
+		if (sendAllSubCommands(sender, this, prefix) == 0) {
+			sender.sendMessage(Lang._(null, "commands.no-perm"));
+		}
 	}
 	
-	private static void sendAllSubCommands(CommandSender sender, BKgSubCommand command, String prefix) {
+	private static int sendAllSubCommands(CommandSender sender, BKgSubCommand command, String prefix) {
+		int i = 0;
 		for (Entry<String, BKgSubCommand> subCommandEntry : command._subCommands.entrySet()) {
 			BKgSubCommand subCommand = subCommandEntry.getValue();
 			if (subCommand._type.isValidSender(sender) && sender.hasPermission(subCommand._perm)) {
 				String newPrefix = prefix + subCommandEntry.getKey() + " ";
 				if (subCommand._exeMethod != null) {
 					sender.sendMessage(ChatColor.GRAY + newPrefix + subCommand._usage);
+					i++;
 				}
-				sendAllSubCommands(sender, subCommand, newPrefix);
+				i += sendAllSubCommands(sender, subCommand, newPrefix);
 			}
 		}
+		return i;
 	}
-	
 	
 	List<String> tabComplete(CommandSender sender, String[] args, int argsIndex) {
 		// Find sub-command.
@@ -150,7 +173,7 @@ class BKgSubCommand {
 	
 	private boolean invokeExeMethod(CommandSender sender, String[] args) {
 		try {
-			return (Boolean) _exeMethod.invoke(_listener, sender, args);
+			return (Boolean) _exeMethod.invoke(_command, sender, args);
 		} catch (InvocationTargetException e) {
 			if (e.getCause() instanceof BKgCommandException) {
 				sender.sendMessage(e.getCause().getMessage());
@@ -166,17 +189,10 @@ class BKgSubCommand {
 	@SuppressWarnings("unchecked")
 	private List<String> invokeTabMethod(CommandSender sender, String[] args) {
 		try {
-			return (List<String>) _tabMethod.invoke(_listener, sender, args);
+			return (List<String>) _tabMethod.invoke(_command, sender, args);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-	
-	protected void removePermission() {
-		for (BKgSubCommand command : _subCommands.values()) {
-			command.removePermission();
-		}
-		Bukkit.getPluginManager().removePermission(_perm);
 	}
 	
 }

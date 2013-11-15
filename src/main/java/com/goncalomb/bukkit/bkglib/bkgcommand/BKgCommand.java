@@ -1,111 +1,163 @@
 package com.goncalomb.bukkit.bkglib.bkgcommand;
 
-import java.lang.reflect.Method;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 
-import org.bukkit.command.Command;
+import org.bukkit.Bukkit;
+import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.command.SimpleCommandMap;
-import org.bukkit.permissions.Permission;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.util.StringUtil;
 
 import com.goncalomb.bukkit.bkglib.BKgLib;
 import com.goncalomb.bukkit.bkglib.Lang;
+import com.goncalomb.bukkit.bkglib.utils.Utils;
 
-public final class BKgCommand extends BKgSubCommand {
+public abstract class BKgCommand extends BKgSubCommand {
 	
-	private static HashMap<Plugin, Permission> _topPermissions = new HashMap<Plugin, Permission>();
-	private static HashMap<String, BKgCommand> _commands = new HashMap<String, BKgCommand>();
+	public static final class CommandUtils {
+		
+		public static List<String> playerTabComplete(CommandSender sender, String prefix) {
+			Player senderPlayer = null;
+			if (sender instanceof Player) {
+				senderPlayer = (Player) sender;
+			}
+	        ArrayList<String> players = new ArrayList<String>();
+	        for (Player player : Bukkit.getOnlinePlayers()) {
+	            String name = player.getName();
+	            if ((senderPlayer == null || senderPlayer.canSee(player)) && StringUtil.startsWithIgnoreCase(name, prefix)) {
+	            	players.add(name);
+	            }
+	        }
+	        Collections.sort(players, String.CASE_INSENSITIVE_ORDER);
+			return players;
+		}
+		
+		public static Player findPlayer(String name) throws BKgCommandException {
+			Player player = Bukkit.getPlayer(name);
+			if (player == null) {
+				throw new BKgCommandException(Lang._(null, "player-not-found.name", name));
+			}
+			return player;
+		}
+		
+		public static PlayerInventory checkFullInventory(Player player) throws BKgCommandException {
+			PlayerInventory inv = player.getInventory();
+			if (inv.firstEmpty() == -1) {
+				throw new BKgCommandException(Lang._(null, "inventory-full"));
+			}
+			return inv;
+		}
+		
+		public static void giveItem(Player player, ItemStack item) throws BKgCommandException {
+			if (player.getInventory().addItem(item).size() > 0) {
+				throw new BKgCommandException(Lang._(null, "inventory-full"));
+			}
+		}
+		
+		public static int parseInt(String str) throws BKgCommandException {
+			int i = Utils.parseInt(str, -1);
+			if (i == -1) {
+				throw new BKgCommandException(Lang._(null, "invalid-int", str));
+			}
+			return i;
+		}
+		
+		public static int parseInt(String str, int max, int min) throws BKgCommandException {
+			int i = Utils.parseInt(str, max, min, -1);
+			if (i == -1) {
+				throw new BKgCommandException(Lang._(null, "invalid-int.bounds", str, min, max));
+			}
+			return i;
+		}
+		
+		public static int parseTimeDuration(String str) throws BKgCommandException {
+			int i = Utils.parseTimeDuration(str);
+			if (i == -1) {
+				throw new BKgCommandException(Lang._(null, "invalid-duration"));
+			}
+			return i;
+		}
+		
+		private CommandUtils() { }
+	}
+	
+	public enum CommandType {
+		DEFAULT, // All
+		PLAYER_ONLY, // Player
+		NO_PLAYER, // Console, Remote, Block
+		CONSOLE_ONLY, // Console, Remote
+		BLOCK_ONLY; // Block
+		
+		public boolean isValidSender(CommandSender sender) {
+			switch (this) {
+			case PLAYER_ONLY:
+				return (sender instanceof Player);
+			case NO_PLAYER:
+				return (sender instanceof ConsoleCommandSender || sender instanceof RemoteConsoleCommandSender || sender instanceof BlockCommandSender);
+			case CONSOLE_ONLY:
+				return (sender instanceof ConsoleCommandSender || sender instanceof RemoteConsoleCommandSender);
+			case BLOCK_ONLY:
+				return (sender instanceof BlockCommandSender);
+			case DEFAULT:
+				return true;
+			}
+			return false;
+		}
+		
+		public String getInvalidSenderMessage() {
+			return Lang._(null, "commands.invalid-sender." + this.toString());
+		}
+	}
+	
+	@Retention(RetentionPolicy.RUNTIME)
+	public @interface Command {
+		String args();
+		CommandType type() default CommandType.DEFAULT;
+		String usage() default "";
+		int minargs() default 0;
+		int maxargs() default 0;
+	}
+	
+	@Retention(RetentionPolicy.RUNTIME)
+	public @interface TabComplete {
+		String args();
+	}
+	
+	//private static HashMap<String, BKgCommand> _commands = new HashMap<String, BKgCommand>();
 	private InternalCommand _internalCommand;
-	Plugin _owner;
+	private Plugin _owner;
 	
-	public static void register(SimpleCommandMap commandMap, BKgCommandListener listener, Plugin plugin) {
-		HashMap<String, Method> tabMethods = new HashMap<String, Method>();
-		Method[] methods = listener.getClass().getDeclaredMethods();
-		// Find all tab completion methods.
-		for (Method method : methods) {
-			BKgCommandListener.TabComplete config = method.getAnnotation(BKgCommandListener.TabComplete.class);
-			if (config != null) {
-				// Verify parameter types.
-				Class<?>[] params = method.getParameterTypes();
-				if (params.length == 2 && method.getReturnType() == List.class && params[0] == CommandSender.class && params[1] == String[].class) {
-					tabMethods.put(config.args().trim().toLowerCase(), method);
-				} else {
-					throw new RuntimeException("Invalid command tab completion method " + method.getName() + " on class " + listener.getClass().getName() + ".");
-				}
-			}
-		}
-		// Find all execution methods.
-		for (Method method : methods) {
-			BKgCommandListener.Command config = method.getAnnotation(BKgCommandListener.Command.class);
-			if (config != null) {
-				// Verify parameter types.
-				Class<?>[] params = method.getParameterTypes();
-				if (params.length == 2 && method.getReturnType() == boolean.class && params[0] == CommandSender.class && params[1] == String[].class) {
-					String argsString = config.args().trim().toLowerCase();
-					String[] args = argsString.split("\\s+");
-					if (args.length > 0) {
-						String cmdName = args[0];
-						// Find command.
-						BKgCommand command = _commands.get(cmdName);
-						if (command == null) {
-							// This is a new command, create and register.
-							command = new BKgCommand(plugin, cmdName);
-							commandMap.register(plugin.getName(), command._internalCommand);
-							_commands.put(cmdName, command);
-						} else {
-							// Not a new command, check owner plugin.
-							if (plugin != command._owner) {
-								throw new RuntimeException("Command " + cmdName + " already registed by " + command._owner.getName() + ", cannot add new sub-commands.");
-							}
-						}
-						// Register.
-						if(!command.addSubCommand(args, 1, config, listener, method, tabMethods.remove(argsString))) {
-							throw new RuntimeException("(Sub-)Command '" + argsString + "' already registed.");
-						}
-						continue;
-					}
-				}
-				throw new RuntimeException("Invalid command execution method " + method.getName() + " on class " + listener.getClass().getName() + ".");
-			}
-		}
-		if (tabMethods.size() > 0) {
-			throw new RuntimeException("Tab completion method " + tabMethods.get(0).getName() + " on class " + listener.getClass().getName() + " has no execution method.");
-		}
-	}
-	
-	public static void setCommandAliases(SimpleCommandMap commandMap, String command, String... aliases) {
-		BKgCommand cmd = _commands.get(command.trim().toLowerCase());
-		if (cmd != null && cmd._internalCommand.getAliases().size() == 0) {
-			// Re-register command (I'm not proud of this).
-			cmd._internalCommand.unregister(commandMap);
-			cmd._internalCommand.setAliases(Arrays.asList(aliases));
-			commandMap.register("null", cmd._internalCommand);
-		}
-	}
-	
-	public static void unregisterAll(SimpleCommandMap commandMap, Plugin plugin) {
-		Collection<Command> internalCommands = commandMap.getCommands();
-		for (Iterator<BKgCommand> it = _commands.values().iterator(); it.hasNext(); ) {
-			BKgCommand command = it.next();
-			if (command._owner == plugin) {
-				while(internalCommands.remove(command._internalCommand));
-				command.removePermission();
-				it.remove();
-			}
-		}
-		_topPermissions.remove(plugin);
-	}
-	
-	private BKgCommand(Plugin owner, String name) {
-		super(name, BKgLib.getTopPermission(owner));
+	public BKgCommand(String name, String ...aliases) {
 		_internalCommand = new InternalCommand(this, name);
-		_internalCommand.setDescription(Lang._(owner.getClass(), "commands." + name + ".description"));
+		_internalCommand.setAliases(Arrays.asList(aliases));
+	}
+	
+	void setup(SimpleCommandMap commandMap, Plugin owner) {
+		// Set the owner and permissions.
 		_owner = owner;
+		_internalCommand.setDescription(Lang._(owner.getClass(), "commands." + getName() + ".description"));
+		setupPermissions(getName(), BKgLib.getTopPermission(owner));
+		// Register the command with Bukkit.
+		commandMap.register(owner.getName(), _internalCommand);
+	}
+	
+	public final String getName() {
+		return _internalCommand.getName();
+	}
+	
+	public final Plugin getOwner() {
+		return _owner;
 	}
 	
 }
