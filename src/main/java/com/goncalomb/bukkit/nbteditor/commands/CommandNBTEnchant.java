@@ -11,7 +11,6 @@ import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener;
 import com.goncalomb.bukkit.bkglib.namemaps.EnchantmentsMap;
 import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
-import com.goncalomb.bukkit.bkglib.utils.Utils;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public class CommandNBTEnchant implements BKgCommandListener {
@@ -31,15 +30,11 @@ public class CommandNBTEnchant implements BKgCommandListener {
 			} else {
 				int level = enchant.getMaxLevel();
 				if (args.length == 2) {
-					level = Utils.parseInt(args[1], Short.MAX_VALUE, 0, -1);
-					if (level == -1) {
-						sender.sendMessage(Lang._(NBTEditor.class, "invalid-level"));
-						return true;
-					}
+					level = CommandUtils.parseInt(args[1], Short.MAX_VALUE, 0);
 				}
 				if(level == 0) {
 					if (item.item.getType() == Material.ENCHANTED_BOOK) {
-						((EnchantmentStorageMeta) item.meta).removeEnchant(enchant);
+						((EnchantmentStorageMeta) item.meta).removeStoredEnchant(enchant);
 					} else {
 						item.meta.removeEnchant(enchant);
 					}

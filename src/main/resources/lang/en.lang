@@ -150,7 +150,6 @@ enchants-prefix=§7Enchantments:
 effects-prefix=§7Effects: 
 attributes-prefix=§7Attributes: 
 variables-prefix=§7Variables: 
-invalid-level=§cInvalid level. The level is an integer between 1 and 32767.
 invalid-index=§cInvalid index. The index is an integer greater than 0.
 
 variable.updated=§aVariable updated.

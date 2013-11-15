@@ -11,8 +11,6 @@ import com.goncalomb.bukkit.bkglib.Lang;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandListener;
 import com.goncalomb.bukkit.bkglib.namemaps.PotionEffectsMap;
-import com.goncalomb.bukkit.bkglib.utils.Utils;
-import com.goncalomb.bukkit.bkglib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public class CommandNBTPotion implements BKgCommandListener {
@@ -27,19 +25,11 @@ public class CommandNBTPotion implements BKgCommandListener {
 			} else {
 				int level = 1;
 				if (args.length >= 2) {
-					level = Utils.parseInt(args[1], Short.MAX_VALUE, 0, -1);
-					if (level == -1) {
-						sender.sendMessage(Lang._(NBTEditor.class, "invalid-level"));
-						return true;
-					}
+					level = CommandUtils.parseInt(args[1], Short.MAX_VALUE, 0);
 				}
 				int duration = (effect == PotionEffectType.HARM || effect == PotionEffectType.HEAL ? 0 : 600);
 				if (args.length == 3) {
-					duration = UtilsMc.parseTickDuration(args[2]);
-					if (duration == -1) {
-						sender.sendMessage(Lang._(null, "invalid-duration"));
-						return true;
-					}
+					duration = CommandUtils.parseTimeDuration(args[2]);
 				}
 				if(level == 0) {
 					// .removeCustomEffect(...); This is bugged, it should use .equals(...) to compare effects.

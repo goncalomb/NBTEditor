@@ -44,15 +44,11 @@ public class CommandBOS implements BKgCommandListener {
 	}
 	
 	@Command(args = "bookofsouls get", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "<entity>")
-	public boolean getCommand(CommandSender sender, String[] args) {
+	public boolean getCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		if (args.length == 1) {
-			EntityType entityType = EntityTypeMap.getByName(args[0]); // We use EntityTypeMap.getByName(...) instead of EntityType.fromName(...) to catch ThrownPotions.
+			EntityType entityType = EntityTypeMap.getByName(args[0]);
 			if (entityType != null && EntityNBT.isValidType(entityType)) {
-				PlayerInventory inv = ((Player) sender).getInventory();
-				if (inv.firstEmpty() == -1) {
-					sender.sendMessage(Lang._(null, "inventory-full"));
-					return true;
-				}
+				PlayerInventory inv = CommandUtils.checkFullInventory((Player) sender);
 				BookOfSouls bos = new BookOfSouls(EntityNBT.fromEntityType(entityType));
 				inv.addItem(bos.getBook());
 				sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.give"));
@@ -68,13 +64,8 @@ public class CommandBOS implements BKgCommandListener {
 	}
 	
 	@Command(args = "bookofsouls getempty", type = CommandType.PLAYER_ONLY)
-	public boolean getemptyCommand(CommandSender sender, String[] args) {
-		PlayerInventory inv = ((Player) sender).getInventory();
-		if (inv.firstEmpty() == -1) {
-			sender.sendMessage(Lang._(null, "inventory-full"));
-			return true;
-		}
-		inv.addItem(BookOfSouls.getEmpty());
+	public boolean getemptyCommand(CommandSender sender, String[] args) throws BKgCommandException {
+		CommandUtils.checkFullInventory((Player) sender).addItem(BookOfSouls.getEmpty());
 		sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.give"));
 		return true;
 	}

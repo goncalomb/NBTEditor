@@ -150,7 +150,6 @@ enchants-prefix=§7Encantamentos:
 effects-prefix=§7Efeitos de poção: 
 attributes-prefix=§7Atributos: 
 variables-prefix=§7Variáveis: 
-invalid-level=§cNível inválido. O nível é um inteiro entre 1 e 32767.
 invalid-index=§cÍndice inválido. O Índice é um inteiro maior que 0.
 
 variable.updated=§aVariável atualizada.
