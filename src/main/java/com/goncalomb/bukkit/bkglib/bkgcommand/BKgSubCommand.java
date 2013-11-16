@@ -116,10 +116,12 @@ class BKgSubCommand {
 		}
 		// Missing arguments or failed command, let's send usage and sub-commands!
 		String prefix = "/" + label + " " + (argsIndex > 0 ? StringUtils.join(args, ' ', 0, argsIndex).toLowerCase() + " " : "");
+		boolean sentUsage = false;
 		if (_exeMethod != null && sender.hasPermission(_perm)) {
 			sender.sendMessage(ChatColor.RESET + prefix + _usage);
+			sentUsage = true;
 		}
-		if (sendAllSubCommands(sender, this, prefix) == 0) {
+		if (sendAllSubCommands(sender, this, prefix) == 0 && !sentUsage) {
 			sender.sendMessage(Lang._(null, "commands.no-perm"));
 		}
 	}

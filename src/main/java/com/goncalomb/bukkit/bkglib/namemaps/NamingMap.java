@@ -1,5 +1,6 @@
 package com.goncalomb.bukkit.bkglib.namemaps;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Set;
@@ -27,8 +28,8 @@ final class NamingMap<T> {
 		return _inverse.get(value);
 	}
 	
-	public Set<String> names() {
-		return Collections.unmodifiableSet(_map.keySet());
+	public Collection<String> names() {
+		return Collections.unmodifiableCollection(_inverse.values());
 	}
 	
 	public Set<T> values() {
