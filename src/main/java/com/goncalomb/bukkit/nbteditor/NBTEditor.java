@@ -18,8 +18,9 @@ import com.goncalomb.bukkit.nbteditor.commands.CommandNBTItem;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTPotion;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTSpawner;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTTile;
-import com.goncalomb.bukkit.nbteditor.tools.MobInspectorTool;
-import com.goncalomb.bukkit.nbteditor.tools.MobRemoverTool;
+import com.goncalomb.bukkit.nbteditor.tools.EntityInspectorTool;
+import com.goncalomb.bukkit.nbteditor.tools.EntityRemoverTool;
+import com.goncalomb.bukkit.nbteditor.tools.SuperLeadTool;
 
 public final class NBTEditor extends JavaPlugin {
 	
@@ -47,8 +48,9 @@ public final class NBTEditor extends JavaPlugin {
 		
 		CustomItemManager itemManager = CustomItemManager.getInstance(this);
 		BookOfSouls.initialize(this, itemManager);
-		itemManager.registerNew(new MobInspectorTool(), this);
-		itemManager.registerNew(new MobRemoverTool(), this);
+		itemManager.registerNew(new EntityInspectorTool(), this);
+		itemManager.registerNew(new EntityRemoverTool(), this);
+		itemManager.registerNew(new SuperLeadTool(), this);
 		
 		getLogger().info("NBTEditor has been enabled.");
 	}

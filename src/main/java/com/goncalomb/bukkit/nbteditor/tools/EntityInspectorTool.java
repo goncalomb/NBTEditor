@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.material.MaterialData;
 
+import com.goncalomb.bukkit.bkglib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
@@ -17,10 +18,10 @@ import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBTOffer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
 
-public class MobInspectorTool extends CustomItem {
+public final class EntityInspectorTool extends CustomItem {
 
-	public MobInspectorTool() {
-		super("mob-inspector", ChatColor.AQUA + "Mob Inspector", new MaterialData(Material.STICK));
+	public EntityInspectorTool() {
+		super("entity-inspector", ChatColor.AQUA + "Entity Inspector", new MaterialData(Material.STICK));
 		setLore(ChatColor.YELLOW + "Right-click on entities to see their information.");
 	}
 	
@@ -30,7 +31,7 @@ public class MobInspectorTool extends CustomItem {
 		Entity entity = event.getRightClicked();
 		if (EntityNBT.isValidType(entity.getType())) {
 			EntityNBT entityNBT = EntityNBT.fromEntity(entity);
-			player.sendMessage(ChatColor.YELLOW + "Information about " + entity.getType().getName() + "");
+			player.sendMessage(ChatColor.YELLOW + "Information about " + EntityTypeMap.getName(entity.getType()) + "");
 			for (NBTVariableContainer vc : entityNBT.getAllVariables()) {
 				player.sendMessage("" + ChatColor.LIGHT_PURPLE + ChatColor.ITALIC + vc.getName() + ":");
 				for (NBTVariable var : vc) {

@@ -12,10 +12,10 @@ import org.bukkit.material.MaterialData;
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 
-public class MobRemoverTool extends CustomItem {
+public final class EntityRemoverTool extends CustomItem {
 
-	public MobRemoverTool() {
-		super("mob-remover", ChatColor.AQUA + "Mob Remover", new MaterialData(Material.STICK));
+	public EntityRemoverTool() {
+		super("entity-remover", ChatColor.AQUA + "Entity Remover", new MaterialData(Material.BLAZE_ROD));
 		setLore(ChatColor.YELLOW + "Right-click on entities remove them.");
 	}
 	
@@ -24,7 +24,6 @@ public class MobRemoverTool extends CustomItem {
 		Player player = event.getPlayer();
 		Entity entity = event.getRightClicked();
 		if (entity.getType() != EntityType.PLAYER) {
-			player.sendMessage(ChatColor.GREEN + "Entity removed.");
 			event.getRightClicked().remove();
 			event.setCancelled(true);
 		} else {
