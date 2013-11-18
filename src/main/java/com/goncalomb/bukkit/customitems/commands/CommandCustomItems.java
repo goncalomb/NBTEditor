@@ -27,8 +27,7 @@ public final class CommandCustomItems extends BKgCommand {
 
 	private List<String> getCustomItemNamesList(String prefix) {
 		ArrayList<String> names = new ArrayList<String>();
-		CustomItemManager c = CustomItemManager.getInstance(getOwner());
-		for (CustomItem citem : c.getCustomItems()) {
+		for (CustomItem citem : CustomItemManager.getCustomItems()) {
 			String slug = citem.getSlug();
 			if (citem.isEnabled() && StringUtil.startsWithIgnoreCase(slug, prefix)) {
 				names.add(slug);
@@ -40,7 +39,7 @@ public final class CommandCustomItems extends BKgCommand {
 	
 	private void giveCustomItem(Player player, String slug, String amount) throws BKgCommandException {
 		int intAmount = (amount == null ? 1 : CommandUtils.parseInt(amount));
-		CustomItem customItem = CustomItemManager.getInstance(getOwner()).getCustomItem(slug);
+		CustomItem customItem = CustomItemManager.getCustomItem(slug);
 		if (customItem == null) {
 			throw new BKgCommandException(Lang._(CustomItemsAPI.class, "commands.customitem.no-item"));
 		} else {
@@ -85,11 +84,10 @@ public final class CommandCustomItems extends BKgCommand {
 	
 	@Command(args = "list", type = CommandType.DEFAULT)
 	public boolean customitem_list(CommandSender sender, String[] args) {
-		CustomItemManager manager = CustomItemManager.getInstance(getOwner());
 		World world = (sender instanceof Player ? ((Player) sender).getWorld() : null);
-		for (Plugin plugin : manager.getOwningPlugins()) {
+		for (Plugin plugin : CustomItemManager.getOwningPlugins()) {
 			StringBuilder sb = new StringBuilder("" + ChatColor.GOLD + ChatColor.ITALIC + plugin.getName() + ":");
-			for (CustomItem customItem : manager.getCustomItems(plugin)) {
+			for (CustomItem customItem : CustomItemManager.getCustomItems(plugin)) {
 				sb.append(" ");
 				if (!customItem.isEnabled()) {
 					sb.append(ChatColor.RED);

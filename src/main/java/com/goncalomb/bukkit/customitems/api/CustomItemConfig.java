@@ -1,31 +1,27 @@
 package com.goncalomb.bukkit.customitems.api;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
+import com.goncalomb.bukkit.bkglib.BKgLib;
 
 final class CustomItemConfig {
 	
-	private Logger _logger;
 	private FileConfiguration _defaultConfig;
 	private ConfigurationSection _defaultItemSection;
 	private File _configFile;
 	private FileConfiguration _config;
 	private ConfigurationSection _itemsSection;
 	
-	public CustomItemConfig(CustomItemManager manager, Plugin plugin) {
-		_logger = manager.getLogger();
+	public CustomItemConfig(Plugin plugin) {
 		_defaultConfig = new YamlConfiguration();
 		_defaultItemSection = _defaultConfig.createSection("custom-items");
 		
-		_configFile = new File(manager.getDataFolder(), "ItemsConfig/" + plugin.getName() + ".yml");
+		_configFile = new File(BKgLib.getGlobalDataFolder(), "CustomItemsAPI/ItemsConfig/" + plugin.getName() + ".yml");
 		
 		if (!_configFile.exists()) {
 			_config = new YamlConfiguration();
@@ -64,12 +60,7 @@ final class CustomItemConfig {
 	}
 	
 	public void saveToFile() {
-		try {
-			_config.save(_configFile);
-		} catch (IOException e) {
-			_logger.log(Level.SEVERE, "Could not save config to " + _configFile, e);
-		}
+		BKgLib.saveConfig(_config, _configFile);
 	}
-	
 	
 }

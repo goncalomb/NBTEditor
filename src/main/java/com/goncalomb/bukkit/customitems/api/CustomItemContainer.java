@@ -1,44 +1,59 @@
 package com.goncalomb.bukkit.customitems.api;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map.Entry;
 
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.Plugin;
 
-class CustomItemContainer<T extends CustomItem> {
-	private HashMap<MaterialData, HashMap<String, T>> _customItems = new HashMap<MaterialData, HashMap<String, T>>();
+final class CustomItemContainer {
 	
-	public static <T extends CustomItem> void removeFromHashMap(HashMap<String, T> map, Plugin plugin) {
-		for (Iterator<Entry<String, T>> it = map.entrySet().iterator(); it.hasNext(); ) {
-			if (it.next().getValue()._owner == plugin) {
-				it.remove();
-			}
-		}
+	private HashMap<MaterialData, HashMap<String, CustomItem>> _customItems = new HashMap<MaterialData, HashMap<String, CustomItem>>();
+	private HashMap<Plugin, ArrayList<CustomItem>> _customItemsByPlugin = new HashMap<Plugin, ArrayList<CustomItem>>();
+	private HashMap<String, CustomItem> _customItemsBySlug = new HashMap<String, CustomItem>();
+	
+	public boolean contains(CustomItem customItem) {
+		return _customItemsBySlug.containsKey(customItem.getSlug());
 	}
 	
-	public boolean put(T customItem) {
-		HashMap<String, T> itemMap = _customItems.get(customItem.getMaterial());
-		if (itemMap == null) {
-			itemMap = new HashMap<String, T>();
-			_customItems.put(customItem.getMaterial(), itemMap);
+	public boolean put(CustomItem customItem, Plugin owner) {
+		if (customItem._owner != null && !contains(customItem)) {
+			// Insert into the HashMap by item type.
+			HashMap<String, CustomItem> itemMap = _customItems.get(customItem.getMaterial());
+			if (itemMap == null) {
+				itemMap = new HashMap<String, CustomItem>();
+				_customItems.put(customItem.getMaterial(), itemMap);
+			}
+			itemMap.put(customItem.getName(), customItem);
+			// Insert into the HashMap by plugin.
+			ArrayList<CustomItem> itemList = _customItemsByPlugin.get(owner);
+			if (itemList == null) {
+				itemList = new ArrayList<CustomItem>();
+				_customItemsByPlugin.put(owner, itemList);
+			}
+			itemList.add(customItem);
+			// Insert into the HashMap by slug.
+			_customItemsBySlug.put(customItem.getSlug(), customItem);
+			// Set the owner.
+			customItem._owner = owner;
 		}
-		itemMap.put(customItem.getName(), customItem);
 		return true;
 	}
 	
-	public final T get(ItemStack item) {
+	public CustomItem get(ItemStack item) {
 		String name = CustomItem.getItemName(item);
 		if (name != null) {
 			MaterialData data = item.getData();
 			if (data.getItemType().getMaxDurability() > 0) {
 				data.setData((byte) 0);
 			}
-			HashMap<String, T> itemMap = _customItems.get(data);
+			HashMap<String, CustomItem> itemMap = _customItems.get(data);
 			if (itemMap != null) {
-				T customItem = itemMap.get(name);
+				CustomItem customItem = itemMap.get(name);
 				if (customItem != null) {
 					return customItem;
 				}
@@ -47,18 +62,43 @@ class CustomItemContainer<T extends CustomItem> {
 		return null;
 	}
 	
-	public final int size() {
-		return _customItems.size();
+	public CustomItem get(String slug) {
+		return _customItemsBySlug.get(slug);
 	}
 	
-	public final void remove(Plugin plugin) {
-		for (HashMap<String, T> map : _customItems.values()) {
-			removeFromHashMap(map, plugin);
+	public Collection<CustomItem> get(Plugin plugin) {
+		ArrayList<CustomItem> list = _customItemsByPlugin.get(plugin);
+		return Collections.unmodifiableCollection(list == null ? new ArrayList<CustomItem>() : list);
+	}
+	
+	public Collection<CustomItem> getAll() {
+		return Collections.unmodifiableCollection(_customItemsBySlug.values());
+	}
+	
+	public Collection<Plugin> getOwners() {
+		return Collections.unmodifiableCollection(_customItemsByPlugin.keySet());
+	}
+	
+	private static void remove(Collection<CustomItem> col, Plugin plugin) {
+		for (Iterator<CustomItem> it = col.iterator(); it.hasNext(); ) {
+			if (it.next()._owner == plugin) {
+				it.remove();
+			}
 		}
 	}
 	
-	public final void clear() {
+	public void remove(Plugin plugin) {
+		for (HashMap<String, CustomItem> map : _customItems.values()) {
+			remove(map.values(), plugin);
+		}
+		remove(_customItemsBySlug.values(), plugin);
+		_customItemsByPlugin.remove(plugin);
+	}
+	
+	public void clear() {
 		_customItems.clear();
+		_customItemsByPlugin.clear();
+		_customItemsBySlug.clear();
 	}
 	
 }

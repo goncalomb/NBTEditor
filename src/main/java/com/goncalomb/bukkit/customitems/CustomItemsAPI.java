@@ -25,20 +25,19 @@ public final class CustomItemsAPI extends JavaPlugin {
 	public void onEnable() {
 		BKgLib.bind(this);
 		
-		CustomItemManager manager = CustomItemManager.getInstance(this);
-		manager.registerNew(new BatBomb(), this);
-		manager.registerNew(new FireBomb(), this);
-		manager.registerNew(new RepulsionBomb(), this);
-		manager.registerNew(new LightningRod(), this);
-		manager.registerNew(new EnderBow(), this);
-		manager.registerNew(new WitherBow(), this);
-		manager.registerNew(new SunStick(), this);
-		manager.registerNew(new MoonStick(), this);
-		manager.registerNew(new EscapePlan(), this);
-		manager.registerNew(new KingsCrown(), this);
-		manager.registerNew(new SimpleMine(), this);
-		manager.registerNew(new TorchBow(), this);
-		manager.registerNew(new AntiMatterBomb(), this);
+		CustomItemManager.register(new BatBomb(), this);
+		CustomItemManager.register(new FireBomb(), this);
+		CustomItemManager.register(new RepulsionBomb(), this);
+		CustomItemManager.register(new LightningRod(), this);
+		CustomItemManager.register(new EnderBow(), this);
+		CustomItemManager.register(new WitherBow(), this);
+		CustomItemManager.register(new SunStick(), this);
+		CustomItemManager.register(new MoonStick(), this);
+		CustomItemManager.register(new EscapePlan(), this);
+		CustomItemManager.register(new KingsCrown(), this);
+		CustomItemManager.register(new SimpleMine(), this);
+		CustomItemManager.register(new TorchBow(), this);
+		CustomItemManager.register(new AntiMatterBomb(), this);
 		
 		BKgLib.registerCommand(new CommandCustomItems(), this);
 		
