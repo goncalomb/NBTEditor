@@ -3,7 +3,6 @@ package com.goncalomb.bukkit.bkglib;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -14,6 +13,7 @@ import org.bukkit.Server;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
@@ -22,7 +22,6 @@ import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandManager;
 public final class BKgLib {
 	
 	private static HashSet<Plugin> _plugins = new HashSet<Plugin>();
-	private static HashMap<Plugin, Permission> _topPermissions = new HashMap<Plugin, Permission>();
 	static Logger _logger;
 	private static File _globalDataFolder;
 	private static SimpleCommandMap _commandMap;
@@ -73,7 +72,7 @@ public final class BKgLib {
 		if (_plugins.remove(plugin)) {
 			BKgCommandManager.unregisterAll(_commandMap, plugin);
 			Lang.unload(plugin);
-			Permission perm = _topPermissions.get(plugin);
+			Permission perm = getRootPermission(plugin);
 			if (perm != null) {
 				Bukkit.getPluginManager().removePermission(perm);
 			}
@@ -103,11 +102,11 @@ public final class BKgLib {
 		}
 	}
 	
-	public static Permission getTopPermission(Plugin plugin) {
-		Permission perm = _topPermissions.get(plugin);
-		if (perm == null) {
-			perm = new Permission(plugin.getName().toLowerCase() + ".*");
-			_topPermissions.put(plugin, perm);
+	public static Permission getRootPermission(Plugin plugin) {
+		String permName = plugin.getName().toLowerCase() + ".*";
+		Permission perm = Bukkit.getPluginManager().getPermission(permName);
+		if (perm == null && _plugins.contains(plugin)) {
+			perm = new Permission(permName, PermissionDefault.OP);
 			Bukkit.getPluginManager().addPermission(perm);
 		}
 		return perm;

@@ -147,7 +147,7 @@ public abstract class BKgCommand extends BKgSubCommand {
 		// Set the owner and permissions.
 		_owner = owner;
 		_internalCommand.setDescription(Lang._(owner.getClass(), "commands." + getName() + ".description"));
-		setupPermissions(getName(), BKgLib.getTopPermission(owner));
+		setupPermissions(getName(), BKgLib.getRootPermission(owner));
 		// Register the command with Bukkit.
 		commandMap.register(owner.getName(), _internalCommand);
 	}
