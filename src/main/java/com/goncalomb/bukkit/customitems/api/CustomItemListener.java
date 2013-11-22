@@ -12,6 +12,7 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
@@ -70,6 +71,19 @@ final class CustomItemListener implements Listener {
 				} else {
 					event.setCancelled(true);
 				}
+			}
+		}
+	}
+	
+	@EventHandler
+	private void playerInteract(BlockBreakEvent event) {
+		ItemStack item = event.getPlayer().getItemInHand();
+		CustomItem customItem = CustomItemManager.getCustomItem(item);
+		if (customItem != null) {
+			if (verifyCustomItem(customItem, event.getPlayer(), false)) {
+				customItem.onBlockBreak(event, new PlayerDetails(event));
+			} else {
+				event.setCancelled(true);
 			}
 		}
 	}

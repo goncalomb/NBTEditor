@@ -2,12 +2,18 @@ package com.goncalomb.bukkit.customitems.api;
 
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class PlayerDetails extends ItemDetails implements IConsumableDetails {
 	
 	protected Player _player;
+	
+	PlayerDetails(BlockBreakEvent event) {
+		super(event.getPlayer().getItemInHand());
+		_player = event.getPlayer();
+	}
 	
 	PlayerDetails(PlayerInteractEvent event) {
 		super(event.getItem());

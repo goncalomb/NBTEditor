@@ -9,6 +9,7 @@ import java.util.List;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ItemDespawnEvent;
@@ -121,6 +122,8 @@ public abstract class CustomItem {
 	public void onLeftClick(PlayerInteractEvent event, PlayerDetails details) { };
 	
 	public void onRightClick(PlayerInteractEvent event, PlayerDetails details) { };
+	
+	public void onBlockBreak(BlockBreakEvent event, PlayerDetails details) { };
 	
 	public void onAttack(EntityDamageByEntityEvent event, PlayerDetails details) { }
 	
