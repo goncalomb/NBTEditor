@@ -46,11 +46,10 @@ public final class NBTEditor extends JavaPlugin {
 		BKgLib.registerCommand(new CommandNBTHead(), this);
 		BKgLib.registerCommand(new CommandNBTTile(), this);
 		
-		CustomItemManager itemManager = CustomItemManager.getInstance(this);
-		BookOfSouls.initialize(this, itemManager);
-		itemManager.registerNew(new EntityInspectorTool(), this);
-		itemManager.registerNew(new EntityRemoverTool(), this);
-		itemManager.registerNew(new SuperLeadTool(), this);
+		BookOfSouls.initialize(this);
+		CustomItemManager.register(new EntityInspectorTool(), this);
+		CustomItemManager.register(new EntityRemoverTool(), this);
+		CustomItemManager.register(new SuperLeadTool(), this);
 		
 		getLogger().info("NBTEditor has been enabled.");
 	}

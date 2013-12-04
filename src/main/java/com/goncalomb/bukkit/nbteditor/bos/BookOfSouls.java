@@ -47,15 +47,15 @@ public class BookOfSouls {
 	private ItemStack _book;
 	private EntityNBT _entityNbt;
 	
-	public static void initialize(Plugin plugin, CustomItemManager itemManager) {
+	public static void initialize(Plugin plugin) {
 		if (_plugin != null) return;
 		_plugin = plugin;
 		
 		_bosEmptyCustomItem = new BookOfSoulsEmptyCI();
-		itemManager.registerNew(_bosEmptyCustomItem, plugin);
+		CustomItemManager.register(_bosEmptyCustomItem, plugin);
 		
 		_bosCustomItem = new BookOfSoulsCI();
-		itemManager.registerNew(_bosCustomItem, plugin);
+		CustomItemManager.register(_bosCustomItem, plugin);
 	}
 	
 	static EntityNBT bookToEntityNBT(ItemStack book) {
