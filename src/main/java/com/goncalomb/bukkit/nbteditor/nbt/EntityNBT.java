@@ -220,7 +220,11 @@ public class EntityNBT {
 	}
 	
 	public static EntityNBT fromEntity(Entity entity) {
-		return fromEntityType(entity.getType(), NBTUtils.getEntityNBTTagCompound(entity));
+		EntityNBT entityNbt = fromEntityType(entity.getType(), NBTUtils.getEntityNBTTagCompound(entity));
+		// When cloning, remove the UUID to force all entities to have a unique one.
+		entityNbt._data.remove("UUIDMost");
+		entityNbt._data.remove("UUIDLeast");
+		return entityNbt;
 	}
 	
 	protected EntityNBT() {
