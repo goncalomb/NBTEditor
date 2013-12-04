@@ -95,9 +95,17 @@ public final class NBTUtils {
 	
 	static void setMineEntityNBTTagCompound(Object minecraftEntity, NBTTagCompoundWrapper data) {
 		NBTTagCompoundWrapper entityData = getMineEntityNBTTagCompound(minecraftEntity);
-		NBTTagListWrapper pos = entityData.getList("Pos"); // Save the position.
+		// Do not override UUID and position.
+		long uuidMost = entityData.getLong("UUIDMost");
+		long uuidLeast = entityData.getLong("UUIDLeast");
+		NBTTagListWrapper pos = entityData.getList("Pos");
+		// Merge the data.
 		entityData.merge(data);
+		// Re-apply UUID and position.
+		entityData.setLong("UUIDMost", uuidMost);
+		entityData.setLong("UUIDLeast", uuidLeast);
 		entityData.setList("Pos", pos);
+		// Apply data.
 		BukkitReflect.invokeMethod(minecraftEntity, _f0, entityData._nbtBaseObject);
 		BukkitReflect.invokeMethod(minecraftEntity, _a0, entityData._nbtBaseObject);
 	}
