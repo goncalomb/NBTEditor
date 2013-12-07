@@ -13,9 +13,13 @@
       <outputDirectory>/</outputDirectory>
     </file>
     <file>
-      <source>README.txt</source>
+      <source>${project.basedir}/src/main/resources/README.txt</source>
       <outputDirectory>/</outputDirectory>
       <filtered>true</filtered>
+    </file>
+    <file>
+      <source>${project.basedir}/LICENCE.txt</source>
+      <outputDirectory>/</outputDirectory>
     </file>
   </files>
 </assembly>
