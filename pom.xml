@@ -22,6 +22,12 @@
 
   <repositories>
     <repository>
+      <id>goncalomb-repo-rel</id>
+      <name>repo.goncalomb.com Releases</name>
+      <url>http://repo.goncalomb.com/maven/releases/</url>
+    </repository>
+
+    <repository>
       <id>bukkit-repo</id>
       <url>http://repo.bukkit.org/content/groups/public</url>
     </repository>
@@ -42,19 +48,31 @@
     </dependency>
   </dependencies>
 
+  <distributionManagement>
+    <repository>
+      <id>goncalomb-repo-rel</id>
+      <name>repo.goncalomb.com Releases</name>
+      <url>http://repo.goncalomb.com/maven/releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>goncalomb-repo-snap</id>
+      <name>repo.goncalomb.com Snapshots</name>
+      <url>http://repo.goncalomb.com/maven/snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
+
   <build>
     <defaultGoal>clean install</defaultGoal>
 
     <resources>
       <resource>
-        <directory>src/main/resources</directory>
+        <directory>${project.basedir}/src/main/resources</directory>
         <filtering>true</filtering>
       </resource>
       <resource>
-        <directory>${basedir}</directory>
-        <filtering>true</filtering>
+        <directory>${project.basedir}</directory>
         <includes>
-          <include>README.txt</include>
+          <include>LICENCE.txt</include>
         </includes>
       </resource>
     </resources>
@@ -67,7 +85,7 @@
         <configuration>
           <filesets>
             <fileset>
-              <directory>${basedir}</directory>
+              <directory>${project.basedir}</directory>
               <includes>
                 <include>dependency-reduced-pom.xml</include>
               </includes>
@@ -98,7 +116,6 @@
         <version>2.4</version>
         <configuration>
           <archive>
-            <addMavenDescriptor>false</addMavenDescriptor>
             <manifestEntries>
               <Specification-Title>${project.name}</Specification-Title>
               <Specification-Version>${project.version}</Specification-Version>
@@ -142,6 +159,18 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>2.5.1</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.8.1</version>
       </plugin>
     </plugins>
   </build>
