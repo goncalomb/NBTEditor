@@ -48,9 +48,6 @@ public final class EntityInspectorTool extends CustomItem {
 	public  void onInteractEntity(PlayerInteractEntityEvent event, PlayerDetails details) {
 		Player player = event.getPlayer();
 		Entity entity = event.getRightClicked();
-		player.sendMessage(entity.getUniqueId().toString());
-		
-		/*
 		if (EntityNBT.isValidType(entity.getType())) {
 			EntityNBT entityNBT = EntityNBT.fromEntity(entity);
 			player.sendMessage(ChatColor.YELLOW + "Information about " + EntityTypeMap.getName(entity.getType()) + "");
@@ -89,7 +86,7 @@ public final class EntityInspectorTool extends CustomItem {
 			event.setCancelled(true);
 		} else {
 			player.sendMessage(ChatColor.RED + "Not a valid entity!");
-		}*/
+		}
 	}
 	
 	@Override
