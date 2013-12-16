@@ -158,7 +158,7 @@ public abstract class CustomItem {
 	
 	public void onDispense(BlockDispenseEvent event, DispenserDetails details) { };
 	
-	public void onPlayerDeath(PlayerDeathEvent event, PlayerInventoryDetails details) { };
+	public void onPlayerDeath(PlayerDeathEvent event, PlayerDetails details) { };
 	
 	public final boolean isEnabled() {
 		return _enabled;

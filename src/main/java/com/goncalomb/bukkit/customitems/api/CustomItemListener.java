@@ -23,8 +23,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.command.defaults.GameRuleCommand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -217,22 +219,17 @@ final class CustomItemListener implements Listener {
 	@EventHandler
 	private void playerDeath(PlayerDeathEvent event) {
 		Player player = event.getEntity();
-		PlayerInventory inv = player.getInventory();
-		for (int i = 0, l = inv.getSize() + 4; i < l; ++i) {
-			ItemStack item = inv.getItem(i);
+		for (ItemStack item : event.getDrops()) {
 			CustomItem customItem = CustomItemManager.getCustomItem(item);
-			
 			if (verifyCustomItem(customItem, player, true)) {
-				customItem.onPlayerDeath(event, new PlayerInventoryDetails(item, player, i));
-				List<ItemStack> drops = event.getDrops();
-				drops.clear();
-				for (ItemStack drop : inv.getContents()) {
-					drops.add(drop);
-				}
-				for (ItemStack drop : inv.getArmorContents()) {
-					drops.add(drop);
-				}
-				return;
+				// This is very dirty, all "Details" classes need to be refactored.
+				customItem.onPlayerDeath(event, new PlayerDetails(item, player) {
+					@Override
+					public void consumeItem() {
+						if (_player.getGameMode() == GameMode.CREATIVE) return;
+						_item.setAmount(_item.getAmount() - 1);
+					}
+				});
 			}
 		}
 	}

@@ -35,7 +35,7 @@ import com.goncalomb.bukkit.bkglib.Lang;
 import com.goncalomb.bukkit.bkglib.utils.UtilsMc;
 import com.goncalomb.bukkit.customitems.CustomItemsAPI;
 import com.goncalomb.bukkit.customitems.api.CustomItem;
-import com.goncalomb.bukkit.customitems.api.PlayerInventoryDetails;
+import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 
 public class KingsCrown extends CustomItem {
 	
@@ -67,7 +67,7 @@ public class KingsCrown extends CustomItem {
 	}
 	
 	@Override
-	public void onPlayerDeath(PlayerDeathEvent event, PlayerInventoryDetails details) {
+	public void onPlayerDeath(PlayerDeathEvent event, PlayerDetails details) {
 		lostCrown(event.getEntity());
 	}
 	
