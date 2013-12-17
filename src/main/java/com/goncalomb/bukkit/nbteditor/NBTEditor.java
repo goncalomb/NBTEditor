@@ -26,7 +26,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.goncalomb.bukkit.bkglib.BKgLib;
 import com.goncalomb.bukkit.bkglib.reflect.NBTBaseWrapper;
 import com.goncalomb.bukkit.bkglib.reflect.WorldUtils;
-import com.goncalomb.bukkit.customitems.api.CustomItemManager;
+import com.goncalomb.bukkit.customitemsapi.api.CustomItemManager;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.commands.CommandBOS;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTArmor;

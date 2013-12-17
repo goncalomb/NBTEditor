@@ -30,8 +30,8 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.material.MaterialData;
 
-import com.goncalomb.bukkit.customitems.api.CustomItem;
-import com.goncalomb.bukkit.customitems.api.PlayerDetails;
+import com.goncalomb.bukkit.customitemsapi.api.CustomItem;
+import com.goncalomb.bukkit.customitemsapi.api.PlayerDetails;
 
 public final class SuperLeadTool extends CustomItem {
 
