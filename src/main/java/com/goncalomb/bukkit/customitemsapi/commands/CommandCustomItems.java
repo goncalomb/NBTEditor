@@ -64,7 +64,7 @@ public final class CommandCustomItems extends BKgCommand {
 		} else {
 			ItemStack item = customItem.getItem();
 			if (item == null) {
-				throw new BKgCommandException(Lang._(CustomItemsAPI.class, "commands.customitem.citem.invalid"));
+				throw new BKgCommandException(Lang._(CustomItemsAPI.class, "commands.customitem.invalid"));
 			} else {
 				item.setAmount(intAmount);
 				CommandUtils.giveItem(player, item);
