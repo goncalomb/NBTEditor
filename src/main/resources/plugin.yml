@@ -1,4 +1,4 @@
 name: CustomItemsAPI
-main: com.goncalomb.bukkit.customitems.CustomItemsAPI
+main: com.goncalomb.bukkit.customitemsapi.CustomItemsAPI
 version: ${project.version}
 author: goncalomb
