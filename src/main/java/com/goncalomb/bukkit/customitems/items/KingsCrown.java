@@ -19,6 +19,7 @@
 
 package com.goncalomb.bukkit.customitems.items;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -39,9 +40,26 @@ import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 
 public class KingsCrown extends CustomItem {
 	
+	private boolean _shouldBroadcastMessage = true;
+	
 	public KingsCrown() {
 		super("kings-crown", ChatColor.GOLD + "King's Crown", new MaterialData(Material.GOLD_HELMET));
 		addEnchantment(Enchantment.PROTECTION_FALL, 4);
+	}
+	
+	private boolean shouldBroadcastMessage() {
+		if (_shouldBroadcastMessage) {
+			_shouldBroadcastMessage = false;
+			// Prevent too much spam.
+			Bukkit.getScheduler().runTaskLater(getPlugin(), new Runnable() {
+				@Override
+				public void run() {
+					_shouldBroadcastMessage = true;
+				}
+			}, 200); // 10 seconds.
+			return true;
+		}
+		return false;
 	}
 	
 	@Override
@@ -52,7 +70,9 @@ public class KingsCrown extends CustomItem {
 			inv.setHelmet(event.getItem().getItemStack());
 			event.getItem().remove();
 			event.setCancelled(true);
-			UtilsMc.broadcastToWorld(event.getPlayer().getWorld(), Lang._(CustomItemsAPI.class, "citems.crown.found", event.getPlayer().getName(), getName()));
+			if (shouldBroadcastMessage()) {
+				UtilsMc.broadcastToWorld(event.getPlayer().getWorld(), Lang._(CustomItemsAPI.class, "crown.found", event.getPlayer().getName(), getName()));
+			}
 		}
 	}
 	
@@ -63,7 +83,9 @@ public class KingsCrown extends CustomItem {
 	
 	@Override
 	public void onDespawn(ItemDespawnEvent event) {
-		UtilsMc.broadcastToWorld(event.getEntity().getWorld(), Lang._(CustomItemsAPI.class, "citems.crown.despawn", getName()));
+		if (shouldBroadcastMessage()) {
+			UtilsMc.broadcastToWorld(event.getEntity().getWorld(), Lang._(CustomItemsAPI.class, "crown.despawn", getName()));
+		}
 	}
 	
 	@Override
@@ -72,7 +94,9 @@ public class KingsCrown extends CustomItem {
 	}
 	
 	private void lostCrown(Player player) {
-		UtilsMc.broadcastToWorld(player.getWorld(), Lang._(CustomItemsAPI.class, "citems.crown.lost", player.getName(), getName()));
+		if (shouldBroadcastMessage()) {
+			UtilsMc.broadcastToWorld(player.getWorld(), Lang._(CustomItemsAPI.class, "crown.lost", player.getName(), getName()));
+		}
 	}
 	
 }
