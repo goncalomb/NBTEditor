@@ -50,12 +50,14 @@ public final class EnchantmentsMap {
 		_enchantments.put("FireAspect", Enchantment.FIRE_ASPECT);
 		_enchantments.put("Looting", Enchantment.LOOT_BONUS_MOBS);
 		_enchantments.put("Efficiency", Enchantment.DIG_SPEED);
-		_enchantments.put("Silk-touch", Enchantment.SILK_TOUCH);
+		_enchantments.put("SilkTouch", Enchantment.SILK_TOUCH);
 		_enchantments.put("Fortune", Enchantment.LOOT_BONUS_BLOCKS);
 		_enchantments.put("Power", Enchantment.ARROW_DAMAGE);
 		_enchantments.put("Punch", Enchantment.ARROW_KNOCKBACK);
 		_enchantments.put("Flame", Enchantment.ARROW_FIRE);
 		_enchantments.put("Infinity", Enchantment.ARROW_INFINITE);
+		_enchantments.put("Lore", Enchantment.LURE);
+		_enchantments.put("Luck", Enchantment.LUCK);
 		
 		List<String> enchantmentNames = new ArrayList<String>(_enchantments.names());
 		Collections.sort(enchantmentNames, String.CASE_INSENSITIVE_ORDER);
