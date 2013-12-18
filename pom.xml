@@ -8,7 +8,7 @@
 
   <groupId>com.goncalomb.bukkit</groupId>
   <artifactId>nbteditor</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0</version>
   <packaging>jar</packaging>
 
   <name>NBTEditor</name>
@@ -44,13 +44,13 @@
     <dependency>
       <groupId>com.goncalomb.bukkit</groupId>
       <artifactId>bkglib</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
+      <version>1.0</version>
     </dependency>
 
     <dependency>
       <groupId>com.goncalomb.bukkit</groupId>
       <artifactId>customitemsapi</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
+      <version>1.0</version>
     </dependency>
   </dependencies>
 
