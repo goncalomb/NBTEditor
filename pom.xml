@@ -8,13 +8,13 @@
 
   <groupId>com.goncalomb.bukkit</groupId>
   <artifactId>bkglib</artifactId>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>BKgLib</name>
 
   <properties>
-    <bukkit.version>1.6.4-R2.0</bukkit.version>
+    <bukkit.version>1.7.2-R0.1</bukkit.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.timestamp>${maven.build.timestamp}</project.build.timestamp>
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
