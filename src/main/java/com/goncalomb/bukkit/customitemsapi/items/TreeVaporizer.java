@@ -23,7 +23,6 @@ import java.util.Set;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -40,7 +39,7 @@ public final class TreeVaporizer extends GenericSuperAxe {
 	@Override
 	public void onBlockBreak(BlockBreakEvent event, PlayerDetails details) {
 		Block root = event.getBlock();
-		if (root.getType() == Material.LOG) {
+		if (isLog(root.getType())) {
 			// Find the blocks
 			Set<Block> blocks = getTreeBlocks(root);
 			if (blocks.size() > 0) {

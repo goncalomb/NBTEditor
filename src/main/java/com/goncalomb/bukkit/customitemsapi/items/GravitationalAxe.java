@@ -45,7 +45,7 @@ public final class GravitationalAxe extends GenericSuperAxe {
 	@Override
 	public void onBlockBreak(BlockBreakEvent event, PlayerDetails details) {
 		Block root = event.getBlock();
-		if (root.getType() == Material.LOG) {
+		if (isLog(root.getType())) {
 			// Initialize some variables:
 			World world = event.getPlayer().getWorld();
 			Location location = root.getLocation();

@@ -39,10 +39,14 @@ public abstract class GenericSuperAxe extends CustomItem {
 	protected GenericSuperAxe(String slug, String name) {
 		super(slug, name, new MaterialData(Material.DIAMOND_AXE));
 	}
+
+	protected boolean isLog(Material mat) {
+		return (mat == Material.LOG || mat == Material.LOG_2);
+	}
 	
 	@Override
 	public void onLeftClick(PlayerInteractEvent event, PlayerDetails details) {
-		if (event.getAction() == org.bukkit.event.block.Action.LEFT_CLICK_BLOCK && event.getClickedBlock().getType() == Material.LOG) {
+		if (event.getAction() == org.bukkit.event.block.Action.LEFT_CLICK_BLOCK && isLog(event.getClickedBlock().getType())) {
 			event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 5*20, 3), true);
 		}
 	}
@@ -69,6 +73,18 @@ public abstract class GenericSuperAxe extends CustomItem {
 			if (_finalSet.size() + more > 1000) {
 				throw new BlockLimitException();
 			}
+		}
+
+		private boolean isLog(Material mat) {
+			return (mat == Material.LOG || mat == Material.LOG_2);
+		}
+		
+		private boolean isLeaves(Material mat) {
+			return (mat == Material.LEAVES || mat == Material.LEAVES_2);
+		}
+		
+		private boolean isGround(Material mat) {
+			return (!isLog(mat) && !isLeaves(mat) && mat.isSolid());
 		}
 		
 		public Set<Block> getBlocks() {
@@ -105,7 +121,7 @@ public abstract class GenericSuperAxe extends CustomItem {
 				blocks = new HashSet<Block>();
 				for (Block block : lastBlocks) {
 					if (!block.equals(_root)) {
-						if (block.getType() == Material.LOG) {
+						if (isLog(block.getType())) {
 							if (result.add(block)) {
 								blocks.addAll(getNeighbourBlocks(block));
 								checkBlockLimit(result.size());
@@ -138,7 +154,7 @@ public abstract class GenericSuperAxe extends CustomItem {
 		private boolean findGround(Block start) {
 			if (_groundedBlocks.contains(start)) {
 				return true;
-			} if (!isGroundBlock(start)) {
+			} if (!isGround(start.getType())) {
 				return false;
 			}
 			HashSet<Block> result = new HashSet<Block>();
@@ -148,7 +164,7 @@ public abstract class GenericSuperAxe extends CustomItem {
 				HashSet<Block> lastBlocks = blocks;
 				blocks = new HashSet<Block>();
 				for (Block block : lastBlocks) {
-					if (isGroundBlock(block) && result.add(block)) {
+					if (isGround(block.getType()) && result.add(block)) {
 						if (result.size() >= 5) {
 							// Found 5 connected ground blocks.
 							// Mark them as ground and return true.
@@ -167,13 +183,8 @@ public abstract class GenericSuperAxe extends CustomItem {
 			return false;
 		}
 		
-		private boolean isGroundBlock(Block block) {
-			Material mat = block.getType();
-			return (mat != Material.LOG && mat != Material.LEAVES && mat.isSolid());
-		}
-		
 		private void findConnectedLeaves(Block block, int depth) throws BlockLimitException {
-			if (depth == 0 || block.getType() == Material.LEAVES) {
+			if (depth == 0 || isLeaves(block.getType())) {
 				if (depth != 0) {
 					_leaves.add(block);
 					checkBlockLimit(_leaves.size());
@@ -186,7 +197,7 @@ public abstract class GenericSuperAxe extends CustomItem {
 					findConnectedLeaves(block.getRelative(0, 0, -1), depth + 1);
 					findConnectedLeaves(block.getRelative(0, 0, 1), depth + 1);
 				}
-			} else if (block.getType() == Material.LOG) {
+			} else if (isLog(block.getType())) {
 				// Found log is it a small disconnected log patch?
 				if (!_finalSet.contains(block) && !_groundedBlocks.contains(block) && !_leaves.contains(block)) {
 					HashSet<Block> patch = findSmallLogPatch(block);
@@ -208,7 +219,7 @@ public abstract class GenericSuperAxe extends CustomItem {
 				blocks = new HashSet<Block>();
 				for (Block block : lastBlocks) {
 					if (!block.equals(_root)) {
-						if (block.getType() == Material.LOG) {
+						if (isLog(block.getType())) {
 							if (result.add(block)) {
 								if (result.size() > 3) {
 									// Found more than 3 connected log blocks.
