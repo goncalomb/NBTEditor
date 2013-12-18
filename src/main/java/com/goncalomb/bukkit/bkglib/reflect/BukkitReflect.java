@@ -20,6 +20,7 @@
 package com.goncalomb.bukkit.bkglib.reflect;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
@@ -107,11 +108,19 @@ public final class BukkitReflect {
 		}
 	}
 	
+	static Object getFieldValue(Object object, Field field) {
+		try {
+			return field.get(object);
+		} catch (Exception e) {
+			throw new Error("Error while getting field value " + field.getName() + " of class " + field.getDeclaringClass().getName() + ".", e);
+		}
+	}
+	
 	static Object newInstance(Class<?> clazz) {
 		try {
 			return clazz.newInstance();
 		} catch (Exception e) {
-			throw new Error("Error creating instance of " + clazz.getSimpleName() + ".", e);
+			throw new Error("Error creating instance of " + clazz.getName() + ".", e);
 		}
 	}
 	
@@ -119,7 +128,7 @@ public final class BukkitReflect {
 		try {
 			return contructor.newInstance(initargs);
 		} catch (Exception e) {
-			throw new Error("Error creating instance of " + contructor.getDeclaringClass().getSimpleName() + ".", e);
+			throw new Error("Error creating instance of " + contructor.getDeclaringClass().getName() + ".", e);
 		}
 	}
 	

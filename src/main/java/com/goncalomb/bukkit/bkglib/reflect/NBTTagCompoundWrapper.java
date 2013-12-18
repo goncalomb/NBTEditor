@@ -19,8 +19,10 @@
 
 package com.goncalomb.bukkit.bkglib.reflect;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Collection;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public final class NBTTagCompoundWrapper extends NBTBaseWrapper {
 	
@@ -32,7 +34,6 @@ public final class NBTTagCompoundWrapper extends NBTBaseWrapper {
 	private static Method _getDouble;
 	private static Method _getString;
 	private static Method _getCompound;
-	private static Method _getList;
 	private static Method _get;
 	
 	private static Method _setByte;
@@ -42,17 +43,16 @@ public final class NBTTagCompoundWrapper extends NBTBaseWrapper {
 	private static Method _setDouble;
 	private static Method _setFloat;
 	private static Method _setString;
-	private static Method _setCompound;
 	private static Method _set;
 	
 	private static Method _hasKey;
 	private static Method _remove;
-	private static Method _c; // Gets a Collection with all NBTBase objects.
+	private static Field _map; // A Map with all NBTBase objects.
 	
 	private static Method _tagCompoundSerialize;
 	private static Method _tagCompoundUnserialize;
 	
-	static void prepareReflectionz() throws SecurityException, NoSuchMethodException {
+	static void prepareReflectionz() throws SecurityException, NoSuchMethodException, NoSuchFieldException {
 		_getByte = _nbtTagCompoundClass.getMethod("getByte", String.class);
 		_getShort = _nbtTagCompoundClass.getMethod("getShort", String.class);
 		_getInt = _nbtTagCompoundClass.getMethod("getInt", String.class);
@@ -61,7 +61,6 @@ public final class NBTTagCompoundWrapper extends NBTBaseWrapper {
 		_getDouble = _nbtTagCompoundClass.getMethod("getDouble", String.class);
 		_getString = _nbtTagCompoundClass.getMethod("getString", String.class);
 		_getCompound = _nbtTagCompoundClass.getMethod("getCompound", String.class);
-		_getList = _nbtTagCompoundClass.getMethod("getList", String.class);
 		_get = _nbtTagCompoundClass.getMethod("get", String.class);
 		
 		_setByte = _nbtTagCompoundClass.getMethod("setByte", String.class, byte.class);
@@ -71,12 +70,12 @@ public final class NBTTagCompoundWrapper extends NBTBaseWrapper {
 		_setFloat = _nbtTagCompoundClass.getMethod("setFloat", String.class, float.class);
 		_setDouble = _nbtTagCompoundClass.getMethod("setDouble", String.class, double.class);
 		_setString = _nbtTagCompoundClass.getMethod("setString", String.class, String.class);
-		_setCompound = _nbtTagCompoundClass.getMethod("setCompound", String.class, _nbtTagCompoundClass);
 		_set = _nbtTagCompoundClass.getMethod("set", String.class, _nbtBaseClass);
 		
 		_hasKey = _nbtTagCompoundClass.getMethod("hasKey", String.class);
 		_remove = _nbtTagCompoundClass.getMethod("remove", String.class);
-		_c = _nbtTagCompoundClass.getMethod("c");
+		_map = _nbtTagCompoundClass.getDeclaredField("map");
+		_map.setAccessible(true);
 		
 		Class<?> nbtCompressedStreamToolsClass = BukkitReflect.getMinecraftClass("NBTCompressedStreamTools");
 		_tagCompoundSerialize = nbtCompressedStreamToolsClass.getMethod("a", _nbtTagCompoundClass);
@@ -128,7 +127,12 @@ public final class NBTTagCompoundWrapper extends NBTBaseWrapper {
 	
 	public NBTTagListWrapper getList(String key) {
 		if (hasKey(key)) {
-			return new NBTTagListWrapper(invokeMethod(_getList, key));
+			// With 1.7 the internal getList method requires a second parameter, the list type.
+			// To bypass this we get the object as a generic type and check for NBTList.
+			Object obj = invokeMethod(_get, key);
+			if (_nbtTagListClass.isInstance(obj)) {
+				return new NBTTagListWrapper(obj);
+			}
 		}
 		return null;
 	}
@@ -171,7 +175,7 @@ public final class NBTTagCompoundWrapper extends NBTBaseWrapper {
 	}
 	
 	public void setCompound(String key, NBTTagCompoundWrapper value) {
-		invokeMethod(_setCompound, key, value._nbtBaseObject);
+		invokeMethod(_set, key, value._nbtBaseObject);
 	}
 	
 	public void setList(String key, NBTTagListWrapper value) {
@@ -213,9 +217,9 @@ public final class NBTTagCompoundWrapper extends NBTBaseWrapper {
 	
 	@SuppressWarnings("unchecked")
 	public void merge(NBTTagCompoundWrapper other) {
-		Collection<Object> tags = (Collection<Object>) BukkitReflect.invokeMethod(other._nbtBaseObject, _c);
-		for (Object tag : tags) {
-			invokeMethod(_set, NBTBaseWrapper.getName(tag), NBTBaseWrapper.clone(tag));
+		Map<String, Object> tags = (Map<String, Object>) BukkitReflect.getFieldValue(other._nbtBaseObject, _map);
+		for (Entry<String, Object> tag : tags.entrySet()) {
+			invokeMethod(_set, tag.getKey(), NBTBaseWrapper.clone(tag.getValue()));
 		}
 	}
 	

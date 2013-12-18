@@ -81,20 +81,17 @@ final class NBTTagTypeHandler {
 	private NBTTagTypeHandler(String tagClassName) throws SecurityException, NoSuchMethodException, NoSuchFieldException {
 		_class = BukkitReflect.getMinecraftClass(tagClassName);
 		_data = _class.getDeclaredField("data");
+		_data.setAccessible(true);
 		_dataType = _data.getType();
-		_contructor = _class.getConstructor(String.class, _dataType);
+		_contructor = _class.getConstructor(_dataType);
 	}
 	
 	private Object wrapWithTag(Object innerObject) {
-		return BukkitReflect.newInstance(_contructor, "", innerObject);
+		return BukkitReflect.newInstance(_contructor, innerObject);
 	}
 	
 	private Object unwrapTag(Object tagObject) {
-		try {
-			return _data.get(tagObject);
-		} catch (Exception e) {
-			throw new Error("Error while acessing data from " + _class.getSimpleName() + ".", e);
-		}
+		return BukkitReflect.getFieldValue(tagObject, _data);
 	}
 	
 }

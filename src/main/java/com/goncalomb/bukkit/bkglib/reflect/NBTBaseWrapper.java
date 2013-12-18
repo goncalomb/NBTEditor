@@ -29,7 +29,6 @@ public class NBTBaseWrapper {
 	protected static Class<?> _nbtTagCompoundClass;
 	protected static Class<?> _nbtTagListClass;
 	
-	private static Method _getName;
 	private static Method _clone;
 	
 	protected Object _nbtBaseObject;
@@ -41,7 +40,6 @@ public class NBTBaseWrapper {
 			_nbtTagListClass = BukkitReflect.getMinecraftClass("NBTTagList");
 			
 			try {
-				_getName = _nbtBaseClass.getMethod("getName");
 				_clone = _nbtBaseClass.getMethod("clone");
 				NBTTagCompoundWrapper.prepareReflectionz();
 				NBTTagListWrapper.prepareReflectionz();
@@ -64,11 +62,6 @@ public class NBTBaseWrapper {
 		} else {
 			return new NBTBaseWrapper(nbtBaseObject);
 		}
-	}
-	
-	// Helper method for NBTTagCompoundWrapper.merge(NBTTagCompoundWrapper).
-	protected static final String getName(Object nbtBaseObject) {
-		return (String) BukkitReflect.invokeMethod(nbtBaseObject, _getName);
 	}
 	
 	// Helper method for NBTTagCompoundWrapper.merge(NBTTagCompoundWrapper).

@@ -19,16 +19,19 @@
 
 package com.goncalomb.bukkit.bkglib.reflect;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.List;
 
 public final class NBTTagListWrapper extends NBTBaseWrapper {
 	
-	private static Method _get;
+	private static Field _list;
 	private static Method _add;
 	private static Method _size;
 	
-	static void prepareReflectionz() throws SecurityException, NoSuchMethodException {
-		_get = _nbtTagListClass.getMethod("get", int.class);
+	static void prepareReflectionz() throws SecurityException, NoSuchMethodException, NoSuchFieldException {
+		_list = _nbtTagListClass.getDeclaredField("list");
+		_list.setAccessible(true);
 		_add = _nbtTagListClass.getMethod("add", _nbtBaseClass);
 		_size = _nbtTagListClass.getMethod("size");
 	}
@@ -49,7 +52,11 @@ public final class NBTTagListWrapper extends NBTBaseWrapper {
 	}
 	
 	public Object get(int index) {
-		return NBTTagTypeHandler.getObjectFromTag(invokeMethod(_get, index));
+		// With 1.7 the internal get method does not return a generic element.
+		// To bypass this we get the list and then fetch the required object.
+		// This is by far not the best implementation. A refactorization of the reflection classes is needed.
+		List<?> list = (List<?>) BukkitReflect.getFieldValue(_nbtBaseObject, _list);
+		return NBTTagTypeHandler.getObjectFromTag(list.get(0));
 	}
 	
 	public void add(Object value) {
