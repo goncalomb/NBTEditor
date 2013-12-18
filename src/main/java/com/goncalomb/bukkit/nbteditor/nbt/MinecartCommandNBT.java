@@ -19,19 +19,17 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
+import org.bukkit.entity.EntityType;
 
-public class ZombieNBT extends MobNBT {
+import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
+
+public class MinecartCommandNBT extends MinecartNBT {
 	
 	static {
-		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Zombie");
-		variables.add("is-villager", new BooleanVariable("IsVillager"));
-		variables.add("is-baby", new BooleanVariable("IsBaby"));
-		variables.add("conversion-time", new IntegerVariable("ConversionTime", -1));
-		variables.add("can-break-doors", new BooleanVariable("CanBreakDoors"));
-		EntityNBTVariableManager.registerVariables(ZombieNBT.class, variables);
+		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("MinecartCommandBlock");
+		variables.add("command", new StringVariable("Command"));
+		EntityNBTVariableManager.registerVariables(EntityType.MINECART_COMMAND, variables);
 	}
 	
 }

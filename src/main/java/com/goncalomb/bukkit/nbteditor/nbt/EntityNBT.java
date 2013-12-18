@@ -114,6 +114,7 @@ public class EntityNBT {
 		registerEntity(EntityType.MINECART_HOPPER, MinecartHopperNBT.class);
 		registerEntity(EntityType.MINECART_MOB_SPAWNER, MinecartSpawnerNBT.class);
 		registerEntity(EntityType.MINECART_TNT, MinecartNBT.class);
+		registerEntity(EntityType.MINECART_COMMAND, MinecartCommandNBT.class);
 		
 		
 		NBTGenericVariableContainer variables = null;
