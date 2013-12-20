@@ -83,8 +83,10 @@ commands.nbtenchant.glow=§aBrilho adicionado.
 commands.nbtenchant.cleared=§aTodos os encahntamentos removidos.
 
 commands.nbthead.description=Usado para obter cabeças de jogadores.
-commands.nbthead.done=§aDesfruta da tua nova cabeça.
-commands.nbthead.invalid=§cNome do jogadore demasiado longo!
+commands.nbthead.done=§aFeito.
+commands.nbthead.done1=§aDesfruta da tua nova cabeça.
+commands.nbthead.invalid=§cNome do jogador demasiado longo!
+commands.nbthead.nop=§cParâmetro 'player-name' em falta!
 
 commands.nbtitem.description=Usado para editar nome e história de items.
 commands.nbtitem.renamed=§aItem renomeado.

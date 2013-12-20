@@ -36,14 +36,23 @@ public class CommandNBTHead extends BKgCommand {
 		super("nbthead", "nbth");
 	}
 	
-	@Command(args = "", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<player-name>")
+	@Command(args = "", type = CommandType.DEFAULT, minargs = 1, maxargs = 2, usage = "<skull-player-name> [player-name]")
 	public boolean headCommand(CommandSender sender, String[] args) throws BKgCommandException {
+		Player other;
+		if (args.length == 2) {
+			other = CommandUtils.findPlayer(args[1]);
+		} else if (sender instanceof Player) {
+			other = (Player) sender;
+		} else {
+			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbthead.nop"));
+			return false;
+		}
 		ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 		SkullMeta meta = (SkullMeta) head.getItemMeta();
 		if (meta.setOwner(args[0])) {
 			head.setItemMeta(meta);
-			CommandUtils.giveItem((Player) sender, head);
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbthead.done"));
+			CommandUtils.giveItem(other, head);
+			sender.sendMessage(Lang._(NBTEditor.class, (other == sender ? "commands.nbthead.done1" : "commands.nbthead.done")));
 		} else {
 			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbthead.invalid"));
 		}

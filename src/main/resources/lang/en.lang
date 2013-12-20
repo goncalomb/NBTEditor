@@ -83,8 +83,10 @@ commands.nbtenchant.glow=§aGlow added.
 commands.nbtenchant.cleared=§aAll enchantments removed.
 
 commands.nbthead.description=Used to get players heads (skulls).
-commands.nbthead.done=§aEnjoy your new head.
+commands.nbthead.done=§aDone.
+commands.nbthead.done1=§aEnjoy your new head.
 commands.nbthead.invalid=§cPlayer name too long!
+commands.nbthead.nop=§cParameter 'player-name' missing!
 
 commands.nbtitem.description=Used to edit item's name and lore.
 commands.nbtitem.renamed=§aItem renamed.
