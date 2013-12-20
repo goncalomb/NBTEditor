@@ -56,7 +56,7 @@ public final class NBTTagListWrapper extends NBTBaseWrapper {
 		// To bypass this we get the list and then fetch the required object.
 		// This is by far not the best implementation. A refactorization of the reflection classes is needed.
 		List<?> list = (List<?>) BukkitReflect.getFieldValue(_nbtBaseObject, _list);
-		return NBTTagTypeHandler.getObjectFromTag(list.get(0));
+		return NBTTagTypeHandler.getObjectFromTag(list.get(index));
 	}
 	
 	public void add(Object value) {
