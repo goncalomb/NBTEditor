@@ -6,9 +6,10 @@ commands.invalid-sender.BLOCK_ONLY=§cThis command can only be used on a command
 
 player-not-found.name=§cPlayer §e{0} §cnot found!
 inventory-full=§cInventory full!
-invalid-duration=§cInvalid duration. Use value in ticks or 0000d00h00m00s.
 invalid-int=§cInvalid integer §e{0}§c.
 invalid-int.bounds=§cInvalid integer §e{0}§c. Use value between §e{1} §cand §e{2}§c.
+invalid-duration=§cInvalid duration. Use the format 0000d00h00m00s.
+invalid-ticks=§cInvalid duration. Use value in ticks or 0000d00h00m00s.
 
 no-perm=§cYou don't have permission to do that!
 no-sight=§cNo block in sight!

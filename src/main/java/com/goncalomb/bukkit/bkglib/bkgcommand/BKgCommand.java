@@ -41,6 +41,7 @@ import org.bukkit.util.StringUtil;
 import com.goncalomb.bukkit.bkglib.BKgLib;
 import com.goncalomb.bukkit.bkglib.Lang;
 import com.goncalomb.bukkit.bkglib.utils.Utils;
+import com.goncalomb.bukkit.bkglib.utils.UtilsMc;
 
 public abstract class BKgCommand extends BKgSubCommand {
 	
@@ -104,6 +105,14 @@ public abstract class BKgCommand extends BKgSubCommand {
 			int i = Utils.parseTimeDuration(str);
 			if (i == -1) {
 				throw new BKgCommandException(Lang._(null, "invalid-duration"));
+			}
+			return i;
+		}
+		
+		public static int parseTickDuration(String str) throws BKgCommandException {
+			int i = UtilsMc.parseTickDuration(str);
+			if (i == -1) {
+				throw new BKgCommandException(Lang._(null, "invalid-tick"));
 			}
 			return i;
 		}
