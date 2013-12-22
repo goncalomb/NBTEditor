@@ -52,7 +52,7 @@ public class CommandNBTPotion extends BKgCommand {
 				}
 				int duration = (effect == PotionEffectType.HARM || effect == PotionEffectType.HEAL ? 0 : 600);
 				if (args.length == 3) {
-					duration = CommandUtils.parseTimeDuration(args[2]);
+					duration = CommandUtils.parseTickDuration(args[2]);
 				}
 				if(level == 0) {
 					// .removeCustomEffect(...); This is bugged, it should use .equals(...) to compare effects.
