@@ -172,7 +172,7 @@ class BKgSubCommand {
 		// Sub-command not found or no more arguments, let's try to run this one.
 		int argsLeft = args.length - argsIndex;
 		if (_tabMethod != null) {
-			if (argsLeft <= _maxArgs && _type.isValidSender(sender) && sender.hasPermission(_perm)) {
+			if (argsLeft >= _minArgs && argsLeft <= _maxArgs && _type.isValidSender(sender) && sender.hasPermission(_perm)) {
 				return invokeTabMethod(sender, Arrays.copyOfRange(args, argsIndex,args.length));
 			}
 			return null;

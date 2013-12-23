@@ -20,6 +20,7 @@
 package com.goncalomb.bukkit.bkglib.utils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -58,21 +59,20 @@ public final class Utils {
 		return -1;
 	}
 	
-	public static List<String> getElementsWithPrefix(List<String> list, String prefix) {
-		return getElementsWithPrefix(list, prefix, false);
+	public static List<String> getElementsWithPrefix(Collection<String> values, String prefix) {
+		return getElementsWithPrefix(values, prefix, false);
 	}
 	
-	public static List<String> getElementsWithPrefix(List<String> list, String prefix, boolean sort) {
+	public static List<String> getElementsWithPrefix(Collection<String> values, String prefix, boolean sort) {
 		if (prefix == null || prefix.isEmpty()) {
-			List<String> result = list;
+			List<String> result = new ArrayList<String>(values);
 			if (sort) {
-				result = new ArrayList<String>(list);
 				Collections.sort(result, String.CASE_INSENSITIVE_ORDER);
 			}
 			return Collections.unmodifiableList(result);
 		} else {
 			List<String> result = new ArrayList<String>();
-			for (String string : list) {
+			for (String string : values) {
 				if (StringUtil.startsWithIgnoreCase(string, prefix)) {
 					result.add(string);
 				}
@@ -82,6 +82,30 @@ public final class Utils {
 			}
 			return Collections.unmodifiableList(result);
 		}
+	}
+	
+	public static List<String> getElementsWithPrefixGeneric(Collection<?> values, String prefix) {
+		return getElementsWithPrefixGeneric(values, prefix, false);
+	}
+	
+	public static List<String> getElementsWithPrefixGeneric(Collection<?> values, String prefix, boolean sort) {
+		List<String> result = new ArrayList<String>(values.size());
+		if (prefix == null || prefix.isEmpty()) {
+			for (Object obj : values) {
+				result.add(obj.toString());
+			}
+		} else {
+			for (Object obj : values) {
+				String str = obj.toString();
+				if (StringUtil.startsWithIgnoreCase(str, prefix)) {
+					result.add(str);
+				}
+			}
+		}
+		if (sort) {
+			Collections.sort(result, String.CASE_INSENSITIVE_ORDER);
+		}
+		return Collections.unmodifiableList(result);
 	}
 	
 }
