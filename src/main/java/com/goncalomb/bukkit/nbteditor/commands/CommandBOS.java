@@ -19,6 +19,11 @@
 
 package com.goncalomb.bukkit.nbteditor.commands;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -26,11 +31,13 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.util.StringUtil;
 
 import com.goncalomb.bukkit.bkglib.Lang;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
 import com.goncalomb.bukkit.bkglib.namemaps.EntityTypeMap;
+import com.goncalomb.bukkit.bkglib.utils.Utils;
 import com.goncalomb.bukkit.bkglib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
@@ -41,6 +48,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.attributes.Attribute;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeType;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
 
 public class CommandBOS extends BKgCommand {
 	
@@ -66,6 +74,26 @@ public class CommandBOS extends BKgCommand {
 		return null;
 	}
 	
+	static List<String> findBosVars(Player player, String prefix) {
+		ItemStack item = player.getItemInHand();
+		if (BookOfSouls.isValidBook(item)) {
+			BookOfSouls bos = BookOfSouls.getFromBook(item);
+			if (bos != null) {
+				List<String> names = new ArrayList<String>();
+				for (NBTVariableContainer container : bos.getEntityNBT().getAllVariables()) {
+					for (String name : container.getVarNames()) {
+						if (StringUtil.startsWithIgnoreCase(name, prefix)) {
+							names.add(name);
+						}
+					}
+				}
+				Collections.sort(names, String.CASE_INSENSITIVE_ORDER);
+				return names;
+			}
+		}
+		return null;
+	}
+	
 	@Command(args = "get", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "<entity>")
 	public boolean getCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		if (args.length == 1) {
@@ -84,6 +112,11 @@ public class CommandBOS extends BKgCommand {
 		}
 		sender.sendMessage(Lang._(NBTEditor.class, "entities-prefix") + StringUtils.join(EntityTypeMap.getNames(EntityNBT.getValidEntityTypes()), ", "));
 		return false;
+	}
+	
+	@TabComplete(args = "get")
+	public List<String> get_tab(CommandSender sender, String[] args) {
+		return (args.length == 1 ? Utils.getElementsWithPrefix(EntityTypeMap.getNames(EntityNBT.getValidEntityTypes()), args[0], true) : null);
 	}
 	
 	@Command(args = "getempty", type = CommandType.PLAYER_ONLY)
@@ -119,6 +152,11 @@ public class CommandBOS extends BKgCommand {
 		return true;
 	}
 	
+	@TabComplete(args = "var")
+	public List<String> var_tab(CommandSender sender, String[] args) {
+		return (args.length == 1 ? findBosVars((Player) sender, args[0]) : null);
+	}
+	
 	@Command(args = "clearvar", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<variable>")
 	public boolean clearvarCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		BookOfSouls bos = getBos((Player) sender);
@@ -131,6 +169,11 @@ public class CommandBOS extends BKgCommand {
 			sender.sendMessage(Lang._(NBTEditor.class, "variable.invalid-format", args[0]));
 		}
 		return true;
+	}
+	
+	@TabComplete(args = "clearvar")
+	public List<String> clearvar_tab(CommandSender sender, String[] args) {
+		return findBosVars((Player) sender, args[0]);
 	}
 	
 	@Command(args = "riding", type = CommandType.PLAYER_ONLY)
@@ -237,6 +280,11 @@ public class CommandBOS extends BKgCommand {
 		return false;
 	}
 	
+	@TabComplete(args = "attr add")
+	public List<String> tab_attr_add(CommandSender sender, String[] args) {
+		return (args.length == 1 ? Utils.getElementsWithPrefixGeneric(Arrays.asList(AttributeType.values()), args[0], true) : null);
+	}
+	
 	@Command(args = "attr del", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "<attribute>")
 	public boolean attr_delCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		if (args.length == 1) {
@@ -264,6 +312,23 @@ public class CommandBOS extends BKgCommand {
 		}
 		sender.sendMessage(Lang._(NBTEditor.class, "attributes-prefix") + StringUtils.join(AttributeType.values(), ", "));
 		return false;
+	}
+	
+	@TabComplete(args = "attr del")
+	public List<String> tab_del_add(CommandSender sender, String[] args) {
+		if (args.length == 1) {
+			ItemStack item = ((Player) sender).getItemInHand();
+			if (BookOfSouls.isValidBook(item)) {
+				BookOfSouls bos = BookOfSouls.getFromBook(item);
+				if (bos != null) {
+					EntityNBT entityNbt = bos.getEntityNBT();
+					if (entityNbt instanceof MobNBT) {
+						return Utils.getElementsWithPrefixGeneric(((MobNBT) entityNbt).getAttributes().types(), args[0], true);
+					}
+				}
+			}
+		}
+		return null;
 	}
 	
 	@Command(args = "attr delall", type = CommandType.PLAYER_ONLY)

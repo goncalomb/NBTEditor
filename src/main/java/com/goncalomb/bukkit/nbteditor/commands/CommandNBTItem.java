@@ -20,6 +20,7 @@
 package com.goncalomb.bukkit.nbteditor.commands;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -142,6 +143,16 @@ public class CommandNBTItem extends BKgCommand {
 		}
 		sender.sendMessage(Lang._(NBTEditor.class, "attributes-prefix") + StringUtils.join(AttributeType.values(), ", "));
 		return false;
+	}
+	
+	@TabComplete(args = "mod add")
+	public List<String> tab_mod_add(CommandSender sender, String[] args) {
+		if (args.length == 1) {
+			return Utils.getElementsWithPrefixGeneric(Arrays.asList(AttributeType.values()), args[0], true);
+		} else if (args.length == 2) {
+			return Utils.getElementsWithPrefix(Arrays.asList(new String[] { "0", "1", "2" }), args[1]);
+		}
+		return null;
 	}
 	
 	@Command(args = "mod del", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<index>")

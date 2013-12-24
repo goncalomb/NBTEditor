@@ -20,6 +20,8 @@
 package com.goncalomb.bukkit.nbteditor.nbt;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.Location;
@@ -53,7 +55,11 @@ public final class SpawnerNBTWrapper {
 	private Block _spawnerBlock;
 	private NBTTagCompoundWrapper _data;
 	private List<SpawnerEntityNBT> _entities;
-
+	
+	public static Collection<String> variableNames() {
+		return Collections.unmodifiableCollection(_variables.getVarNames());
+	}
+	
 	public SpawnerNBTWrapper(Block block) {
 		_spawnerBlock = block;
 		_data = NBTUtils.getTileEntityNBTTagCompound(block);

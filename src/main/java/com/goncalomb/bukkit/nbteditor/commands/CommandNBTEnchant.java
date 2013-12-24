@@ -19,6 +19,9 @@
 
 package com.goncalomb.bukkit.nbteditor.commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
@@ -30,6 +33,7 @@ import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
 import com.goncalomb.bukkit.bkglib.namemaps.EnchantmentsMap;
 import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
+import com.goncalomb.bukkit.bkglib.utils.Utils;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public class CommandNBTEnchant extends BKgCommand {
@@ -77,6 +81,25 @@ public class CommandNBTEnchant extends BKgCommand {
 		sender.sendMessage(Lang._(NBTEditor.class, "enchants-prefix") + EnchantmentsMap.getNamesAsString());
 		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtenchant.info"));
 		return false;
+	}
+	
+	@TabComplete(args = "")
+	public List<String> tab(CommandSender sender, String[] args) {
+		if (args.length == 1) {
+			List<String> names = new ArrayList<String>(EnchantmentsMap.getNames());
+			names.add("glow");
+			names.add("clear");
+			return Utils.getElementsWithPrefix(names, args[0]);
+		}
+		return null;
+	}
+	
+	@Command(args = "glow", type = CommandType.PLAYER_ONLY)
+	public boolean enchant_glowCommand(CommandSender sender, String[] args) throws BKgCommandException {
+		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
+		NBTUtils.setItemStackFakeEnchantment(item.item);
+		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtenchant.glow"));
+		return true;
 	}
 	
 	@Command(args = "clear", type = CommandType.PLAYER_ONLY)

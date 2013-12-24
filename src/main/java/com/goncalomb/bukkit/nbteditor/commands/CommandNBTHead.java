@@ -19,6 +19,9 @@
 
 package com.goncalomb.bukkit.nbteditor.commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -28,6 +31,9 @@ import org.bukkit.inventory.meta.SkullMeta;
 import com.goncalomb.bukkit.bkglib.Lang;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand.TabComplete;
+import com.goncalomb.bukkit.bkglib.namemaps.EnchantmentsMap;
+import com.goncalomb.bukkit.bkglib.utils.Utils;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public class CommandNBTHead extends BKgCommand {
@@ -57,5 +63,10 @@ public class CommandNBTHead extends BKgCommand {
 			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbthead.invalid"));
 		}
 		return true;
+	}
+	
+	@TabComplete(args = "")
+	public List<String> tab(CommandSender sender, String[] args) {
+		return CommandUtils.playerTabComplete(sender, args[args.length - 1]);
 	}
 }

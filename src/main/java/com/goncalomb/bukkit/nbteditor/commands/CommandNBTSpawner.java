@@ -35,6 +35,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import com.goncalomb.bukkit.bkglib.Lang;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand.TabComplete;
 import com.goncalomb.bukkit.bkglib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.bkglib.utils.Utils;
 import com.goncalomb.bukkit.bkglib.utils.UtilsMc;
@@ -122,6 +123,11 @@ public class CommandNBTSpawner extends BKgCommand {
 		return false;
 	}
 	
+	@TabComplete(args = "var")
+	public List<String> var_tab(CommandSender sender, String[] args) {
+		return (args.length == 1 ? Utils.getElementsWithPrefix(SpawnerNBTWrapper.variableNames(), args[0], true) : null);
+	}
+	
 	@Command(args = "add", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<entity> [weight]")
 	public boolean addCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		if (args.length >= 1) {
@@ -143,6 +149,11 @@ public class CommandNBTSpawner extends BKgCommand {
 		}
 		sender.sendMessage(Lang._(NBTEditor.class, "entities-prefix") + EntityTypeMap.getLivingNamesAsString());
 		return false;
+	}
+	
+	@TabComplete(args = "add")
+	public List<String> add_tab(CommandSender sender, String[] args) {
+		return (args.length == 1 ? Utils.getElementsWithPrefix(EntityTypeMap.getLivingNames(), args[0]) : null);
 	}
 	
 	@Command(args = "additem", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "[weight]")

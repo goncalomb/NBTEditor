@@ -19,6 +19,9 @@
 
 package com.goncalomb.bukkit.nbteditor.commands;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -31,6 +34,7 @@ import com.goncalomb.bukkit.bkglib.Lang;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
 import com.goncalomb.bukkit.bkglib.namemaps.PotionEffectsMap;
+import com.goncalomb.bukkit.bkglib.utils.Utils;
 import com.goncalomb.bukkit.bkglib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.nbt.BeaconNBTWrapper;
@@ -85,6 +89,16 @@ public class CommandNBTTile extends BKgCommand {
 		sender.sendMessage(Lang._(NBTEditor.class, "effects-prefix") + PotionEffectsMap.getNamesAsString());
 		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbttile.beacon.info"));
 		return false;
+	}
+	
+	@TabComplete(args = "beacon")
+	public List<String> tab_beacon(CommandSender sender, String[] args) {
+		if (args.length == 1) {
+			return Utils.getElementsWithPrefix(Arrays.asList(new String[] { "primary", "secondary" }), args[0]);
+		} else if (args.length == 2) {
+			return Utils.getElementsWithPrefix(PotionEffectsMap.getNames(), args[1]);
+		}
+		return null;
 	}
 	
 	@Command(args = "record", type = CommandType.PLAYER_ONLY)

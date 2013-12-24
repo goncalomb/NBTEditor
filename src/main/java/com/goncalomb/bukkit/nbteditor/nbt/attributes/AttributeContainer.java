@@ -58,6 +58,10 @@ public final class AttributeContainer {
 		return Collections.unmodifiableCollection(_attributes.values());
 	}
 	
+	public Collection<AttributeType> types() {
+		return Collections.unmodifiableCollection(_attributes.keySet());
+	}
+	
 	public NBTTagListWrapper toNBT() {
 		NBTTagListWrapper data = new NBTTagListWrapper();
 		for (Attribute attribute : _attributes.values()) {

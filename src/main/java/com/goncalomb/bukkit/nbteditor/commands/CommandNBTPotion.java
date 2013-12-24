@@ -30,6 +30,7 @@ import com.goncalomb.bukkit.bkglib.Lang;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
 import com.goncalomb.bukkit.bkglib.namemaps.PotionEffectsMap;
+import com.goncalomb.bukkit.bkglib.utils.Utils;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public class CommandNBTPotion extends BKgCommand {
@@ -76,5 +77,10 @@ public class CommandNBTPotion extends BKgCommand {
 		sender.sendMessage(Lang._(NBTEditor.class, "effects-prefix") + PotionEffectsMap.getNamesAsString());
 		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtpotion.info"));
 		return false;
+	}
+	
+	@TabComplete(args = "")
+	public List<String> tab(CommandSender sender, String[] args) {
+		return (args.length == 1 ? Utils.getElementsWithPrefix(PotionEffectsMap.getNames(), args[0]) : null);
 	}
 }
