@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -21,7 +21,7 @@ package com.goncalomb.bukkit.nbteditor.nbt.attributes;
 
 import java.util.UUID;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
 
 public class Modifier {
 	
@@ -30,7 +30,7 @@ public class Modifier {
 	private int _operation;
 	private UUID _uuid;
 	
-	public static Modifier fromNBT(NBTTagCompoundWrapper data) {
+	public static Modifier fromNBT(NBTTagCompound data) {
 		return new Modifier(data.getString("Name"), data.getDouble("Amount"), data.getInt("Operation"), new UUID(data.getLong("UUIDMost"), data.getLong("UUIDLeast")));
 	}
 	
@@ -61,8 +61,8 @@ public class Modifier {
 		return _uuid;
 	}
 	
-	public NBTTagCompoundWrapper toNBT() {
-		NBTTagCompoundWrapper data = new NBTTagCompoundWrapper();
+	public NBTTagCompound toNBT() {
+		NBTTagCompound data = new NBTTagCompound();
 		data.setString("Name", _name);
 		data.setDouble("Amount", _amount);
 		data.setInt("Operation", _operation);

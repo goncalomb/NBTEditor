@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -22,7 +22,7 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
@@ -46,7 +46,7 @@ public class MinecartSpawnerNBT extends MinecartNBT {
 	}
 	
 	public void copyFromSpawner(Block block) {
-		NBTTagCompoundWrapper data = NBTUtils.getTileEntityNBTTagCompound(block);
+		NBTTagCompound data = NBTUtils.getTileEntityNBTData(block);
 		data.remove("id");
 		data.remove("x");
 		data.remove("y");
@@ -58,12 +58,12 @@ public class MinecartSpawnerNBT extends MinecartNBT {
 	}
 	
 	public void copyToSpawner(Block block) {
-		NBTTagCompoundWrapper data = NBTUtils.getTileEntityNBTTagCompound(block);
+		NBTTagCompound data = NBTUtils.getTileEntityNBTData(block);
 		data.setString("EntityId", "Pig");
 		data.remove("SpawnData");
 		data.remove("SpawnPotentials");
 		data.merge(_data);
-		NBTUtils.setTileEntityNBTTagCompound(block, data);
+		NBTUtils.setTileEntityNBTData(block, data);
 	}
 	
 }

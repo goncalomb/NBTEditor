@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -24,7 +24,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BlockVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
@@ -49,7 +49,7 @@ public class FallingBlockNBT extends EntityNBT {
 	public void copyFromTileEntity(Block block) {
 		_data.setInt("TileID", block.getTypeId());
 		_data.setByte("Data", block.getData());
-		NBTTagCompoundWrapper tileEntityData = NBTUtils.getTileEntityNBTTagCompound(block);
+		NBTTagCompound tileEntityData = NBTUtils.getTileEntityNBTData(block);
 		if (tileEntityData != null) {
 			_data.setCompound("TileEntityData", tileEntityData);
 		} else {
@@ -66,7 +66,7 @@ public class FallingBlockNBT extends EntityNBT {
 		int blockId = (_data.hasKey("TileID") ? _data.getInt("TileID") : Material.SAND.getId());
 		byte blockData = (_data.hasKey("Data") ? _data.getByte("Data") : 0);
 		Entity entity = location.getWorld().spawnFallingBlock(location, blockId, blockData);
-		NBTUtils.setEntityNBTTagCompound(entity, _data);
+		NBTUtils.setEntityNBTData(entity, _data);
 		return entity;
 	}
 	

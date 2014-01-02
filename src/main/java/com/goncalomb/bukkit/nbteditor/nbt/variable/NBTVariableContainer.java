@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -22,14 +22,14 @@ package com.goncalomb.bukkit.nbteditor.nbt.variable;
 import java.util.Iterator;
 import java.util.Set;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
 
 public final class NBTVariableContainer implements Iterable<NBTVariable> {
 	
 	NBTGenericVariableContainer _generic;
-	NBTTagCompoundWrapper _data;
+	NBTTagCompound _data;
 	
-	NBTVariableContainer(NBTGenericVariableContainer generic, NBTTagCompoundWrapper data) {
+	NBTVariableContainer(NBTGenericVariableContainer generic, NBTTagCompound data) {
 		_generic = generic;
 		_data = data;
 	}

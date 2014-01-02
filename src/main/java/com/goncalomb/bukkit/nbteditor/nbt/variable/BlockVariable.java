@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -22,7 +22,7 @@ package com.goncalomb.bukkit.nbteditor.nbt.variable;
 import org.bukkit.Material;
 
 import com.goncalomb.bukkit.bkglib.Lang;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public final class BlockVariable extends NBTGenericVariable2X {
@@ -44,7 +44,7 @@ public final class BlockVariable extends NBTGenericVariable2X {
 		_dataAsInt = dataAsInt;
 	}
 	
-	boolean set(NBTTagCompoundWrapper data, String value) {
+	boolean set(NBTTagCompound data, String value) {
 		String[] pieces = value.split(":", 2);
 		Material material = Material.getMaterial(pieces[0]);
 		if (material == null) {
@@ -86,7 +86,7 @@ public final class BlockVariable extends NBTGenericVariable2X {
 		return false;
 	}
 	
-	String get(NBTTagCompoundWrapper data) {
+	String get(NBTTagCompound data) {
 		if (data.hasKey(_nbtKey) && data.hasKey(_nbtKey2)) {
 			int materialId, materialData;
 			if (_asShort) {

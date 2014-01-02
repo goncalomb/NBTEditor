@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -22,7 +22,7 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 import org.bukkit.entity.EntityType;
 
 import com.goncalomb.bukkit.bkglib.namemaps.EntityTypeMap;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
 
 public class SpawnerEntityNBT {
 	
@@ -67,8 +67,8 @@ public class SpawnerEntityNBT {
 		return new SpawnerEntityNBT(_entityNbt.clone(), _weight);
 	}
 	
-	NBTTagCompoundWrapper buildTagCompound() {
-		NBTTagCompoundWrapper data = new  NBTTagCompoundWrapper();
+	NBTTagCompound buildTagCompound() {
+		NBTTagCompound data = new  NBTTagCompound();
 		data.setInt("Weight", _weight);
 		data.setString("Type", EntityTypeMap.getName(_entityNbt.getEntityType()));
 		data.setCompound("Properties", _entityNbt._data);

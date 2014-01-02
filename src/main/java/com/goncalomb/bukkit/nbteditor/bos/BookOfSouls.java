@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -34,7 +34,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 import com.goncalomb.bukkit.bkglib.namemaps.EntityTypeMap;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.bkglib.utils.BookSerialize;
 import com.goncalomb.bukkit.customitemsapi.api.CustomItem;
 import com.goncalomb.bukkit.customitemsapi.api.CustomItemManager;
@@ -87,7 +87,7 @@ public class BookOfSouls {
 					if (data != null) {
 						// Yes, it is v0.1, do a dirty conversion.
 						int i = data.indexOf(',');
-						NBTTagCompoundWrapper nbtData = NBTTagCompoundWrapper.unserialize(Base64.decode(data.substring(i + 1)));
+						NBTTagCompound nbtData = NBTTagCompound.unserialize(Base64.decode(data.substring(i + 1)));
 						nbtData.setString("id", data.substring(0, i));
 						data = Base64.encodeBytes(nbtData.serialize(), Base64.GZIP);
 					}

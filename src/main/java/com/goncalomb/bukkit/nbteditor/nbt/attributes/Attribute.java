@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -22,8 +22,8 @@ package com.goncalomb.bukkit.nbteditor.nbt.attributes;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagListWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagList;
 
 public final class Attribute {
 	
@@ -31,13 +31,13 @@ public final class Attribute {
 	private double _base;
 	private List<Modifier> _modifiers = new ArrayList<Modifier>();
 	
-	public static Attribute fromNBT(NBTTagCompoundWrapper data) {
+	public static Attribute fromNBT(NBTTagCompound data) {
 		Attribute attribute = new Attribute(AttributeType.getByInternalName(data.getString("Name")), data.getDouble("Base"));
 		if (data.hasKey("Modifiers")) {
 			Object[] modifiersData = data.getListAsArray("Modifiers");
 			attribute._modifiers = new ArrayList<Modifier>(modifiersData.length);
 			for (Object mod : modifiersData) {
-				attribute.addModifier(Modifier.fromNBT((NBTTagCompoundWrapper) mod));
+				attribute.addModifier(Modifier.fromNBT((NBTTagCompound) mod));
 			}
 		}
 		return attribute;
@@ -87,12 +87,12 @@ public final class Attribute {
 		return _modifiers.remove(index);
 	}
 	
-	public NBTTagCompoundWrapper toNBT() {
-		NBTTagCompoundWrapper data = new NBTTagCompoundWrapper();
+	public NBTTagCompound toNBT() {
+		NBTTagCompound data = new NBTTagCompound();
 		data.setString("Name", _type._internalName);
 		data.setDouble("Base", _base);
 		if (_modifiers.size() > 0) {
-			NBTTagListWrapper modifiersData = new NBTTagListWrapper();
+			NBTTagList modifiersData = new NBTTagList();
 			for (Modifier modifier : _modifiers) {
 				modifiersData.add(modifier.toNBT());
 			}

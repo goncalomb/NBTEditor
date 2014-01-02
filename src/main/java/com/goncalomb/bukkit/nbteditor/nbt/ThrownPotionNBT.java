@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -32,13 +32,13 @@ public class ThrownPotionNBT extends EntityNBT {
 		if (potion == null) {
 			_data.remove("Potion");
 		} else {
-			_data.setCompound("Potion", NBTUtils.nbtTagCompoundFromItemStack(potion));
+			_data.setCompound("Potion", NBTUtils.itemStackToNBTData(potion));
 		}
 	}
 	
 	public ItemStack getPotion() {
 		if (_data.hasKey("Potion")) {
-			return NBTUtils.itemStackFromNBTTagCompound(_data.getCompound("Potion"));
+			return NBTUtils.itemStackFromNBTData(_data.getCompound("Potion"));
 		}
 		return null;
 	}

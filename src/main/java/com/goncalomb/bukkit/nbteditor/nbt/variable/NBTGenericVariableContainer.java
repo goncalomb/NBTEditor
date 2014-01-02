@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -22,7 +22,7 @@ package com.goncalomb.bukkit.nbteditor.nbt.variable;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
 
 public final class NBTGenericVariableContainer {
 	
@@ -50,11 +50,11 @@ public final class NBTGenericVariableContainer {
 		return _variables.keySet();
 	}
 	
-	public NBTVariableContainer boundToData(NBTTagCompoundWrapper data) {
+	public NBTVariableContainer boundToData(NBTTagCompound data) {
 		return new NBTVariableContainer(this, data);
 	}
 	
-	public NBTVariable getVariable(String name, NBTTagCompoundWrapper data) {
+	public NBTVariable getVariable(String name, NBTTagCompound data) {
 		if (hasVariable(name)) {
 			return new NBTVariable(name, _variables.get(name), data);
 		}

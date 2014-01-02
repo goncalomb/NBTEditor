@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -20,7 +20,7 @@
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
 import com.goncalomb.bukkit.bkglib.Lang;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public final class HorseVariantVariable extends NBTGenericVariable{
@@ -29,7 +29,7 @@ public final class HorseVariantVariable extends NBTGenericVariable{
 		super("Variant");
 	}
 	
-	boolean set(NBTTagCompoundWrapper data, String value) {
+	boolean set(NBTTagCompound data, String value) {
 		String[] pieces = value.split("\\s+", 2);
 		if (pieces.length == 2) {
 			int markings, color;
@@ -47,7 +47,7 @@ public final class HorseVariantVariable extends NBTGenericVariable{
 		return false;
 	}
 	
-	String get(NBTTagCompoundWrapper data) {
+	String get(NBTTagCompound data) {
 		if (data.hasKey(_nbtKey)) {
 			int variant = data.getInt(_nbtKey);
 			return ((variant >> 8) & 0xFF) + " " + (variant & 0xFF);

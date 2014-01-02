@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -22,8 +22,8 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagListWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagList;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 
@@ -43,14 +43,14 @@ public class VillagerNBT extends BreedNBT {
 	}
 	
 	public void addOffer(VillagerNBTOffer offer) {
-		NBTTagCompoundWrapper offers = _data.getCompound("Offers");
+		NBTTagCompound offers = _data.getCompound("Offers");
 		if (offers == null) {
-			offers = new NBTTagCompoundWrapper();
+			offers = new NBTTagCompound();
 			_data.setCompound("Offers", offers);
 		}
-		NBTTagListWrapper recipes = offers.getList("Recipes");
+		NBTTagList recipes = offers.getList("Recipes");
 		if (recipes == null) {
-			recipes = new NBTTagListWrapper();
+			recipes = new NBTTagList();
 			offers.setList("Recipes", recipes);
 		}
 		recipes.add(offer.getCompound());
@@ -63,11 +63,11 @@ public class VillagerNBT extends BreedNBT {
 		if (_offers == null) {
 			_offers = new ArrayList<VillagerNBTOffer>();
 			if (_data.hasKey("Offers")) {
-				NBTTagCompoundWrapper offers = _data.getCompound("Offers");
+				NBTTagCompound offers = _data.getCompound("Offers");
 				if (offers.hasKey("Recipes")) {
 					Object[] recipes = offers.getListAsArray("Recipes");
 					for (Object recipe : recipes) {
-						_offers.add(new VillagerNBTOffer((NBTTagCompoundWrapper)recipe));
+						_offers.add(new VillagerNBTOffer((NBTTagCompound)recipe));
 					}
 				}
 			}

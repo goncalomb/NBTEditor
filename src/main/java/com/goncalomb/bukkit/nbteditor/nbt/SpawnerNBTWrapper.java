@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -29,8 +29,8 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 
 import com.goncalomb.bukkit.bkglib.namemaps.EntityTypeMap;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagListWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagList;
 import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
@@ -53,7 +53,7 @@ public final class SpawnerNBTWrapper {
 	}
 	
 	private Block _spawnerBlock;
-	private NBTTagCompoundWrapper _data;
+	private NBTTagCompound _data;
 	private List<SpawnerEntityNBT> _entities;
 	
 	public static Collection<String> variableNames() {
@@ -62,15 +62,15 @@ public final class SpawnerNBTWrapper {
 	
 	public SpawnerNBTWrapper(Block block) {
 		_spawnerBlock = block;
-		_data = NBTUtils.getTileEntityNBTTagCompound(block);
+		_data = NBTUtils.getTileEntityNBTData(block);
 		
 		if (_data.hasKey("SpawnPotentials")) {
-			NBTTagListWrapper spawnPotentials = _data.getList("SpawnPotentials");
+			NBTTagList spawnPotentials = _data.getList("SpawnPotentials");
 			int l = spawnPotentials.size();
 			
 			_entities = new ArrayList<SpawnerEntityNBT>(l);
 			for (int i = 0; i < l; ++i) {
-				NBTTagCompoundWrapper potential = (NBTTagCompoundWrapper) spawnPotentials.get(i);
+				NBTTagCompound potential = (NBTTagCompound) spawnPotentials.get(i);
 				EntityType entityType = EntityTypeMap.getByName(potential.getString("Type"));
 				if (entityType != null) {
 					EntityNBT entityNbt;
@@ -99,7 +99,7 @@ public final class SpawnerNBTWrapper {
 	}
 
 	public void cloneFrom(SpawnerNBTWrapper other) {
-		NBTTagCompoundWrapper clone = other._data.clone();
+		NBTTagCompound clone = other._data.clone();
 		clone.remove("id");
 		clone.remove("x");
 		clone.remove("y");
@@ -137,17 +137,17 @@ public final class SpawnerNBTWrapper {
 	
 	public void save() {
 		if (_entities.size() > 0) {
-			NBTTagListWrapper spawnPotentials = new NBTTagListWrapper();
+			NBTTagList spawnPotentials = new NBTTagList();
 			for (SpawnerEntityNBT spawnerEntityNbt : _entities) {
 				spawnPotentials.add(spawnerEntityNbt.buildTagCompound());
 			}
-			_data.set("SpawnPotentials", spawnPotentials);
+			_data.setList("SpawnPotentials", spawnPotentials);
 		} else {
 			_data.setString("EntityId", "Pig");
 			_data.remove("SpawnData");
 			_data.remove("SpawnPotentials");
 		}
-		NBTUtils.setTileEntityNBTTagCompound(_spawnerBlock, _data);
+		NBTUtils.setTileEntityNBTData(_spawnerBlock, _data);
 	}
 	
 }

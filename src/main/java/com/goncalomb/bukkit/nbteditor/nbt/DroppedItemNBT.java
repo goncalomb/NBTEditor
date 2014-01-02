@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -31,13 +31,13 @@ public class DroppedItemNBT extends ItemsNBT {
 		if (item == null) {
 			_data.remove("Item");
 		} else {
-			_data.setCompound("Item", NBTUtils.nbtTagCompoundFromItemStack(item));
+			_data.setCompound("Item", NBTUtils.itemStackToNBTData(item));
 		}
 	}
 	
 	public ItemStack getItem() {
 		if (_data.hasKey("Item")) {
-			return NBTUtils.itemStackFromNBTTagCompound(_data.getCompound("Item"));
+			return NBTUtils.itemStackFromNBTData(_data.getCompound("Item"));
 		}
 		return null;
 	}
@@ -50,7 +50,7 @@ public class DroppedItemNBT extends ItemsNBT {
 	public Entity spawn(Location location) {
 		if (_data.hasKey("Item")) {
 			Entity entity = location.getWorld().dropItem(location, getItem());
-			NBTUtils.setEntityNBTTagCompound(entity, _data);
+			NBTUtils.setEntityNBTData(entity, _data);
 			return entity;
 		}
 		return null;

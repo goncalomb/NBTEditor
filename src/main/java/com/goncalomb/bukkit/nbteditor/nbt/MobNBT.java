@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -24,8 +24,8 @@ import java.util.Arrays;
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.inventory.ItemStack;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagListWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagList;
 import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
@@ -61,9 +61,9 @@ public class MobNBT extends EntityNBT {
 		Object[] equipmentData = new Object[5];
 		for (int i = 0; i < 5; ++i) {
 			if (_equipment[i] != null) {
-				equipmentData[i] = NBTUtils.nbtTagCompoundFromItemStack(_equipment[i]);
+				equipmentData[i] = NBTUtils.itemStackToNBTData(_equipment[i]);
 			} else {
-				equipmentData[i] = new NBTTagCompoundWrapper();
+				equipmentData[i] = new NBTTagCompound();
 			}
 		}
 		_data.setList("Equipment", equipmentData);
@@ -75,7 +75,7 @@ public class MobNBT extends EntityNBT {
 			if (_data.hasKey("Equipment")) {
 				Object[] equipmentData = _data.getListAsArray("Equipment");
 				for (int i = 0; i < 5; ++i) {
-					_equipment[i] = NBTUtils.itemStackFromNBTTagCompound((NBTTagCompoundWrapper) equipmentData[i]);
+					_equipment[i] = NBTUtils.itemStackFromNBTData((NBTTagCompound) equipmentData[i]);
 				}
 			}
 		}
@@ -104,9 +104,9 @@ public class MobNBT extends EntityNBT {
 	
 	public void setEffectsFromPotion(ItemStack potion) {
 		if (potion != null) {
-			NBTTagListWrapper effects = NBTUtils.effectsListFromPotion(potion);
+			NBTTagList effects = NBTUtils.potionToNBTEffectsList(potion);
 			if (effects != null) {
-				_data.set("ActiveEffects", effects);
+				_data.setList("ActiveEffects", effects);
 				return;
 			}
 		} else {
@@ -116,7 +116,7 @@ public class MobNBT extends EntityNBT {
 	
 	public ItemStack getEffectsAsPotion() {
 		if (_data.hasKey("ActiveEffects")) {
-			return NBTUtils.getGenericPotionFromEffectList(_data.getList("ActiveEffects"));
+			return NBTUtils.potionFromNBTEffectsList(_data.getList("ActiveEffects"));
 		}
 		return null;
 	}

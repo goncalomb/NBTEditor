@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -40,7 +40,7 @@ public class XPOrbNBT extends EntityNBT {
 	@Override
 	public Entity spawn(final Location location) {
 		ExperienceOrb entity = WorldUtils.spawnXPOrb(location, (_data.hasKey("Value") ? _data.getShort("Value") : 0));
-		NBTUtils.setEntityNBTTagCompound(entity, _data);
+		NBTUtils.setEntityNBTData(entity, _data);
 		return entity;
 	}
 

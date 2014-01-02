@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -19,7 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
 
 public final class ShortVariable extends NumericVariable {
 	
@@ -35,7 +35,7 @@ public final class ShortVariable extends NumericVariable {
 		super(nbtKey, min, max);
 	}
 	
-	boolean set(NBTTagCompoundWrapper data, String value) {
+	boolean set(NBTTagCompound data, String value) {
 		try {
 			short v = Short.parseShort(value);
 			if (v < _min || v > _max) return false;
@@ -46,7 +46,7 @@ public final class ShortVariable extends NumericVariable {
 		}
 	}
 	
-	String get(NBTTagCompoundWrapper data) {
+	String get(NBTTagCompound data) {
 		if (data.hasKey(_nbtKey)) {
 			return String.valueOf(data.getShort(_nbtKey));
 		}

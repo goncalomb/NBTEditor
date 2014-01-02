@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -23,13 +23,13 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
 
 public class TileNBTWrapper {
 	
 	protected Block _block;
-	protected NBTTagCompoundWrapper _data;
+	protected NBTTagCompound _data;
 	
 	public static final boolean allowsCustomName(Material mat) {
 		return (mat == Material.CHEST || mat == Material.FURNACE
@@ -40,7 +40,7 @@ public class TileNBTWrapper {
 	
 	public TileNBTWrapper(Block block) {
 		_block = block;
-		_data = NBTUtils.getTileEntityNBTTagCompound(_block);
+		_data = NBTUtils.getTileEntityNBTData(_block);
 	}
 	
 	public final boolean allowsCustomName() {
@@ -66,7 +66,7 @@ public class TileNBTWrapper {
 	}
 	
 	public void save() {
-		NBTUtils.setTileEntityNBTTagCompound(_block, _data);
+		NBTUtils.setTileEntityNBTData(_block, _data);
 	}
 	
 }

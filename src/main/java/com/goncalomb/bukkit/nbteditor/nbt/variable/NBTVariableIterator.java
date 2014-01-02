@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -23,15 +23,15 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
 
 public final class NBTVariableIterator implements Iterator<NBTVariable> {
 	
 	Iterator<Entry<String, NBTGenericVariable>> _state;
-	NBTTagCompoundWrapper _data;
+	NBTTagCompound _data;
 	String _separator;
 	
-	NBTVariableIterator(LinkedHashMap<String, NBTGenericVariable> hashMap, NBTTagCompoundWrapper data) {
+	NBTVariableIterator(LinkedHashMap<String, NBTGenericVariable> hashMap, NBTTagCompound data) {
 		_state = hashMap.entrySet().iterator();
 		_data = data;
 	}
@@ -46,7 +46,7 @@ public final class NBTVariableIterator implements Iterator<NBTVariable> {
 	}
 	
 	public void remove() {
-		throw new Error("Cannot remove NBTVariables.");
+		throw new UnsupportedOperationException("Cannot remove NBTVariables.");
 	}
 	
 }

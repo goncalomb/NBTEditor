@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -21,7 +21,7 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 
 import org.bukkit.inventory.ItemStack;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
 
 public final class VillagerNBTOffer {
@@ -47,25 +47,25 @@ public final class VillagerNBTOffer {
 		_uses = uses;
 	}
 	
-	VillagerNBTOffer(NBTTagCompoundWrapper offer) {
-		_buyA = NBTUtils.itemStackFromNBTTagCompound(offer.getCompound("buy"));
+	VillagerNBTOffer(NBTTagCompound offer) {
+		_buyA = NBTUtils.itemStackFromNBTData(offer.getCompound("buy"));
 		if (offer.hasKey("buyB")) {
-			_buyB = NBTUtils.itemStackFromNBTTagCompound(offer.getCompound("buyB"));
+			_buyB = NBTUtils.itemStackFromNBTData(offer.getCompound("buyB"));
 		} else {
 			_buyB = null;
 		}
-		_sell = NBTUtils.itemStackFromNBTTagCompound(offer.getCompound("sell"));
+		_sell = NBTUtils.itemStackFromNBTData(offer.getCompound("sell"));
 		_maxUses = offer.getInt("maxUses");
 		_uses = offer.getInt("uses");
 	}
 	
-	NBTTagCompoundWrapper getCompound() {
-		NBTTagCompoundWrapper offer = new NBTTagCompoundWrapper();
-		offer.setCompound("buy", NBTUtils.nbtTagCompoundFromItemStack(_buyA));
+	NBTTagCompound getCompound() {
+		NBTTagCompound offer = new NBTTagCompound();
+		offer.setCompound("buy", NBTUtils.itemStackToNBTData(_buyA));
 		if (_buyB != null) {
-			offer.setCompound("buyB", NBTUtils.nbtTagCompoundFromItemStack(_buyB));
+			offer.setCompound("buyB", NBTUtils.itemStackToNBTData(_buyB));
 		}
-		offer.setCompound("sell", NBTUtils.nbtTagCompoundFromItemStack(_sell));
+		offer.setCompound("sell", NBTUtils.itemStackToNBTData(_sell));
 		offer.setInt("maxUses", _maxUses);
 		offer.setInt("uses", _uses);
 		return offer;

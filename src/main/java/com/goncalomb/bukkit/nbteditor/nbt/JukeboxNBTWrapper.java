@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -23,7 +23,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
 
 public final class JukeboxNBTWrapper extends TileNBTWrapper {
@@ -35,10 +35,10 @@ public final class JukeboxNBTWrapper extends TileNBTWrapper {
 	public void setRecord(ItemStack item) {
 		if (item == null || item.getType() == Material.AIR) {
 			_data.setInt("Record", 0);
-			_data.setCompound("RecordItem", new NBTTagCompoundWrapper());
+			_data.setCompound("RecordItem", new NBTTagCompound());
 		} else {
 			_data.setInt("Record", item.getTypeId());
-			_data.setCompound("RecordItem", NBTUtils.nbtTagCompoundFromItemStack(item));
+			_data.setCompound("RecordItem", NBTUtils.itemStackToNBTData(item));
 		}
 	}
 	

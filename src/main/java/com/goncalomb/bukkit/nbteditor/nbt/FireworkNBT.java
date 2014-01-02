@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -45,7 +45,7 @@ public final class FireworkNBT extends EntityNBT {
 		this();
 		if (firework.getType() != Material.FIREWORK) throw new IllegalArgumentException("Invalid argument firework.");
 		_data.setInt("Life", 0);
-		_data.setCompound("FireworksItem", NBTUtils.nbtTagCompoundFromItemStack(firework));
+		_data.setCompound("FireworksItem", NBTUtils.itemStackToNBTData(firework));
 		setLifeTimeFromItem(firework);
 	}
 	
@@ -61,14 +61,14 @@ public final class FireworkNBT extends EntityNBT {
 		if (firework == null) {
 			_data.remove("FireworksItem");
 		} else {
-			_data.setCompound("FireworksItem", NBTUtils.nbtTagCompoundFromItemStack(firework));
+			_data.setCompound("FireworksItem", NBTUtils.itemStackToNBTData(firework));
 		}
 		setLifeTimeFromItem(firework);
 	}
 	
 	public ItemStack getFirework() {
 		if (_data.hasKey("FireworksItem")) {
-			return NBTUtils.itemStackFromNBTTagCompound(_data.getCompound("FireworksItem"));
+			return NBTUtils.itemStackFromNBTData(_data.getCompound("FireworksItem"));
 		}
 		return null;
 	}

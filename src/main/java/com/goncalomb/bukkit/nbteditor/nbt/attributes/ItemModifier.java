@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -25,25 +25,25 @@ import java.util.UUID;
 
 import org.bukkit.inventory.ItemStack;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagListWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagList;
 import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
 
 public final class ItemModifier extends Modifier {
 	
 	private AttributeType _attributeType;
 	
-	public static ItemModifier fromNBT(NBTTagCompoundWrapper data) {
+	public static ItemModifier fromNBT(NBTTagCompound data) {
 		return new ItemModifier(AttributeType.getByInternalName(data.getString("AttributeName")), data.getString("Name"), data.getDouble("Amount"), data.getInt("Operation"), new UUID(data.getLong("UUIDMost"), data.getLong("UUIDLeast")));
 	}
 	
 	public static List<ItemModifier> getItemStackModifiers(ItemStack item) {
-		NBTTagCompoundWrapper tag = NBTUtils.getItemStackTag(item);
+		NBTTagCompound tag = NBTUtils.getItemStackTag(item);
 		if (tag.hasKey("AttributeModifiers")) {
 			Object[] modifiersData = tag.getListAsArray("AttributeModifiers");
 			List<ItemModifier> modifiers = new ArrayList<ItemModifier>(modifiersData.length);
 			for (Object data : modifiersData) {
-				modifiers.add(fromNBT((NBTTagCompoundWrapper) data));
+				modifiers.add(fromNBT((NBTTagCompound) data));
 			}
 			return modifiers;
 		}
@@ -51,11 +51,11 @@ public final class ItemModifier extends Modifier {
 	}
 	
 	public static void setItemStackModifiers(ItemStack item, List<ItemModifier> modifiers) {
-		NBTTagListWrapper modifiersData = new NBTTagListWrapper();
+		NBTTagList modifiersData = new NBTTagList();
 		for (ItemModifier modifier : modifiers) {
 			modifiersData.add(modifier.toNBT());
 		}
-		NBTTagCompoundWrapper tag = NBTUtils.getItemStackTag(item);
+		NBTTagCompound tag = NBTUtils.getItemStackTag(item);
 		tag.setList("AttributeModifiers", modifiersData);
 		NBTUtils.setItemStackTag(item, tag);
 	}
@@ -75,8 +75,8 @@ public final class ItemModifier extends Modifier {
 	}
 	
 	@Override
-	public NBTTagCompoundWrapper toNBT() {
-		NBTTagCompoundWrapper data = super.toNBT();
+	public NBTTagCompound toNBT() {
+		NBTTagCompound data = super.toNBT();
 		data.setString("AttributeName", _attributeType._internalName);
 		return data;
 	}

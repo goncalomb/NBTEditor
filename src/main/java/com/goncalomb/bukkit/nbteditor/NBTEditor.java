@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -24,7 +24,7 @@ import java.util.logging.Level;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.goncalomb.bukkit.bkglib.BKgLib;
-import com.goncalomb.bukkit.bkglib.reflect.NBTBaseWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTBase;
 import com.goncalomb.bukkit.bkglib.reflect.WorldUtils;
 import com.goncalomb.bukkit.customitemsapi.api.CustomItemManager;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
@@ -46,7 +46,7 @@ public final class NBTEditor extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		try {
-			NBTBaseWrapper.prepareReflection();
+			NBTBase.prepareReflection();
 			WorldUtils.prepareReflection();
 		} catch (Throwable e) {
 			getLogger().log(Level.SEVERE, "Error preparing reflection objects. This means that this version of NBTEditor is not compatible with this version of Bukkit.", e);

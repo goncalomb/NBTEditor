@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -20,7 +20,7 @@
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
 import com.goncalomb.bukkit.bkglib.Lang;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public final class BooleanVariable extends NBTGenericVariable{
@@ -29,7 +29,7 @@ public final class BooleanVariable extends NBTGenericVariable{
 		super(nbtKey);
 	}
 	
-	boolean set(NBTTagCompoundWrapper data, String value) {
+	boolean set(NBTTagCompound data, String value) {
 		if (value.equalsIgnoreCase("true")) {
 			data.setByte(_nbtKey, (byte)1);
 		} else if (value.equalsIgnoreCase("false")) {
@@ -40,7 +40,7 @@ public final class BooleanVariable extends NBTGenericVariable{
 		return true;
 	}
 	
-	String get(NBTTagCompoundWrapper data) {
+	String get(NBTTagCompound data) {
 		if (data.hasKey(_nbtKey)) {
 			return (data.getByte(_nbtKey) > 0 ? "true" : "false");
 		}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -20,7 +20,7 @@
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
 import com.goncalomb.bukkit.bkglib.Lang;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public final class VectorVariable extends NBTGenericVariable{
@@ -29,7 +29,7 @@ public final class VectorVariable extends NBTGenericVariable{
 		super(nbtKey);
 	}
 	
-	boolean set(NBTTagCompoundWrapper data, String value) {
+	boolean set(NBTTagCompound data, String value) {
 		String[] pieces = value.replace(',', '.').split("\\s+", 3);
 		if (pieces.length == 3) {
 			Object[] vector = new Object[3];
@@ -46,7 +46,7 @@ public final class VectorVariable extends NBTGenericVariable{
 		return false;
 	}
 	
-	String get(NBTTagCompoundWrapper data) {
+	String get(NBTTagCompound data) {
 		if (data.hasKey(_nbtKey)) {
 			Object[] vector = data.getListAsArray(_nbtKey);
 			return (Double) vector[0] + ";" + (Double) vector[1] + ";" + (Double) vector[2];

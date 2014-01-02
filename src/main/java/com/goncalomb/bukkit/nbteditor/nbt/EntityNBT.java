@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -30,7 +30,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 import com.goncalomb.bukkit.bkglib.namemaps.EntityTypeMap;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BlockVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
@@ -49,7 +49,7 @@ public class EntityNBT {
 	private static HashMap<EntityType, Class<? extends EntityNBT>> _entityClasses;
 	
 	private EntityType _entityType;
-	protected NBTTagCompoundWrapper _data;
+	protected NBTTagCompound _data;
 	
 	static {
 		_entityClasses = new HashMap<EntityType, Class<? extends EntityNBT>>();
@@ -207,7 +207,7 @@ public class EntityNBT {
 		try {
 			instance = entityClass.newInstance();
 		} catch (Exception e) {
-			throw new Error("Error when instantiating " + entityClass.getName() + ".", e);
+			throw new RuntimeException("Error when instantiating " + entityClass.getName() + ".", e);
 		}
 		return instance;
 	}
@@ -229,7 +229,7 @@ public class EntityNBT {
 		return null;
 	}
 	
-	static EntityNBT fromEntityType(EntityType entityType, NBTTagCompoundWrapper data) {
+	static EntityNBT fromEntityType(EntityType entityType, NBTTagCompound data) {
 		if (_entityClasses.containsKey(entityType)) {
 			EntityNBT entityNbt = newInstance(entityType);
 			entityNbt.initialize(entityType, data);
@@ -240,7 +240,7 @@ public class EntityNBT {
 	}
 	
 	public static EntityNBT fromEntity(Entity entity) {
-		EntityNBT entityNbt = fromEntityType(entity.getType(), NBTUtils.getEntityNBTTagCompound(entity));
+		EntityNBT entityNbt = fromEntityType(entity.getType(), NBTUtils.getEntityNBTData(entity));
 		// When cloning, remove the UUID to force all entities to have a unique one.
 		entityNbt._data.remove("UUIDMost");
 		entityNbt._data.remove("UUIDLeast");
@@ -253,14 +253,14 @@ public class EntityNBT {
 	
 	protected EntityNBT(EntityType entityType) {
 		_entityType = entityType;
-		_data = new NBTTagCompoundWrapper();
+		_data = new NBTTagCompound();
 	}
 	
-	private EntityNBT(EntityType entityType, NBTTagCompoundWrapper data) {
+	private EntityNBT(EntityType entityType, NBTTagCompound data) {
 		initialize(entityType, data);
 	}
 	
-	private void initialize(EntityType entityType, NBTTagCompoundWrapper data) {
+	private void initialize(EntityType entityType, NBTTagCompound data) {
 		_entityType = entityType;
 		if (data != null) {
 			_data = data;
@@ -290,7 +290,7 @@ public class EntityNBT {
 	
 	public Entity spawn(Location location) {
 		Entity entity = location.getWorld().spawnEntity(location, _entityType);
-		NBTUtils.setEntityNBTTagCompound(entity, _data);
+		NBTUtils.setEntityNBTData(entity, _data);
 		return entity;
 	}
 	
@@ -325,12 +325,12 @@ public class EntityNBT {
 		try {
 			return Base64.encodeBytes(_data.serialize(), Base64.GZIP);
 		} catch (Throwable e) {
-			throw new Error("Error serializing EntityNBT.", e);
+			throw new RuntimeException("Error serializing EntityNBT.", e);
 		}
 	}
 	
 	public EntityNBT getRiding() {
-		NBTTagCompoundWrapper ridingData = _data.getCompound("Riding");
+		NBTTagCompound ridingData = _data.getCompound("Riding");
 		if (ridingData != null) {
 			return fromEntityType(EntityTypeMap.getByName(ridingData.getString("id")), ridingData);
 		}
@@ -342,9 +342,9 @@ public class EntityNBT {
 			_data.remove("Riding");
 			return;
 		}
-		NBTTagCompoundWrapper rider = _data;
+		NBTTagCompound rider = _data;
 		for (EntityNBT ride : riding) {
-			NBTTagCompoundWrapper rideData = ride._data.clone();
+			NBTTagCompound rideData = ride._data.clone();
 			rider.setCompound("Riding", rideData);
 			rider = rideData;
 		}
@@ -352,10 +352,10 @@ public class EntityNBT {
 	
 	public static EntityNBT unserialize(String serializedData) {
 		try {
-			NBTTagCompoundWrapper data = NBTTagCompoundWrapper.unserialize(Base64.decode(serializedData));
+			NBTTagCompound data = NBTTagCompound.unserialize(Base64.decode(serializedData));
 			return fromEntityType(EntityTypeMap.getByName(data.getString("id")), data);
 		} catch (Throwable e) {
-			throw new Error("Error unserializing EntityNBT.", e);
+			throw new RuntimeException("Error unserializing EntityNBT.", e);
 		}
 	}
 	

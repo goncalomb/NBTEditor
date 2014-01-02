@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -19,15 +19,15 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
 
 public final class NBTVariable {
 	
 	private String _name;
 	private NBTGenericVariable _generic;
-	private NBTTagCompoundWrapper _data;
+	private NBTTagCompound _data;
 	
-	NBTVariable(String name, NBTGenericVariable generic, NBTTagCompoundWrapper data) {
+	NBTVariable(String name, NBTGenericVariable generic, NBTTagCompound data) {
 		_name = name;
 		_generic = generic;
 		_data = data;

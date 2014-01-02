@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -23,17 +23,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompoundWrapper;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagListWrapper;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagList;
 
 public final class AttributeContainer {
 	
 	private LinkedHashMap<AttributeType, Attribute> _attributes = new LinkedHashMap<AttributeType, Attribute>();
 	
-	public static AttributeContainer fromNBT(NBTTagListWrapper data) {
+	public static AttributeContainer fromNBT(NBTTagList data) {
 		AttributeContainer container = new AttributeContainer();
 		for (Object attr : data.getAsArray()) {
-			container.setAttribute(Attribute.fromNBT((NBTTagCompoundWrapper) attr));
+			container.setAttribute(Attribute.fromNBT((NBTTagCompound) attr));
 		}
 		return container;
 	}
@@ -62,8 +62,8 @@ public final class AttributeContainer {
 		return Collections.unmodifiableCollection(_attributes.keySet());
 	}
 	
-	public NBTTagListWrapper toNBT() {
-		NBTTagListWrapper data = new NBTTagListWrapper();
+	public NBTTagList toNBT() {
+		NBTTagList data = new NBTTagList();
 		for (Attribute attribute : _attributes.values()) {
 			data.add(attribute.toNBT());
 		}
