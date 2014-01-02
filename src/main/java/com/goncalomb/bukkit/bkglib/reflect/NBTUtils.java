@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of BKgLib.
  *
@@ -93,31 +93,28 @@ public final class NBTUtils {
 	
 	private NBTUtils() { }
 	
-	public static ItemStack itemStackFromNBTTagCompound(NBTTagCompoundWrapper data) {
-		NBTBaseWrapper.prepareReflection();
-		return (ItemStack) BukkitReflect.invokeMethod(null, _asBukkitCopy, BukkitReflect.invokeMethod(null, _createStack, data._nbtBaseObject));
+	public static ItemStack itemStackFromNBTData(NBTTagCompound data) {
+		return (ItemStack) BukkitReflect.invokeMethod(null, _asBukkitCopy, BukkitReflect.invokeMethod(null, _createStack, data._handle));
 	}
 	
-	public static NBTTagCompoundWrapper nbtTagCompoundFromItemStack(ItemStack stack) {
-		NBTBaseWrapper.prepareReflection();
-		NBTTagCompoundWrapper data = new NBTTagCompoundWrapper();
-		BukkitReflect.invokeMethod(BukkitReflect.invokeMethod(null, _asNMSCopy, stack), _save, data._nbtBaseObject);
+	public static NBTTagCompound itemStackToNBTData(ItemStack stack) {
+		NBTTagCompound data = new NBTTagCompound();
+		BukkitReflect.invokeMethod(BukkitReflect.invokeMethod(null, _asNMSCopy, stack), _save, data._handle);
 		return data;
 	}
 	
-	public static NBTTagCompoundWrapper getMineEntityNBTTagCompound(Object minecraftEntity) {
-		NBTBaseWrapper.prepareReflection();
-		NBTTagCompoundWrapper data = new NBTTagCompoundWrapper();
-		BukkitReflect.invokeMethod(minecraftEntity, _e0, data._nbtBaseObject);
+	static NBTTagCompound getInternalEntityNBTData(Object minecraftEntity) {
+		NBTTagCompound data = new NBTTagCompound();
+		BukkitReflect.invokeMethod(minecraftEntity, _e0, data._handle);
 		return data;
 	}
 	
-	static void setMineEntityNBTTagCompound(Object minecraftEntity, NBTTagCompoundWrapper data) {
-		NBTTagCompoundWrapper entityData = getMineEntityNBTTagCompound(minecraftEntity);
+	static void setInternalEntityNBTData(Object minecraftEntity, NBTTagCompound data) {
+		NBTTagCompound entityData = getInternalEntityNBTData(minecraftEntity);
 		// Do not override UUID and position.
 		long uuidMost = entityData.getLong("UUIDMost");
 		long uuidLeast = entityData.getLong("UUIDLeast");
-		NBTTagListWrapper pos = entityData.getList("Pos");
+		NBTTagList pos = entityData.getList("Pos");
 		// Merge the data.
 		entityData.merge(data);
 		// Re-apply UUID and position.
@@ -125,32 +122,31 @@ public final class NBTUtils {
 		entityData.setLong("UUIDLeast", uuidLeast);
 		entityData.setList("Pos", pos);
 		// Apply data.
-		BukkitReflect.invokeMethod(minecraftEntity, _f0, entityData._nbtBaseObject);
-		BukkitReflect.invokeMethod(minecraftEntity, _a0, entityData._nbtBaseObject);
+		BukkitReflect.invokeMethod(minecraftEntity, _f0, entityData._handle);
+		BukkitReflect.invokeMethod(minecraftEntity, _a0, entityData._handle);
 	}
 	
-	public static NBTTagCompoundWrapper getEntityNBTTagCompound(Entity entity) {
-		return getMineEntityNBTTagCompound(BukkitReflect.invokeMethod(entity, _getHandle));
+	public static NBTTagCompound getEntityNBTData(Entity entity) {
+		return getInternalEntityNBTData(BukkitReflect.invokeMethod(entity, _getHandle));
 	}
 	
-	public static void setEntityNBTTagCompound(Entity entity, NBTTagCompoundWrapper data) {
-		setMineEntityNBTTagCompound(BukkitReflect.invokeMethod(entity, _getHandle), data);
+	public static void setEntityNBTData(Entity entity, NBTTagCompound data) {
+		setInternalEntityNBTData(BukkitReflect.invokeMethod(entity, _getHandle), data);
 	}
 	
-	public static NBTTagListWrapper effectsListFromPotion(ItemStack potion) {
-		NBTBaseWrapper.prepareReflection();
+	public static NBTTagList potionToNBTEffectsList(ItemStack potion) {
 		Object tagObject = BukkitReflect.invokeMethod(BukkitReflect.invokeMethod(null, _asNMSCopy, potion), _getTag);
 		if (tagObject != null) {
-			NBTTagCompoundWrapper tag = new NBTTagCompoundWrapper(tagObject);
+			NBTTagCompound tag = new NBTTagCompound(tagObject);
 			if (tag != null && tag.hasKey("CustomPotionEffects")) {
 				return tag.getList("CustomPotionEffects").clone();
 			}
 		}
 		// Fallback to default potion effect.
 		Collection<PotionEffect> effects = Potion.fromItemStack(potion).getEffects();
-		NBTTagListWrapper effectList = new NBTTagListWrapper();
+		NBTTagList effectList = new NBTTagList();
 		for (PotionEffect effect : effects) {
-			NBTTagCompoundWrapper effectTag = new NBTTagCompoundWrapper();
+			NBTTagCompound effectTag = new NBTTagCompound();
 			effectTag.setByte("Id", (byte)effect.getType().getId());
 			effectTag.setByte("Amplifier", (byte)effect.getAmplifier());
 			effectTag.setInt("Duration", effect.getDuration());
@@ -159,63 +155,54 @@ public final class NBTUtils {
 		return effectList;
 	}
 	
-	public static ItemStack getGenericPotionFromEffectList(NBTTagListWrapper effectList) {
-		NBTBaseWrapper.prepareReflection();
-		NBTTagCompoundWrapper tag = new NBTTagCompoundWrapper();
-		tag.setList("CustomPotionEffects", effectList.clone());
-		NBTTagCompoundWrapper data = new NBTTagCompoundWrapper();
+	public static ItemStack potionFromNBTEffectsList(NBTTagList effects) {
+		NBTTagCompound tag = new NBTTagCompound();
+		tag.setList("CustomPotionEffects", effects.clone());
+		NBTTagCompound data = new NBTTagCompound();
 		data.setShort("id", (short) Material.POTION.getId());
 		data.setByte("Count", (byte) 1);
 		data.setShort("Damage", (short) (new Potion(PotionType.SPEED, 1)).toDamageValue());
 		data.setCompound("tag", tag);
-		return itemStackFromNBTTagCompound(data);
+		return itemStackFromNBTData(data);
 	}
 	
 	private static Object getTileEntity(Block block) {
 		return BukkitReflect.invokeMethod(block.getWorld(), _getTileEntity, block.getX(), block.getY(), block.getZ());
 	}
 	
-	public static NBTTagCompoundWrapper getTileEntityNBTTagCompound(Block block) {
-		NBTBaseWrapper.prepareReflection();
+	public static NBTTagCompound getTileEntityNBTData(Block block) {
+		NBTBase.prepareReflection();
 		Object tileEntity = getTileEntity(block);
 		if (tileEntity != null) {
-			NBTTagCompoundWrapper data = new NBTTagCompoundWrapper();
-			BukkitReflect.invokeMethod(tileEntity, _b1, data._nbtBaseObject);
+			NBTTagCompound data = new NBTTagCompound();
+			BukkitReflect.invokeMethod(tileEntity, _b1, data._handle);
 			return data;
 		}
 		return null;
 	}
 	
-	public static void setTileEntityNBTTagCompound(Block block, NBTTagCompoundWrapper data) {
-		NBTBaseWrapper.prepareReflection();
+	public static void setTileEntityNBTData(Block block, NBTTagCompound data) {
+		NBTBase.prepareReflection();
 		Object tileEntity = getTileEntity(block);
 		if (tileEntity != null) {
-			BukkitReflect.invokeMethod(tileEntity, _a1, data._nbtBaseObject);
+			BukkitReflect.invokeMethod(tileEntity, _a1, data._handle);
 		}
 	}
 	
-	public static NBTTagCompoundWrapper getItemStackTag(ItemStack item) {
-		try {
-			Object handle = _handle.get(item);
-			Object tag = BukkitReflect.invokeMethod(handle, _getTag);
-			return (tag == null ? new NBTTagCompoundWrapper() : new NBTTagCompoundWrapper(tag));
-		} catch (Exception e) {
-			throw new Error("Error while getting item tag.", e);
-		}
+	public static NBTTagCompound getItemStackTag(ItemStack item) {
+		Object handle = BukkitReflect.getFieldValue(item, _handle);
+		Object tag = BukkitReflect.invokeMethod(handle, _getTag);
+		return (tag == null ? new NBTTagCompound() : new NBTTagCompound(tag));
 	}
 	
-	public static void setItemStackTag(ItemStack item, NBTTagCompoundWrapper tag) {
-		try {
-			Object handle = _handle.get(item);
-			BukkitReflect.invokeMethod(handle, _setTag, tag._nbtBaseObject);
-		} catch (Exception e) {
-			throw new Error("Error while setting item tag.", e);
-		}
+	public static void setItemStackTag(ItemStack item, NBTTagCompound tag) {
+		Object handle = BukkitReflect.getFieldValue(item, _handle);
+		BukkitReflect.invokeMethod(handle, _setTag, tag._handle);
 	}
 	
 	public static void setItemStackFakeEnchantment(ItemStack item) {
-		NBTTagCompoundWrapper tag = getItemStackTag(item);
-		tag.setList("ench", new NBTTagListWrapper());
+		NBTTagCompound tag = getItemStackTag(item);
+		tag.setList("ench", new NBTTagList());
 		setItemStackTag(item, tag);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of BKgLib.
  *
@@ -73,7 +73,7 @@ public final class WorldUtils {
 				_enderPearlConstructor = minecraftEntityEnderPearl.getConstructor(minecraftWorldClass);
 				
 			} catch (Exception e) {
-				throw new Error("Error while preparing WorldUtils.", e);
+				throw new RuntimeException("Error while preparing WorldUtils.", e);
 			}
 			_isPrepared = true;
 		}
@@ -82,7 +82,6 @@ public final class WorldUtils {
 	private WorldUtils() { }
 	
 	public static ExperienceOrb spawnXPOrb(Location location, short value) {
-		prepareReflection();
 		Object world = BukkitReflect.invokeMethod(location.getWorld(), _getHandle);
 		Object entity = BukkitReflect.newInstance(_xpOrbConstructor, world, location.getBlockX() + 0.5, location.getBlockY(), location.getZ(), (int) value);
 		BukkitReflect.invokeMethod(entity, _setPositionRotation, location.getBlockX() + 0.5, location.getBlockY(), location.getZ(), 0, 0);
@@ -90,19 +89,19 @@ public final class WorldUtils {
 		return (ExperienceOrb) BukkitReflect.invokeMethod(entity, _getBukkitEntity);
 	}
 	
-	public static ThrownPotion spawnPotion(Location location, NBTTagCompoundWrapper data) {
+	public static ThrownPotion spawnPotion(Location location, NBTTagCompound data) {
 		Object world = BukkitReflect.invokeMethod(location.getWorld(), _getHandle);
 		Object entity = BukkitReflect.newInstance(_potionConstructor, world, location.getBlockX() + 0.5, location.getBlockY(), location.getZ(), null);
-		NBTUtils.setMineEntityNBTTagCompound(entity, data);
+		NBTUtils.setInternalEntityNBTData(entity, data);
 		BukkitReflect.invokeMethod(world, _addEntity, entity);
 		return (ThrownPotion) BukkitReflect.invokeMethod(entity, _getBukkitEntity);
 	}
 	
-	public static EnderPearl spawnEnderpearl(Location location, NBTTagCompoundWrapper data) {
+	public static EnderPearl spawnEnderpearl(Location location, NBTTagCompound data) {
 		Object world = BukkitReflect.invokeMethod(location.getWorld(), _getHandle);
 		Object entity = BukkitReflect.newInstance(_enderPearlConstructor, world);
 		BukkitReflect.invokeMethod(entity, _setPositionRotation, location.getBlockX() + 0.5, location.getBlockY(), location.getZ(), 0, 0);
-		NBTUtils.setMineEntityNBTTagCompound(entity, data);
+		NBTUtils.setInternalEntityNBTData(entity, data);
 		BukkitReflect.invokeMethod(world, _addEntity, entity);
 		return (EnderPearl) BukkitReflect.invokeMethod(entity, _getBukkitEntity);
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of BKgLib.
  *
@@ -25,10 +25,10 @@ import java.util.HashMap;
 
 import org.apache.commons.lang.ClassUtils;
 
-final class NBTTagTypeHandler {
+final class NBTTypes {
 	
-	private static HashMap<Class<?>, NBTTagTypeHandler> _innerTypeMap;
-	private static HashMap<Class<?>, NBTTagTypeHandler> _outerTypeMap;
+	private static HashMap<Class<?>, NBTTypes> _innerTypeMap = new HashMap<Class<?>, NBTTypes>();;
+	private static HashMap<Class<?>, NBTTypes> _outerTypeMap = new HashMap<Class<?>, NBTTypes>();;
 	
 	private Class<?> _class;
 	private Constructor<?> _contructor;
@@ -36,8 +36,6 @@ final class NBTTagTypeHandler {
 	private Class<?> _dataType;
 	
 	public static void prepareReflection() throws SecurityException, NoSuchMethodException, NoSuchFieldException {
-		_innerTypeMap = new HashMap<Class<?>, NBTTagTypeHandler>();
-		_outerTypeMap = new HashMap<Class<?>, NBTTagTypeHandler>();
 		registerNew("NBTTagByte");
 		registerNew("NBTTagShort");
 		registerNew("NBTTagInt");
@@ -48,37 +46,39 @@ final class NBTTagTypeHandler {
 	}
 	
 	private static void registerNew(String tagClassName) throws SecurityException, NoSuchMethodException, NoSuchFieldException {
-		NBTTagTypeHandler handler = new NBTTagTypeHandler(tagClassName);
+		NBTTypes handler = new NBTTypes(tagClassName);
 		_innerTypeMap.put((handler._dataType.isPrimitive() ? ClassUtils.primitiveToWrapper(handler._dataType) : handler._dataType), handler);
 		_outerTypeMap.put(handler._class, handler);
 	}
 	
-	public static Object getTagFromObject(Object object) {
-		if (object instanceof NBTBaseWrapper) {
-			return ((NBTBaseWrapper) object)._nbtBaseObject;
+	// Converts from BKgLib tags, primitives and strings to internal Minecraft tags.
+	public static Object toInternal(Object object) {
+		if (object instanceof NBTBase) {
+			return ((NBTBase) object)._handle;
 		} else {
-			NBTTagTypeHandler handler = _innerTypeMap.get(object.getClass());
+			NBTTypes handler = _innerTypeMap.get(object.getClass());
 			if (handler != null) {
-				return handler.wrapWithTag(object);
+				return handler.wrap(object);
 			} else {
-				throw new Error(object.getClass().getSimpleName() + " is not a valid NBTTag type.");
+				throw new RuntimeException(object.getClass() + " is not a valid NBTTag type.");
 			}
 		}
 	}
 	
-	public static Object getObjectFromTag(Object tagObject) {
-		if (tagObject == null) {
+	// Converts internal Minecraft tags to BKgLib tags, primitives and strings.
+	public static Object fromInternal(Object object) {
+		if (object == null) {
 			return null;
 		}
-		NBTTagTypeHandler handler = _outerTypeMap.get(tagObject.getClass());
+		NBTTypes handler = _outerTypeMap.get(object.getClass());
 		if (handler != null) {
-			return handler.unwrapTag(tagObject);
+			return handler.unwrap(object);
 		} else {
-			return NBTBaseWrapper.wrap(tagObject);
+			return NBTBase.wrap(object);
 		}
 	}
 	
-	private NBTTagTypeHandler(String tagClassName) throws SecurityException, NoSuchMethodException, NoSuchFieldException {
+	private NBTTypes(String tagClassName) throws SecurityException, NoSuchMethodException, NoSuchFieldException {
 		_class = BukkitReflect.getMinecraftClass(tagClassName);
 		_data = _class.getDeclaredField("data");
 		_data.setAccessible(true);
@@ -86,11 +86,13 @@ final class NBTTagTypeHandler {
 		_contructor = _class.getConstructor(_dataType);
 	}
 	
-	private Object wrapWithTag(Object innerObject) {
+	// Wraps primitives and strings with Minecraft tags.
+	private Object wrap(Object innerObject) {
 		return BukkitReflect.newInstance(_contructor, innerObject);
 	}
 	
-	private Object unwrapTag(Object tagObject) {
+	// Unwraps primitives and strings from Minecraft tags.
+	private Object unwrap(Object tagObject) {
 		return BukkitReflect.getFieldValue(tagObject, _data);
 	}
 	

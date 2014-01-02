@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of BKgLib.
  *
@@ -21,7 +21,7 @@ package com.goncalomb.bukkit.bkglib.reflect;
 
 import java.lang.reflect.Method;
 
-public class NBTBaseWrapper {
+public class NBTBase {
 	
 	private static boolean _isPrepared = false;
 	
@@ -31,53 +31,55 @@ public class NBTBaseWrapper {
 	
 	private static Method _clone;
 	
-	protected Object _nbtBaseObject;
+	final Object _handle; // The wrapped Minecraft NBTBase instance.
 	
 	public static final void prepareReflection() {
 		if (!_isPrepared) {
 			_nbtBaseClass = BukkitReflect.getMinecraftClass("NBTBase");
 			_nbtTagCompoundClass = BukkitReflect.getMinecraftClass("NBTTagCompound");
 			_nbtTagListClass = BukkitReflect.getMinecraftClass("NBTTagList");
-			
 			try {
 				_clone = _nbtBaseClass.getMethod("clone");
-				NBTTagCompoundWrapper.prepareReflectionz();
-				NBTTagListWrapper.prepareReflectionz();
-				NBTTagTypeHandler.prepareReflection();
+				NBTTagCompound.prepareReflectionz();
+				NBTTagList.prepareReflectionz();
+				NBTTypes.prepareReflection();
 				NBTUtils.prepareReflection();
 			} catch (Exception e) {
-				_nbtBaseClass = null;
-				throw new Error("Error while preparing NBTWrapper classes.", e);
+				throw new RuntimeException("Error while preparing NBT wrapper classes.", e);
 			}
-			
 			_isPrepared = true;
 		}
 	}
 	
-	protected static final NBTBaseWrapper wrap(Object nbtBaseObject) {
-		if (_nbtTagCompoundClass.isInstance(nbtBaseObject)) {
-			return new NBTTagCompoundWrapper(nbtBaseObject);
-		} else if (_nbtTagListClass.isInstance(nbtBaseObject)) {
-			return new NBTTagListWrapper(nbtBaseObject);
+	// Wraps any Minecraft tags in BKgLib tags.
+	// Primitives and strings are wrapped with NBTBase.
+	protected static final NBTBase wrap(Object object) {
+		if (_nbtTagCompoundClass.isInstance(object)) {
+			return new NBTTagCompound(object);
+		} else if (_nbtTagListClass.isInstance(object)) {
+			return new NBTTagList(object);
+		} else if (_nbtBaseClass.isInstance(object)) {
+			return new NBTBase(object);
 		} else {
-			return new NBTBaseWrapper(nbtBaseObject);
+			throw new RuntimeException(object.getClass() + " is not a valid NBT tag type.");
 		}
 	}
 	
-	// Helper method for NBTTagCompoundWrapper.merge(NBTTagCompoundWrapper).
+	// Helper method for NBTTagCompoundWrapper.merge().
+	// Clones any internal Minecraft tags.
 	protected static final Object clone(Object nbtBaseObject) {
 		return BukkitReflect.invokeMethod(nbtBaseObject, _clone);
 	}
 	
-	protected NBTBaseWrapper(Object nbtBaseObject) {
-		_nbtBaseObject = nbtBaseObject;
+	protected NBTBase(Object handle) {
+		_handle = handle;
 	}
 	
 	protected final Object invokeMethod(Method method, Object... args) {
-		return BukkitReflect.invokeMethod(_nbtBaseObject, method, args);
+		return BukkitReflect.invokeMethod(_handle, method, args);
 	}
 	
-	public NBTBaseWrapper clone() {
+	public NBTBase clone() {
 		return wrap(invokeMethod(_clone));
 	}
 	

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of BKgLib.
  *
@@ -44,7 +44,7 @@ public final class BukkitReflect {
 				try {
 					clazz = this.getClass().getClassLoader().loadClass(_packageName + "." + className);
 				} catch (ClassNotFoundException e) {
-					throw new Error("Cannot find class " + _packageName + "." + className + ".", e);
+					throw new RuntimeException("Cannot find class " + _packageName + "." + className + ".", e);
 				}
 				_cache.put(className, clazz);
 			}
@@ -76,7 +76,7 @@ public final class BukkitReflect {
 				_minecraftPackage = new CachedPackage(getHandle.getReturnType().getPackage().getName());
 				_getCommandMap = craftServerClass.getMethod("getCommandMap");
 			} catch (NoSuchMethodException e) {
-				throw new Error("Cannot find getHandle() method on server.", e);
+				throw new RuntimeException("Cannot find getHandle() method on server.", e);
 			}
 			
 			_isPrepared = true;
@@ -104,7 +104,7 @@ public final class BukkitReflect {
 		try {
 			return method.invoke(object, args);
 		} catch (Exception e) {
-			throw new Error("Error while invoking " + method.getName() + ".", e);
+			throw new RuntimeException("Error while invoking " + method.getName() + ".", e);
 		}
 	}
 	
@@ -112,7 +112,7 @@ public final class BukkitReflect {
 		try {
 			return field.get(object);
 		} catch (Exception e) {
-			throw new Error("Error while getting field value " + field.getName() + " of class " + field.getDeclaringClass().getName() + ".", e);
+			throw new RuntimeException("Error while getting field value " + field.getName() + " of class " + field.getDeclaringClass().getName() + ".", e);
 		}
 	}
 	
@@ -120,7 +120,7 @@ public final class BukkitReflect {
 		try {
 			return clazz.newInstance();
 		} catch (Exception e) {
-			throw new Error("Error creating instance of " + clazz.getName() + ".", e);
+			throw new RuntimeException("Error creating instance of " + clazz.getName() + ".", e);
 		}
 	}
 	
@@ -128,7 +128,7 @@ public final class BukkitReflect {
 		try {
 			return contructor.newInstance(initargs);
 		} catch (Exception e) {
-			throw new Error("Error creating instance of " + contructor.getDeclaringClass().getName() + ".", e);
+			throw new RuntimeException("Error creating instance of " + contructor.getDeclaringClass().getName() + ".", e);
 		}
 	}
 	
