@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
 
-Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
 
 NBTEditor ${project.version}
 
