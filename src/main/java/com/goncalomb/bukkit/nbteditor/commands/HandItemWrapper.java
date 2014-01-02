@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -56,7 +56,7 @@ public abstract class HandItemWrapper<T extends ItemMeta> {
 		public Book(Player player, BookType bookType) throws BKgCommandException {
 			super(BookMeta.class, player, (bookType == BookType.BOTH));
 			if (meta == null) {
-				throw new BKgCommandException(Lang._(NBTEditor.class, "meta-error.format", Lang._(NBTEditor.class, "nbt.meta-error.book-" + (bookType == BookType.BOOK_AND_QUILL ? "quill" : "written"))));
+				throw new BKgCommandException(Lang._(NBTEditor.class, "meta-error.format", Lang._(NBTEditor.class, "meta-error.book-" + (bookType == BookType.BOOK_AND_QUILL ? "quill" : "written"))));
 			}
 		}
 		
@@ -85,7 +85,7 @@ public abstract class HandItemWrapper<T extends ItemMeta> {
 		}
 		meta = null;
 		if (throwEx) {
-			throw new BKgCommandException(Lang._(NBTEditor.class, "nbt.meta-error.format", Lang._(NBTEditor.class, "nbt.meta-error." + this.getClass().getSimpleName().toLowerCase())));
+			throw new BKgCommandException(Lang._(NBTEditor.class, "meta-error.format", Lang._(NBTEditor.class, "meta-error." + this.getClass().getSimpleName().toLowerCase())));
 		}
 	}
 	
