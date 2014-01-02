@@ -146,12 +146,22 @@ commands.nbtspawner.copy=§aSpawner copied.
 commands.nbtspawner.paste=§aSpawner pasted.
 commands.nbtspawner.no-copy=§cYou must copy a spawner first!
 
+commands.itemstorage.description=Used to store items in files.
+commands.itemstorage.invalid-name=§cInvalid name. Use [0-9a-zA-Z_-], 64 characters max.
+commands.itemstorage.not-found=§cThat item does not exist.
+commands.itemstorage.found=§cDuplicated name.
+commands.itemstorage.not-holding=§cYou must be holding an item.
+commands.itemstorage.stored=§aStored.
+commands.itemstorage.got=§aDone.
+commands.itemstorage.removed=§aRemoved.
+
 invalid-entity=§cInvalid entity!
 entities-prefix=§7Entities: 
 enchants-prefix=§7Enchantments: 
 effects-prefix=§7Effects: 
 attributes-prefix=§7Attributes: 
 variables-prefix=§7Variables: 
+storeditems-prefix=§7Stored items: 
 invalid-index=§cInvalid index. The index is an integer greater than 0.
 
 variable.updated=§aVariable updated.

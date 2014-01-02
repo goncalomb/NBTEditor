@@ -19,6 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor;
 
+import java.io.File;
 import java.util.logging.Level;
 
 import org.bukkit.plugin.java.JavaPlugin;
@@ -29,6 +30,7 @@ import com.goncalomb.bukkit.bkglib.reflect.WorldUtils;
 import com.goncalomb.bukkit.customitemsapi.api.CustomItemManager;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.commands.CommandBOS;
+import com.goncalomb.bukkit.nbteditor.commands.CommandItemStorage;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTArmor;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTBook;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTEnchant;
@@ -64,6 +66,9 @@ public final class NBTEditor extends JavaPlugin {
 		BKgLib.registerCommand(new CommandNBTArmor(), this);
 		BKgLib.registerCommand(new CommandNBTHead(), this);
 		BKgLib.registerCommand(new CommandNBTTile(), this);
+		
+		ItemStorage.setDataFolder(new File(BKgLib.getDataFolder(this), "ItemStorage"));
+		BKgLib.registerCommand(new CommandItemStorage(), this);
 		
 		BookOfSouls.initialize(this);
 		CustomItemManager.register(new EntityInspectorTool(), this);

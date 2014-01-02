@@ -146,12 +146,22 @@ commands.nbtspawner.copy=§aGerador de monstros copiado.
 commands.nbtspawner.paste=§aGerador de monstros colado.
 commands.nbtspawner.no-copy=§cDeves primeiro copiar um gerador de monstros!
 
+commands.itemstorage.description=Usado para guardar itens em ficheiros.
+commands.itemstorage.invalid-name=§cNome inválido. Usa [0-9a-zA-Z_-], 64 carácteres max.
+commands.itemstorage.not-found=§cEsse item não existe.
+commands.itemstorage.found=§cNome duplicado.
+commands.itemstorage.not-holding=§cDeves estar a segurar um item.
+commands.itemstorage.stored=§aGuardado.
+commands.itemstorage.got=§aFeito.
+commands.itemstorage.removed=§aRemovido.
+
 invalid-entity=§cEntidade inválida!
 entities-prefix=§7Entidades: 
 enchants-prefix=§7Encantamentos: 
 effects-prefix=§7Efeitos de poção: 
 attributes-prefix=§7Atributos: 
 variables-prefix=§7Variáveis: 
+storeditems-prefix=§7Itens guardados: 
 invalid-index=§cÍndice inválido. O Índice é um inteiro maior que 0.
 
 variable.updated=§aVariável atualizada.
