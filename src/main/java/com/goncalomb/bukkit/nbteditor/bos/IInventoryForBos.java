@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -34,7 +34,7 @@ import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 abstract class IInventoryForBos extends CustomInventory {
 	
-	protected final static ItemStack _itemFiller = UtilsMc.newItem(Material.TRIPWIRE, Lang._(NBTEditor.class, "bos.inv.nothing"));
+	protected final static ItemStack _itemFiller = UtilsMc.newItem(Material.ENDER_PORTAL, Lang._(NBTEditor.class, "bos.inv.nothing"));
 	
 	private HashMap<Integer, ItemStack> _placeholders;
 	private boolean _allowBos;
