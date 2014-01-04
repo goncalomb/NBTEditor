@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -20,6 +20,7 @@
 package com.goncalomb.bukkit.nbteditor.bos;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -43,20 +44,20 @@ public final class InventoryForVillagers extends IInventoryForBos {
 	}
 	
 	private BookOfSouls _bos;
+	private int _page;
 	
-	public InventoryForVillagers(BookOfSouls bos, Player owner) {
+	public InventoryForVillagers(BookOfSouls bos, int page, Player owner) {
 		super(owner, 27, Lang._(NBTEditor.class, "bos.offers.title"), _placeholders);
 		_bos = bos;
+		_page = Math.min(Math.max(page, 0), 9);
 		Inventory inv = getInventory();
 		VillagerNBT villager = (VillagerNBT) _bos.getEntityNBT();
-		int i = 0;
-		for (VillagerNBTOffer offer : villager.getOffers()) {
+		List<VillagerNBTOffer> offers = villager.getOffers();
+		for (int i = 0, j = _page * 9, l = offers.size(); i < 9 && j < l ; ++i, ++j) {
+			VillagerNBTOffer offer = offers.get(j);
 			inv.setItem(i, offer.getBuyA());
 			inv.setItem(9 + i, offer.getBuyB());
 			inv.setItem(18 + i, offer.getSell());
-			if (++i == 9) {
-				break;
-			}
 		}
 	}
 
@@ -64,14 +65,23 @@ public final class InventoryForVillagers extends IInventoryForBos {
 	protected void inventoryClose(InventoryCloseEvent event) {
 		VillagerNBT villager = (VillagerNBT) _bos.getEntityNBT();
 		ItemStack[] items = getContents();
+		List<VillagerNBTOffer> offers = villager.getOffers();
 		villager.clearOffers();
+		int j = 0;
+		int k = _page * 9;
+		for (int l = offers.size(); j < l && j < k; ++j) {
+			villager.addOffer(offers.get(j));
+		}
 		boolean invalidOffer = false;
-		for (int i = 0; i < 9; ++i) {
+		for (int i = 0; i < 9; ++i, ++j) {
 			if (items[i] != null && items[18 + i] != null) {
 				villager.addOffer(new VillagerNBTOffer(items[i], items[9 + i], items[18 + i], Integer.MAX_VALUE));
 			} else if (items[i] != null || items[9 + i] != null || items[18 + i] != null) {
 				invalidOffer = true;
 			}
+		}
+		for (int l = offers.size(); j < l; ++j) {
+			villager.addOffer(offers.get(j));
 		}
 		_bos.saveBook();
 

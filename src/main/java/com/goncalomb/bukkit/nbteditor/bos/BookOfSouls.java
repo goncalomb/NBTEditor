@@ -151,9 +151,9 @@ public class BookOfSouls {
 		return false;
 	}
 	
-	public boolean openOffersInventory(Player player) {
+	public boolean openOffersInventory(Player player, int page) {
 		if (_entityNbt instanceof VillagerNBT) {
-			(new InventoryForVillagers(this, player)).openInventory(player, _plugin);
+			(new InventoryForVillagers(this, page, player)).openInventory(player, _plugin);
 			return true;
 		}
 		return false;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -194,10 +194,14 @@ public class CommandBOS extends BKgCommand {
 		return true;
 	}
 	
-	@Command(args = "offers", type = CommandType.PLAYER_ONLY)
+	@Command(args = "offers", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "[page]")
 	public boolean offersCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		Player player = (Player) sender;
-		if (!getBos(player).openOffersInventory(player)) {
+		int page = 0;
+		if (args.length == 1) {
+			page = CommandUtils.parseInt(args[0], 9, 0);
+		}
+		if (!getBos(player).openOffersInventory(player, page)) {
 			player.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.no-villager"));
 		} else {
 			player.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.villager-info"));
