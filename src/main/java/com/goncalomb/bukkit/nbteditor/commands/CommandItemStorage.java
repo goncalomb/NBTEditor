@@ -68,18 +68,30 @@ public class CommandItemStorage extends BKgCommand {
 		return true;
 	}
 	
-	@Command(args = "get", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<name>")
+	@Command(args = "get", type = CommandType.DEFAULT, minargs = 1, maxargs = 2, usage = "<name> [player]")
 	public boolean command_get(CommandSender sender, String[] args) throws BKgCommandException {
 		validateName(args[0]);
 		checkItemExistance(args[0]);
-		CommandUtils.giveItem((Player) sender, ItemStorage.getItem(args[0]));
+		Player player;
+		if (args.length == 2) {
+			player = CommandUtils.findPlayer(args[1]);
+		} else if (sender instanceof Player) {
+			player = (Player) sender;
+		} else {
+			sender.sendMessage(Lang._(NBTEditor.class, "commands.itemstorage.no-player"));
+			return false;
+		}
+		CommandUtils.giveItem(player, ItemStorage.getItem(args[0]));
 		sender.sendMessage(Lang._(NBTEditor.class, "commands.itemstorage.got"));
 		return true;
 	}
 	
 	@TabComplete(args = "get")
 	public List<String> tabcomplete_get(CommandSender sender, String[] args) {
-		return Utils.getElementsWithPrefix(ItemStorage.listItems(), args[0]);
+		if (args.length == 1) {
+			return Utils.getElementsWithPrefix(ItemStorage.listItems(), args[0]);
+		}
+		return CommandUtils.playerTabComplete(sender, args[1]);
 	}
 	
 	@Command(args = "remove", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<name>")

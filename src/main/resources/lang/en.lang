@@ -150,6 +150,7 @@ commands.itemstorage.description=Used to store items in files.
 commands.itemstorage.invalid-name=§cInvalid name. Use [0-9a-zA-Z_-], 64 characters max.
 commands.itemstorage.not-found=§cThat item does not exist.
 commands.itemstorage.found=§cDuplicated name.
+commands.itemstorage.no-player=§cArgument 'player' missing!
 commands.itemstorage.not-holding=§cYou must be holding an item.
 commands.itemstorage.stored=§aStored.
 commands.itemstorage.got=§aDone.
