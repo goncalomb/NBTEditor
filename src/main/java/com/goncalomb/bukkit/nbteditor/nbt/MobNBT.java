@@ -41,7 +41,6 @@ public class MobNBT extends EntityNBT {
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Mob");
 		variables.add("health", new FloatVariable("HealF", 0.0f));
-		variables.add("old-health", new ShortVariable("Health", (short) 0));
 		variables.add("attack-time", new ShortVariable("AttackTime"));
 		variables.add("hurt-time", new ShortVariable("HurtTime"));
 		variables.add("death-time", new ShortVariable("DeathTime"));
