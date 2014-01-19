@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -39,7 +39,7 @@ import com.goncalomb.bukkit.nbteditor.NBTEditor;
 public class CommandNBTEnchant extends BKgCommand {
 	
 	public CommandNBTEnchant() {
-		super("nbtencahnt", "nbte");
+		super("nbtenchant", "nbte");
 	}
 	
 	@Command(args = "", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<enchantment> [level]")

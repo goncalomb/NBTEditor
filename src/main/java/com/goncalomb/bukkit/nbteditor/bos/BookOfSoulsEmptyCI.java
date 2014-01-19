@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -34,7 +34,7 @@ final class BookOfSoulsEmptyCI extends CustomItem {
 	public BookOfSoulsEmptyCI() {
 		super("bos-empty", ChatColor.GREEN + "Book of Souls" + ChatColor.RESET + " - " + ChatColor.RED + "Empty", new MaterialData(Material.BOOK));
 		setLore("§bThis is a empty Book of Souls.",
-				"§bLeft-click on an existing entity to capture his soul.");
+				"§bRight-click an existing entity to capture the soul.");
 	}
 	
 	@Override
