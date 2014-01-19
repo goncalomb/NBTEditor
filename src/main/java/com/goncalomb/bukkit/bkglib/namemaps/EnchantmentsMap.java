@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of BKgLib.
  *
@@ -56,7 +56,7 @@ public final class EnchantmentsMap {
 		_enchantments.put("Punch", Enchantment.ARROW_KNOCKBACK);
 		_enchantments.put("Flame", Enchantment.ARROW_FIRE);
 		_enchantments.put("Infinity", Enchantment.ARROW_INFINITE);
-		_enchantments.put("Lore", Enchantment.LURE);
+		_enchantments.put("Lure", Enchantment.LURE);
 		_enchantments.put("Luck", Enchantment.LUCK);
 		
 		List<String> enchantmentNames = new ArrayList<String>(_enchantments.names());
