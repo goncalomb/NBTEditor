@@ -94,6 +94,19 @@ public class CommandItemStorage extends BKgCommand {
 		return CommandUtils.playerTabComplete(sender, args[1]);
 	}
 	
+	@Command(args = "info", type = CommandType.DEFAULT, minargs = 1, usage = "<name>")
+	public boolean command_info(CommandSender sender, String[] args) throws BKgCommandException {
+		validateName(args[0]);
+		checkItemExistance(args[0]);
+		ItemUtils.sendItemStackInformation(ItemStorage.getItem(args[0]), sender);
+		return true;
+	}
+	
+	@TabComplete(args = "info")
+	public List<String> tabcomplete_info(CommandSender sender, String[] args) {
+		return Utils.getElementsWithPrefix(ItemStorage.listItems(), args[0]);
+	}
+	
 	@Command(args = "remove", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<name>")
 	public boolean command_remove(CommandSender sender, String[] args) throws BKgCommandException {
 		validateName(args[0]);

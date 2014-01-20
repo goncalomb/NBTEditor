@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -40,6 +40,13 @@ public class CommandNBTItem extends BKgCommand {
 	
 	public CommandNBTItem() {
 		super("nbtitem", "nbti");
+	}
+	
+	@Command(args = "info", type = CommandType.PLAYER_ONLY)
+	public boolean infoCommand(CommandSender sender, String[] args) throws BKgCommandException {
+		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
+		ItemUtils.sendItemStackInformation(item.item, sender);
+		return true;
 	}
 	
 	@Command(args = "name", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "[name]")
@@ -89,23 +96,6 @@ public class CommandNBTItem extends BKgCommand {
 		item.meta.setLore(null);
 		item.save();
 		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.lore-cleared"));
-		return true;
-	}
-	
-	@Command(args = "mod list", type = CommandType.PLAYER_ONLY)
-	public boolean mod_list(CommandSender sender, String[] args) throws BKgCommandException {
-		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
-		List<ItemModifier> modifiers = ItemModifier.getItemStackModifiers(item.item);
-		sender.sendMessage("§bModifiers:");
-		if (modifiers.size() > 0) {
-			for (ItemModifier modifier : modifiers) {
-				sender.sendMessage("§6" + modifier.getName());
-				sender.sendMessage("  §2Attribute: §a" + modifier.getAttributeType() + " §2Operation: §a" + modifier.getOperation());
-				sender.sendMessage("  §2Amount: §a" + modifier.getAmount());
-			}
-		} else {
-			sender.sendMessage("  §a§onone");
-		}
 		return true;
 	}
 	
