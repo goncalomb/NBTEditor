@@ -40,8 +40,7 @@ public final class NBTUtils {
 	private static Method _setTag;
 	
 	// CraftItemStack Class;
-	private static Method _asBukkitCopy;
-	private static Method _asNMSCopy;
+	private static Method _asCraftMirror;
 	private static Field _handle;
 	
 	// Minecraft's Entity Class;
@@ -69,8 +68,7 @@ public final class NBTUtils {
 		_setTag = minecraftItemStackClass.getMethod("setTag", nbtTagCompoundClass);
 		
 		Class<?> craftItemStackClass = BukkitReflect.getCraftBukkitClass("inventory.CraftItemStack");
-		_asBukkitCopy = craftItemStackClass.getMethod("asBukkitCopy", minecraftItemStackClass);
-		_asNMSCopy = craftItemStackClass.getMethod("asNMSCopy", ItemStack.class);
+		_asCraftMirror = craftItemStackClass.getMethod("asCraftMirror", minecraftItemStackClass);
 		_handle = craftItemStackClass.getDeclaredField("handle");
 		_handle.setAccessible(true);
 		
@@ -94,12 +92,13 @@ public final class NBTUtils {
 	private NBTUtils() { }
 	
 	public static ItemStack itemStackFromNBTData(NBTTagCompound data) {
-		return (ItemStack) BukkitReflect.invokeMethod(null, _asBukkitCopy, BukkitReflect.invokeMethod(null, _createStack, data._handle));
+		return (ItemStack) BukkitReflect.invokeMethod(null, _asCraftMirror, BukkitReflect.invokeMethod(null, _createStack, data._handle));
 	}
 	
 	public static NBTTagCompound itemStackToNBTData(ItemStack stack) {
 		NBTTagCompound data = new NBTTagCompound();
-		BukkitReflect.invokeMethod(BukkitReflect.invokeMethod(null, _asNMSCopy, stack), _save, data._handle);
+		Object handle = BukkitReflect.getFieldValue(stack, _handle);
+		BukkitReflect.invokeMethod(handle, _save, data._handle);
 		return data;
 	}
 	
@@ -135,12 +134,9 @@ public final class NBTUtils {
 	}
 	
 	public static NBTTagList potionToNBTEffectsList(ItemStack potion) {
-		Object tagObject = BukkitReflect.invokeMethod(BukkitReflect.invokeMethod(null, _asNMSCopy, potion), _getTag);
-		if (tagObject != null) {
-			NBTTagCompound tag = new NBTTagCompound(tagObject);
-			if (tag != null && tag.hasKey("CustomPotionEffects")) {
-				return tag.getList("CustomPotionEffects").clone();
-			}
+		NBTTagCompound tag = getItemStackTag(potion);
+		if (tag.hasKey("CustomPotionEffects")) {
+			return tag.getList("CustomPotionEffects").clone();
 		}
 		// Fallback to default potion effect.
 		Collection<PotionEffect> effects = Potion.fromItemStack(potion).getEffects();
