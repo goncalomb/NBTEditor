@@ -28,8 +28,9 @@ public class NBTBase {
 	protected static Class<?> _nbtBaseClass;
 	protected static Class<?> _nbtTagCompoundClass;
 	protected static Class<?> _nbtTagListClass;
-	
+
 	private static Method _clone;
+	private static Method _toString;
 	
 	final Object _handle; // The wrapped Minecraft NBTBase instance.
 	
@@ -40,6 +41,7 @@ public class NBTBase {
 			_nbtTagListClass = BukkitReflect.getMinecraftClass("NBTTagList");
 			try {
 				_clone = _nbtBaseClass.getMethod("clone");
+				_toString = _nbtBaseClass.getMethod("toString");
 				NBTTagCompound.prepareReflectionz();
 				NBTTagList.prepareReflectionz();
 				NBTTypes.prepareReflection();
@@ -81,6 +83,11 @@ public class NBTBase {
 	
 	public NBTBase clone() {
 		return wrap(invokeMethod(_clone));
+	}
+	
+	@Override
+	public String toString() {
+		return (String) invokeMethod(_toString);
 	}
 	
 }
