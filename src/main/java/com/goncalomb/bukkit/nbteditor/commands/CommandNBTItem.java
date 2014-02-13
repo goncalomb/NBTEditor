@@ -24,15 +24,24 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.CommandBlock;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.goncalomb.bukkit.bkglib.Lang;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand.Command;
+import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand.CommandType;
+import com.goncalomb.bukkit.bkglib.namemaps.EntityTypeMap;
+import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
 import com.goncalomb.bukkit.bkglib.utils.Utils;
 import com.goncalomb.bukkit.bkglib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
+import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
+import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeType;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.ItemModifier;
 
@@ -167,6 +176,27 @@ public class CommandNBTItem extends BKgCommand {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		ItemModifier.setItemStackModifiers(item.item, new ArrayList<ItemModifier>());
 		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.mod-cleared"));
+		return true;
+	}
+	
+	@Command(args = "tocommand", type = CommandType.PLAYER_ONLY)
+	public boolean tocommandCommand(CommandSender sender, String[] args) throws BKgCommandException {
+		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
+		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
+		if (block.getType() == Material.COMMAND) {
+			String command = "/give @p " + item.item.getTypeId() + " 1 " + item.item.getDurability() + " " + NBTUtils.getItemStackTag(item.item).toString();
+			// We spare 50 characters of space so people can change the player.
+			if (command.length() > 32767 - 50) {
+				sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.too-complex"));
+				return true;
+			}
+			CommandBlock commandBlock = (CommandBlock) block.getState();
+			commandBlock.setCommand(command);
+			commandBlock.update();
+			sender.sendMessage(Lang._(NBTEditor.class, "command-block.set"));
+			return true;
+		}
+		sender.sendMessage(Lang._(NBTEditor.class, "command-block.no-sight"));
 		return true;
 	}
 	

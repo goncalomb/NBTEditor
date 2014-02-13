@@ -103,6 +103,7 @@ commands.nbtitem.mod-invalid-op=§cOperation must be 0, 1 or 2!
 commands.nbtitem.mod-invalid-amount=§cAmount must be a number!
 commands.nbtitem.mod-nop=§cModifier with index {0} doesn''t exist!
 commands.nbtitem.mod-cleared=§aModifiers cleared.
+commands.nbtitem.too-complex=§aItem too complex!
 
 commands.nbtpotion.description=Used to edit potions.
 commands.nbtpotion.invalid-effect=§cInvalid potion effect!
