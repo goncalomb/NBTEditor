@@ -76,6 +76,8 @@ public final class BKgCommandManager {
 		command.setup(commandMap, plugin);
 	}
 	
+	// Bukkit is an asshole, getCommands() now returns UnmodifiableCollection.
+	/*
 	public static void unregisterAll(SimpleCommandMap commandMap, Plugin plugin) {
 		for (Iterator<Command> it = commandMap.getCommands().iterator(); it.hasNext(); ) {
 			Command command = it.next();
@@ -85,5 +87,6 @@ public final class BKgCommandManager {
 			}
 		}
 	}
+	*/
 	
 }

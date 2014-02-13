@@ -89,7 +89,7 @@ public final class BKgLib {
 	// Call this on Plugin.onDisable().
 	public static void unbind(Plugin plugin) {
 		if (_plugins.remove(plugin)) {
-			BKgCommandManager.unregisterAll(_commandMap, plugin);
+			//BKgCommandManager.unregisterAll(_commandMap, plugin);
 			Lang.unload(plugin);
 			Permission perm = getRootPermission(plugin);
 			if (perm != null) {
