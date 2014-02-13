@@ -26,6 +26,9 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.CommandBlock;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -346,6 +349,28 @@ public class CommandBOS extends BKgCommand {
 			return true;
 		}
 		sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.no-mob"));
+		return true;
+	}
+	
+	@Command(args = "tocommand", type = CommandType.PLAYER_ONLY)
+	public boolean tocommandCommand(CommandSender sender, String[] args) throws BKgCommandException {
+		BookOfSouls bos = getBos((Player) sender);
+		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
+		if (block.getType() == Material.COMMAND) {
+			EntityNBT entityNbt = bos.getEntityNBT();
+			String command = "/summon " + EntityTypeMap.getName(entityNbt.getEntityType()) + " ~ ~1 ~ " + entityNbt.getMetadataString();
+			// We spare 50 characters of space so people can change the position.
+			if (command.length() > 32767 - 50) {
+				sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.too-complex"));
+				return true;
+			}
+			CommandBlock commandBlock = (CommandBlock) block.getState();
+			commandBlock.setCommand(command);
+			commandBlock.update();
+			sender.sendMessage(Lang._(NBTEditor.class, "command-block.set"));
+			return true;
+		}
+		sender.sendMessage(Lang._(NBTEditor.class, "command-block.no-sight"));
 		return true;
 	}
 	

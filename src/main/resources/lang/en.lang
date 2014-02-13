@@ -67,6 +67,7 @@ commands.bookofsouls.attr-invalid-base=§cBase must be a number!
 commands.bookofsouls.attr-nop=§cThis entity does no have the attribute {0}!
 commands.bookofsouls.attr-cleared=§aEntity attributes cleared.
 commands.bookofsouls.falling-block-nop=§eThis BoS has special block data associated, you cannot change the 'block' variable.
+commands.bookofsouls.too-complex=§cEntity too complex!
 
 commands.nbtbook.description=Used to help book writing.
 commands.nbtbook.colors=§aColor codes have been replaced.
@@ -164,6 +165,8 @@ attributes-prefix=§7Attributes:
 variables-prefix=§7Variables: 
 storeditems-prefix=§7Stored items: 
 invalid-index=§cInvalid index. The index is an integer greater than 0.
+command-block.no-sight=§cNo Command Block in sight!
+command-block.set=§aCommand set.
 
 variable.updated=§aVariable updated.
 variable.cleared=§aVariable cleared.

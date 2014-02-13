@@ -67,6 +67,7 @@ commands.bookofsouls.attr-invalid-base=§c'Base' deve ser um número!
 commands.bookofsouls.attr-nop=§cEsta entidade não tem o attributo {0}!
 commands.bookofsouls.attr-cleared=§aAttributos apagados.
 commands.bookofsouls.falling-block-nop=§eEste BoS tem associado informação especial relativa ao bloco, não podes mudar a variável 'block'.
+commands.bookofsouls.too-complex=§cEntidate demasiado complexa!
 
 commands.nbtbook.description=Usado para ajudar na escrita de livros.
 commands.nbtbook.colors=§aOs códigos das cores foram subtituídos.
@@ -164,6 +165,8 @@ attributes-prefix=§7Atributos:
 variables-prefix=§7Variáveis: 
 storeditems-prefix=§7Itens guardados: 
 invalid-index=§cÍndice inválido. O Índice é um inteiro maior que 0.
+command-block.no-sight=§cNenhum 'Command Block' visível
+command-block.set=§aCommando definido.
 
 variable.updated=§aVariável atualizada.
 variable.cleared=§aVariável reposta.

@@ -362,4 +362,9 @@ public class EntityNBT {
 	public EntityNBT clone() {
 		return fromEntityType(_entityType, _data.clone());
 	}
+	
+	public String getMetadataString() {
+		return _data.toString();
+	}
+	
 }
