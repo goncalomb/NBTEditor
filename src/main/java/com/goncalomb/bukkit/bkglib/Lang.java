@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of BKgLib.
  *
@@ -35,6 +35,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
+import com.google.common.io.ByteStreams;
+import com.google.common.io.Files;
+
 public final class Lang {
 	
 	private static String _lang;
@@ -57,14 +60,10 @@ public final class Lang {
 		// Is common language file loaded?
 		if (!_data.containsKey(null)) {
 			// If not, load it.
-			String path = "lang/common/" + _lang + ".lang";
-			File external = new File(BKgLib.getGlobalDataFolder(), "languages/" + _lang + ".lang");
-			_data.put(null, loadLanguage(plugin, path, external));
+			_data.put(null, loadLanguage(plugin, true));
 		}
 		// Load language file for that plugin.
-		String path = "lang/" + _lang + ".lang";
-		File external = new File(BKgLib.getGlobalDataFolder(), "languages/" + plugin.getName() +  "/" + _lang + ".lang");
-		_data.put(plugin.getClass(), loadLanguage(plugin, path, external));
+		_data.put(plugin.getClass(), loadLanguage(plugin, false));
 	}
 	
 	static void unload(Plugin plugin) {
@@ -80,56 +79,68 @@ public final class Lang {
 		}
 	}
 	
-	private static Properties loadLanguage(Plugin plugin, String internalFile, File externalFile) {
-		Properties defaults;
-		try {
-			defaults = readProperties(plugin.getResource(internalFile), null);
-		} catch (IOException e) {
-			BKgLib.getLogger().log(Level.SEVERE, "Cannot load internal language file " + internalFile + ".", e);
-			defaults = new Properties();
-		}
+	private static Properties loadLanguage(Plugin plugin, boolean loadCommon) {
+		String internalFile = "lang" + (loadCommon ? "/common/" : "/") + _lang + ".lang";
+		File externalFile = new File(BKgLib.getGlobalDataFolder(), "languages" + (loadCommon ? "/" : "/" + plugin.getName()) + "/" + _lang + ".lang");
 		if (_useFiles) {
 			if (externalFile.exists()) {
 				try {
-					return readProperties(externalFile, defaults);
+					return readProperties(externalFile);
 				} catch (IOException e) {
 					BKgLib.getLogger().log(Level.SEVERE, "Cannot load language file " + externalFile + ".", e);
 				}
 			} else {
 				try {
-					if (!externalFile.getParentFile().isDirectory()) {
-						externalFile.getParentFile().mkdirs();
-					}
-					InputStream inStream = plugin.getResource(internalFile);
-					OutputStream outStream = new FileOutputStream(externalFile);
-					byte[] buffer = new byte[1024];
-					int r;
-					while ((r = inStream.read(buffer)) != -1) {
-						outStream.write(buffer, 0, r);
-					}
-					inStream.close();
-					outStream.close();
+					createExternalFile(plugin, internalFile, externalFile);
 				} catch (IOException e) {
 					BKgLib.getLogger().log(Level.SEVERE, "Cannot save language file " + externalFile + ".", e);
 				}
 			}
 		}
-		return defaults;
+		// External file is disabled, missing or broken, use internal.
+		InputStream stream = plugin.getResource(internalFile);
+		if (stream != null) {
+			try {
+				return readProperties(stream);
+			} catch (IOException e) {
+				BKgLib.getLogger().log(Level.SEVERE, "Cannot load internal language file " + internalFile + ".", e);
+			}
+		} else if (!externalFile.exists()) {
+			BKgLib.getLogger().warning("Missing language file " + externalFile + ".");
+		}
+		return new Properties();
 	}
 	
-	private static Properties readProperties(File file, Properties defaults) throws IOException {
-		return readProperties(new FileInputStream(file), defaults);
+	private static void createExternalFile(Plugin plugin, String internalFile, File externalFile) throws IOException {
+		InputStream inStream = null;
+		OutputStream outStream = null;
+		try {
+			inStream = plugin.getResource(internalFile);
+			if (inStream != null) {
+				Files.createParentDirs(externalFile);
+				outStream = new FileOutputStream(externalFile);
+				ByteStreams.copy(inStream, outStream);
+				BKgLib.getLogger().info("Created external language file " + externalFile + ".");
+			}
+		} finally {
+			if (inStream != null) inStream.close();
+			if (outStream != null) outStream.close();
+		}
 	}
 	
-	private static Properties readProperties(InputStream stream, Properties defaults) throws IOException {
-		Properties properties = new Properties(defaults);
+	private static Properties readProperties(File file) throws IOException {
+		return readProperties(new FileInputStream(file));
+	}
+	
+	private static Properties readProperties(InputStream stream) throws IOException {
+		Properties properties = new Properties();
 		properties.load(new InputStreamReader(stream, "UTF-8"));
 		return properties;
 	}
 	
 	public static String _(Class<? extends Plugin> context, String key) {
 		String result = get(context, key);
-		return (result == null ? key : result);
+		return (result == null ? "#" + key : result);
 	}
 	
 	public static String _(Class<? extends Plugin> context, String key, Object... objects) {
@@ -146,7 +157,7 @@ public final class Lang {
 				formatCache.put(key, msgFormat);
 				return msgFormat.format(objects);
 			}
-			return key;
+			return "#" + key;
 		}
 		return msgFormat.format(objects);
 	}
