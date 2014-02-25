@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of BKgLib.
  *
@@ -47,7 +47,7 @@ public final class BKgLib {
 	
 	static {
 		if (_logger == null) {
-			_logger = new Logger(null, null) {
+			_logger = new Logger("BKgLibLogger", null) {
 				@Override
 				public void log(LogRecord logRecord) {
 					logRecord.setMessage("[com.goncalomb] " + logRecord.getMessage());
