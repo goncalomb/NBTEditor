@@ -25,7 +25,7 @@ import java.util.List;
 public final class NBTTagList extends NBTBase {
 	
 	private static Field _listField;
-	private static List<Object> _list;
+	List<Object> _list;
 	
 	static void prepareReflectionz() throws SecurityException, NoSuchMethodException, NoSuchFieldException {
 		_listField = _nbtTagListClass.getDeclaredField("list");

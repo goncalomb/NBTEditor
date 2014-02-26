@@ -60,16 +60,16 @@ public final class NBTTagCompound extends NBTBase {
 		_tagUnserializeStream = nbtCompressedStreamToolsClass.getMethod("a", InputStream.class);
 	}
 	
-	private Map<String, Object> _map;
+	Map<String, Object> _map;
 	
 	public NBTTagCompound() {
 		this(BukkitReflect.newInstance(_nbtTagCompoundClass));
 	}
 	
 	@SuppressWarnings("unchecked")
-	NBTTagCompound(Object nbtTagCompoundObject) {
-		super(nbtTagCompoundObject);
-		_map = (Map<String, Object>) BukkitReflect.getFieldValue(nbtTagCompoundObject, _mapField);
+	NBTTagCompound(Object handle) {
+		super(handle);
+		_map = (Map<String, Object>) BukkitReflect.getFieldValue(handle, _mapField);
 	}
 	
 	public byte getByte(String key) {
