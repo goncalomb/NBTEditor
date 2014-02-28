@@ -42,6 +42,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.RotationVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.VectorVariable;
 
 public class EntityNBT {
@@ -96,7 +97,7 @@ public class EntityNBT {
 		registerEntity(EntityType.FIREWORK, FireworkNBT.class);
 
 		registerEntity(EntityType.ARROW, EntityNBT.class);
-		registerEntity(EntityType.ENDER_PEARL, EnderPearlNBT.class);
+		registerEntity(EntityType.ENDER_PEARL, EntityNBT.class);
 		registerEntity(EntityType.THROWN_EXP_BOTTLE, EntityNBT.class);
 		registerEntity(EntityType.SNOWBALL, EntityNBT.class);
 		//registerEntity(EntityType.EGG, EntityNBT.class); // Eggs thrown eggs cannot be put in spawners, missing internal EntityId.
@@ -191,6 +192,10 @@ public class EntityNBT {
 		variables.add("player", new BooleanVariable("player"));
 		variables.add("damage", new DoubleVariable("damage"));
 		EntityNBTVariableManager.registerVariables(EntityType.ARROW, variables);
+		
+		variables = new NBTGenericVariableContainer("Enderpearl");
+		variables.add("owner", new StringVariable("ownerName"));
+		EntityNBTVariableManager.registerVariables(EntityType.ENDER_PEARL, variables);
 		
 		variables = new NBTGenericVariableContainer("LargeFireball");
 		variables.add("explosion-power", new IntegerVariable("ExplosionPower", 0, 25)); // Limited to 25
