@@ -157,6 +157,9 @@ commands.itemstorage.not-holding=§cDeves estar a segurar um item.
 commands.itemstorage.stored=§aGuardado.
 commands.itemstorage.got=§aFeito.
 commands.itemstorage.removed=§aRemovido.
+commands.itemstorage.updated=§aAtualizado.
+commands.itemstorage.different-type=§cO item guardado é de um tipo diferente, §e{0}§c, impossível atualizar. Remova-o primeiro.
+commands.itemstorage.different-name=§cO item guardado tem um nome diferente, §e"§r{0}§r§e"§c, impossível atualizar. Remova-o primeiro.
 
 invalid-entity=§cEntidade inválida!
 entities-prefix=§7Entidades: 

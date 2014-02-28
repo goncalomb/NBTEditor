@@ -107,6 +107,39 @@ public class CommandItemStorage extends BKgCommand {
 		return Utils.getElementsWithPrefix(ItemStorage.listItems(), args[0]);
 	}
 	
+	@Command(args = "update", type = CommandType.DEFAULT, minargs = 1, usage = "<name>")
+	public boolean command_update(CommandSender sender, String[] args) throws BKgCommandException {
+		ItemStack item = ((Player) sender).getItemInHand();
+		if (item == null || item.getType() == Material.AIR) {
+			sender.sendMessage(Lang._(NBTEditor.class, "commands.itemstorage.not-holding"));
+		} else {
+			validateName(args[0]);
+			checkItemExistance(args[0]);
+			ItemStack storedItem = ItemStorage.getItem(args[0]);
+			if (item.getType() != storedItem.getType()) {
+				sender.sendMessage(Lang._(NBTEditor.class, "commands.itemstorage.different-type", storedItem.getType()));
+				return true;
+			}
+			String itemName = item.getItemMeta().getDisplayName();
+			String storedItemName = storedItem.getItemMeta().getDisplayName();
+			itemName = (itemName == null ? "" : itemName);
+			storedItemName = (storedItemName == null ? "" : storedItemName);
+			if (!itemName.equals(storedItemName)) {
+				sender.sendMessage(Lang._(NBTEditor.class, "commands.itemstorage.different-name", storedItemName));
+				return true;
+			}
+			ItemStorage.removeItem(args[0]);
+			ItemStorage.addItem(item, args[0]);
+			sender.sendMessage(Lang._(NBTEditor.class, "commands.itemstorage.updated"));
+		}
+		return true;
+	}
+	
+	@TabComplete(args = "update")
+	public List<String> tabcomplete_update(CommandSender sender, String[] args) {
+		return Utils.getElementsWithPrefix(ItemStorage.listItems(), args[0]);
+	}
+	
 	@Command(args = "remove", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<name>")
 	public boolean command_remove(CommandSender sender, String[] args) throws BKgCommandException {
 		validateName(args[0]);

@@ -157,6 +157,9 @@ commands.itemstorage.not-holding=§cYou must be holding an item.
 commands.itemstorage.stored=§aStored.
 commands.itemstorage.got=§aDone.
 commands.itemstorage.removed=§aRemoved.
+commands.itemstorage.updated=§aUpdated.
+commands.itemstorage.different-type=§cThe stored item is from a different type, §e{0}§c, cannot update. Remove it first.
+commands.itemstorage.different-name=§cThe stored item has a different name, §e"§r{0}§r§e"§c, cannot update. Remove it first.
 
 invalid-entity=§cInvalid entity!
 entities-prefix=§7Entities: 
