@@ -288,29 +288,8 @@ public class EntityNBT {
 		return _entityType;
 	}
 	
-	public Entity spawn(Location location) {
-		Entity entity = location.getWorld().spawnEntity(location, _entityType);
-		NBTUtils.setEntityNBTData(entity, _data);
-		return entity;
-	}
-	
-	public Entity spawnStack(Location location) {
-		LinkedList<EntityNBT> entities = new LinkedList<EntityNBT>();
-		entities.addFirst(this);
-		EntityNBT entityNBT = this;
-		while ((entityNBT = entityNBT.getRiding()) != null) {
-			entities.addFirst(entityNBT);
-		}
-		int i = 0;
-		Entity last = null;
-		for (EntityNBT nbt : entities) {
-			Entity entity = nbt.spawn(location.add(0, i++, 0));
-			if (last != null) {
-				last.setPassenger(entity);
-			}
-			last = entity;
-		}
-		return last;
+	public final Entity spawn(Location location) {
+		return NBTUtils.spawnEntity(_data, location);
 	}
 	
 	public NBTVariableContainer[] getAllVariables() {

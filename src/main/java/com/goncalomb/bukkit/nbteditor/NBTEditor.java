@@ -26,7 +26,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.goncalomb.bukkit.bkglib.BKgLib;
 import com.goncalomb.bukkit.bkglib.reflect.NBTBase;
-import com.goncalomb.bukkit.bkglib.reflect.WorldUtils;
 import com.goncalomb.bukkit.customitemsapi.api.CustomItemManager;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.commands.CommandBOS;
@@ -49,7 +48,6 @@ public final class NBTEditor extends JavaPlugin {
 	public void onEnable() {
 		try {
 			NBTBase.prepareReflection();
-			WorldUtils.prepareReflection();
 		} catch (Throwable e) {
 			getLogger().log(Level.SEVERE, "Error preparing reflection objects. This means that this version of NBTEditor is not compatible with this version of Bukkit.", e);
 			getLogger().warning("NBTEditor version not compatible with this version of Bukkit. Please install the apropriated version.");

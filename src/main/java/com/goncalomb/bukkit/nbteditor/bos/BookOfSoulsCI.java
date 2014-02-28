@@ -88,16 +88,16 @@ final class BookOfSoulsCI extends CustomItem {
 				return;
 			}
 			
-			location = event.getClickedBlock().getLocation().add(UtilsMc.faceToDelta(event.getBlockFace(), 0.5));
+			location = event.getClickedBlock().getLocation().add(UtilsMc.faceToDelta(event.getBlockFace(), 0.2));
 		} else {
 			Block block = UtilsMc.getTargetBlock(player);
 			if (block.getType() != Material.AIR) {
-				location = UtilsMc.airLocation(block.getLocation()).add(0.0, 0.5, 0.0);
+				location = UtilsMc.airLocation(block.getLocation());
 			}
 		}
 		
 		if (location != null) {
-			bos.getEntityNBT().spawnStack(location);
+			bos.getEntityNBT().spawn(location);
 			event.setCancelled(true);
 		} else {
 			player.sendMessage(Lang._(null, "no-sight"));
@@ -109,7 +109,7 @@ final class BookOfSoulsCI extends CustomItem {
     public void onDispense(BlockDispenseEvent event, DispenserDetails details) {
 		BookOfSouls bos = BookOfSouls.getFromBook(event.getItem());
 		if (bos != null) {
-			bos.getEntityNBT().spawnStack(details.getLocation());
+			bos.getEntityNBT().spawn(details.getLocation());
 		}
 		event.setCancelled(true);
     }

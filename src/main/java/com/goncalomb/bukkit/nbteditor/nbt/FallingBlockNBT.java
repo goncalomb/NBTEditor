@@ -19,10 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
 
 import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
@@ -59,15 +56,6 @@ public class FallingBlockNBT extends EntityNBT {
 	
 	public boolean hasTileEntityData() {
 		return _data.hasKey("TileEntityData");
-	}
-	
-	@Override
-	public Entity spawn(Location location) {
-		int blockId = (_data.hasKey("TileID") ? _data.getInt("TileID") : Material.SAND.getId());
-		byte blockData = (_data.hasKey("Data") ? _data.getByte("Data") : 0);
-		Entity entity = location.getWorld().spawnFallingBlock(location, blockId, blockData);
-		NBTUtils.setEntityNBTData(entity, _data);
-		return entity;
 	}
 	
 }

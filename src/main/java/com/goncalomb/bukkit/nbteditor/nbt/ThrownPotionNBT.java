@@ -19,12 +19,9 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
-import com.goncalomb.bukkit.bkglib.reflect.WorldUtils;
 
 public class ThrownPotionNBT extends EntityNBT {
 	
@@ -45,14 +42,6 @@ public class ThrownPotionNBT extends EntityNBT {
 	
 	public boolean isSet() {
 		return _data.hasKey("Potion");
-	}
-	
-	@Override
-	public Entity spawn(Location location) {
-		if (_data.hasKey("Potion")) {
-			return WorldUtils.spawnPotion(location, _data);
-		}
-		return null;
 	}
 	
 }

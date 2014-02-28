@@ -19,8 +19,6 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
@@ -44,16 +42,6 @@ public class DroppedItemNBT extends ItemsNBT {
 	
 	public boolean isSet() {
 		return _data.hasKey("Item");
-	}
-	
-	@Override
-	public Entity spawn(Location location) {
-		if (_data.hasKey("Item")) {
-			Entity entity = location.getWorld().dropItem(location, getItem());
-			NBTUtils.setEntityNBTData(entity, _data);
-			return entity;
-		}
-		return null;
 	}
 	
 }
