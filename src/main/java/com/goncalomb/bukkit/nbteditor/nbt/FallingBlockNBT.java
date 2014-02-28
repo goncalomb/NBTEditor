@@ -43,6 +43,10 @@ public class FallingBlockNBT extends EntityNBT {
 		EntityNBTVariableManager.registerVariables(FallingBlockNBT.class, variables);
 	}
 	
+	public FallingBlockNBT() {
+		_data.setByte("Time", (byte) 1);
+	}
+	
 	public void copyFromTileEntity(Block block) {
 		_data.setInt("TileID", block.getTypeId());
 		_data.setByte("Data", block.getData());

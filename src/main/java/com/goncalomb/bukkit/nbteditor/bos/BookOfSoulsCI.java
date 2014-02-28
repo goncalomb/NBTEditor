@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -88,11 +88,11 @@ final class BookOfSoulsCI extends CustomItem {
 				return;
 			}
 			
-			location = event.getClickedBlock().getLocation().add(UtilsMc.faceToDelta(event.getBlockFace(), 0.2));
+			location = event.getClickedBlock().getLocation().add(UtilsMc.faceToDelta(event.getBlockFace(), 0.5d));
 		} else {
 			Block block = UtilsMc.getTargetBlock(player);
 			if (block.getType() != Material.AIR) {
-				location = UtilsMc.airLocation(block.getLocation());
+				location = UtilsMc.airLocation(block.getLocation()).add(0.0d, 0.3d, 0.0d);
 			}
 		}
 		
