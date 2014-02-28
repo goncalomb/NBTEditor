@@ -180,6 +180,7 @@ variable.formats.string=Cadeia de caracteres (tamanho máximo: 64).
 variable.formats.block='block id' e 'data' válidos, 'id:data'.
 variable.formats.vector=Conjunto de 3 números decimais, '0.00 0.00 0.00'.
 variable.formats.horse-variant=Dois números inteiros, o primeiro controla as marcas do cavalo (0 a 4), o segundo controla a cor (0 to 6), e.g. '4 1'.
+variable.formats.rotation=Conjunto de 2 números decimais, ângulos de direção e altura, e.g. '25.6 -90'.
 
 meta-error.format=§cDeves estar a segurar {0}.
 meta-error.item=um Item

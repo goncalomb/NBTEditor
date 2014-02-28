@@ -21,7 +21,6 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 import net.iharder.Base64;
 
@@ -41,6 +40,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.RotationVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.VectorVariable;
 
@@ -122,6 +122,7 @@ public class EntityNBT {
 		variables = new NBTGenericVariableContainer("Entity");
 		variables.add("pos", new VectorVariable("Pos"));
 		variables.add("vel", new VectorVariable("Motion"));
+		variables.add("rot", new RotationVariable("Rotation"));
 		variables.add("fall-distance", new FloatVariable("FallDistance", 0.0f));
 		variables.add("fire", new ShortVariable("Fire"));
 		variables.add("air", new ShortVariable("Air", (short) 0, (short) 200));
