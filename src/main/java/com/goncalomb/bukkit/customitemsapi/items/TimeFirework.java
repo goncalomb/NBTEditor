@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of CustomItemsAPI.
  *
@@ -51,9 +51,10 @@ public class TimeFirework extends CustomFirework {
 	}
 	
 	@Override
-	public final void onFire(FireworkPlayerDetails details, FireworkMeta meta) {
+	public final boolean onFire(FireworkPlayerDetails details, FireworkMeta meta) {
 		details.getFirework().setVelocity(new Vector(0, 0.05, 0));
 		meta.setPower(10);
+		return true;
 	}
 	
 	@Override

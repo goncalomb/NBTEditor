@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of CustomItemsAPI.
  *
@@ -42,9 +42,10 @@ public abstract class CustomFirework extends CustomItem {
 	@Override
 	public final void onRightClick(PlayerInteractEvent event, PlayerDetails details) {
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-			details.consumeItem();
 			Location loc = event.getClickedBlock().getLocation();
-			fire(loc.add(UtilsMc.faceToDelta(event.getBlockFace())), details, null);
+			if (fire(loc.add(UtilsMc.faceToDelta(event.getBlockFace())), details, null) != null) {
+				details.consumeItem();
+			}
 			event.setCancelled(true);
 		}
 	}
@@ -58,7 +59,10 @@ public abstract class CustomFirework extends CustomItem {
 		final Firework firework = (Firework) location.getWorld().spawnEntity(location, EntityType.FIREWORK);
 		FireworkMeta meta = firework.getFireworkMeta();
 		final FireworkPlayerDetails fDetails = FireworkPlayerDetails.fromConsumableDetails(details, firework, userObject);
-		onFire(fDetails, meta);
+		if (!onFire(fDetails, meta)) {
+			firework.remove();
+			return null;
+		}
 		firework.setFireworkMeta(meta);
 		
 		final BukkitTask[] task = new BukkitTask[1];
@@ -75,7 +79,7 @@ public abstract class CustomFirework extends CustomItem {
 		return firework;
 	}
 	
-	public void onFire(FireworkPlayerDetails details, FireworkMeta meta) { };
+	public boolean onFire(FireworkPlayerDetails details, FireworkMeta meta) { return true; };
 	
 	public void onExplode(FireworkPlayerDetails details) { };
 	

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of CustomItemsAPI.
  *
@@ -55,26 +55,33 @@ public final class EscapePlan extends CustomFirework {
 	}
 	
 	@Override
-	public void onFire(FireworkPlayerDetails details, FireworkMeta meta) {
+	public boolean onFire(FireworkPlayerDetails details, FireworkMeta meta) {
 		if (details.getUserObject() == null) {
+			// This was fired with right click, not by attacking another entity.
+			if (details.getPlayer().getVehicle() != null) {
+				return false;
+			}
 			details.setUserObject(details.getPlayer());
 		}
 		details.getFirework().setPassenger((LivingEntity) details.getUserObject());
 		meta.setPower(2);
 		meta.addEffect(FireworkEffect.builder().withColor(Color.YELLOW).withFade(Color.WHITE).withFlicker().withTrail().build());
+		return true;
 	}
 	
 	@Override
 	public void onExplode(final FireworkPlayerDetails details) {
 		final Vector v = details.getFirework().getVelocity().setY(0).normalize().multiply(7).setY(1);
-		Bukkit.getScheduler().runTaskLater(getPlugin(), new Runnable() {
-			@Override
-			public void run() {
-				LivingEntity entity = (LivingEntity) details.getUserObject();
-				entity.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 8*20, 4), true);
-				entity.setVelocity(v);
-			}
-		}, 2);
+		final Entity passenger = details.getFirework().getPassenger();
+		if (passenger != null && passenger == details.getUserObject()) {
+			Bukkit.getScheduler().runTaskLater(getPlugin(), new Runnable() {
+				@Override
+				public void run() {
+					((LivingEntity) passenger).addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 8*20, 4), true);
+					passenger.setVelocity(v);
+				}
+			}, 2);
+		}
 	}
 	
 }
