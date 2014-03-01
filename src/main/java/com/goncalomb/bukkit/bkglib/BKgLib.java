@@ -29,6 +29,7 @@ import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
+import org.bukkit.command.Command;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.permissions.Permission;
@@ -129,6 +130,15 @@ public final class BKgLib {
 			Bukkit.getPluginManager().addPermission(perm);
 		}
 		return perm;
+	}
+	
+	public static boolean isVanillaCommand(String name) {
+		Command mineCommand = _commandMap.getCommand("minecraft:" + name);
+		if (mineCommand != null) {
+			Command command = _commandMap.getCommand(name);
+			return (mineCommand == command);
+		}
+		return false;
 	}
 	
 	public static File getGlobalDataFolder() {
