@@ -171,6 +171,7 @@ storeditems-prefix=§7Itens guardados:
 invalid-index=§cÍndice inválido. O Índice é um inteiro maior que 0.
 command-block.no-sight=§cNenhum 'Command Block' visível
 command-block.set=§aCommando definido.
+non-vanilla-command=§7Detectado commando /{0} não 'vanilla', a usar /minecraft:{0}.
 
 variable.updated=§aVariável atualizada.
 variable.cleared=§aVariável reposta.

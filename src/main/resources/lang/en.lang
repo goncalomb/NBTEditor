@@ -171,6 +171,7 @@ storeditems-prefix=§7Stored items:
 invalid-index=§cInvalid index. The index is an integer greater than 0.
 command-block.no-sight=§cNo Command Block in sight!
 command-block.set=§aCommand set.
+non-vanilla-command=§7Non-vanilla /{0} command detected, using /minecraft:{0}.
 
 variable.updated=§aVariable updated.
 variable.cleared=§aVariable cleared.

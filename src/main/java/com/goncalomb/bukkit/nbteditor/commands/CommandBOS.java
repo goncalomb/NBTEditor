@@ -36,6 +36,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.util.StringUtil;
 
+import com.goncalomb.bukkit.bkglib.BKgLib;
 import com.goncalomb.bukkit.bkglib.Lang;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
@@ -358,7 +359,12 @@ public class CommandBOS extends BKgCommand {
 		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
 		if (block.getType() == Material.COMMAND) {
 			EntityNBT entityNbt = bos.getEntityNBT();
-			String command = "/summon " + EntityTypeMap.getName(entityNbt.getEntityType()) + " ~ ~1 ~ " + entityNbt.getMetadataString();
+			String command = "summon";
+			if (!BKgLib.isVanillaCommand(command)) {
+				sender.sendMessage(Lang._(NBTEditor.class, "non-vanilla-command", command));
+				command = "minecraft:" + command;
+			}
+			command = "/" + command + " " + EntityTypeMap.getName(entityNbt.getEntityType()) + " ~ ~1 ~ " + entityNbt.getMetadataString();
 			// We spare 50 characters of space so people can change the position.
 			if (command.length() > 32767 - 50) {
 				sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.too-complex"));
