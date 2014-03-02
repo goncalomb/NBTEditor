@@ -116,6 +116,14 @@ public final class BukkitReflect {
 		}
 	}
 	
+	static void setFieldValue(Object object, Field field, Object value) {
+		try {
+			field.set(object, value);
+		} catch (Exception e) {
+			throw new RuntimeException("Error while setting field value " + field.getName() + " of class " + field.getDeclaringClass().getName() + ".", e);
+		}
+	}
+	
 	static Object newInstance(Class<?> clazz) {
 		try {
 			return clazz.newInstance();

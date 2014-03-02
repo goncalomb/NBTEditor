@@ -24,10 +24,13 @@ import java.util.List;
 
 public final class NBTTagList extends NBTBase {
 	
+	private static Field _typeField;
 	private static Field _listField;
 	List<Object> _list;
 	
 	static void prepareReflectionz() throws SecurityException, NoSuchMethodException, NoSuchFieldException {
+		_typeField = _nbtTagListClass.getDeclaredField("type");
+		_typeField.setAccessible(true);
 		_listField = _nbtTagListClass.getDeclaredField("list");
 		_listField.setAccessible(true);
 	}
@@ -54,7 +57,9 @@ public final class NBTTagList extends NBTBase {
 	}
 	
 	public void add(Object value) {
-		_list.add(NBTTypes.toInternal(value));
+		Object handle = NBTTypes.toInternal(value);
+		BukkitReflect.setFieldValue(_handle, _typeField, NBTBase.getTypeId(handle));
+		_list.add(handle);
 	}
 	
 	public int size() {
