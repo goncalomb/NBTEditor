@@ -8,7 +8,7 @@
 
   <groupId>com.goncalomb.bukkit</groupId>
   <artifactId>customitemsapi</artifactId>
-  <version>1.1.1-SNAPSHOT</version>
+  <version>1.1.1</version>
   <packaging>jar</packaging>
 
   <name>CustomItemsAPI</name>
@@ -44,7 +44,7 @@
     <dependency>
       <groupId>com.goncalomb.bukkit</groupId>
       <artifactId>bkglib</artifactId>
-      <version>1.1.2-SNAPSHOT</version>
+      <version>1.1.2</version>
     </dependency>
   </dependencies>
 
