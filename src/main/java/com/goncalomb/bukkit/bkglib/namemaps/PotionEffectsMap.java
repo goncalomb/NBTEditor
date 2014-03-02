@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of BKgLib.
  *
@@ -41,7 +41,7 @@ public final class PotionEffectsMap {
 		_potionEffects.put("MiningFatigue", PotionEffectType.SLOW_DIGGING);
 		_potionEffects.put("Strength", PotionEffectType.INCREASE_DAMAGE);
 		_potionEffects.put("InstantHealth", PotionEffectType.HEAL);
-		_potionEffects.put("InstanDamage", PotionEffectType.HARM);
+		_potionEffects.put("InstantDamage", PotionEffectType.HARM);
 		_potionEffects.put("JumpBoost", PotionEffectType.JUMP);
 		_potionEffects.put("Nausea", PotionEffectType.CONFUSION);
 		_potionEffects.put("Regeneration", PotionEffectType.REGENERATION);
