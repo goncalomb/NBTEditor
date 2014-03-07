@@ -20,11 +20,15 @@
 package com.goncalomb.bukkit.nbteditor;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.logging.Level;
 
+import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.goncalomb.bukkit.bkglib.BKgLib;
+import com.goncalomb.bukkit.bkglib.reflect.BukkitReflect;
 import com.goncalomb.bukkit.bkglib.reflect.NBTBase;
 import com.goncalomb.bukkit.customitemsapi.api.CustomItemManager;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
@@ -44,10 +48,29 @@ import com.goncalomb.bukkit.nbteditor.tools.SuperLeadTool;
 
 public final class NBTEditor extends JavaPlugin {
 	
+	private static Field _Item_REGISTRY;
+	private static Method _Item_d; // Get Item instance from id.
+	private static Method _RegistryMaterials_c; // Get item name from Item instance.
+	
+	public static String getMaterialName(Material material) {
+		try {
+			Object item = _Item_d.invoke(null, material.getId());
+			if (item != null) {
+				Object REGISTRY = _Item_REGISTRY.get(null);
+				return (String) _RegistryMaterials_c.invoke(REGISTRY, item);
+			}
+		} catch (Exception e) { }
+		return "minecraft:air";
+	}
+	
 	@Override
 	public void onEnable() {
 		try {
 			NBTBase.prepareReflection();
+			Class<?> minecraftItemClass = BukkitReflect.getMinecraftClass("Item");
+			_Item_REGISTRY = minecraftItemClass.getField("REGISTRY");
+			_Item_d = minecraftItemClass.getMethod("d", int.class);
+			_RegistryMaterials_c = _Item_REGISTRY.getType().getMethod("c", Object.class);
 		} catch (Throwable e) {
 			getLogger().log(Level.SEVERE, "Error preparing reflection objects. This means that this version of NBTEditor is not compatible with this version of Bukkit.", e);
 			getLogger().warning("NBTEditor version not compatible with this version of Bukkit. Please install the apropriated version.");

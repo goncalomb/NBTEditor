@@ -185,7 +185,7 @@ public class CommandNBTItem extends BKgCommand {
 				sender.sendMessage(Lang._(NBTEditor.class, "non-vanilla-command", command));
 				command = "minecraft:" + command;
 			}
-			command = "/" + command + " @p " + item.item.getTypeId() + " 1 " + item.item.getDurability() + " " + NBTUtils.getItemStackTag(item.item).toString();
+			command = "/" + command + " @p " + NBTEditor.getMaterialName(item.item.getType()) + " " + item.item.getAmount() + " " + item.item.getDurability() + " " + NBTUtils.getItemStackTag(item.item).toString();
 			// We spare 50 characters of space so people can change the player.
 			if (command.length() > 32767 - 50) {
 				sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.too-complex"));
