@@ -25,6 +25,8 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.CommandBlock;
+import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -126,6 +128,33 @@ public class CommandNBTTile extends BKgCommand {
 		} else {
 			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbttile.name.no-sight"));
 		}
+		return true;
+	}
+	
+	@Command(args = "command-colors", type = CommandType.PLAYER_ONLY)
+	public boolean colorsCommand(CommandSender sender, String[] args) throws BKgCommandException {
+		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
+		if (block.getType() != Material.COMMAND) {
+			throw new BKgCommandException(Lang._(NBTEditor.class, "command-block.no-sight"));
+		}
+		CommandBlock commandBlock = (CommandBlock) block.getState();
+		commandBlock.setCommand(UtilsMc.parseColors(commandBlock.getCommand()));
+		commandBlock.update();
+		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtbook.colors"));
+		return true;
+	}
+	
+	@Command(args = "sign", type = CommandType.PLAYER_ONLY, minargs = 2, maxargs = Integer.MAX_VALUE, usage = "<line> [content ...]")
+	public boolean signCommand(CommandSender sender, String[] args) throws BKgCommandException {
+		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
+		if (block.getType() != Material.SIGN_POST) {
+			throw new BKgCommandException(Lang._(NBTEditor.class, "commands.nbttile.sign.no-sight"));
+		}
+		int line = CommandUtils.parseInt(args[0], 4, 1);
+		Sign sign = (Sign) block.getState();
+		sign.setLine(line - 1, UtilsMc.parseColors(StringUtils.join(args, " ", 1, args.length)));
+		sign.update();
+		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbttile.line-set"));
 		return true;
 	}
 	

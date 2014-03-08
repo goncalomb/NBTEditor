@@ -128,6 +128,8 @@ commands.nbttile.jukebox.cleared=§aDisco removido.
 commands.nbttile.name.no-sight=§cDeves estar a olhar para um Chest, Furnace, Dispenser, Dropper, Hopper, Brewing Stand, Enchantment Table ou Commmand Block!
 commands.nbttile.name.set=§aNome definido.
 commands.nbttile.name.cleared=§aNome removido.
+commands.nbttile.sign.no-sight=§cNenhuma placa visível!
+commands.nbttile.line-set=§aLinha definida.
 
 commands.nbtspawner.description=Usado para editar geradores de monstros.
 commands.nbtspawner.no-sight=§cNenhum gerador de monstros visível!

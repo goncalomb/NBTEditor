@@ -128,6 +128,8 @@ commands.nbttile.jukebox.cleared=§aRecord cleared.
 commands.nbttile.name.no-sight=§cYou must be looking at a Chest, Furnace, Dispenser, Dropper, Hopper, Brewing Stand, Enchantment Table or Commmand Block!
 commands.nbttile.name.set=§aName set.
 commands.nbttile.name.cleared=§aName cleared.
+commands.nbttile.sign.no-sight=§cNo Sign in sight!
+commands.nbttile.line-set=§aLine set.
 
 commands.nbtspawner.description=Used to edit spawners.
 commands.nbtspawner.no-sight=§cNo spawner in sight!
