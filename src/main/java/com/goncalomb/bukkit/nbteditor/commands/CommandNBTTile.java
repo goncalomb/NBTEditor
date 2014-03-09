@@ -25,6 +25,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.CommandBlock;
 import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
@@ -32,10 +33,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import com.goncalomb.bukkit.bkglib.BKgLib;
 import com.goncalomb.bukkit.bkglib.Lang;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
 import com.goncalomb.bukkit.bkglib.namemaps.PotionEffectsMap;
+import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
 import com.goncalomb.bukkit.bkglib.utils.Utils;
 import com.goncalomb.bukkit.bkglib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
@@ -155,6 +159,41 @@ public class CommandNBTTile extends BKgCommand {
 		sign.setLine(line - 1, UtilsMc.parseColors(StringUtils.join(args, " ", 1, args.length)));
 		sign.update();
 		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbttile.line-set"));
+		return true;
+	}
+	
+	@Command(args = "tocommand", type = CommandType.PLAYER_ONLY)
+	public boolean tocommandCommand(CommandSender sender, String[] args) throws BKgCommandException {
+		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
+		if (block == null || block.getType() == Material.AIR) {
+			sender.sendMessage(Lang._(null, "no-sight"));
+			return true;
+		}
+		String command = "setblock";
+		if (!BKgLib.isVanillaCommand(command)) {
+			sender.sendMessage(Lang._(NBTEditor.class, "non-vanilla-command", command));
+			command = "minecraft:" + command;
+		}
+		command = "/" + command + " " + block.getX() + " " + block.getY() + " " + block.getZ() + " " + NBTEditor.getMaterialName(block.getType()) + " " + block.getData() + " destroy";
+		NBTTagCompound data = NBTUtils.getTileEntityNBTData(block);
+		if (data != null) {
+			data.remove("id");
+			data.remove("x");
+			data.remove("y");
+			data.remove("z");
+			command += " " + data.toString();
+			// We spare 50 characters of space so people can change the position.
+			if (command.length() > 32767 - 50) {
+				sender.sendMessage(Lang._(NBTEditor.class, "commands.nbttile.too-complex"));
+				return true;
+			}
+		}
+		Block newBlock = block.getRelative(BlockFace.DOWN);
+		newBlock.setType(Material.COMMAND);
+		CommandBlock commandBlock = (CommandBlock) newBlock.getState();
+		commandBlock.setCommand(command);
+		commandBlock.update();
+		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbttile.command-created"));
 		return true;
 	}
 	

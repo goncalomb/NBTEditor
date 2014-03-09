@@ -130,6 +130,8 @@ commands.nbttile.name.set=§aName set.
 commands.nbttile.name.cleared=§aName cleared.
 commands.nbttile.sign.no-sight=§cNo Sign in sight!
 commands.nbttile.line-set=§aLine set.
+commands.nbttile.too-complex=§cTile entity too complex!
+commands.nbttile.command-created=§aCommand block created below the tile.
 
 commands.nbtspawner.description=Used to edit spawners.
 commands.nbtspawner.no-sight=§cNo spawner in sight!

@@ -130,6 +130,8 @@ commands.nbttile.name.set=§aNome definido.
 commands.nbttile.name.cleared=§aNome removido.
 commands.nbttile.sign.no-sight=§cNenhuma placa visível!
 commands.nbttile.line-set=§aLinha definida.
+commands.nbttile.too-complex=§cEntidade bloco demasiado complexa!
+commands.nbttile.command-created=§aCommand block criado por baixo do bloco.
 
 commands.nbtspawner.description=Usado para editar geradores de monstros.
 commands.nbtspawner.no-sight=§cNenhum gerador de monstros visível!
