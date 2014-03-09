@@ -108,11 +108,16 @@ public class NBTBase {
 			buffer.append("}");
 		} else if (_nbtTagListClass.isInstance(object)) {
 			// We need this to force using this method on all list values.
-			// Lists don't need to be numbered, the internal Mojanson encoder uses numbers.
+			// Mojang, WHY do lists need to be numbered!?!?.
+			// Strings with ':' on unnumbered lists break the parser.
+			// The numbers don't even determine the position on the list.
+			// Le sigh.
 			buffer.append("[");
 			int i = 0;
 			for (Object obj : (new NBTTagList(object))._list) {
-				if (i++ != 0) buffer.append(",");
+				if (i != 0) buffer.append(",");
+				buffer.append(i++);
+				buffer.append(":");
 				buffer.append(toStringAny(obj));
 			}
 			buffer.append("]");
@@ -124,8 +129,8 @@ public class NBTBase {
 			int j = 0, l = str.length();
 			for (int i = 0; i < l; ++i) {
 				char c = str.charAt(i);
-				// There is a problem with the internal decoder, it does not recognize // as an escaped /.
-				// It's not possible to encode strings that end with /. Mojang, fix it.
+				// There is a problem with the internal decoder, it does not recognize \\ as an escaped \.
+				// It's not possible to encode strings that end with \. Mojang, fix it.
 				if (/*c == '\' || */c == '"') {
 					buffer.append(str.substring(j, i));
 					buffer.append("\\" +  c);
