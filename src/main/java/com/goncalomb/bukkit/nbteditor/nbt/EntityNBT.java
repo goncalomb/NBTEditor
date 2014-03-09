@@ -349,7 +349,9 @@ public class EntityNBT {
 	}
 	
 	public String getMetadataString() {
-		return _data.toString();
+		NBTTagCompound data = _data.clone();
+		data.remove("id");
+		return data.toString();
 	}
 	
 }
