@@ -309,7 +309,7 @@ public class BookOfSouls {
 					sb.append("  " + ChatColor.BLACK + chances[4 - i] + "\n");
 				}
 			} else {
-				sb.append("" + ChatColor.BLACK + ChatColor.ITALIC + "not defined,\ndefault 0.85");
+				sb.append("" + ChatColor.BLACK + ChatColor.ITALIC + "not defined,\ndefault 0.085");
 			}
 			meta.addPage(sb.toString());
 		}

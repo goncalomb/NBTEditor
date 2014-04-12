@@ -213,6 +213,14 @@ public class CommandBOS extends BKgCommand {
 		return true;
 	}
 	
+	private static float parseDropchanceFloat(String value) {
+		float f = Float.parseFloat(value);
+		if ((f < 0 || f > 1) && f != 2) {
+			throw new NumberFormatException("Invalid dropchance.");
+		}
+		return f;
+	}
+	
 	@Command(args = "dropchance", type = CommandType.PLAYER_ONLY, maxargs = 5, usage = "[<head> <chest> <legs> <feet> <hand>]")
 	public boolean dropchanceCommand(CommandSender sender, String[] args) throws BKgCommandException {
 		Player player = (Player) sender;
@@ -227,18 +235,14 @@ public class CommandBOS extends BKgCommand {
 			return true;
 		} else if (args.length == 5) {
 
-			float head = 0f, chest = 0f, legs = 0f, feet = 0f, hand = 0f;
-			boolean invalid = false;
+			float head, chest, legs, feet, hand;
 			try {
-				head = Float.parseFloat(args[0]);
-				chest = Float.parseFloat(args[1]);
-				legs = Float.parseFloat(args[2]);
-				feet = Float.parseFloat(args[3]);
-				hand = Float.parseFloat(args[4]);
+				head = parseDropchanceFloat(args[0]);
+				chest = parseDropchanceFloat(args[1]);
+				legs = parseDropchanceFloat(args[2]);
+				feet = parseDropchanceFloat(args[3]);
+				hand = parseDropchanceFloat(args[4]);
 			} catch (NumberFormatException e) {
-				invalid = true;
-			}
-			if (invalid || head < 0 || head > 1 || chest < 0 || chest > 1|| legs < 0 || legs > 1 || feet < 0 || feet > 1 || hand < 0 || hand > 1) {
 				player.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.drop-chance.invalid"));
 				return true;
 			}
