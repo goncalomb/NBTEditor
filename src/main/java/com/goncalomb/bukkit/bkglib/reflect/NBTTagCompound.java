@@ -37,12 +37,13 @@ public final class NBTTagCompound extends NBTBase {
 	private static Method _getString;
 	private static Field _mapField;
 
+	private static Object _nbtReadLimiterUnlimited;
 	private static Method _tagSerializeArray;
 	private static Method _tagUnserializeArray;
 	private static Method _tagSerializeStream;
 	private static Method _tagUnserializeStream;
 	
-	static void prepareReflectionz() throws SecurityException, NoSuchMethodException, NoSuchFieldException {
+	static void prepareReflectionz() throws SecurityException, NoSuchMethodException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
 		_getByte = _nbtTagCompoundClass.getMethod("getByte", String.class);
 		_getShort = _nbtTagCompoundClass.getMethod("getShort", String.class);
 		_getInt = _nbtTagCompoundClass.getMethod("getInt", String.class);
@@ -53,9 +54,12 @@ public final class NBTTagCompound extends NBTBase {
 		_mapField = _nbtTagCompoundClass.getDeclaredField("map");
 		_mapField.setAccessible(true);
 		
+		Class<?> nbtReadLimiterClass = BukkitReflect.getMinecraftClass("NBTReadLimiter");
+		_nbtReadLimiterUnlimited = nbtReadLimiterClass.getDeclaredField("a").get(null);
+		
 		Class<?> nbtCompressedStreamToolsClass = BukkitReflect.getMinecraftClass("NBTCompressedStreamTools");
 		_tagSerializeArray = nbtCompressedStreamToolsClass.getMethod("a", _nbtTagCompoundClass);
-		_tagUnserializeArray = nbtCompressedStreamToolsClass.getMethod("a", byte[].class);
+		_tagUnserializeArray = nbtCompressedStreamToolsClass.getMethod("a", byte[].class, nbtReadLimiterClass);
 		_tagSerializeStream = nbtCompressedStreamToolsClass.getMethod("a", _nbtTagCompoundClass, OutputStream.class);
 		_tagUnserializeStream = nbtCompressedStreamToolsClass.getMethod("a", InputStream.class);
 	}
@@ -182,7 +186,7 @@ public final class NBTTagCompound extends NBTBase {
 	}
 	
 	public static NBTTagCompound unserialize(byte[] data) {
-		return new NBTTagCompound(BukkitReflect.invokeMethod(null, _tagUnserializeArray, data));
+		return new NBTTagCompound(BukkitReflect.invokeMethod(null, _tagUnserializeArray, data, _nbtReadLimiterUnlimited));
 	}
 	
 	public static NBTTagCompound unserialize(InputStream inputStream) {
