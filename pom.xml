@@ -14,7 +14,7 @@
   <name>NBTEditor</name>
 
   <properties>
-    <bukkit.version>1.7.2-R0.3</bukkit.version>
+    <bukkit.version>1.7.8-R0.1-SNAPSHOT</bukkit.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.timestamp>${maven.build.timestamp}</project.build.timestamp>
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
@@ -44,7 +44,7 @@
     <dependency>
       <groupId>com.goncalomb.bukkit</groupId>
       <artifactId>bkglib</artifactId>
-      <version>1.1.2</version>
+      <version>1.1.3-SNAPSHOT</version>
     </dependency>
 
     <dependency>
