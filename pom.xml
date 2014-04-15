@@ -26,6 +26,12 @@
       <name>repo.goncalomb.com Releases</name>
       <url>http://repo.goncalomb.com/maven/releases/</url>
     </repository>
+    
+    <repository>
+      <id>goncalomb-repo-snap</id>
+      <name>repo.goncalomb.com Snapshots</name>
+      <url>http://repo.goncalomb.com/maven/snapshots/</url>
+    </repository>
 
     <repository>
       <id>bukkit-repo</id>
