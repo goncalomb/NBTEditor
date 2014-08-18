@@ -49,12 +49,12 @@ import com.goncalomb.bukkit.nbteditor.tools.SuperLeadTool;
 public final class NBTEditor extends JavaPlugin {
 	
 	private static Field _Item_REGISTRY;
-	private static Method _Item_d; // Get Item instance from id.
+	private static Method _Item_getById; // Get Item instance from id.
 	private static Method _RegistryMaterials_c; // Get item name from Item instance.
 	
 	public static String getMaterialName(Material material) {
 		try {
-			Object item = _Item_d.invoke(null, material.getId());
+			Object item = _Item_getById.invoke(null, material.getId());
 			if (item != null) {
 				Object REGISTRY = _Item_REGISTRY.get(null);
 				return (String) _RegistryMaterials_c.invoke(REGISTRY, item);
@@ -69,7 +69,13 @@ public final class NBTEditor extends JavaPlugin {
 			NBTBase.prepareReflection();
 			Class<?> minecraftItemClass = BukkitReflect.getMinecraftClass("Item");
 			_Item_REGISTRY = minecraftItemClass.getField("REGISTRY");
-			_Item_d = minecraftItemClass.getMethod("d", int.class);
+			try {
+				// craftbukkit-1.7.10
+				_Item_getById = minecraftItemClass.getMethod("getById", int.class);
+			} catch (NoSuchMethodException e) {
+				// craftbukkit-1.7.9
+				_Item_getById = minecraftItemClass.getMethod("d", int.class);
+			}
 			_RegistryMaterials_c = _Item_REGISTRY.getType().getMethod("c", Object.class);
 		} catch (Throwable e) {
 			getLogger().log(Level.SEVERE, "Error preparing reflection objects. This means that this version of NBTEditor is not compatible with this version of Bukkit.", e);
