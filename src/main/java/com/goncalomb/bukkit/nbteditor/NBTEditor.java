@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014, 2015 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -57,7 +57,7 @@ public final class NBTEditor extends JavaPlugin {
 			Object item = _Item_getById.invoke(null, material.getId());
 			if (item != null) {
 				Object REGISTRY = _Item_REGISTRY.get(null);
-				return (String) _RegistryMaterials_c.invoke(REGISTRY, item);
+				return _RegistryMaterials_c.invoke(REGISTRY, item).toString();
 			}
 		} catch (Exception e) { }
 		return "minecraft:air";
