@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014, 2015 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -19,6 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.bos;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
@@ -93,6 +94,11 @@ public class BookOfSouls {
 					}
 				}
 				if (data != null) {
+					if (data.startsWith("§k")) {
+						// Dirty fix, for some reason 'data' can sometimes start with §k.
+						// Remove it!!!
+						data = data.substring(2);
+					}
 					return EntityNBT.unserialize(data);
 				}
 			} catch (Throwable e) {
@@ -205,7 +211,7 @@ public class BookOfSouls {
 			meta.setAuthor(_author);
 		}
 		
-		meta.setPages((List<String>)null);
+		meta.setPages(new ArrayList<String>());
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("This book contains the soul of a " + ChatColor.RED + ChatColor.BOLD + entityName + "\n\n");
