@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014, 2015 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of BKgLib.
  *
@@ -19,6 +19,9 @@
 
 package com.goncalomb.bukkit.bkglib.reflect;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
@@ -37,9 +40,6 @@ public final class NBTTagCompound extends NBTBase {
 	private static Method _getString;
 	private static Field _mapField;
 
-	private static Object _nbtReadLimiterUnlimited;
-	private static Method _tagSerializeArray;
-	private static Method _tagUnserializeArray;
 	private static Method _tagSerializeStream;
 	private static Method _tagUnserializeStream;
 	
@@ -54,12 +54,7 @@ public final class NBTTagCompound extends NBTBase {
 		_mapField = _nbtTagCompoundClass.getDeclaredField("map");
 		_mapField.setAccessible(true);
 		
-		Class<?> nbtReadLimiterClass = BukkitReflect.getMinecraftClass("NBTReadLimiter");
-		_nbtReadLimiterUnlimited = nbtReadLimiterClass.getDeclaredField("a").get(null);
-		
 		Class<?> nbtCompressedStreamToolsClass = BukkitReflect.getMinecraftClass("NBTCompressedStreamTools");
-		_tagSerializeArray = nbtCompressedStreamToolsClass.getMethod("a", _nbtTagCompoundClass);
-		_tagUnserializeArray = nbtCompressedStreamToolsClass.getMethod("a", byte[].class, nbtReadLimiterClass);
 		_tagSerializeStream = nbtCompressedStreamToolsClass.getMethod("a", _nbtTagCompoundClass, OutputStream.class);
 		_tagUnserializeStream = nbtCompressedStreamToolsClass.getMethod("a", InputStream.class);
 	}
@@ -178,7 +173,9 @@ public final class NBTTagCompound extends NBTBase {
 	}
 	
 	public byte[] serialize() {
-		return (byte[]) BukkitReflect.invokeMethod(null, _tagSerializeArray, _handle);
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		serialize(out);
+		return out.toByteArray();
 	}
 	
 	public void serialize(OutputStream outputStream) {
@@ -186,7 +183,12 @@ public final class NBTTagCompound extends NBTBase {
 	}
 	
 	public static NBTTagCompound unserialize(byte[] data) {
-		return new NBTTagCompound(BukkitReflect.invokeMethod(null, _tagUnserializeArray, data, _nbtReadLimiterUnlimited));
+		ByteArrayInputStream in = new ByteArrayInputStream(data);
+		NBTTagCompound tag = unserialize(in);
+		try {
+			in.close();
+		} catch (IOException e) { }
+		return tag;
 	}
 	
 	public static NBTTagCompound unserialize(InputStream inputStream) {
