@@ -58,6 +58,7 @@ public final class EnchantmentsMap {
 		_enchantments.put("Infinity", Enchantment.ARROW_INFINITE);
 		_enchantments.put("Lure", Enchantment.LURE);
 		_enchantments.put("Luck", Enchantment.LUCK);
+		_enchantments.put("DepthStrider", Enchantment.DEPTH_STRIDER);
 		
 		List<String> enchantmentNames = new ArrayList<String>(_enchantments.names());
 		Collections.sort(enchantmentNames, String.CASE_INSENSITIVE_ORDER);
