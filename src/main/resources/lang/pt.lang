@@ -1,3 +1,16 @@
+# CustomItemsAPI
+
+commands.customitem.description=Usado para obter itens modificados.
+commands.customitem.no-item=§cEsse item não existe! Usa '/citem list' para listar os itens.
+commands.customitem.ok=§aDesfruta do teu item.
+commands.customitem.invalid=§eEsse item não pode ser obtido usando este commando! O plugin dono poderá fornecer uma forma de o obter.
+
+crown.found=§6{0} §ffoi coroado §6Rei§f!
+crown.lost=§6{0} §fperdeu a sua coroa!
+crown.despawn=A {0}§1 foi perdida para sempre!
+
+# NBTEditor
+
 bos.inv.nothing=Nada aqui!
 bos.inv.pholder=§oEste é um item temporário, não será guardado!
 

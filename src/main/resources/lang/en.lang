@@ -1,3 +1,16 @@
+# CustomItemsAPI
+
+commands.customitem.description=Used to get custom items.
+commands.customitem.no-item=§cNo such item! Use '/citem list' to list all items.
+commands.customitem.ok=§aEnjoy your custom item.
+commands.customitem.invalid=§eThat item cannot be obtained using this command! The owner plugin may provide a way to obtain it.
+
+crown.found=§6{0} §fhas been crown §6King§f!
+crown.lost=§6{0} §fhas lost his crown!
+crown.despawn=The {0}§f has been lost forever!
+
+# NBTEditor
+
 bos.inv.nothing=Nothing here!
 bos.inv.pholder=§oThis is a placeholder item, it will not be saved!
 
