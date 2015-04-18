@@ -18,7 +18,7 @@
       <filtered>true</filtered>
     </file>
     <file>
-      <source>${project.basedir}/LICENCE.txt</source>
+      <source>${project.basedir}/LICENSE.txt</source>
       <outputDirectory>/</outputDirectory>
     </file>
   </files>
