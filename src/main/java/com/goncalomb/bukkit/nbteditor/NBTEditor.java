@@ -31,6 +31,22 @@ import com.goncalomb.bukkit.bkglib.BKgLib;
 import com.goncalomb.bukkit.bkglib.reflect.BukkitReflect;
 import com.goncalomb.bukkit.bkglib.reflect.NBTBase;
 import com.goncalomb.bukkit.customitemsapi.api.CustomItemManager;
+import com.goncalomb.bukkit.customitemsapi.commands.CommandCustomItems;
+import com.goncalomb.bukkit.customitemsapi.items.AntiMatterBomb;
+import com.goncalomb.bukkit.customitemsapi.items.BatBomb;
+import com.goncalomb.bukkit.customitemsapi.items.EnderBow;
+import com.goncalomb.bukkit.customitemsapi.items.EscapePlan;
+import com.goncalomb.bukkit.customitemsapi.items.FireBomb;
+import com.goncalomb.bukkit.customitemsapi.items.GravitationalAxe;
+import com.goncalomb.bukkit.customitemsapi.items.KingsCrown;
+import com.goncalomb.bukkit.customitemsapi.items.LightningRod;
+import com.goncalomb.bukkit.customitemsapi.items.MoonStick;
+import com.goncalomb.bukkit.customitemsapi.items.RepulsionBomb;
+import com.goncalomb.bukkit.customitemsapi.items.SimpleMine;
+import com.goncalomb.bukkit.customitemsapi.items.SunStick;
+import com.goncalomb.bukkit.customitemsapi.items.TorchBow;
+import com.goncalomb.bukkit.customitemsapi.items.TreeVaporizer;
+import com.goncalomb.bukkit.customitemsapi.items.WitherBow;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.commands.CommandBOS;
 import com.goncalomb.bukkit.nbteditor.commands.CommandItemStorage;
@@ -101,6 +117,29 @@ public final class NBTEditor extends JavaPlugin {
 		CustomItemManager.register(new EntityInspectorTool(), this);
 		CustomItemManager.register(new EntityRemoverTool(), this);
 		CustomItemManager.register(new SuperLeadTool(), this);
+		
+		this.saveDefaultConfig();
+		
+		if (getConfig().getBoolean("enable-custom-items", false)) {
+			CustomItemManager.register(new BatBomb(), this);
+			CustomItemManager.register(new FireBomb(), this);
+			CustomItemManager.register(new RepulsionBomb(), this);
+			CustomItemManager.register(new LightningRod(), this);
+			CustomItemManager.register(new EnderBow(), this);
+			CustomItemManager.register(new WitherBow(), this);
+			CustomItemManager.register(new SunStick(), this);
+			CustomItemManager.register(new MoonStick(), this);
+			CustomItemManager.register(new EscapePlan(), this);
+			CustomItemManager.register(new KingsCrown(), this);
+			CustomItemManager.register(new SimpleMine(), this);
+			CustomItemManager.register(new TorchBow(), this);
+			CustomItemManager.register(new AntiMatterBomb(), this);
+			CustomItemManager.register(new GravitationalAxe(), this);
+			CustomItemManager.register(new TreeVaporizer(), this);
+			
+			BKgLib.registerCommand(new CommandCustomItems(), this);
+			getLogger().info("CustomItems enabled.");
+		}
 		
 		getLogger().info("NBTEditor has been enabled.");
 	}
