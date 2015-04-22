@@ -40,7 +40,7 @@ final class CustomItemConfig {
 		_defaultConfig = new YamlConfiguration();
 		_defaultItemSection = _defaultConfig.createSection("custom-items");
 		
-		_configFile = new File(BKgLib.getGlobalDataFolder(), "CustomItemsAPI/ItemsConfig/" + plugin.getName() + ".yml");
+		_configFile = new File(plugin.getDataFolder(), "items-config.yml");
 		
 		if (!_configFile.exists()) {
 			_config = new YamlConfiguration();

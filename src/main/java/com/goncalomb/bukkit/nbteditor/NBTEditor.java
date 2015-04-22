@@ -110,7 +110,7 @@ public final class NBTEditor extends JavaPlugin {
 		BKgLib.registerCommand(new CommandNBTHead(), this);
 		BKgLib.registerCommand(new CommandNBTTile(), this);
 		
-		ItemStorage.setDataFolder(new File(BKgLib.getDataFolder(this), "ItemStorage"));
+		ItemStorage.setDataFolder(new File(getDataFolder(), "ItemStorage"));
 		BKgLib.registerCommand(new CommandItemStorage(), this);
 		
 		BookOfSouls.initialize(this);
