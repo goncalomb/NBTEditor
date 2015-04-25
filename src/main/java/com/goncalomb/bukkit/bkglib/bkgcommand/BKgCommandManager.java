@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2015 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of BKgLib.
  *
@@ -29,9 +29,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.plugin.Plugin;
 
+import com.goncalomb.bukkit.bkglib.reflect.BukkitReflect;
+
 public final class BKgCommandManager {
 
-	public static void register(SimpleCommandMap commandMap, BKgCommand command, Plugin plugin) {
+	public static void register(BKgCommand command, Plugin plugin) {
 		if (command.getOwner() != null) {
 			throw new RuntimeException("Command " + command.getName() + " already registered by " + command.getOwner().getName() + ".");
 		}
@@ -73,7 +75,7 @@ public final class BKgCommandManager {
 		if (tabMethods.size() > 0) {
 			throw new RuntimeException("Tab completion method " + tabMethods.get(0).getName() + " on class " + command.getClass().getName() + " has no execution method.");
 		}
-		command.setup(commandMap, plugin);
+		command.setup(BukkitReflect.getCommandMap(), plugin);
 	}
 	
 	// Bukkit is an asshole, getCommands() now returns UnmodifiableCollection.

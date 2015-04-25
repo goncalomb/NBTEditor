@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014, 2015 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of BKgLib.
  *
@@ -38,13 +38,13 @@ import org.bukkit.plugin.Plugin;
 
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandManager;
+import com.goncalomb.bukkit.bkglib.reflect.BukkitReflect;
 
 public final class BKgLib {
 	
 	private static HashSet<Plugin> _plugins = new HashSet<Plugin>();
 	static Logger _logger;
 	private static File _globalDataFolder;
-	private static SimpleCommandMap _commandMap;
 	
 	static {
 		if (_logger == null) {
@@ -71,16 +71,6 @@ public final class BKgLib {
 		if (_globalDataFolder == null) {
 			_globalDataFolder = new File(plugin.getDataFolder().getParentFile(), "com.goncalomb");
 		}
-		if (_commandMap == null) {
-			Server server = Bukkit.getServer();
-			Class<?> craftServerClass = server.getClass();
-			try {
-				Method getCommandMap = craftServerClass.getMethod("getCommandMap");
-				_commandMap = (SimpleCommandMap) getCommandMap.invoke(server);
-			} catch (Exception e) {
-				throw new RuntimeException("Error while initializing the BetterPlugin class. This Plugin is not compatible with this version of Bukkit.");
-			}
-		}
 		// Initialize plugin stuff.
 		if (_plugins.add(plugin)) {
 			Lang.load(plugin);
@@ -101,7 +91,7 @@ public final class BKgLib {
 	
 	public static void registerCommand(BKgCommand command, Plugin plugin) {
 		if (_plugins.contains(plugin)) {
-			BKgCommandManager.register(_commandMap, command, plugin);
+			BKgCommandManager.register(command, plugin);
 		}
 	}
 	
@@ -133,9 +123,9 @@ public final class BKgLib {
 	}
 	
 	public static boolean isVanillaCommand(String name) {
-		Command mineCommand = _commandMap.getCommand("minecraft:" + name);
+		Command mineCommand = BukkitReflect.getCommandMap().getCommand("minecraft:" + name);
 		if (mineCommand != null) {
-			Command command = _commandMap.getCommand(name);
+			Command command = BukkitReflect.getCommandMap().getCommand(name);
 			return (mineCommand == command);
 		}
 		return false;
