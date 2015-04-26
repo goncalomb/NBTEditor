@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2014, 2015 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of BKgLib.
  *
@@ -35,6 +35,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
+import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
 
@@ -48,14 +49,18 @@ public final class Lang {
 	static void load(Plugin plugin) {
 		if (_lang == null) {
 			// Load language configuration file, language.yml.
-			File configFile = new File(BKgLib.getGlobalDataFolder(), "language.yml");
+			File configFile = new File(plugin.getDataFolder(), "language.yml");
 			FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
 			config.options().copyDefaults(true);
 			config.addDefault("language", "en");
 			config.addDefault("use-files", false);
 			_lang = config.getString("language");
 			_useFiles = config.getBoolean("use-files");
-			BKgLib.saveConfig(config, configFile);
+			try {
+				config.save(configFile);
+			} catch (IOException e) {
+				plugin.getLogger().log(Level.SEVERE, "Cannot save file " + configFile + ".", e);
+			}
 		}
 		// Is common language file loaded?
 		if (!_data.containsKey(null)) {
@@ -81,19 +86,19 @@ public final class Lang {
 	
 	private static Properties loadLanguage(Plugin plugin, boolean loadCommon) {
 		String internalFile = "lang" + (loadCommon ? "/common/" : "/") + _lang + ".lang";
-		File externalFile = new File(BKgLib.getGlobalDataFolder(), "languages" + (loadCommon ? "/" : "/" + plugin.getName()) + "/" + _lang + ".lang");
+		File externalFile = new File(plugin.getDataFolder(), "languages" + (loadCommon ? "/" : "/" + plugin.getName()) + "/" + _lang + ".lang");
 		if (_useFiles) {
 			if (externalFile.exists()) {
 				try {
 					return readProperties(externalFile);
 				} catch (IOException e) {
-					BKgLib.getLogger().log(Level.SEVERE, "Cannot load language file " + externalFile + ".", e);
+					plugin.getLogger().log(Level.SEVERE, "Cannot load language file " + externalFile + ".", e);
 				}
 			} else {
 				try {
 					createExternalFile(plugin, internalFile, externalFile);
 				} catch (IOException e) {
-					BKgLib.getLogger().log(Level.SEVERE, "Cannot save language file " + externalFile + ".", e);
+					plugin.getLogger().log(Level.SEVERE, "Cannot save language file " + externalFile + ".", e);
 				}
 			}
 		}
@@ -103,10 +108,10 @@ public final class Lang {
 			try {
 				return readProperties(stream);
 			} catch (IOException e) {
-				BKgLib.getLogger().log(Level.SEVERE, "Cannot load internal language file " + internalFile + ".", e);
+				plugin.getLogger().log(Level.SEVERE, "Cannot load internal language file " + internalFile + ".", e);
 			}
 		} else if (!externalFile.exists()) {
-			BKgLib.getLogger().warning("Missing language file " + externalFile + ".");
+			plugin.getLogger().warning("Missing language file " + externalFile + ".");
 		}
 		return new Properties();
 	}
@@ -120,7 +125,7 @@ public final class Lang {
 				Files.createParentDirs(externalFile);
 				outStream = new FileOutputStream(externalFile);
 				ByteStreams.copy(inStream, outStream);
-				BKgLib.getLogger().info("Created external language file " + externalFile + ".");
+				plugin.getLogger().info("Created external language file " + externalFile + ".");
 			}
 		} finally {
 			if (inStream != null) inStream.close();

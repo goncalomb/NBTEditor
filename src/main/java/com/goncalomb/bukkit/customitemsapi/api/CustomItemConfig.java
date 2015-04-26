@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2015 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of CustomItemsAPI.
  *
@@ -20,13 +20,15 @@
 package com.goncalomb.bukkit.customitemsapi.api;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
-import com.goncalomb.bukkit.bkglib.BKgLib;
+import com.goncalomb.bukkit.customitemsapi.CustomItemsAPI;
 
 final class CustomItemConfig {
 	
@@ -79,7 +81,11 @@ final class CustomItemConfig {
 	}
 	
 	public void saveToFile() {
-		BKgLib.saveConfig(_config, _configFile);
+		try {
+			_config.save(_configFile);
+		} catch (IOException e) {
+			CustomItemsAPI.getInstance().getLogger().log(Level.SEVERE, "Cannot save file " + _configFile + ".", e);
+		}
 	}
 	
 }

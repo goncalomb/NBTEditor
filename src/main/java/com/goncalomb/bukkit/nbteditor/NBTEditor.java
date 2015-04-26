@@ -64,6 +64,8 @@ import com.goncalomb.bukkit.nbteditor.tools.SuperLeadTool;
 
 public final class NBTEditor extends JavaPlugin {
 	
+	private static NBTEditor _instance;
+	
 	private static Field _Item_REGISTRY;
 	private static Method _Item_getById; // Get Item instance from id.
 	private static Method _RegistryMaterials_c; // Get item name from Item instance.
@@ -141,12 +143,18 @@ public final class NBTEditor extends JavaPlugin {
 			getLogger().info("CustomItems enabled.");
 		}
 		
+		_instance = this;
 		getLogger().info("NBTEditor has been enabled.");
 	}
 	
 	@Override
 	public void onDisable() {
 		BKgLib.unbind(this);
+		_instance = null;
+	}
+	
+	public static NBTEditor getInstance() {
+		return _instance;
 	}
 	
 }
