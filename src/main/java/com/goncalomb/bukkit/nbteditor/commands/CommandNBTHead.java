@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013, 2015 - Gonçalo Baltazar <http://goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -19,7 +19,6 @@
 
 package com.goncalomb.bukkit.nbteditor.commands;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Material;
@@ -31,9 +30,6 @@ import org.bukkit.inventory.meta.SkullMeta;
 import com.goncalomb.bukkit.bkglib.Lang;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
 import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand.TabComplete;
-import com.goncalomb.bukkit.bkglib.namemaps.EnchantmentsMap;
-import com.goncalomb.bukkit.bkglib.utils.Utils;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public class CommandNBTHead extends BKgCommand {

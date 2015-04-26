@@ -21,12 +21,9 @@ package com.goncalomb.bukkit.bkglib.bkgcommand;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.plugin.Plugin;
 
 import com.goncalomb.bukkit.bkglib.reflect.BukkitReflect;
