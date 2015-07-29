@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - Gonçalo Baltazar <http://goncalomb.com>
+ * Copyright (C) 2013-2015 Gonçalo Baltazar <me@goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
