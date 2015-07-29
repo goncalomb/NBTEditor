@@ -34,8 +34,8 @@ import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
-import com.goncalomb.bukkit.customitemsapi.api.CustomItem;
-import com.goncalomb.bukkit.customitemsapi.api.CustomItemManager;
+import com.goncalomb.bukkit.customitems.api.CustomItem;
+import com.goncalomb.bukkit.customitems.api.CustomItemManager;
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.utils.BookSerialize;

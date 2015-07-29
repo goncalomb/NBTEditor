@@ -30,9 +30,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
-import com.goncalomb.bukkit.customitemsapi.api.CustomItem;
-import com.goncalomb.bukkit.customitemsapi.api.DispenserDetails;
-import com.goncalomb.bukkit.customitemsapi.api.PlayerDetails;
+import com.goncalomb.bukkit.customitems.api.CustomItem;
+import com.goncalomb.bukkit.customitems.api.DispenserDetails;
+import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;

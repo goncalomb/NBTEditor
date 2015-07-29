@@ -17,42 +17,47 @@
  * along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.goncalomb.bukkit.nbteditor.tools;
+package com.goncalomb.bukkit.customitems.items;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 
-public final class EntityRemoverTool extends CustomItem {
-
-	public EntityRemoverTool() {
-		super("entity-remover", ChatColor.AQUA + "Entity Remover", new MaterialData(Material.BLAZE_ROD));
-		setLore(ChatColor.YELLOW + "Right-click on entities remove them.");
+public final class SimpleMine extends CustomItem {
+	
+	public SimpleMine() {
+		super("simple-mine", ChatColor.GREEN + "Mine", new MaterialData(Material.FLOWER_POT_ITEM));
+		setLore("§bDrop it and don't pick it up.");
 	}
 	
 	@Override
-	public void onInteractEntity(PlayerInteractEntityEvent event, PlayerDetails details) {
-		Player player = event.getPlayer();
-		Entity entity = event.getRightClicked();
-		if (entity.getType() != EntityType.PLAYER) {
-			event.getRightClicked().remove();
-			event.setCancelled(true);
-		} else {
-			player.sendMessage(ChatColor.RED + "You cannot remove players!");
-		}
+	public void onRightClick(PlayerInteractEvent event, PlayerDetails details) {
+		event.setCancelled(true);
+	}
+	
+	@Override
+	public void onPickup(PlayerPickupItemEvent event) {
+		event.setCancelled(true);
+		Item item = event.getItem();
+		ItemStack stack = item.getItemStack();
+		Location loc = item.getLocation();
+		item.remove();
+		loc.getWorld().createExplosion(loc.getX(), loc.getY(), loc.getZ(), 4f + 0.2f*stack.getAmount(), false, false);
 	}
 	
 	@Override
 	public void onDrop(PlayerDropItemEvent event) {
-		event.getItemDrop().remove();
+		event.getItemDrop().getItemStack().addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 0);
 	}
-
+	
 }
