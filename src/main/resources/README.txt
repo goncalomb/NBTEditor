@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
 
-Copyright (C) 2013, 2014 - Gonçalo Baltazar <http://goncalomb.com>
+Copyright (C) 2013-2015 Gonçalo Baltazar <me@goncalomb.com>
 
 NBTEditor ${project.version}
 
@@ -22,11 +22,11 @@ along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
 ----- BUILD INFORMATION --------------------------------------------------------
 
 Build Date: ${project.build.timestamp}
-For CraftBukkit ${bukkit.version}
+For Bukkit ${bukkit.version}
 
 ----- SOFTWARE INFORMATION -----------------------------------------------------
 
-For more information and usage help, check:
-<http://goncalomb.com/bukkit/nbteditor>
+For more information and help, check
+http://dev.bukkit.org/bukkit-plugins/nbteditor/
 
 --------------------------------------------------------------------------------
