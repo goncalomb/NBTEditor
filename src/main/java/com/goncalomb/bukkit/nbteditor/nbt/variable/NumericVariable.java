@@ -19,7 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
-import com.goncalomb.bukkit.bkglib.Lang;
+import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public abstract class NumericVariable extends NBTGenericVariable {

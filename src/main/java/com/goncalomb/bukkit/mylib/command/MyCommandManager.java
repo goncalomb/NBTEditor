@@ -17,7 +17,7 @@
  * along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.goncalomb.bukkit.bkglib.bkgcommand;
+package com.goncalomb.bukkit.mylib.command;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -26,11 +26,11 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
-import com.goncalomb.bukkit.bkglib.reflect.BukkitReflect;
+import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
 
-public final class BKgCommandManager {
+public final class MyCommandManager {
 
-	public static void register(BKgCommand command, Plugin plugin) {
+	public static void register(MyCommand command, Plugin plugin) {
 		if (command.getOwner() != null) {
 			throw new RuntimeException("Command " + command.getName() + " already registered by " + command.getOwner().getName() + ".");
 		}
@@ -39,7 +39,7 @@ public final class BKgCommandManager {
 		Method[] methods = command.getClass().getDeclaredMethods();
 		// Find all tab completion methods.
 		for (Method method : methods) {
-			BKgCommand.TabComplete config = method.getAnnotation(BKgCommand.TabComplete.class);
+			MyCommand.TabComplete config = method.getAnnotation(MyCommand.TabComplete.class);
 			if (config != null) {
 				// Verify parameter types.
 				Class<?>[] params = method.getParameterTypes();
@@ -52,7 +52,7 @@ public final class BKgCommandManager {
 		}
 		// Find all execution methods.
 		for (Method method : methods) {
-			BKgCommand.Command config = method.getAnnotation(BKgCommand.Command.class);
+			MyCommand.Command config = method.getAnnotation(MyCommand.Command.class);
 			if (config != null) {
 				// Verify parameter types.
 				Class<?>[] params = method.getParameterTypes();

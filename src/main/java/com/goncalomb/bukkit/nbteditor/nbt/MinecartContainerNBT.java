@@ -24,9 +24,9 @@ import org.bukkit.block.Chest;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagList;
-import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
+import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
 public abstract class MinecartContainerNBT extends MinecartNBT {
 	

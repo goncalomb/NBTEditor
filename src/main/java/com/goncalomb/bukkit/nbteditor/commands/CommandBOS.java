@@ -36,13 +36,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.util.StringUtil;
 
-import com.goncalomb.bukkit.bkglib.BKgLib;
-import com.goncalomb.bukkit.bkglib.Lang;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
-import com.goncalomb.bukkit.bkglib.namemaps.EntityTypeMap;
-import com.goncalomb.bukkit.bkglib.utils.Utils;
-import com.goncalomb.bukkit.bkglib.utils.UtilsMc;
+import com.goncalomb.bukkit.mylib.MyLib;
+import com.goncalomb.bukkit.mylib.Lang;
+import com.goncalomb.bukkit.mylib.command.MyCommand;
+import com.goncalomb.bukkit.mylib.command.MyCommandException;
+import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
+import com.goncalomb.bukkit.mylib.utils.Utils;
+import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
@@ -54,26 +54,26 @@ import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeType;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
 
-public class CommandBOS extends BKgCommand {
+public class CommandBOS extends MyCommand {
 	
 	public CommandBOS() {
 		super("bookofsouls", "bos");
 	}
 
-	static BookOfSouls getBos(Player player) throws BKgCommandException {
+	static BookOfSouls getBos(Player player) throws MyCommandException {
 		return getBos(player, false);
 	}
 	
-	static BookOfSouls getBos(Player player, boolean nullIfMissing) throws BKgCommandException {
+	static BookOfSouls getBos(Player player, boolean nullIfMissing) throws MyCommandException {
 		ItemStack item = player.getItemInHand();
 		if (BookOfSouls.isValidBook(item)) {
 			BookOfSouls bos = BookOfSouls.getFromBook(item);
 			if (bos != null) {
 				return bos;
 			}
-			throw new BKgCommandException(Lang._(NBTEditor.class, "bos.corrupted"));
+			throw new MyCommandException(Lang._(NBTEditor.class, "bos.corrupted"));
 		} else if (!nullIfMissing) {
-			throw new BKgCommandException(Lang._(NBTEditor.class, "commands.bookofsouls.holding"));
+			throw new MyCommandException(Lang._(NBTEditor.class, "commands.bookofsouls.holding"));
 		}
 		return null;
 	}
@@ -99,7 +99,7 @@ public class CommandBOS extends BKgCommand {
 	}
 	
 	@Command(args = "get", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "<entity>")
-	public boolean getCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean getCommand(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length == 1) {
 			EntityType entityType = EntityTypeMap.getByName(args[0]);
 			if (entityType != null && EntityNBT.isValidType(entityType)) {
@@ -124,14 +124,14 @@ public class CommandBOS extends BKgCommand {
 	}
 	
 	@Command(args = "getempty", type = CommandType.PLAYER_ONLY)
-	public boolean getemptyCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean getemptyCommand(CommandSender sender, String[] args) throws MyCommandException {
 		CommandUtils.checkFullInventory((Player) sender).addItem(BookOfSouls.getEmpty());
 		sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.give"));
 		return true;
 	}
 	
 	@Command(args = "var", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<variable> [value]")
-	public boolean varCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean varCommand(CommandSender sender, String[] args) throws MyCommandException {
 		BookOfSouls bos = getBos((Player) sender);
 		NBTVariable variable = bos.getEntityNBT().getVariable(args[0]);
 		if (variable != null) {
@@ -162,7 +162,7 @@ public class CommandBOS extends BKgCommand {
 	}
 	
 	@Command(args = "clearvar", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<variable>")
-	public boolean clearvarCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean clearvarCommand(CommandSender sender, String[] args) throws MyCommandException {
 		BookOfSouls bos = getBos((Player) sender);
 		NBTVariable variable = bos.getEntityNBT().getVariable(args[0]);
 		if (variable != null) {
@@ -181,7 +181,7 @@ public class CommandBOS extends BKgCommand {
 	}
 	
 	@Command(args = "riding", type = CommandType.PLAYER_ONLY)
-	public boolean ridingCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean ridingCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Player player = (Player) sender;
 		BookOfSouls bos = getBos(player);
 		bos.openRidingInventory(player);
@@ -189,7 +189,7 @@ public class CommandBOS extends BKgCommand {
 	}
 	
 	@Command(args = "items", type = CommandType.PLAYER_ONLY)
-	public boolean itemsCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean itemsCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Player player = (Player) sender;
 		BookOfSouls bos = getBos(player);
 		if (!bos.openInventory(player)) {
@@ -199,7 +199,7 @@ public class CommandBOS extends BKgCommand {
 	}
 	
 	@Command(args = "offers", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "[page]")
-	public boolean offersCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean offersCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Player player = (Player) sender;
 		int page = 0;
 		if (args.length == 1) {
@@ -222,7 +222,7 @@ public class CommandBOS extends BKgCommand {
 	}
 	
 	@Command(args = "dropchance", type = CommandType.PLAYER_ONLY, maxargs = 5, usage = "[<head> <chest> <legs> <feet> <hand>]")
-	public boolean dropchanceCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean dropchanceCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Player player = (Player) sender;
 		if (args.length == 0) {
 			BookOfSouls bos = getBos(player);
@@ -260,7 +260,7 @@ public class CommandBOS extends BKgCommand {
 	}
 	
 	@Command(args = "attr add", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<attribute> <base>")
-	public boolean attr_addCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean attr_addCommand(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length == 2) {
 			BookOfSouls bos = getBos((Player) sender);
 			EntityNBT entityNbt = bos.getEntityNBT();
@@ -298,7 +298,7 @@ public class CommandBOS extends BKgCommand {
 	}
 	
 	@Command(args = "attr del", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "<attribute>")
-	public boolean attr_delCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean attr_delCommand(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length == 1) {
 			BookOfSouls bos = getBos((Player) sender);
 			EntityNBT entityNbt = bos.getEntityNBT();
@@ -344,7 +344,7 @@ public class CommandBOS extends BKgCommand {
 	}
 	
 	@Command(args = "attr delall", type = CommandType.PLAYER_ONLY)
-	public boolean attr_delallCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean attr_delallCommand(CommandSender sender, String[] args) throws MyCommandException {
 		BookOfSouls bos = getBos((Player) sender);
 		EntityNBT entityNbt = bos.getEntityNBT();
 		if (entityNbt instanceof MobNBT) {
@@ -358,13 +358,13 @@ public class CommandBOS extends BKgCommand {
 	}
 	
 	@Command(args = "tocommand", type = CommandType.PLAYER_ONLY)
-	public boolean tocommandCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean tocommandCommand(CommandSender sender, String[] args) throws MyCommandException {
 		BookOfSouls bos = getBos((Player) sender);
 		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
 		if (block.getType() == Material.COMMAND) {
 			EntityNBT entityNbt = bos.getEntityNBT();
 			String command = "summon";
-			if (!BKgLib.isVanillaCommand(command)) {
+			if (!MyLib.isVanillaCommand(command)) {
 				sender.sendMessage(Lang._(NBTEditor.class, "non-vanilla-command", command));
 				command = "minecraft:" + command;
 			}

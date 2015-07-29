@@ -1,7 +1,7 @@
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
-import com.goncalomb.bukkit.bkglib.Lang;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.Lang;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public class RotationVariable extends NBTGenericVariable {

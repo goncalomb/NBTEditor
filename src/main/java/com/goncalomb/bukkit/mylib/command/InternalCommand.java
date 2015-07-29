@@ -17,7 +17,7 @@
  * along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.goncalomb.bukkit.bkglib.bkgcommand;
+package com.goncalomb.bukkit.mylib.command;
 
 import java.util.List;
 
@@ -27,9 +27,9 @@ import org.bukkit.plugin.Plugin;
 
 final class InternalCommand extends Command {
 	
-	private BKgCommand _command;
+	private MyCommand _command;
 	
-	public InternalCommand(BKgCommand command, String name) {
+	public InternalCommand(MyCommand command, String name) {
 		super(name);
 		_command = command;
 	}
@@ -59,7 +59,7 @@ final class InternalCommand extends Command {
 		return _command.getOwner();
 	}
 	
-	BKgCommand getCommand() {
+	MyCommand getCommand() {
 		return _command;
 	}
 	

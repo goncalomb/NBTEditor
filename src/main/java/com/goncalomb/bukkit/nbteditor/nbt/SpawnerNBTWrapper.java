@@ -28,10 +28,10 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 
-import com.goncalomb.bukkit.bkglib.namemaps.EntityTypeMap;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagList;
-import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
+import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
+import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;

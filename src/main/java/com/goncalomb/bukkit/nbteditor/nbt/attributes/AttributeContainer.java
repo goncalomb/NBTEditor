@@ -23,8 +23,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagList;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 
 public final class AttributeContainer {
 	

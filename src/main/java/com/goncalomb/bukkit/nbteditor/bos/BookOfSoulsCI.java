@@ -30,11 +30,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
-import com.goncalomb.bukkit.bkglib.Lang;
-import com.goncalomb.bukkit.bkglib.utils.UtilsMc;
 import com.goncalomb.bukkit.customitemsapi.api.CustomItem;
 import com.goncalomb.bukkit.customitemsapi.api.DispenserDetails;
 import com.goncalomb.bukkit.customitemsapi.api.PlayerDetails;
+import com.goncalomb.bukkit.mylib.Lang;
+import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.nbt.FallingBlockNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MinecartContainerNBT;

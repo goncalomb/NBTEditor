@@ -17,7 +17,7 @@
  * along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.goncalomb.bukkit.bkglib;
+package com.goncalomb.bukkit.mylib;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -29,8 +29,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.goncalomb.bukkit.bkglib.namemaps.EnchantmentsMap;
-import com.goncalomb.bukkit.bkglib.namemaps.PotionEffectsMap;
+import com.goncalomb.bukkit.mylib.namemaps.EnchantmentsMap;
+import com.goncalomb.bukkit.mylib.namemaps.PotionEffectsMap;
 
 public class TestNameMaps {
 	

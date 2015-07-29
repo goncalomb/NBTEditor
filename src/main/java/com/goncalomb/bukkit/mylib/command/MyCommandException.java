@@ -17,12 +17,12 @@
  * along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.goncalomb.bukkit.bkglib.bkgcommand;
+package com.goncalomb.bukkit.mylib.command;
 
 @SuppressWarnings("serial")
-public class BKgCommandException extends Exception {
+public class MyCommandException extends Exception {
 
-	public BKgCommandException(String message) {
+	public MyCommandException(String message) {
 		super(message);
 	}
 	

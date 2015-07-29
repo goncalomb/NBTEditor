@@ -26,21 +26,21 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import com.goncalomb.bukkit.bkglib.Lang;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
-import com.goncalomb.bukkit.bkglib.namemaps.PotionEffectsMap;
-import com.goncalomb.bukkit.bkglib.utils.Utils;
+import com.goncalomb.bukkit.mylib.Lang;
+import com.goncalomb.bukkit.mylib.command.MyCommand;
+import com.goncalomb.bukkit.mylib.command.MyCommandException;
+import com.goncalomb.bukkit.mylib.namemaps.PotionEffectsMap;
+import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
-public class CommandNBTPotion extends BKgCommand {
+public class CommandNBTPotion extends MyCommand {
 	
 	public CommandNBTPotion() {
 		super("nbtpotion", "nbtp");
 	}
 	
 	@Command(args = "", type = CommandType.PLAYER_ONLY, maxargs = 3, usage = "<effect> [level] [duration]")
-	public boolean potionCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean potionCommand(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length > 0) {
 			HandItemWrapper.Potion item = new HandItemWrapper.Potion((Player) sender);
 			PotionEffectType effect = PotionEffectsMap.getByName(args[0]);

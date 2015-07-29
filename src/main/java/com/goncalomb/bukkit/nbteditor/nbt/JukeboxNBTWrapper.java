@@ -23,8 +23,8 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
 public final class JukeboxNBTWrapper extends TileNBTWrapper {
 	

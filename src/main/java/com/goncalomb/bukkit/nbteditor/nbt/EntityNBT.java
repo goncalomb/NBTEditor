@@ -28,9 +28,9 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
-import com.goncalomb.bukkit.bkglib.namemaps.EntityTypeMap;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
+import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BlockVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ByteVariable;

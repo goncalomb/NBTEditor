@@ -17,7 +17,7 @@
  * along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.goncalomb.bukkit.bkglib.reflect;
+package com.goncalomb.bukkit.mylib.reflect;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -51,7 +51,7 @@ final class NBTTypes {
 		_outerTypeMap.put(handler._class, handler);
 	}
 	
-	// Converts from BKgLib tags, primitives and strings to internal Minecraft tags.
+	// Converts from MyLib tags, primitives and strings to internal Minecraft tags.
 	public static Object toInternal(Object object) {
 		if (object instanceof NBTBase) {
 			return ((NBTBase) object)._handle;
@@ -65,7 +65,7 @@ final class NBTTypes {
 		}
 	}
 	
-	// Converts internal Minecraft tags to BKgLib tags, primitives and strings.
+	// Converts internal Minecraft tags to MyLib tags, primitives and strings.
 	public static Object fromInternal(Object object) {
 		if (object == null) {
 			return null;

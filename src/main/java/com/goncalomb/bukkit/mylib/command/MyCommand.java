@@ -17,7 +17,7 @@
  * along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.goncalomb.bukkit.bkglib.bkgcommand;
+package com.goncalomb.bukkit.mylib.command;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -38,12 +38,12 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.StringUtil;
 
-import com.goncalomb.bukkit.bkglib.BKgLib;
-import com.goncalomb.bukkit.bkglib.Lang;
-import com.goncalomb.bukkit.bkglib.utils.Utils;
-import com.goncalomb.bukkit.bkglib.utils.UtilsMc;
+import com.goncalomb.bukkit.mylib.MyLib;
+import com.goncalomb.bukkit.mylib.Lang;
+import com.goncalomb.bukkit.mylib.utils.Utils;
+import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 
-public abstract class BKgCommand extends BKgSubCommand {
+public abstract class MyCommand extends MySubCommand {
 	
 	public static final class CommandUtils {
 		
@@ -63,56 +63,56 @@ public abstract class BKgCommand extends BKgSubCommand {
 			return players;
 		}
 		
-		public static Player findPlayer(String name) throws BKgCommandException {
+		public static Player findPlayer(String name) throws MyCommandException {
 			Player player = Bukkit.getPlayer(name);
 			if (player == null) {
-				throw new BKgCommandException(Lang._(null, "player-not-found.name", name));
+				throw new MyCommandException(Lang._(null, "player-not-found.name", name));
 			}
 			return player;
 		}
 		
-		public static PlayerInventory checkFullInventory(Player player) throws BKgCommandException {
+		public static PlayerInventory checkFullInventory(Player player) throws MyCommandException {
 			PlayerInventory inv = player.getInventory();
 			if (inv.firstEmpty() == -1) {
-				throw new BKgCommandException(Lang._(null, "inventory-full"));
+				throw new MyCommandException(Lang._(null, "inventory-full"));
 			}
 			return inv;
 		}
 		
-		public static void giveItem(Player player, ItemStack item) throws BKgCommandException {
+		public static void giveItem(Player player, ItemStack item) throws MyCommandException {
 			if (player.getInventory().addItem(item).size() > 0) {
-				throw new BKgCommandException(Lang._(null, "inventory-full"));
+				throw new MyCommandException(Lang._(null, "inventory-full"));
 			}
 		}
 		
-		public static int parseInt(String str) throws BKgCommandException {
+		public static int parseInt(String str) throws MyCommandException {
 			int i = Utils.parseInt(str, -1);
 			if (i == -1) {
-				throw new BKgCommandException(Lang._(null, "invalid-int", str));
+				throw new MyCommandException(Lang._(null, "invalid-int", str));
 			}
 			return i;
 		}
 		
-		public static int parseInt(String str, int max, int min) throws BKgCommandException {
+		public static int parseInt(String str, int max, int min) throws MyCommandException {
 			int i = Utils.parseInt(str, max, min, -1);
 			if (i == -1) {
-				throw new BKgCommandException(Lang._(null, "invalid-int.bounds", str, min, max));
+				throw new MyCommandException(Lang._(null, "invalid-int.bounds", str, min, max));
 			}
 			return i;
 		}
 		
-		public static int parseTimeDuration(String str) throws BKgCommandException {
+		public static int parseTimeDuration(String str) throws MyCommandException {
 			int i = Utils.parseTimeDuration(str);
 			if (i == -1) {
-				throw new BKgCommandException(Lang._(null, "invalid-duration"));
+				throw new MyCommandException(Lang._(null, "invalid-duration"));
 			}
 			return i;
 		}
 		
-		public static int parseTickDuration(String str) throws BKgCommandException {
+		public static int parseTickDuration(String str) throws MyCommandException {
 			int i = UtilsMc.parseTickDuration(str);
 			if (i == -1) {
-				throw new BKgCommandException(Lang._(null, "invalid-tick"));
+				throw new MyCommandException(Lang._(null, "invalid-tick"));
 			}
 			return i;
 		}
@@ -162,11 +162,10 @@ public abstract class BKgCommand extends BKgSubCommand {
 		String args();
 	}
 	
-	//private static HashMap<String, BKgCommand> _commands = new HashMap<String, BKgCommand>();
 	private InternalCommand _internalCommand;
 	private Plugin _owner;
 	
-	public BKgCommand(String name, String ...aliases) {
+	public MyCommand(String name, String ...aliases) {
 		_internalCommand = new InternalCommand(this, name);
 		_internalCommand.setAliases(Arrays.asList(aliases));
 	}
@@ -175,7 +174,7 @@ public abstract class BKgCommand extends BKgSubCommand {
 		// Set the owner and permissions.
 		_owner = owner;
 		_internalCommand.setDescription(Lang._(owner.getClass(), "commands." + getName() + ".description"));
-		setupPermissions(getName(), BKgLib.getRootPermission(owner));
+		setupPermissions(getName(), MyLib.getRootPermission(owner));
 		// Register the command with Bukkit.
 		commandMap.register(owner.getName(), _internalCommand);
 	}

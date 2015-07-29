@@ -25,9 +25,9 @@ import java.util.UUID;
 
 import org.bukkit.inventory.ItemStack;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagList;
-import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
+import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
 public final class ItemModifier extends Modifier {
 	

@@ -49,7 +49,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import com.goncalomb.bukkit.bkglib.Lang;
+import com.goncalomb.bukkit.mylib.Lang;
 
 final class CustomItemListener implements Listener {
 	

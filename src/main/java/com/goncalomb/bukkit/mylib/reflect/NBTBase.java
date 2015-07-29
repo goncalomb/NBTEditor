@@ -17,7 +17,7 @@
  * along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.goncalomb.bukkit.bkglib.reflect;
+package com.goncalomb.bukkit.mylib.reflect;
 
 import java.lang.reflect.Method;
 import java.util.Map.Entry;
@@ -56,7 +56,7 @@ public class NBTBase {
 		}
 	}
 	
-	// Wraps any Minecraft tags in BKgLib tags.
+	// Wraps any Minecraft tags in MyLib tags.
 	// Primitives and strings are wrapped with NBTBase.
 	protected static final NBTBase wrap(Object object) {
 		if (_nbtTagCompoundClass.isInstance(object)) {

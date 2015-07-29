@@ -27,19 +27,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import com.goncalomb.bukkit.bkglib.Lang;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
+import com.goncalomb.bukkit.mylib.Lang;
+import com.goncalomb.bukkit.mylib.command.MyCommand;
+import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
-public class CommandNBTHead extends BKgCommand {
+public class CommandNBTHead extends MyCommand {
 	
 	public CommandNBTHead() {
 		super("nbthead", "nbth");
 	}
 	
 	@Command(args = "", type = CommandType.DEFAULT, minargs = 1, maxargs = 2, usage = "<skull-player-name> [player-name]")
-	public boolean headCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean headCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Player other;
 		if (args.length == 2) {
 			other = CommandUtils.findPlayer(args[1]);

@@ -37,8 +37,8 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 
-import com.goncalomb.bukkit.bkglib.namemaps.EnchantmentsMap;
-import com.goncalomb.bukkit.bkglib.namemaps.PotionEffectsMap;
+import com.goncalomb.bukkit.mylib.namemaps.EnchantmentsMap;
+import com.goncalomb.bukkit.mylib.namemaps.PotionEffectsMap;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.ItemModifier;
 
 public class ItemUtils {

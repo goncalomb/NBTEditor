@@ -32,11 +32,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.material.MaterialData;
 
-import com.goncalomb.bukkit.bkglib.Lang;
-import com.goncalomb.bukkit.bkglib.utils.UtilsMc;
 import com.goncalomb.bukkit.customitemsapi.CustomItemsAPI;
 import com.goncalomb.bukkit.customitemsapi.api.CustomItem;
 import com.goncalomb.bukkit.customitemsapi.api.PlayerDetails;
+import com.goncalomb.bukkit.mylib.Lang;
+import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 
 public class KingsCrown extends CustomItem {
 	

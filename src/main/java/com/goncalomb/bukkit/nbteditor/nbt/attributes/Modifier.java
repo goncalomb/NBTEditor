@@ -21,7 +21,7 @@ package com.goncalomb.bukkit.nbteditor.nbt.attributes;
 
 import java.util.UUID;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public class Modifier {
 	

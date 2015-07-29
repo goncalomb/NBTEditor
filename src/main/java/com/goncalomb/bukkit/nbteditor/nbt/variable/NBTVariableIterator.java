@@ -23,7 +23,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public final class NBTVariableIterator implements Iterator<NBTVariable> {
 	

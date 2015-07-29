@@ -17,7 +17,7 @@
  * along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.goncalomb.bukkit.bkglib.namemaps;
+package com.goncalomb.bukkit.mylib.namemaps;
 
 import java.util.ArrayList;
 import java.util.Collection;

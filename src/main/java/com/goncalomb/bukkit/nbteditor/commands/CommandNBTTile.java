@@ -33,44 +33,44 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import com.goncalomb.bukkit.bkglib.BKgLib;
-import com.goncalomb.bukkit.bkglib.Lang;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
-import com.goncalomb.bukkit.bkglib.namemaps.PotionEffectsMap;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
-import com.goncalomb.bukkit.bkglib.utils.Utils;
-import com.goncalomb.bukkit.bkglib.utils.UtilsMc;
+import com.goncalomb.bukkit.mylib.MyLib;
+import com.goncalomb.bukkit.mylib.Lang;
+import com.goncalomb.bukkit.mylib.command.MyCommand;
+import com.goncalomb.bukkit.mylib.command.MyCommandException;
+import com.goncalomb.bukkit.mylib.namemaps.PotionEffectsMap;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
+import com.goncalomb.bukkit.mylib.utils.Utils;
+import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.nbt.BeaconNBTWrapper;
 import com.goncalomb.bukkit.nbteditor.nbt.JukeboxNBTWrapper;
 import com.goncalomb.bukkit.nbteditor.nbt.TileNBTWrapper;
 
-public class CommandNBTTile extends BKgCommand {
+public class CommandNBTTile extends MyCommand {
 	
 	public CommandNBTTile() {
 		super("nbttile", "nbtt");
 	}
 	
-	private static BeaconNBTWrapper getBeacon(Player player) throws BKgCommandException {
+	private static BeaconNBTWrapper getBeacon(Player player) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock(player, 5);
 		if (block.getType() != Material.BEACON) {
-			throw new BKgCommandException(Lang._(NBTEditor.class, "commands.nbttile.beacon.no-sight"));
+			throw new MyCommandException(Lang._(NBTEditor.class, "commands.nbttile.beacon.no-sight"));
 		}
 		return new BeaconNBTWrapper(block);
 	}
 	
-	private static JukeboxNBTWrapper getJukebox(Player player) throws BKgCommandException {
+	private static JukeboxNBTWrapper getJukebox(Player player) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock(player, 5);
 		if (block.getType() != Material.JUKEBOX) {
-			throw new BKgCommandException(Lang._(NBTEditor.class, "commands.nbttile.jukebox.no-sight"));
+			throw new MyCommandException(Lang._(NBTEditor.class, "commands.nbttile.jukebox.no-sight"));
 		}
 		return new JukeboxNBTWrapper(block);
 	}
 	
 	@Command(args = "beacon", type = CommandType.PLAYER_ONLY, minargs = 0, maxargs = 2, usage = "<primary|secondary> <effect>")
-	public boolean beaconEffectCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean beaconEffectCommand(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length == 2 && (args[0].equalsIgnoreCase("primary") || args[0].equalsIgnoreCase("secondary"))) {
 			BeaconNBTWrapper beacon = getBeacon((Player) sender);
 			PotionEffectType effect = null;
@@ -108,7 +108,7 @@ public class CommandNBTTile extends BKgCommand {
 	}
 	
 	@Command(args = "record", type = CommandType.PLAYER_ONLY)
-	public boolean setRecordCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean setRecordCommand(CommandSender sender, String[] args) throws MyCommandException {
 		JukeboxNBTWrapper jukebox = getJukebox((Player) sender);
 		ItemStack item = ((Player) sender).getItemInHand();
 		jukebox.setRecord(item);
@@ -122,7 +122,7 @@ public class CommandNBTTile extends BKgCommand {
 	}
 	
 	@Command(args = "name", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "[name]")
-	public boolean nameCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean nameCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
 		if (TileNBTWrapper.allowsCustomName(block.getType())) {
 			TileNBTWrapper tile = new TileNBTWrapper(block);
@@ -136,10 +136,10 @@ public class CommandNBTTile extends BKgCommand {
 	}
 	
 	@Command(args = "command-colors", type = CommandType.PLAYER_ONLY)
-	public boolean colorsCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean colorsCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
 		if (block.getType() != Material.COMMAND) {
-			throw new BKgCommandException(Lang._(NBTEditor.class, "command-block.no-sight"));
+			throw new MyCommandException(Lang._(NBTEditor.class, "command-block.no-sight"));
 		}
 		CommandBlock commandBlock = (CommandBlock) block.getState();
 		commandBlock.setCommand(UtilsMc.parseColors(commandBlock.getCommand()));
@@ -149,10 +149,10 @@ public class CommandNBTTile extends BKgCommand {
 	}
 	
 	@Command(args = "sign", type = CommandType.PLAYER_ONLY, minargs = 2, maxargs = Integer.MAX_VALUE, usage = "<line> [content ...]")
-	public boolean signCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean signCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
 		if (block.getType() != Material.SIGN_POST) {
-			throw new BKgCommandException(Lang._(NBTEditor.class, "commands.nbttile.sign.no-sight"));
+			throw new MyCommandException(Lang._(NBTEditor.class, "commands.nbttile.sign.no-sight"));
 		}
 		int line = CommandUtils.parseInt(args[0], 4, 1);
 		Sign sign = (Sign) block.getState();
@@ -163,14 +163,14 @@ public class CommandNBTTile extends BKgCommand {
 	}
 	
 	@Command(args = "tocommand", type = CommandType.PLAYER_ONLY)
-	public boolean tocommandCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean tocommandCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
 		if (block == null || block.getType() == Material.AIR) {
 			sender.sendMessage(Lang._(null, "no-sight"));
 			return true;
 		}
 		String command = "setblock";
-		if (!BKgLib.isVanillaCommand(command)) {
+		if (!MyLib.isVanillaCommand(command)) {
 			sender.sendMessage(Lang._(NBTEditor.class, "non-vanilla-command", command));
 			command = "minecraft:" + command;
 		}

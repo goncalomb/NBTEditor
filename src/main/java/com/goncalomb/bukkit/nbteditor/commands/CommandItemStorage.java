@@ -27,33 +27,33 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.goncalomb.bukkit.bkglib.Lang;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
-import com.goncalomb.bukkit.bkglib.utils.Utils;
+import com.goncalomb.bukkit.mylib.Lang;
+import com.goncalomb.bukkit.mylib.command.MyCommand;
+import com.goncalomb.bukkit.mylib.command.MyCommandException;
+import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.nbteditor.ItemStorage;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
-public class CommandItemStorage extends BKgCommand {
+public class CommandItemStorage extends MyCommand {
 
 	public CommandItemStorage() {
 		super("itemstorage", "is");
 	}
 	
-	private static void validateName(String name) throws BKgCommandException {
+	private static void validateName(String name) throws MyCommandException {
 		if (!ItemStorage.isValidName(name)) {
-			throw new BKgCommandException(Lang._(NBTEditor.class, "commands.itemstorage.invalid-name"));
+			throw new MyCommandException(Lang._(NBTEditor.class, "commands.itemstorage.invalid-name"));
 		}
 	}
 	
-	private static void checkItemExistance(String name) throws BKgCommandException {
+	private static void checkItemExistance(String name) throws MyCommandException {
 		if (!ItemStorage.existsItem(name)) {
-			throw new BKgCommandException(Lang._(NBTEditor.class, "commands.itemstorage.not-found"));
+			throw new MyCommandException(Lang._(NBTEditor.class, "commands.itemstorage.not-found"));
 		}
 	}
 	
 	@Command(args = "store", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<name>")
-	public boolean command_store(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean command_store(CommandSender sender, String[] args) throws MyCommandException {
 		ItemStack item = ((Player) sender).getItemInHand();
 		if (item == null || item.getType() == Material.AIR) {
 			sender.sendMessage(Lang._(NBTEditor.class, "commands.itemstorage.not-holding"));
@@ -69,7 +69,7 @@ public class CommandItemStorage extends BKgCommand {
 	}
 	
 	@Command(args = "get", type = CommandType.DEFAULT, minargs = 1, maxargs = 2, usage = "<name> [player]")
-	public boolean command_get(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean command_get(CommandSender sender, String[] args) throws MyCommandException {
 		validateName(args[0]);
 		checkItemExistance(args[0]);
 		Player player;
@@ -95,7 +95,7 @@ public class CommandItemStorage extends BKgCommand {
 	}
 	
 	@Command(args = "info", type = CommandType.DEFAULT, minargs = 1, usage = "<name>")
-	public boolean command_info(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean command_info(CommandSender sender, String[] args) throws MyCommandException {
 		validateName(args[0]);
 		checkItemExistance(args[0]);
 		ItemUtils.sendItemStackInformation(ItemStorage.getItem(args[0]), sender);
@@ -108,7 +108,7 @@ public class CommandItemStorage extends BKgCommand {
 	}
 	
 	@Command(args = "update", type = CommandType.DEFAULT, minargs = 1, usage = "<name>")
-	public boolean command_update(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean command_update(CommandSender sender, String[] args) throws MyCommandException {
 		ItemStack item = ((Player) sender).getItemInHand();
 		if (item == null || item.getType() == Material.AIR) {
 			sender.sendMessage(Lang._(NBTEditor.class, "commands.itemstorage.not-holding"));
@@ -141,7 +141,7 @@ public class CommandItemStorage extends BKgCommand {
 	}
 	
 	@Command(args = "remove", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<name>")
-	public boolean command_remove(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean command_remove(CommandSender sender, String[] args) throws MyCommandException {
 		validateName(args[0]);
 		checkItemExistance(args[0]);
 		ItemStorage.removeItem(args[0]);
@@ -155,7 +155,7 @@ public class CommandItemStorage extends BKgCommand {
 	}
 	
 	@Command(args = "list", type = CommandType.PLAYER_ONLY)
-	public boolean command_list(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean command_list(CommandSender sender, String[] args) throws MyCommandException {
 		sender.sendMessage(Lang._(NBTEditor.class, "storeditems-prefix") + StringUtils.join(ItemStorage.listItems(), ", "));
 		return true;
 	}

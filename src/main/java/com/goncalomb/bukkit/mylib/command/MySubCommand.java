@@ -17,7 +17,7 @@
  * along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.goncalomb.bukkit.bkglib.bkgcommand;
+package com.goncalomb.bukkit.mylib.command;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -33,29 +33,29 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;
 
-import com.goncalomb.bukkit.bkglib.Lang;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand.Command;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand.CommandType;
+import com.goncalomb.bukkit.mylib.Lang;
+import com.goncalomb.bukkit.mylib.command.MyCommand.Command;
+import com.goncalomb.bukkit.mylib.command.MyCommand.CommandType;
 
-class BKgSubCommand {
+class MySubCommand {
 	
 	private Permission _perm;
-	private BKgCommand _command;
+	private MyCommand _command;
 	private Method _exeMethod = null;
 	private Method _tabMethod = null;
 	private CommandType _type = CommandType.DEFAULT;
 	private String _usage;
 	private int _minArgs;
 	private int _maxArgs;
-	private LinkedHashMap<String, BKgSubCommand> _subCommands = new LinkedHashMap<String, BKgSubCommand>();
+	private LinkedHashMap<String, MySubCommand> _subCommands = new LinkedHashMap<String, MySubCommand>();
 	
-	public BKgSubCommand() {
-		if (this instanceof BKgCommand) {
-			_command = (BKgCommand) this;
+	public MySubCommand() {
+		if (this instanceof MyCommand) {
+			_command = (MyCommand) this;
 		}
 	}
 	
-	private BKgSubCommand(BKgCommand command) {
+	private MySubCommand(MyCommand command) {
 		_command = command;
 	}
 	
@@ -66,7 +66,7 @@ class BKgSubCommand {
 		}
 		_perm = new Permission(permName + "." + name);
 		_perm.addParent(parent, true);
-		for (Entry<String, BKgSubCommand> entry : _subCommands.entrySet()) {
+		for (Entry<String, MySubCommand> entry : _subCommands.entrySet()) {
 			entry.getValue().setupPermissions(entry.getKey(), _perm);
 		}
 		Bukkit.getPluginManager().addPermission(_perm);
@@ -74,13 +74,13 @@ class BKgSubCommand {
 	}
 	
 	void removePermissions() {
-		for (BKgSubCommand command : _subCommands.values()) {
+		for (MySubCommand command : _subCommands.values()) {
 			command.removePermissions();
 		}
 		Bukkit.getPluginManager().removePermission(_perm);
 	}
 	
-	boolean addSubCommand(String[] args, int argsIndex, Command config, BKgCommand command, Method exeMethod, Method tabMethod) {
+	boolean addSubCommand(String[] args, int argsIndex, Command config, MyCommand command, Method exeMethod, Method tabMethod) {
 		if (args.length == argsIndex) {
 			if (_exeMethod == null) {
 				_exeMethod = exeMethod;
@@ -96,9 +96,9 @@ class BKgSubCommand {
 			}
 			return false;
 		} else {
-			BKgSubCommand subCommand = _subCommands.get(args[argsIndex]);
+			MySubCommand subCommand = _subCommands.get(args[argsIndex]);
 			if (subCommand == null) {
-				subCommand = new BKgSubCommand(command);
+				subCommand = new MySubCommand(command);
 				_subCommands.put(args[argsIndex], subCommand);
 			}
 			return subCommand.addSubCommand(args, argsIndex + 1, config, command, exeMethod, tabMethod);
@@ -108,7 +108,7 @@ class BKgSubCommand {
 	void execute(CommandSender sender, String label, String[] args, int argsIndex) {
 		// Find sub-command.
 		if (argsIndex < args.length) {
-			BKgSubCommand subCommand = _subCommands.get(args[argsIndex].toLowerCase());
+			MySubCommand subCommand = _subCommands.get(args[argsIndex].toLowerCase());
 			if (subCommand != null) {
 				subCommand.execute(sender, label, args, argsIndex + 1);
 				return;
@@ -145,10 +145,10 @@ class BKgSubCommand {
 		}
 	}
 	
-	private static int sendAllSubCommands(CommandSender sender, BKgSubCommand command, String prefix) {
+	private static int sendAllSubCommands(CommandSender sender, MySubCommand command, String prefix) {
 		int i = 0;
-		for (Entry<String, BKgSubCommand> subCommandEntry : command._subCommands.entrySet()) {
-			BKgSubCommand subCommand = subCommandEntry.getValue();
+		for (Entry<String, MySubCommand> subCommandEntry : command._subCommands.entrySet()) {
+			MySubCommand subCommand = subCommandEntry.getValue();
 			if (subCommand._type.isValidSender(sender) && sender.hasPermission(subCommand._perm)) {
 				String newPrefix = prefix + subCommandEntry.getKey() + " ";
 				if (subCommand._exeMethod != null) {
@@ -164,7 +164,7 @@ class BKgSubCommand {
 	List<String> tabComplete(CommandSender sender, String[] args, int argsIndex) {
 		// Find sub-command.
 		if (argsIndex < args.length) {
-			BKgSubCommand subCommand = _subCommands.get(args[argsIndex].toLowerCase());
+			MySubCommand subCommand = _subCommands.get(args[argsIndex].toLowerCase());
 			if (subCommand != null) {
 				return subCommand.tabComplete(sender, args, argsIndex + 1);
 			}
@@ -181,7 +181,7 @@ class BKgSubCommand {
 		if (argsLeft == 1) {
 			ArrayList<String> allowedCommands = new ArrayList<String>();
 			String arg = args[args.length - 1].toLowerCase();
-			for (Entry<String, BKgSubCommand> command : _subCommands.entrySet()) {
+			for (Entry<String, MySubCommand> command : _subCommands.entrySet()) {
 				String name = command.getKey();
 				if (name.startsWith(arg) && command.getValue()._type.isValidSender(sender)) {
 					allowedCommands.add(name);
@@ -196,7 +196,7 @@ class BKgSubCommand {
 		try {
 			return (Boolean) _exeMethod.invoke(_command, sender, args);
 		} catch (InvocationTargetException e) {
-			if (e.getCause() instanceof BKgCommandException) {
+			if (e.getCause() instanceof MyCommandException) {
 				sender.sendMessage(e.getCause().getMessage());
 				return true;
 			} else {

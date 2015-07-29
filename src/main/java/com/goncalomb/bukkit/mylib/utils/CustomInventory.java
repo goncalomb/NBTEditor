@@ -17,7 +17,7 @@
  * along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.goncalomb.bukkit.bkglib.utils;
+package com.goncalomb.bukkit.mylib.utils;
 
 import java.util.HashMap;
 import java.util.HashSet;

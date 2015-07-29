@@ -22,8 +22,8 @@ package com.goncalomb.bukkit.nbteditor.nbt.attributes;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagList;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 
 public final class Attribute {
 	

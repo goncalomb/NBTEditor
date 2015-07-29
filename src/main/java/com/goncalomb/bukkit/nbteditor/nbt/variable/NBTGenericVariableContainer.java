@@ -22,7 +22,7 @@ package com.goncalomb.bukkit.nbteditor.nbt.variable;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public final class NBTGenericVariableContainer {
 	

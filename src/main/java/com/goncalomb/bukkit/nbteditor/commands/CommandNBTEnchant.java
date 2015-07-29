@@ -28,22 +28,22 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
-import com.goncalomb.bukkit.bkglib.Lang;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
-import com.goncalomb.bukkit.bkglib.namemaps.EnchantmentsMap;
-import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
-import com.goncalomb.bukkit.bkglib.utils.Utils;
+import com.goncalomb.bukkit.mylib.Lang;
+import com.goncalomb.bukkit.mylib.command.MyCommand;
+import com.goncalomb.bukkit.mylib.command.MyCommandException;
+import com.goncalomb.bukkit.mylib.namemaps.EnchantmentsMap;
+import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
+import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
-public class CommandNBTEnchant extends BKgCommand {
+public class CommandNBTEnchant extends MyCommand {
 	
 	public CommandNBTEnchant() {
 		super("nbtenchant", "nbte");
 	}
 	
 	@Command(args = "", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<enchantment> [level]")
-	public boolean enchantCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean enchantCommand(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length > 0) {
 			HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 			if (args[0].equalsIgnoreCase("glow")) {
@@ -95,7 +95,7 @@ public class CommandNBTEnchant extends BKgCommand {
 	}
 	
 	@Command(args = "glow", type = CommandType.PLAYER_ONLY)
-	public boolean enchant_glowCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean enchant_glowCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		NBTUtils.setItemStackFakeEnchantment(item.item);
 		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtenchant.glow"));
@@ -103,7 +103,7 @@ public class CommandNBTEnchant extends BKgCommand {
 	}
 	
 	@Command(args = "clear", type = CommandType.PLAYER_ONLY)
-	public boolean enchant_clearCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean enchant_clearCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		for (Enchantment ench : item.meta.getEnchants().keySet()) {
 			item.meta.removeEnchant(ench);

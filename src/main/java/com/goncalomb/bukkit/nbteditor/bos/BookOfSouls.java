@@ -34,11 +34,11 @@ import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
-import com.goncalomb.bukkit.bkglib.namemaps.EntityTypeMap;
-import com.goncalomb.bukkit.bkglib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.bkglib.utils.BookSerialize;
 import com.goncalomb.bukkit.customitemsapi.api.CustomItem;
 import com.goncalomb.bukkit.customitemsapi.api.CustomItemManager;
+import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.utils.BookSerialize;
 import com.goncalomb.bukkit.nbteditor.nbt.DroppedItemNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.FallingBlockNBT;

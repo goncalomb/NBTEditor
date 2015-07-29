@@ -17,7 +17,7 @@
  * along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.goncalomb.bukkit.bkglib;
+package com.goncalomb.bukkit.mylib;
 
 import java.io.File;
 import java.io.FileInputStream;

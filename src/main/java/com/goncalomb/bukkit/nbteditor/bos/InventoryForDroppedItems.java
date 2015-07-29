@@ -26,9 +26,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.nbt.DroppedItemNBT;
-import com.goncalomb.bukkit.bkglib.Lang;
 
 public final class InventoryForDroppedItems extends InventoryForSingleItem {
 	

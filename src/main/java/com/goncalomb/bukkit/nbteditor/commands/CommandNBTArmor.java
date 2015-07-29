@@ -24,19 +24,19 @@ import java.awt.Color;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.goncalomb.bukkit.bkglib.Lang;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandException;
+import com.goncalomb.bukkit.mylib.Lang;
+import com.goncalomb.bukkit.mylib.command.MyCommand;
+import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
-public class CommandNBTArmor extends BKgCommand {
+public class CommandNBTArmor extends MyCommand {
 	
 	public CommandNBTArmor() {
 		super("nbtarmor", "nbta");
 	}
 	
 	@Command(args = "", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "<color>")
-	public boolean potionCommand(CommandSender sender, String[] args) throws BKgCommandException {
+	public boolean potionCommand(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length > 0) {
 			HandItemWrapper.LeatherArmor item = new HandItemWrapper.LeatherArmor((Player) sender);
 			if (!args[0].startsWith("#")) {

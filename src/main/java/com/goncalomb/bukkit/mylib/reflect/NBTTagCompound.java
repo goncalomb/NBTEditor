@@ -17,7 +17,7 @@
  * along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.goncalomb.bukkit.bkglib.reflect;
+package com.goncalomb.bukkit.mylib.reflect;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

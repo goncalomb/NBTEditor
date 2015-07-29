@@ -17,7 +17,7 @@
  * along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.goncalomb.bukkit.bkglib;
+package com.goncalomb.bukkit.mylib;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -25,11 +25,11 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommand;
-import com.goncalomb.bukkit.bkglib.bkgcommand.BKgCommandManager;
-import com.goncalomb.bukkit.bkglib.reflect.BukkitReflect;
+import com.goncalomb.bukkit.mylib.command.MyCommand;
+import com.goncalomb.bukkit.mylib.command.MyCommandManager;
+import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
 
-public final class BKgLib {
+public final class MyLib {
 	
 	// Call this on Plugin.onEnable().
 	public static void bind(Plugin plugin) {
@@ -45,8 +45,8 @@ public final class BKgLib {
 		}
 	}
 	
-	public static void registerCommand(BKgCommand command, Plugin plugin) {
-		BKgCommandManager.register(command, plugin);
+	public static void registerCommand(MyCommand command, Plugin plugin) {
+		MyCommandManager.register(command, plugin);
 	}
 	
 	public static Permission getRootPermission(Plugin plugin) {
@@ -68,6 +68,6 @@ public final class BKgLib {
 		return false;
 	}
 	
-	private BKgLib() { }
+	private MyLib() { }
 	
 }

@@ -21,7 +21,7 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 
 import org.bukkit.inventory.ItemStack;
 
-import com.goncalomb.bukkit.bkglib.reflect.NBTUtils;
+import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
 public class DroppedItemNBT extends ItemsNBT {
 	
