@@ -100,7 +100,7 @@ public class EntityNBT {
 		registerEntity(EntityType.ENDER_PEARL, EntityNBT.class);
 		registerEntity(EntityType.THROWN_EXP_BOTTLE, EntityNBT.class);
 		registerEntity(EntityType.SNOWBALL, EntityNBT.class);
-		//registerEntity(EntityType.EGG, EntityNBT.class); // Eggs thrown eggs cannot be put in spawners, missing internal EntityId.
+		registerEntity(EntityType.EGG, EntityNBT.class);
 		registerEntity(EntityType.SPLASH_POTION, ThrownPotionNBT.class);
 		//registerEntity(EntityType.ENDER_SIGNAL, EntityNBT.class); // Broken cannot get it to work.
 		registerEntity(EntityType.FIREBALL, FireballNBT.class);

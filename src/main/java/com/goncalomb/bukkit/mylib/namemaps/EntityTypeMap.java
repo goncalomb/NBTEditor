@@ -57,6 +57,8 @@ public final class EntityTypeMap {
 	public static EntityType getByName(String name) {
 		if (name.equalsIgnoreCase("ThrownPotion")) {
 			return EntityType.SPLASH_POTION;
+		} else if (name.equalsIgnoreCase("ThrownEgg")) {
+			return EntityType.EGG;
 		} else if (name.equalsIgnoreCase("MinecartSpawner")) {
 			return EntityType.MINECART_MOB_SPAWNER;
 		} else {
@@ -67,6 +69,8 @@ public final class EntityTypeMap {
 	public static String getName(EntityType type) {
 		if (type == EntityType.SPLASH_POTION) {
 			return "ThrownPotion";
+		} else if (type == EntityType.EGG) {
+			return "ThrownEgg";
 		} else if (type == EntityType.MINECART_MOB_SPAWNER) {
 			return "MinecartSpawner";
 		} else {
