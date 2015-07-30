@@ -38,6 +38,7 @@ import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.namemaps.PotionEffectsMap;
+import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.mylib.utils.Utils;
@@ -174,7 +175,7 @@ public class CommandNBTTile extends MyCommand {
 			sender.sendMessage(Lang._(NBTEditor.class, "non-vanilla-command", command));
 			command = "minecraft:" + command;
 		}
-		command = "/" + command + " " + block.getX() + " " + block.getY() + " " + block.getZ() + " " + NBTEditor.getMaterialName(block.getType()) + " " + block.getData() + " destroy";
+		command = "/" + command + " " + block.getX() + " " + block.getY() + " " + block.getZ() + " " + BukkitReflect.getMaterialName(block.getType()) + " " + block.getData() + " destroy";
 		NBTTagCompound data = NBTUtils.getTileEntityNBTData(block);
 		if (data != null) {
 			data.remove("id");

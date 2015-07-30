@@ -25,6 +25,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.SimpleCommandMap;
 
 public final class BukkitReflect {
@@ -60,6 +61,10 @@ public final class BukkitReflect {
 	
 	private static Method _getCommandMap;
 	
+	private static Field _Item_REGISTRY;
+	private static Method _Item_getById; // Get Item instance from id.
+	private static Method _RegistryMaterials_c; // Get item name from Item instance.
+	
 	public static void prepareReflection() {
 		if (!_isPrepared) {
 			Class<?> craftServerClass = Bukkit.getServer().getClass();
@@ -80,6 +85,15 @@ public final class BukkitReflect {
 			}
 			
 			_isPrepared = true;
+			
+			try {
+				Class<?> minecraftItemClass = getMinecraftClass("Item");
+				_Item_REGISTRY = minecraftItemClass.getField("REGISTRY");
+				_Item_getById = minecraftItemClass.getMethod("getById", int.class);
+				_RegistryMaterials_c = _Item_REGISTRY.getType().getMethod("c", Object.class);
+			} catch (Exception e) {
+				throw new RuntimeException("Error while preparing item name methods.", e);
+			}
 		}
 	}
 	
@@ -99,6 +113,19 @@ public final class BukkitReflect {
 		prepareReflection();
 		return (SimpleCommandMap) invokeMethod(Bukkit.getServer(), _getCommandMap);
 	}
+	
+	public static String getMaterialName(Material material) {
+		try {
+			Object item = _Item_getById.invoke(null, material.getId());
+			if (item != null) {
+				Object REGISTRY = _Item_REGISTRY.get(null);
+				return _RegistryMaterials_c.invoke(REGISTRY, item).toString();
+			}
+		} catch (Exception e) { }
+		return "minecraft:air";
+	}
+	
+	// Other helper methods...
 	
 	static Object invokeMethod(Object object, Method method, Object... args) {
 		try {
