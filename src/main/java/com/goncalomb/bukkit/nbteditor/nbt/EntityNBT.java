@@ -85,6 +85,9 @@ public class EntityNBT {
 		registerEntity(EntityType.ENDERMAN, MobNBT.class);
 		registerEntity(EntityType.SILVERFISH, MobNBT.class);
 		registerEntity(EntityType.WITCH, MobNBT.class);
+		registerEntity(EntityType.GUARDIAN, MobNBT.class);
+		registerEntity(EntityType.ENDERMITE, MobNBT.class);
+		registerEntity(EntityType.RABBIT, MobNBT.class);
 
 		registerEntity(EntityType.ENDER_DRAGON, MobNBT.class);
 		registerEntity(EntityType.WITHER, MobNBT.class);
@@ -175,6 +178,19 @@ public class EntityNBT {
 		variables = new NBTGenericVariableContainer("Enderman");
 		variables.add("block", new BlockVariable("carried", "carriedData", true));
 		EntityNBTVariableManager.registerVariables(EntityType.ENDERMAN, variables);
+		
+		variables = new NBTGenericVariableContainer("Guardian");
+		variables.add("elder", new BooleanVariable("Elder"));
+		EntityNBTVariableManager.registerVariables(EntityType.GUARDIAN, variables);
+		
+		variables = new NBTGenericVariableContainer("Endermite");
+		variables.add("lifetime", new IntegerVariable("Lifetime"));
+		variables.add("player-spawned", new BooleanVariable("PlayerSpawned"));
+		EntityNBTVariableManager.registerVariables(EntityType.ENDERMITE, variables);
+		
+		variables = new NBTGenericVariableContainer("Rabbit");
+		variables.add("type", new IntegerVariable("RabbitType", 0, 99));
+		EntityNBTVariableManager.registerVariables(EntityType.RABBIT, variables);
 		
 		
 		variables = new NBTGenericVariableContainer("Wither");
