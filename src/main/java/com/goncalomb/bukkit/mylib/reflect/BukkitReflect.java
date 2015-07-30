@@ -68,20 +68,13 @@ public final class BukkitReflect {
 	public static void prepareReflection() {
 		if (!_isPrepared) {
 			Class<?> craftServerClass = Bukkit.getServer().getClass();
-			try {
-				Class.forName("org.libigot.LibigotServer");
-				// Libigot server, use org.bukkit.craftbukkit.
-				_craftBukkitPackage = new CachedPackage("org.bukkit.craftbukkit");
-			} catch (ClassNotFoundException e) {
-				// Not a Libigot server find the CraftBukkit package using the CraftServer class (varies by version).
-				_craftBukkitPackage = new CachedPackage(craftServerClass.getPackage().getName());
-			}
+			_craftBukkitPackage = new CachedPackage(craftServerClass.getPackage().getName());
 			try {
 				Method getHandle = craftServerClass.getMethod("getHandle");
 				_minecraftPackage = new CachedPackage(getHandle.getReturnType().getPackage().getName());
 				_getCommandMap = craftServerClass.getMethod("getCommandMap");
 			} catch (NoSuchMethodException e) {
-				throw new RuntimeException("Cannot find getHandle() method on server.", e);
+				throw new RuntimeException("Cannot find the required methods on the server class.", e);
 			}
 			
 			_isPrepared = true;
