@@ -2,4 +2,3 @@ name: NBTEditor
 main: com.goncalomb.bukkit.nbteditor.NBTEditor
 version: ${project.version}
 author: goncalomb
-softdepend: [CustomItemsAPI]

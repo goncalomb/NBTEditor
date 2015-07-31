@@ -31,12 +31,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.StringUtil;
 
-import com.goncalomb.bukkit.customitems.CustomItemsAPI;
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.CustomItemManager;
 import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
+import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public final class CommandCustomItems extends MyCommand {
 	
@@ -60,15 +60,15 @@ public final class CommandCustomItems extends MyCommand {
 		int intAmount = (amount == null ? 1 : CommandUtils.parseInt(amount));
 		CustomItem customItem = CustomItemManager.getCustomItem(slug);
 		if (customItem == null) {
-			throw new MyCommandException(Lang._(CustomItemsAPI.class, "commands.customitem.no-item"));
+			throw new MyCommandException(Lang._(NBTEditor.class, "commands.customitem.no-item"));
 		} else {
 			ItemStack item = customItem.getItem();
 			if (item == null) {
-				throw new MyCommandException(Lang._(CustomItemsAPI.class, "commands.customitem.invalid"));
+				throw new MyCommandException(Lang._(NBTEditor.class, "commands.customitem.invalid"));
 			} else {
 				item.setAmount(intAmount);
 				CommandUtils.giveItem(player, item);
-				player.sendMessage(Lang._(CustomItemsAPI.class, "commands.customitem.ok"));
+				player.sendMessage(Lang._(NBTEditor.class, "commands.customitem.ok"));
 			}
 		}
 	}

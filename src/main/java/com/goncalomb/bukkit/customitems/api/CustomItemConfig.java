@@ -23,12 +23,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
-
-import com.goncalomb.bukkit.customitems.CustomItemsAPI;
 
 final class CustomItemConfig {
 	
@@ -84,7 +83,7 @@ final class CustomItemConfig {
 		try {
 			_config.save(_configFile);
 		} catch (IOException e) {
-			CustomItemsAPI.getInstance().getLogger().log(Level.SEVERE, "Cannot save file " + _configFile + ".", e);
+			Bukkit.getLogger().log(Level.SEVERE, "Cannot save file " + _configFile + ".", e);
 		}
 	}
 	
