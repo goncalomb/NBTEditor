@@ -21,12 +21,10 @@ package com.goncalomb.bukkit.customitems.api;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.command.defaults.GameRuleCommand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -46,7 +44,6 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import com.goncalomb.bukkit.mylib.Lang;
