@@ -43,7 +43,7 @@ public final class CustomItemManager {
 	private static Permission _worldOverridePermission;
 	private static CustomItemContainer _container = new CustomItemContainer();
 	private static CustomItemListener _listener = new CustomItemListener();
-	private static HashMap<Plugin, CustomItemConfig> _configsByPlugin = new HashMap<Plugin, CustomItemConfig>();
+	private static HashMap<String, CustomItemConfig> _configsByGroup = new HashMap<String, CustomItemConfig>();
 	
 	private CustomItemManager() { }
 	
@@ -80,10 +80,9 @@ public final class CustomItemManager {
 					_plugin = null;
 					_mainListener = null;
 					_container.clear();
-					_configsByPlugin.clear();
+					_configsByGroup.clear();
 				} else {
 					_container.remove(plugin);
-					_configsByPlugin.remove(plugin);
 				}
 			}
 		};
@@ -92,7 +91,7 @@ public final class CustomItemManager {
 		Bukkit.getPluginManager().registerEvents(_listener, _plugin);
 	}
 	
-	public static boolean register(CustomItem customItem, Plugin plugin) {
+	public static boolean register(CustomItem customItem, Plugin plugin, String group) {
 		initialize();
 		if (_plugin == null) {
 			return false;
@@ -101,21 +100,22 @@ public final class CustomItemManager {
 			return false;
 		}
 		
-		CustomItemConfig config = _configsByPlugin.get(plugin);
+		CustomItemConfig config = _configsByGroup.get(group);
 		if (config == null) {
-			config = new CustomItemConfig( plugin);
+			config = new CustomItemConfig(group);
 		}
 		config.configureItem(customItem);
 		
 		config.saveToFile();
-		_configsByPlugin.put(plugin, config);
-		
+		_configsByGroup.put(group, config);
+
 		customItem._owner = plugin;
+		customItem._group = group;
 		
 		(new Permission("nbteditor.customitems.use." + customItem.getSlug())).addParent(_usePermission, true);
 		(new Permission("nbteditor.customitems.world-override." + customItem.getSlug())).addParent(_worldOverridePermission, true);
 		
-		_container.put(customItem, plugin);
+		_container.put(customItem, plugin, group);
 		return true;
 	}
 	
@@ -128,7 +128,11 @@ public final class CustomItemManager {
 	}
 	
 	public static Collection<CustomItem> getCustomItems(Plugin plugin) {
-		return _container.get(plugin);
+		return _container.getByOwner(plugin);
+	}
+	
+	public static Collection<CustomItem> getCustomItems(String group) {
+		return _container.getByGroup(group);
 	}
 	
 	public static Collection<CustomItem> getCustomItems() {
@@ -137,6 +141,10 @@ public final class CustomItemManager {
 	
 	public static Collection<Plugin> getOwningPlugins() {
 		return _container.getOwners();
+	}
+	
+	public static Collection<String> getGroups() {
+		return _container.getGroups();
 	}
 	
 }

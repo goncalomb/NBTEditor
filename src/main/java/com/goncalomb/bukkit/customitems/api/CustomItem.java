@@ -45,8 +45,9 @@ import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.Plugin;
 
 public abstract class CustomItem {
-	
+
 	Plugin _owner;
+	String _group;
 	private String _slug;
 	private String _name;
 	private MaterialData _material;
@@ -97,6 +98,10 @@ public abstract class CustomItem {
 	
 	public final Plugin getPlugin() {
 		return _owner;
+	}
+	
+	public final String getGroup() {
+		return _group;
 	}
 	
 	public final String getSlug() {

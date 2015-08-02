@@ -104,9 +104,9 @@ public final class CommandCustomItems extends MyCommand {
 	@Command(args = "list", type = CommandType.DEFAULT)
 	public boolean customitem_list(CommandSender sender, String[] args) {
 		World world = (sender instanceof Player ? ((Player) sender).getWorld() : null);
-		for (Plugin plugin : CustomItemManager.getOwningPlugins()) {
-			StringBuilder sb = new StringBuilder("" + ChatColor.GOLD + ChatColor.ITALIC + plugin.getName() + ":");
-			for (CustomItem customItem : CustomItemManager.getCustomItems(plugin)) {
+		for (String group : CustomItemManager.getGroups()) {
+			StringBuilder sb = new StringBuilder("" + ChatColor.GOLD + ChatColor.ITALIC + group + ":");
+			for (CustomItem customItem : CustomItemManager.getCustomItems(group)) {
 				sb.append(" ");
 				if (!customItem.isEnabled()) {
 					sb.append(ChatColor.RED);

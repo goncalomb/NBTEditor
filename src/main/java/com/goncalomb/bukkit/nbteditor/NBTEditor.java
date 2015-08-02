@@ -91,28 +91,28 @@ public final class NBTEditor extends JavaPlugin {
 		MyCommandManager.register(new CommandItemStorage(), this);
 		
 		BookOfSouls.initialize(this);
-		CustomItemManager.register(new EntityInspectorTool(), this);
-		CustomItemManager.register(new EntityRemoverTool(), this);
-		CustomItemManager.register(new SuperLeadTool(), this);
+		CustomItemManager.register(new EntityInspectorTool(), this, "nbteditor");
+		CustomItemManager.register(new EntityRemoverTool(), this, "nbteditor");
+		CustomItemManager.register(new SuperLeadTool(), this, "nbteditor");
 		
 		this.saveDefaultConfig();
 		
-		if (getConfig().getBoolean("enable-custom-items", false)) {
-			CustomItemManager.register(new BatBomb(), this);
-			CustomItemManager.register(new FireBomb(), this);
-			CustomItemManager.register(new RepulsionBomb(), this);
-			CustomItemManager.register(new LightningRod(), this);
-			CustomItemManager.register(new EnderBow(), this);
-			CustomItemManager.register(new WitherBow(), this);
-			CustomItemManager.register(new SunStick(), this);
-			CustomItemManager.register(new MoonStick(), this);
-			CustomItemManager.register(new EscapePlan(), this);
-			CustomItemManager.register(new KingsCrown(), this);
-			CustomItemManager.register(new SimpleMine(), this);
-			CustomItemManager.register(new TorchBow(), this);
-			CustomItemManager.register(new AntiMatterBomb(), this);
-			CustomItemManager.register(new GravitationalAxe(), this);
-			CustomItemManager.register(new TreeVaporizer(), this);
+		if (getConfig().getBoolean("enable-customitems", false)) {
+			CustomItemManager.register(new BatBomb(), this, "bombs");
+			CustomItemManager.register(new FireBomb(), this, "bombs");
+			CustomItemManager.register(new RepulsionBomb(), this, "bombs");
+			CustomItemManager.register(new LightningRod(), this, "bombs");
+			CustomItemManager.register(new EnderBow(), this, "bows");
+			CustomItemManager.register(new WitherBow(), this, "bows");
+			CustomItemManager.register(new SunStick(), this, "fireworks");
+			CustomItemManager.register(new MoonStick(), this, "fireworks");
+			CustomItemManager.register(new EscapePlan(), this, "fireworks");
+			CustomItemManager.register(new KingsCrown(), this, "misc");
+			CustomItemManager.register(new SimpleMine(), this, "bombs");
+			CustomItemManager.register(new TorchBow(), this, "bows");
+			CustomItemManager.register(new AntiMatterBomb(), this, "bombs");
+			CustomItemManager.register(new GravitationalAxe(), this, "axes");
+			CustomItemManager.register(new TreeVaporizer(), this, "axes");
 			
 			MyCommandManager.register(new CommandCustomItems(), this);
 			getLogger().info("CustomItems enabled.");

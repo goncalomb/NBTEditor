@@ -37,18 +37,16 @@ final class CustomItemConfig {
 	private FileConfiguration _config;
 	private ConfigurationSection _itemsSection;
 	
-	public CustomItemConfig(Plugin plugin) {
+	public CustomItemConfig(String group) {
 		_defaultConfig = new YamlConfiguration();
 		_defaultItemSection = _defaultConfig.createSection("custom-items");
 		
-		_configFile = new File(plugin.getDataFolder(), "items-config.yml");
+		_configFile = new File(CustomItemManager._plugin.getDataFolder(), "CustomItems" + File.separator + group + ".yml");
 		
 		if (!_configFile.exists()) {
 			_config = new YamlConfiguration();
 			_config.options().header(
-					"----- CustomItems ----- Item configuration file -----\n" +
-					"This file configures the custom items registed by " + plugin.getName() + ".\n" +
-					"For the changes to take effect you must reload the corresponding plugin.\n" +
+					"----- CustomItems (" + group + ") ----- Item configuration file -----\n" +
 					"\n" +
 					"Note regarding allowed-worlds/blocked-worlds:\n" +
 					"  allowed-worlds, when not empty, acts like a whitelist and only\n" +

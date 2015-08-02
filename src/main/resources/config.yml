@@ -1,3 +1,6 @@
-# Enable CustomItems
-enable-custom-items: false
+# Enable CustomItems.
+# CustomItemsAPI has a standalone plugin that was merged into the NBTEditor 2.0, more info at
+# http://dev.bukkit.org/bukkit-plugins/customitems/
+# This will enable the /customitem (/citem) command and make available all the old custom items from that plugin.
+enable-customitems: false
 
