@@ -63,9 +63,9 @@ final class CustomItemListener implements Listener {
 		if (customItem != null) {
 			if (!customItem.isEnabled()) {
 				if (!silent) player.sendMessage(Lang._(null, "customitemsapi.disabled"));
-			} else if (player != null && !player.hasPermission("customitemsapi.use." + customItem.getSlug())) {
+			} else if (player != null && !player.hasPermission("nbteditor.customitems.use." + customItem.getSlug())) {
 				if (!silent) player.sendMessage(Lang._(null, "customitemsapi.no-perm"));
-			} else if (!customItem.isValidWorld(player.getWorld()) && !player.hasPermission("customitemsapi.world-override." + customItem.getSlug())) {
+			} else if (!customItem.isValidWorld(player.getWorld()) && !player.hasPermission("nbteditor.customitems.world-override." + customItem.getSlug())) {
 				if (!silent) player.sendMessage(Lang._(null, "customitemsapi.invalid-world"));
 			} else {
 				return true;

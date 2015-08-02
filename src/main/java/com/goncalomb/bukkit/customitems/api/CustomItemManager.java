@@ -32,7 +32,8 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
+
+import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 
 public final class CustomItemManager {
 
@@ -46,25 +47,21 @@ public final class CustomItemManager {
 	
 	private CustomItemManager() { }
 	
-	private static void initialize() {
-		if (_plugin != null) {
-			return;
-		}
-		// Find parent plugin (CustomItemsAPI or NBTEditor).
-		PluginManager pm = Bukkit.getPluginManager();
-		_plugin = pm.getPlugin("CustomItemsAPI");
-		if (_plugin == null && (_plugin = pm.getPlugin("NBTEditor")) == null) {
-			return;
-		}
-		if (!_plugin.isEnabled()) {
+	public static void initialize() {
+		// Find NBTEditor plugin...
+		if (_plugin != null || (_plugin = Bukkit.getPluginManager().getPlugin("NBTEditor")) == null) {
 			return;
 		}
 		
-		_usePermission = new Permission("customitemsapi.use.*");
-		_usePermission.addParent("customitemsapi.*", true);
+		Permission mainPermission = new Permission("nbteditor.customitems.*");
+		mainPermission.addParent(UtilsMc.getRootPermission(_plugin), true);
+		
+		_usePermission = new Permission("nbteditor.customitems.use.*");
+		_usePermission.addParent(mainPermission, true);
 		Bukkit.getPluginManager().addPermission(_usePermission);
-		_worldOverridePermission = new Permission("customitemsapi.world-override.*");
-		_worldOverridePermission.addParent("customitemsapi.*", true);
+		
+		_worldOverridePermission = new Permission("nbteditor.customitems.world-override.*");
+		_worldOverridePermission.addParent(mainPermission, true);
 		Bukkit.getPluginManager().addPermission(_worldOverridePermission);
 		
 		_mainListener = new Listener() {
@@ -91,21 +88,16 @@ public final class CustomItemManager {
 			}
 		};
 		
-		pm.registerEvents(_mainListener, _plugin);
-		pm.registerEvents(_listener, _plugin);
-		Bukkit.getLogger().info("[CustomItemsAPI] CustomItemManager initialized.");
-	}
-	
-	public static boolean isReady() {
-		initialize();
-		return (_plugin != null);
+		Bukkit.getPluginManager().registerEvents(_mainListener, _plugin);
+		Bukkit.getPluginManager().registerEvents(_listener, _plugin);
 	}
 	
 	public static boolean register(CustomItem customItem, Plugin plugin) {
-		if (!isReady()) {
+		initialize();
+		if (_plugin == null) {
 			return false;
 		} else if (customItem._owner != null || _container.contains(customItem)) {
-			Bukkit.getLogger().warning("[CustomItemsAPI] " + plugin.getName() + " tried to register an already registed CustomItem, " + customItem.getSlug() + "!");
+			_plugin.getLogger().warning(plugin.getName() + " tried to register an already registed Custom Item, " + customItem.getSlug() + "!");
 			return false;
 		}
 		
@@ -120,8 +112,8 @@ public final class CustomItemManager {
 		
 		customItem._owner = plugin;
 		
-		(new Permission("customitemsapi.use." + customItem.getSlug())).addParent("customitemsapi.use.*", true);
-		(new Permission("customitemsapi.world-override." + customItem.getSlug())).addParent("customitemsapi.world-override.*", true);
+		(new Permission("nbteditor.customitems.use." + customItem.getSlug())).addParent(_usePermission, true);
+		(new Permission("nbteditor.customitems.world-override." + customItem.getSlug())).addParent(_worldOverridePermission, true);
 		
 		_container.put(customItem, plugin);
 		return true;
