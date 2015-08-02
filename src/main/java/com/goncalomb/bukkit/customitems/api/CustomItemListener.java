@@ -50,6 +50,7 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import com.goncalomb.bukkit.mylib.Lang;
+import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 final class CustomItemListener implements Listener {
 	
@@ -62,11 +63,11 @@ final class CustomItemListener implements Listener {
 	private static boolean verifyCustomItem(CustomItem customItem, Player player, boolean silent) {
 		if (customItem != null) {
 			if (!customItem.isEnabled()) {
-				if (!silent) player.sendMessage(Lang._(null, "customitemsapi.disabled"));
+				if (!silent) player.sendMessage(Lang._(NBTEditor.class, "customitems.disabled"));
 			} else if (player != null && !player.hasPermission("nbteditor.customitems.use." + customItem.getSlug())) {
-				if (!silent) player.sendMessage(Lang._(null, "customitemsapi.no-perm"));
+				if (!silent) player.sendMessage(Lang._(NBTEditor.class, "customitems.no-perm"));
 			} else if (!customItem.isValidWorld(player.getWorld()) && !player.hasPermission("nbteditor.customitems.world-override." + customItem.getSlug())) {
-				if (!silent) player.sendMessage(Lang._(null, "customitemsapi.invalid-world"));
+				if (!silent) player.sendMessage(Lang._(NBTEditor.class, "customitems.invalid-world"));
 			} else {
 				return true;
 			}

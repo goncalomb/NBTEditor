@@ -1,5 +1,9 @@
 # CustomItemsAPI
 
+customitems.disabled=§cEste item está desativado!
+customitems.invalid-world=§cEste item está desativado neste mundo!
+customitems.no-perm=§cNão tens permissão para usar este item!
+
 commands.customitem.description=Usado para obter itens modificados.
 commands.customitem.no-item=§cEsse item não existe! Usa '/citem list' para listar os itens.
 commands.customitem.ok=§aDesfruta do teu item.

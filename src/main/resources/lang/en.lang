@@ -1,5 +1,9 @@
 # CustomItemsAPI
 
+customitems.disabled=§cThis item is disabled!
+customitems.invalid-world=§cThis item is disabled on this world!
+customitems.no-perm=§cYou don't have permission to use this item!
+
 commands.customitem.description=Used to get custom items.
 commands.customitem.no-item=§cNo such item! Use '/citem list' to list all items.
 commands.customitem.ok=§aEnjoy your custom item.

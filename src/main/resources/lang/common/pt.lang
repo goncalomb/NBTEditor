@@ -13,9 +13,3 @@ invalid-ticks=§cDuração inválida. Usa um valor em 'ticks' ou 0000d00h00m00s.
 
 no-perm=§cNão tens permissão para fazer isso!
 no-sight=§cNenhum bloco visível!
-
-# These are here because NBTEditor when installed by itself it uses an
-# internal version of the CustomItemsAPI that requires these strings.
-customitemsapi.disabled=§cEste item está desativado!
-customitemsapi.invalid-world=§cEste item está desativado neste mundo!
-customitemsapi.no-perm=§cNão tens permissão para usar este item!
