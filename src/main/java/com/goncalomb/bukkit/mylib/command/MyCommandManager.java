@@ -23,6 +23,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
@@ -73,6 +74,15 @@ public final class MyCommandManager {
 			throw new RuntimeException("Tab completion method " + tabMethods.get(0).getName() + " on class " + command.getClass().getName() + " has no execution method.");
 		}
 		command.setup(BukkitReflect.getCommandMap(), plugin);
+	}
+	
+	public static boolean isVanillaCommand(String name) {
+		Command mineCommand = BukkitReflect.getCommandMap().getCommand("minecraft:" + name);
+		if (mineCommand != null) {
+			Command command = BukkitReflect.getCommandMap().getCommand(name);
+			return (mineCommand == command);
+		}
+		return false;
 	}
 	
 	// Bukkit is an asshole, getCommands() now returns UnmodifiableCollection.

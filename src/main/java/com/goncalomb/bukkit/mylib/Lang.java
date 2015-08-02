@@ -35,7 +35,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
 
@@ -46,7 +45,7 @@ public final class Lang {
 	private static HashMap<Class<? extends Plugin>, Properties> _data = new HashMap<Class<? extends Plugin>, Properties>();
 	private static HashMap<Class<? extends Plugin>, HashMap<String, MessageFormat>> _formatCache = new HashMap<Class<? extends Plugin>, HashMap<String, MessageFormat>>();
 	
-	static void load(Plugin plugin) {
+	public static void load(Plugin plugin) {
 		if (_lang == null) {
 			// Load language configuration file, language.yml.
 			File configFile = new File(plugin.getDataFolder(), "language.yml");
@@ -71,7 +70,7 @@ public final class Lang {
 		_data.put(plugin.getClass(), loadLanguage(plugin, false));
 	}
 	
-	static void unload(Plugin plugin) {
+	public static void unload(Plugin plugin) {
 		_data.remove(plugin.getClass());
 		_formatCache.remove(plugin.getClass());
 		if (_data.size() == 1) {

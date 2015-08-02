@@ -33,10 +33,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import com.goncalomb.bukkit.mylib.MyLib;
 import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
+import com.goncalomb.bukkit.mylib.command.MyCommandManager;
 import com.goncalomb.bukkit.mylib.namemaps.PotionEffectsMap;
 import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
@@ -171,7 +171,7 @@ public class CommandNBTTile extends MyCommand {
 			return true;
 		}
 		String command = "setblock";
-		if (!MyLib.isVanillaCommand(command)) {
+		if (!MyCommandManager.isVanillaCommand(command)) {
 			sender.sendMessage(Lang._(NBTEditor.class, "non-vanilla-command", command));
 			command = "minecraft:" + command;
 		}

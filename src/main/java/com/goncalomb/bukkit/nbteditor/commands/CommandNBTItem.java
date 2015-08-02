@@ -30,10 +30,10 @@ import org.bukkit.block.CommandBlock;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.goncalomb.bukkit.mylib.MyLib;
 import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
+import com.goncalomb.bukkit.mylib.command.MyCommandManager;
 import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.mylib.utils.Utils;
@@ -182,7 +182,7 @@ public class CommandNBTItem extends MyCommand {
 		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
 		if (block.getType() == Material.COMMAND) {
 			String command = "give";
-			if (!MyLib.isVanillaCommand(command)) {
+			if (!MyCommandManager.isVanillaCommand(command)) {
 				sender.sendMessage(Lang._(NBTEditor.class, "non-vanilla-command", command));
 				command = "minecraft:" + command;
 			}

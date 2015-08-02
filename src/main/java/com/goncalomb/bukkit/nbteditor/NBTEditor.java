@@ -41,7 +41,8 @@ import com.goncalomb.bukkit.customitems.items.SunStick;
 import com.goncalomb.bukkit.customitems.items.TorchBow;
 import com.goncalomb.bukkit.customitems.items.TreeVaporizer;
 import com.goncalomb.bukkit.customitems.items.WitherBow;
-import com.goncalomb.bukkit.mylib.MyLib;
+import com.goncalomb.bukkit.mylib.Lang;
+import com.goncalomb.bukkit.mylib.command.MyCommandManager;
 import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
 import com.goncalomb.bukkit.mylib.reflect.NBTBase;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
@@ -73,20 +74,21 @@ public final class NBTEditor extends JavaPlugin {
 			getLogger().warning("NBTEditor version not compatible with this version of Bukkit. Please install the apropriated version.");
 			return;
 		}
-		MyLib.bind(this);
 		
-		MyLib.registerCommand(new CommandBOS(), this);
-		MyLib.registerCommand(new CommandNBTSpawner(), this);
-		MyLib.registerCommand(new CommandNBTItem(), this);
-		MyLib.registerCommand(new CommandNBTEnchant(), this);
-		MyLib.registerCommand(new CommandNBTBook(), this);
-		MyLib.registerCommand(new CommandNBTPotion(), this);
-		MyLib.registerCommand(new CommandNBTArmor(), this);
-		MyLib.registerCommand(new CommandNBTHead(), this);
-		MyLib.registerCommand(new CommandNBTTile(), this);
+		Lang.load(this);
+		
+		MyCommandManager.register(new CommandBOS(), this);
+		MyCommandManager.register(new CommandNBTSpawner(), this);
+		MyCommandManager.register(new CommandNBTItem(), this);
+		MyCommandManager.register(new CommandNBTEnchant(), this);
+		MyCommandManager.register(new CommandNBTBook(), this);
+		MyCommandManager.register(new CommandNBTPotion(), this);
+		MyCommandManager.register(new CommandNBTArmor(), this);
+		MyCommandManager.register(new CommandNBTHead(), this);
+		MyCommandManager.register(new CommandNBTTile(), this);
 		
 		ItemStorage.setDataFolder(new File(getDataFolder(), "ItemStorage"));
-		MyLib.registerCommand(new CommandItemStorage(), this);
+		MyCommandManager.register(new CommandItemStorage(), this);
 		
 		BookOfSouls.initialize(this);
 		CustomItemManager.register(new EntityInspectorTool(), this);
@@ -112,7 +114,7 @@ public final class NBTEditor extends JavaPlugin {
 			CustomItemManager.register(new GravitationalAxe(), this);
 			CustomItemManager.register(new TreeVaporizer(), this);
 			
-			MyLib.registerCommand(new CommandCustomItems(), this);
+			MyCommandManager.register(new CommandCustomItems(), this);
 			getLogger().info("CustomItems enabled.");
 		}
 		
@@ -122,7 +124,7 @@ public final class NBTEditor extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
-		MyLib.unbind(this);
+		Lang.unload(this);
 		_instance = null;
 	}
 	

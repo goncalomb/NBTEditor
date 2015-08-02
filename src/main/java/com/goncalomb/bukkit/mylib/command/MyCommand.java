@@ -38,7 +38,6 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.StringUtil;
 
-import com.goncalomb.bukkit.mylib.MyLib;
 import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
@@ -174,7 +173,7 @@ public abstract class MyCommand extends MySubCommand {
 		// Set the owner and permissions.
 		_owner = owner;
 		_internalCommand.setDescription(Lang._(owner.getClass(), "commands." + getName() + ".description"));
-		setupPermissions(getName(), MyLib.getRootPermission(owner));
+		setupPermissions(getName(), UtilsMc.getRootPermission(owner));
 		// Register the command with Bukkit.
 		commandMap.register(owner.getName(), _internalCommand);
 	}

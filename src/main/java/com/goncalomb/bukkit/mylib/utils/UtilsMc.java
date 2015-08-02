@@ -23,16 +23,23 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 public final class UtilsMc {
@@ -131,6 +138,16 @@ public final class UtilsMc {
 		meta.setLore(lore == null ? null : Arrays.asList(lore));
 		item.setItemMeta(meta);
 		return item;
+	}
+	
+	public static Permission getRootPermission(Plugin plugin) {
+		String permName = plugin.getName().toLowerCase() + ".*";
+		Permission perm = Bukkit.getPluginManager().getPermission(permName);
+		if (perm == null) {
+			perm = new Permission(permName, PermissionDefault.OP);
+			Bukkit.getPluginManager().addPermission(perm);
+		}
+		return perm;
 	}
 	
 }

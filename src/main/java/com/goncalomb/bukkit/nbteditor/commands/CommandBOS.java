@@ -36,10 +36,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.util.StringUtil;
 
-import com.goncalomb.bukkit.mylib.MyLib;
 import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
+import com.goncalomb.bukkit.mylib.command.MyCommandManager;
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
@@ -364,7 +364,7 @@ public class CommandBOS extends MyCommand {
 		if (block.getType() == Material.COMMAND) {
 			EntityNBT entityNbt = bos.getEntityNBT();
 			String command = "summon";
-			if (!MyLib.isVanillaCommand(command)) {
+			if (!MyCommandManager.isVanillaCommand(command)) {
 				sender.sendMessage(Lang._(NBTEditor.class, "non-vanilla-command", command));
 				command = "minecraft:" + command;
 			}
