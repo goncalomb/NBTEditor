@@ -38,7 +38,7 @@ public class MinecartSpawnerNBT extends MinecartNBT {
 		variables.add("max-delay", new ShortVariable("MaxSpawnDelay", (short) 0));
 		variables.add("max-entities", new ShortVariable("MaxNearbyEntities", (short) 0));
 		variables.add("player-range", new ShortVariable("RequiredPlayerRange", (short) 0));
-		EntityNBTVariableManager.registerVariables(EntityType.MINECART_MOB_SPAWNER, variables);
+		registerVariables(EntityType.MINECART_MOB_SPAWNER, variables);
 	}
 	
 	public void MinecartNBT() {

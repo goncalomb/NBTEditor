@@ -35,7 +35,7 @@ public final class HorseNBT extends BreedNBT {
 		variables.add("eating", new BooleanVariable("EatingHaystack"));
 		variables.add("owner", new StringVariable("OwnerName"));
 		variables.add("variant", new HorseVariantVariable());
-		EntityNBTVariableManager.registerVariables(HorseNBT.class, variables);
+		registerVariables(HorseNBT.class, variables);
 	}
 	
 }

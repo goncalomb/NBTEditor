@@ -29,7 +29,7 @@ public class MinecartCommandNBT extends MinecartNBT {
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("MinecartCommandBlock");
 		variables.add("command", new StringVariable("Command"));
-		EntityNBTVariableManager.registerVariables(EntityType.MINECART_COMMAND, variables);
+		registerVariables(EntityType.MINECART_COMMAND, variables);
 	}
 	
 }

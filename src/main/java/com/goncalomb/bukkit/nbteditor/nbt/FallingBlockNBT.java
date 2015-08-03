@@ -40,7 +40,7 @@ public class FallingBlockNBT extends EntityNBT {
 		variables.add("hurt-entities", new BooleanVariable("HurtEntities"));
 		variables.add("fall-hurt-amount", new FloatVariable("FallHurtAmount", 0));
 		variables.add("fall-hurt-max", new IntegerVariable("FallHurtMax", 0));
-		EntityNBTVariableManager.registerVariables(FallingBlockNBT.class, variables);
+		registerVariables(FallingBlockNBT.class, variables);
 	}
 	
 	public FallingBlockNBT() {

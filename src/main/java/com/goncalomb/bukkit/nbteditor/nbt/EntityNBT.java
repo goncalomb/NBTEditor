@@ -45,12 +45,10 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.VectorVariable;
 
-public class EntityNBT {
+public class EntityNBT extends EntityNBTBase {
 	
 	private static HashMap<EntityType, Class<? extends EntityNBT>> _entityClasses;
 	
-	private EntityType _entityType;
-	protected NBTTagCompound _data;
 	
 	static {
 		_entityClasses = new HashMap<EntityType, Class<? extends EntityNBT>>();
@@ -131,142 +129,92 @@ public class EntityNBT {
 		variables.add("fire", new ShortVariable("Fire"));
 		variables.add("air", new ShortVariable("Air", (short) 0, (short) 200));
 		variables.add("invulnerable", new BooleanVariable("Invulnerable"));
-		EntityNBTVariableManager.registerVariables(EntityNBT.class, variables);
+		registerVariables(EntityNBT.class, variables);
 		
 		variables = new NBTGenericVariableContainer("Pig");
 		variables.add("saddle", new BooleanVariable("Saddle"));
-		EntityNBTVariableManager.registerVariables(EntityType.PIG, variables);
+		registerVariables(EntityType.PIG, variables);
 		
 		variables = new NBTGenericVariableContainer("Sheep");
 		variables.add("sheared", new BooleanVariable("Saddle"));
 		variables.add("color", new ByteVariable("Color", (byte) 0, (byte) 15));
-		EntityNBTVariableManager.registerVariables(EntityType.SHEEP, variables);
+		registerVariables(EntityType.SHEEP, variables);
 		
 		variables = new NBTGenericVariableContainer("Wolf");
 		variables.add("angry", new BooleanVariable("Angry"));
 		variables.add("collar-color", new ByteVariable("CollarColor", (byte) 0, (byte) 15));
-		EntityNBTVariableManager.registerVariables(EntityType.WOLF, variables);
+		registerVariables(EntityType.WOLF, variables);
 		
 		variables = new NBTGenericVariableContainer("Ocelot");
 		variables.add("cat-type", new IntegerVariable("CatType", 0, 3));
-		EntityNBTVariableManager.registerVariables(EntityType.OCELOT, variables);
+		registerVariables(EntityType.OCELOT, variables);
 		
 		
 		variables = new NBTGenericVariableContainer("IronGolem");
 		variables.add("player-created", new BooleanVariable("PlayerCreated"));
-		EntityNBTVariableManager.registerVariables(EntityType.IRON_GOLEM, variables);
+		registerVariables(EntityType.IRON_GOLEM, variables);
 		
 		
 		variables = new NBTGenericVariableContainer("PigZombie");
 		variables.add("anger", new ShortVariable("Anger"));
-		EntityNBTVariableManager.registerVariables(EntityType.PIG_ZOMBIE, variables);
+		registerVariables(EntityType.PIG_ZOMBIE, variables);
 		
 		variables = new NBTGenericVariableContainer("Ghast");
 		variables.add("explosion-power", new IntegerVariable("ExplosionPower", 0, 25)); // Limited to 25
-		EntityNBTVariableManager.registerVariables(EntityType.GHAST, variables);
+		registerVariables(EntityType.GHAST, variables);
 		
 		variables = new NBTGenericVariableContainer("Skeleton");
 		variables.add("is-wither", new BooleanVariable("SkeletonType"));
-		EntityNBTVariableManager.registerVariables(EntityType.SKELETON, variables);
+		registerVariables(EntityType.SKELETON, variables);
 		
 		variables = new NBTGenericVariableContainer("Creeper");
 		variables.add("powered", new BooleanVariable("powered"));
 		variables.add("explosion-radius", new ByteVariable("ExplosionRadius", (byte) 0, (byte) 25)); // Limited to 25
 		variables.add("fuse", new ShortVariable("Fuse", (short) 0));
-		EntityNBTVariableManager.registerVariables(EntityType.CREEPER, variables);
+		registerVariables(EntityType.CREEPER, variables);
 		
 		variables = new NBTGenericVariableContainer("Enderman");
 		variables.add("block", new BlockVariable("carried", "carriedData", true));
-		EntityNBTVariableManager.registerVariables(EntityType.ENDERMAN, variables);
+		registerVariables(EntityType.ENDERMAN, variables);
 		
 		variables = new NBTGenericVariableContainer("Guardian");
 		variables.add("elder", new BooleanVariable("Elder"));
-		EntityNBTVariableManager.registerVariables(EntityType.GUARDIAN, variables);
+		registerVariables(EntityType.GUARDIAN, variables);
 		
 		variables = new NBTGenericVariableContainer("Endermite");
 		variables.add("lifetime", new IntegerVariable("Lifetime"));
 		variables.add("player-spawned", new BooleanVariable("PlayerSpawned"));
-		EntityNBTVariableManager.registerVariables(EntityType.ENDERMITE, variables);
+		registerVariables(EntityType.ENDERMITE, variables);
 		
 		variables = new NBTGenericVariableContainer("Rabbit");
 		variables.add("type", new IntegerVariable("RabbitType", 0, 99));
-		EntityNBTVariableManager.registerVariables(EntityType.RABBIT, variables);
+		registerVariables(EntityType.RABBIT, variables);
 		
 		
 		variables = new NBTGenericVariableContainer("Wither");
 		variables.add("invul-time", new IntegerVariable("Invul", 0));
-		EntityNBTVariableManager.registerVariables(EntityType.WITHER, variables);
+		registerVariables(EntityType.WITHER, variables);
 		
 		
 		variables = new NBTGenericVariableContainer("PrimedTNT");
 		variables.add("fuse", new ByteVariable("Fuse", (byte) 0));
-		EntityNBTVariableManager.registerVariables(EntityType.PRIMED_TNT, variables);
+		registerVariables(EntityType.PRIMED_TNT, variables);
 		
 		
 		variables = new NBTGenericVariableContainer("Arrow");
 		variables.add("pickup", new ByteVariable("pickup", (byte) 0, (byte) 2));
 		variables.add("player", new BooleanVariable("player"));
 		variables.add("damage", new DoubleVariable("damage"));
-		EntityNBTVariableManager.registerVariables(EntityType.ARROW, variables);
+		registerVariables(EntityType.ARROW, variables);
 		
 		variables = new NBTGenericVariableContainer("Enderpearl");
 		variables.add("owner", new StringVariable("ownerName"));
-		EntityNBTVariableManager.registerVariables(EntityType.ENDER_PEARL, variables);
+		registerVariables(EntityType.ENDER_PEARL, variables);
 		
 		variables = new NBTGenericVariableContainer("LargeFireball");
 		variables.add("explosion-power", new IntegerVariable("ExplosionPower", 0, 25)); // Limited to 25
-		EntityNBTVariableManager.registerVariables(EntityType.FIREBALL, variables);
+		registerVariables(EntityType.FIREBALL, variables);
 		
-	}
-	
-	private static void registerEntity(EntityType entityType, Class<? extends EntityNBT> entityClass) {
-		_entityClasses.put(entityType, entityClass);
-	}
-	
-	private static EntityNBT newInstance(EntityType entityType) {
-		Class<? extends EntityNBT> entityClass = _entityClasses.get(entityType);
-		EntityNBT instance;
-		try {
-			instance = entityClass.newInstance();
-		} catch (Exception e) {
-			throw new RuntimeException("Error when instantiating " + entityClass.getName() + ".", e);
-		}
-		return instance;
-	}
-	
-	public static boolean isValidType(EntityType entityType) {
-		return _entityClasses.containsKey(entityType);
-	}
-	
-	public static Collection<EntityType> getValidEntityTypes() {
-		return _entityClasses.keySet();
-	}
-	
-	public static EntityNBT fromEntityType(EntityType entityType) {
-		if (_entityClasses.containsKey(entityType)) {
-			EntityNBT entityNbt = newInstance(entityType);
-			entityNbt.initialize(entityType, null);
-			return entityNbt;
-		}
-		return null;
-	}
-	
-	static EntityNBT fromEntityType(EntityType entityType, NBTTagCompound data) {
-		if (_entityClasses.containsKey(entityType)) {
-			EntityNBT entityNbt = newInstance(entityType);
-			entityNbt.initialize(entityType, data);
-			return entityNbt;
-		} else {
-			return new EntityNBT(entityType, data);
-		}
-	}
-	
-	public static EntityNBT fromEntity(Entity entity) {
-		EntityNBT entityNbt = fromEntityType(entity.getType(), NBTUtils.getEntityNBTData(entity));
-		// When cloning, remove the UUID to force all entities to have a unique one.
-		entityNbt._data.remove("UUIDMost");
-		entityNbt._data.remove("UUIDLeast");
-		return entityNbt;
 	}
 	
 	protected EntityNBT() {
@@ -274,20 +222,7 @@ public class EntityNBT {
 	}
 	
 	protected EntityNBT(EntityType entityType) {
-		_entityType = entityType;
-		_data = new NBTTagCompound();
-	}
-	
-	private EntityNBT(EntityType entityType, NBTTagCompound data) {
-		initialize(entityType, data);
-	}
-	
-	private void initialize(EntityType entityType, NBTTagCompound data) {
-		_entityType = entityType;
-		if (data != null) {
-			_data = data;
-		}
-		_data.setString("id", EntityTypeMap.getName(_entityType));
+		super(entityType);
 	}
 	
 	public void setPos(double x, double y, double z) {
@@ -304,30 +239,6 @@ public class EntityNBT {
 	
 	public void removeMotion() {
 		_data.remove("Motion");
-	}
-	
-	public EntityType getEntityType() {
-		return _entityType;
-	}
-	
-	public final Entity spawn(Location location) {
-		return NBTUtils.spawnEntity(_data, location);
-	}
-	
-	public NBTVariableContainer[] getAllVariables() {
-		return EntityNBTVariableManager.getAllVariables(this);
-	}
-	
-	public NBTVariable getVariable(String name) {
-		return EntityNBTVariableManager.getVariable(this, name);
-	}
-	
-	public String serialize() {
-		try {
-			return Base64.encodeBytes(_data.serialize(), Base64.GZIP);
-		} catch (Throwable e) {
-			throw new RuntimeException("Error serializing EntityNBT.", e);
-		}
 	}
 	
 	public EntityNBT getRiding() {
@@ -349,25 +260,6 @@ public class EntityNBT {
 			rider.setCompound("Riding", rideData);
 			rider = rideData;
 		}
-	}
-	
-	public static EntityNBT unserialize(String serializedData) {
-		try {
-			NBTTagCompound data = NBTTagCompound.unserialize(Base64.decode(serializedData));
-			return fromEntityType(EntityTypeMap.getByName(data.getString("id")), data);
-		} catch (Throwable e) {
-			throw new RuntimeException("Error unserializing EntityNBT.", e);
-		}
-	}
-	
-	public EntityNBT clone() {
-		return fromEntityType(_entityType, _data.clone());
-	}
-	
-	public String getMetadataString() {
-		NBTTagCompound data = _data.clone();
-		data.remove("id");
-		return data.toString();
 	}
 	
 }

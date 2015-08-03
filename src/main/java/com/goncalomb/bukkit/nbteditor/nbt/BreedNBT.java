@@ -28,7 +28,7 @@ public class BreedNBT extends MobNBT {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Breed");
 		variables.add("in-love", new IntegerVariable("InLove", 0));
 		variables.add("age", new IntegerVariable("Age"));
-		EntityNBTVariableManager.registerVariables(BreedNBT.class, variables);
+		registerVariables(BreedNBT.class, variables);
 	}
 	
 }

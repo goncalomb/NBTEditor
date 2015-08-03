@@ -29,7 +29,7 @@ public class TamedNBT extends BreedNBT {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Tameable");
 		variables.add("owner", new StringVariable("Owner"));
 		variables.add("sitting", new BooleanVariable("Sitting"));
-		EntityNBTVariableManager.registerVariables(TamedNBT.class, variables);
+		registerVariables(TamedNBT.class, variables);
 	}
 	
 }

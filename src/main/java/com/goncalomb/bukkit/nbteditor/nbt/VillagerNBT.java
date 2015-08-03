@@ -34,7 +34,7 @@ public class VillagerNBT extends BreedNBT {
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Villager");
 		variables.add("profession", new IntegerVariable("Profession", 0, 5));
-		EntityNBTVariableManager.registerVariables(VillagerNBT.class, variables);
+		registerVariables(VillagerNBT.class, variables);
 	}
 	
 	public void clearOffers() {

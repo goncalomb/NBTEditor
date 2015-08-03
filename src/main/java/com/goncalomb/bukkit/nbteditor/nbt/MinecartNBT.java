@@ -33,7 +33,7 @@ public class MinecartNBT extends EntityNBT {
 		variables.add("tile", new BlockVariable("DisplayTile", "DisplayData", false, true));
 		variables.add("tile-offset", new IntegerVariable("DisplayOffset"));
 		variables.add("name", new StringVariable("CustomName"));
-		EntityNBTVariableManager.registerVariables(MinecartNBT.class, variables);
+		registerVariables(MinecartNBT.class, variables);
 	}
 	
 }

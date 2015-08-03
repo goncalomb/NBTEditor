@@ -48,7 +48,7 @@ public class MobNBT extends EntityNBT {
 		variables.add("persistent", new BooleanVariable("PersistenceRequired"));
 		variables.add("name", new StringVariable("CustomName"));
 		variables.add("name-visible", new BooleanVariable("CustomNameVisible"));
-		EntityNBTVariableManager.registerVariables(MobNBT.class, variables);
+		registerVariables(MobNBT.class, variables);
 	}
 	
 	public void setEquipment(ItemStack hand, ItemStack feet, ItemStack legs, ItemStack chest, ItemStack head) {

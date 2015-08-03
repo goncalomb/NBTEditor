@@ -27,7 +27,7 @@ public class SlimeNBT extends MobNBT {
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Slime");
 		variables.add("size", new IntegerVariable("Size", -50, 50)); // Limited to 50
-		EntityNBTVariableManager.registerVariables(SlimeNBT.class, variables);
+		registerVariables(SlimeNBT.class, variables);
 	}
 	
 }
