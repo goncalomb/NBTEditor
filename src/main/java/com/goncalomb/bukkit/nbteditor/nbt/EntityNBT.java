@@ -19,18 +19,10 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import java.util.Collection;
-import java.util.HashMap;
-
-import net.iharder.Base64;
-
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BlockVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ByteVariable;
@@ -38,8 +30,6 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.DoubleVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.FloatVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.RotationVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
@@ -47,12 +37,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.VectorVariable;
 
 public class EntityNBT extends EntityNBTBase {
 	
-	private static HashMap<EntityType, Class<? extends EntityNBT>> _entityClasses;
-	
-	
 	static {
-		_entityClasses = new HashMap<EntityType, Class<? extends EntityNBT>>();
-		
 		registerEntity(EntityType.PIG, BreedNBT.class);
 		registerEntity(EntityType.SHEEP, BreedNBT.class);
 		registerEntity(EntityType.COW, BreedNBT.class);
@@ -103,7 +88,6 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.SNOWBALL, EntityNBT.class);
 		registerEntity(EntityType.EGG, EntityNBT.class);
 		registerEntity(EntityType.SPLASH_POTION, ThrownPotionNBT.class);
-		//registerEntity(EntityType.ENDER_SIGNAL, EntityNBT.class); // Broken cannot get it to work.
 		registerEntity(EntityType.FIREBALL, FireballNBT.class);
 		registerEntity(EntityType.SMALL_FIREBALL, FireballNBT.class);
 		registerEntity(EntityType.WITHER_SKULL, FireballNBT.class);
