@@ -38,9 +38,21 @@ import net.iharder.Base64;
 
 abstract class EntityNBTBase {
 
-	private static HashMap<EntityType, Class<? extends EntityNBT>> _entityClasses = new HashMap<EntityType, Class<? extends EntityNBT>>();
-	private static HashMap<Class<? extends EntityNBT>, NBTGenericVariableContainer> _entityVariables = new HashMap<Class<? extends EntityNBT>, NBTGenericVariableContainer>();
-	private static HashMap<EntityType, NBTGenericVariableContainer> _entityVariablesByType = new HashMap<EntityType, NBTGenericVariableContainer>();
+	private static HashMap<EntityType, Class<? extends EntityNBT>> _entityClasses;
+	private static HashMap<Class<? extends EntityNBT>, NBTGenericVariableContainer> _entityVariables;
+	private static HashMap<EntityType, NBTGenericVariableContainer> _entityVariablesByType;
+	
+	static {
+		_entityClasses = new HashMap<EntityType, Class<? extends EntityNBT>>();
+		_entityVariables = new HashMap<Class<? extends EntityNBT>, NBTGenericVariableContainer>();
+		_entityVariablesByType = new HashMap<EntityType, NBTGenericVariableContainer>();
+		// Force static initialization of the EntityNBT class.
+		try {
+			Class.forName(EntityNBT.class.getName());
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
 	
 	static void registerVariables(Class<? extends EntityNBT> entityClass, NBTGenericVariableContainer variables) {
 		_entityVariables.put(entityClass, variables);
