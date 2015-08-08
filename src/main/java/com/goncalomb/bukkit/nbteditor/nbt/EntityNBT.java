@@ -120,7 +120,7 @@ public class EntityNBT extends EntityNBTBase {
 		registerVariables(EntityType.PIG, variables);
 		
 		variables = new NBTGenericVariableContainer("Sheep");
-		variables.add("sheared", new BooleanVariable("Saddle"));
+		variables.add("sheared", new BooleanVariable("Sheared"));
 		variables.add("color", new ByteVariable("Color", (byte) 0, (byte) 15));
 		registerVariables(EntityType.SHEEP, variables);
 		
