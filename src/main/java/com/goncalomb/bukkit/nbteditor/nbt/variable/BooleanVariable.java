@@ -30,9 +30,10 @@ public final class BooleanVariable extends NBTGenericVariable{
 	}
 	
 	boolean set(NBTTagCompound data, String value) {
-		if (value.equalsIgnoreCase("true")) {
+		String lower = value.toLowerCase();
+		if ("true".startsWith(lower)) {
 			data.setByte(_nbtKey, (byte)1);
-		} else if (value.equalsIgnoreCase("false")) {
+		} else if ("false".startsWith(lower)) {
 			data.setByte(_nbtKey, (byte)0);
 		} else {
 			return false;
