@@ -113,6 +113,7 @@ public class EntityNBT extends EntityNBTBase {
 		variables.add("Fire", new ShortVariable("Fire"));
 		variables.add("Air", new ShortVariable("Air", (short) 0, (short) 200));
 		variables.add("Invulnerable", new BooleanVariable("Invulnerable"));
+		variables.add("Silent", new BooleanVariable("Silent"));
 		registerVariables(EntityNBT.class, variables);
 		
 		variables = new NBTGenericVariableContainer("Pig");
@@ -123,6 +124,10 @@ public class EntityNBT extends EntityNBTBase {
 		variables.add("Sheared", new BooleanVariable("Sheared"));
 		variables.add("Color", new ByteVariable("Color", (byte) 0, (byte) 15));
 		registerVariables(EntityType.SHEEP, variables);
+		
+		variables = new NBTGenericVariableContainer("Chicken");
+		variables.add("EggLayTime", new IntegerVariable("EggLayTime"));
+		registerVariables(EntityType.CHICKEN, variables);
 		
 		variables = new NBTGenericVariableContainer("Wolf");
 		variables.add("Angry", new BooleanVariable("Angry"));
