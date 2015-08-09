@@ -91,6 +91,7 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.FIREBALL, FireballNBT.class);
 		registerEntity(EntityType.SMALL_FIREBALL, FireballNBT.class);
 		registerEntity(EntityType.WITHER_SKULL, FireballNBT.class);
+		registerEntity(EntityType.ARMOR_STAND, EntityNBT.class);
 		
 		registerEntity(EntityType.BOAT, EntityNBT.class);
 		
@@ -203,6 +204,15 @@ public class EntityNBT extends EntityNBTBase {
 		variables = new NBTGenericVariableContainer("LargeFireball");
 		variables.add("ExplosionPower", new IntegerVariable("ExplosionPower", 0, 25)); // Limited to 25
 		registerVariables(EntityType.FIREBALL, variables);
+		
+		variables = new NBTGenericVariableContainer("ArmorStand");
+		variables.add("Marker", new BooleanVariable("Marker"));
+		variables.add("Invisible", new BooleanVariable("Invisible"));
+		variables.add("NoBasePlate", new BooleanVariable("NoBasePlate"));
+		variables.add("NoGravity", new BooleanVariable("NoGravity"));
+		variables.add("ShowArms", new BooleanVariable("ShowArms"));
+		variables.add("Small", new BooleanVariable("Small"));
+		registerVariables(EntityType.ARMOR_STAND, variables);
 		
 	}
 	
