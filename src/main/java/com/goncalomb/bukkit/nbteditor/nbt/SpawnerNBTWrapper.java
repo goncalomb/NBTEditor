@@ -43,13 +43,13 @@ public final class SpawnerNBTWrapper {
 	
 	static {
 		_variables = new NBTGenericVariableContainer("Spawner");
-		_variables.add("count", new ShortVariable("SpawnCount", (short) 0));
-		_variables.add("range", new ShortVariable("SpawnRange", (short) 0));
-		_variables.add("delay", new ShortVariable("Delay", (short) 0));
-		_variables.add("min-delay", new ShortVariable("MinSpawnDelay", (short) 0));
-		_variables.add("max-delay", new ShortVariable("MaxSpawnDelay", (short) 0));
-		_variables.add("max-entities", new ShortVariable("MaxNearbyEntities", (short) 0));
-		_variables.add("player-range", new ShortVariable("RequiredPlayerRange", (short) 0));
+		_variables.add("Count", new ShortVariable("SpawnCount", (short) 0));
+		_variables.add("Range", new ShortVariable("SpawnRange", (short) 0));
+		_variables.add("Delay", new ShortVariable("Delay", (short) 0));
+		_variables.add("MinDelay", new ShortVariable("MinSpawnDelay", (short) 0));
+		_variables.add("MaxDelay", new ShortVariable("MaxSpawnDelay", (short) 0));
+		_variables.add("MaxEntities", new ShortVariable("MaxNearbyEntities", (short) 0));
+		_variables.add("PlayerRange", new ShortVariable("RequiredPlayerRange", (short) 0));
 	}
 	
 	private Block _spawnerBlock;

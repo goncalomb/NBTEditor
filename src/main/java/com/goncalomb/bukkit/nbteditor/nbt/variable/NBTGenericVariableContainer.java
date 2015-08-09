@@ -19,6 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
@@ -26,20 +27,26 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public final class NBTGenericVariableContainer {
 	
-	String _name;
+	private String _name;
+	private HashMap<String, String> _variableNames;
 	LinkedHashMap<String, NBTGenericVariable> _variables;
 	
 	public NBTGenericVariableContainer(String name) {
 		_name = name;
+		_variableNames = new HashMap<String, String>();
 		_variables = new LinkedHashMap<String, NBTGenericVariable>();
 	}
 	
 	public void add(String name, NBTGenericVariable variable) {
-		_variables.put(name, variable);
+		String lower = name.toLowerCase();
+		if (!_variableNames.containsKey(lower)) {
+			_variableNames.put(lower, name);
+			_variables.put(name, variable);
+		}
 	}
 	
 	public boolean hasVariable(String name) {
-		return _variables.containsKey(name);
+		return _variableNames.containsKey(name.toLowerCase());
 	}
 	
 	public String getName() {
@@ -55,8 +62,9 @@ public final class NBTGenericVariableContainer {
 	}
 	
 	public NBTVariable getVariable(String name, NBTTagCompound data) {
-		if (hasVariable(name)) {
-			return new NBTVariable(name, _variables.get(name), data);
+		String formalName = _variableNames.get(name.toLowerCase());
+		if (formalName != null) {
+			return new NBTVariable(formalName, _variables.get(formalName), data);
 		}
 		return null;
 	}

@@ -106,97 +106,97 @@ public class EntityNBT extends EntityNBTBase {
 		NBTGenericVariableContainer variables = null;
 		
 		variables = new NBTGenericVariableContainer("Entity");
-		variables.add("pos", new VectorVariable("Pos"));
-		variables.add("vel", new VectorVariable("Motion"));
-		variables.add("rot", new RotationVariable("Rotation"));
-		variables.add("fall-distance", new FloatVariable("FallDistance", 0.0f));
-		variables.add("fire", new ShortVariable("Fire"));
-		variables.add("air", new ShortVariable("Air", (short) 0, (short) 200));
-		variables.add("invulnerable", new BooleanVariable("Invulnerable"));
+		variables.add("Position", new VectorVariable("Pos"));
+		variables.add("Velocity", new VectorVariable("Motion"));
+		variables.add("Rotation", new RotationVariable("Rotation"));
+		variables.add("FallDistance", new FloatVariable("FallDistance", 0.0f));
+		variables.add("Fire", new ShortVariable("Fire"));
+		variables.add("Air", new ShortVariable("Air", (short) 0, (short) 200));
+		variables.add("Invulnerable", new BooleanVariable("Invulnerable"));
 		registerVariables(EntityNBT.class, variables);
 		
 		variables = new NBTGenericVariableContainer("Pig");
-		variables.add("saddle", new BooleanVariable("Saddle"));
+		variables.add("Saddle", new BooleanVariable("Saddle"));
 		registerVariables(EntityType.PIG, variables);
 		
 		variables = new NBTGenericVariableContainer("Sheep");
-		variables.add("sheared", new BooleanVariable("Sheared"));
-		variables.add("color", new ByteVariable("Color", (byte) 0, (byte) 15));
+		variables.add("Sheared", new BooleanVariable("Sheared"));
+		variables.add("Color", new ByteVariable("Color", (byte) 0, (byte) 15));
 		registerVariables(EntityType.SHEEP, variables);
 		
 		variables = new NBTGenericVariableContainer("Wolf");
-		variables.add("angry", new BooleanVariable("Angry"));
-		variables.add("collar-color", new ByteVariable("CollarColor", (byte) 0, (byte) 15));
+		variables.add("Angry", new BooleanVariable("Angry"));
+		variables.add("CollarColor", new ByteVariable("CollarColor", (byte) 0, (byte) 15));
 		registerVariables(EntityType.WOLF, variables);
 		
 		variables = new NBTGenericVariableContainer("Ocelot");
-		variables.add("cat-type", new IntegerVariable("CatType", 0, 3));
+		variables.add("Type", new IntegerVariable("CatType", 0, 3));
 		registerVariables(EntityType.OCELOT, variables);
 		
 		
 		variables = new NBTGenericVariableContainer("IronGolem");
-		variables.add("player-created", new BooleanVariable("PlayerCreated"));
+		variables.add("PlayerCreated", new BooleanVariable("PlayerCreated"));
 		registerVariables(EntityType.IRON_GOLEM, variables);
 		
 		
 		variables = new NBTGenericVariableContainer("PigZombie");
-		variables.add("anger", new ShortVariable("Anger"));
+		variables.add("Anger", new ShortVariable("Anger"));
 		registerVariables(EntityType.PIG_ZOMBIE, variables);
 		
 		variables = new NBTGenericVariableContainer("Ghast");
-		variables.add("explosion-power", new IntegerVariable("ExplosionPower", 0, 25)); // Limited to 25
+		variables.add("ExplosionPower", new IntegerVariable("ExplosionPower", 0, 25)); // Limited to 25
 		registerVariables(EntityType.GHAST, variables);
 		
 		variables = new NBTGenericVariableContainer("Skeleton");
-		variables.add("is-wither", new BooleanVariable("SkeletonType"));
+		variables.add("IsWither", new BooleanVariable("SkeletonType"));
 		registerVariables(EntityType.SKELETON, variables);
 		
 		variables = new NBTGenericVariableContainer("Creeper");
-		variables.add("powered", new BooleanVariable("powered"));
-		variables.add("explosion-radius", new ByteVariable("ExplosionRadius", (byte) 0, (byte) 25)); // Limited to 25
-		variables.add("fuse", new ShortVariable("Fuse", (short) 0));
+		variables.add("Powered", new BooleanVariable("powered"));
+		variables.add("ExplosionRadius", new ByteVariable("ExplosionRadius", (byte) 0, (byte) 25)); // Limited to 25
+		variables.add("Fuse", new ShortVariable("Fuse", (short) 0));
 		registerVariables(EntityType.CREEPER, variables);
 		
 		variables = new NBTGenericVariableContainer("Enderman");
-		variables.add("block", new BlockVariable("carried", "carriedData", true));
+		variables.add("Block", new BlockVariable("carried", "carriedData", true));
 		registerVariables(EntityType.ENDERMAN, variables);
 		
 		variables = new NBTGenericVariableContainer("Guardian");
-		variables.add("elder", new BooleanVariable("Elder"));
+		variables.add("Elder", new BooleanVariable("Elder"));
 		registerVariables(EntityType.GUARDIAN, variables);
 		
 		variables = new NBTGenericVariableContainer("Endermite");
-		variables.add("lifetime", new IntegerVariable("Lifetime"));
-		variables.add("player-spawned", new BooleanVariable("PlayerSpawned"));
+		variables.add("Lifetime", new IntegerVariable("Lifetime"));
+		variables.add("PlayerSpawned", new BooleanVariable("PlayerSpawned"));
 		registerVariables(EntityType.ENDERMITE, variables);
 		
 		variables = new NBTGenericVariableContainer("Rabbit");
-		variables.add("type", new IntegerVariable("RabbitType", 0, 99));
+		variables.add("Type", new IntegerVariable("RabbitType", 0, 99));
 		registerVariables(EntityType.RABBIT, variables);
 		
 		
 		variables = new NBTGenericVariableContainer("Wither");
-		variables.add("invul-time", new IntegerVariable("Invul", 0));
+		variables.add("InvulnerableTime", new IntegerVariable("Invul", 0));
 		registerVariables(EntityType.WITHER, variables);
 		
 		
 		variables = new NBTGenericVariableContainer("PrimedTNT");
-		variables.add("fuse", new ByteVariable("Fuse", (byte) 0));
+		variables.add("Fuse", new ByteVariable("Fuse", (byte) 0));
 		registerVariables(EntityType.PRIMED_TNT, variables);
 		
 		
 		variables = new NBTGenericVariableContainer("Arrow");
-		variables.add("pickup", new ByteVariable("pickup", (byte) 0, (byte) 2));
-		variables.add("player", new BooleanVariable("player"));
-		variables.add("damage", new DoubleVariable("damage"));
+		variables.add("Pickup", new ByteVariable("pickup", (byte) 0, (byte) 2));
+		variables.add("Player", new BooleanVariable("player"));
+		variables.add("Damage", new DoubleVariable("damage"));
 		registerVariables(EntityType.ARROW, variables);
 		
 		variables = new NBTGenericVariableContainer("Enderpearl");
-		variables.add("owner", new StringVariable("ownerName"));
+		variables.add("Owner", new StringVariable("ownerName"));
 		registerVariables(EntityType.ENDER_PEARL, variables);
 		
 		variables = new NBTGenericVariableContainer("LargeFireball");
-		variables.add("explosion-power", new IntegerVariable("ExplosionPower", 0, 25)); // Limited to 25
+		variables.add("ExplosionPower", new IntegerVariable("ExplosionPower", 0, 25)); // Limited to 25
 		registerVariables(EntityType.FIREBALL, variables);
 		
 	}

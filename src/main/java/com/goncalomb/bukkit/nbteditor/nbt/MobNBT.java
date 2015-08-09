@@ -40,14 +40,14 @@ public class MobNBT extends EntityNBT {
 	
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Mob");
-		variables.add("health", new FloatVariable("HealF", 0.0f));
-		variables.add("attack-time", new ShortVariable("AttackTime"));
-		variables.add("hurt-time", new ShortVariable("HurtTime"));
-		variables.add("death-time", new ShortVariable("DeathTime"));
-		variables.add("pick-loot", new BooleanVariable("CanPickUpLoot"));
-		variables.add("persistent", new BooleanVariable("PersistenceRequired"));
-		variables.add("name", new StringVariable("CustomName"));
-		variables.add("name-visible", new BooleanVariable("CustomNameVisible"));
+		variables.add("Health", new FloatVariable("HealF", 0.0f));
+		variables.add("AttackTime", new ShortVariable("AttackTime"));
+		variables.add("HurtTime", new ShortVariable("HurtTime"));
+		variables.add("DeathTime", new ShortVariable("DeathTime"));
+		variables.add("PickLoot", new BooleanVariable("CanPickUpLoot"));
+		variables.add("Persistent", new BooleanVariable("PersistenceRequired"));
+		variables.add("Name", new StringVariable("CustomName"));
+		variables.add("NameVisible", new BooleanVariable("CustomNameVisible"));
 		registerVariables(MobNBT.class, variables);
 	}
 	

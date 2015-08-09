@@ -29,10 +29,10 @@ public class MinecartNBT extends EntityNBT {
 	
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Minecart");
-		variables.add("display-tile", new BooleanVariable("CustomDisplayTile"));
-		variables.add("tile", new BlockVariable("DisplayTile", "DisplayData", false, true));
-		variables.add("tile-offset", new IntegerVariable("DisplayOffset"));
-		variables.add("name", new StringVariable("CustomName"));
+		variables.add("DisplayTile", new BooleanVariable("CustomDisplayTile"));
+		variables.add("Tile", new BlockVariable("DisplayTile", "DisplayData", false, true));
+		variables.add("TileOffset", new IntegerVariable("DisplayOffset"));
+		variables.add("Name", new StringVariable("CustomName"));
 		registerVariables(MinecartNBT.class, variables);
 	}
 	

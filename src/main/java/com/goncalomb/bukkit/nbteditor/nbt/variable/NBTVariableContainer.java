@@ -35,11 +35,11 @@ public final class NBTVariableContainer implements Iterable<NBTVariable> {
 	}
 	
 	public boolean hasVariable(String name) {
-		return _generic._variables.containsKey(name);
+		return _generic.hasVariable(name);
 	}
 	
 	public String getName() {
-		return _generic._name;
+		return _generic.getName();
 	}
 	
 	public Set<String> getVarNames() {
@@ -47,7 +47,7 @@ public final class NBTVariableContainer implements Iterable<NBTVariable> {
 	}
 	
 	public NBTVariable getVariable(String name) {
-		return new NBTVariable(name, _generic._variables.get(name), _data);
+		return _generic.getVariable(name, _data);
 	}
 	
 	public Iterator<NBTVariable> iterator() {

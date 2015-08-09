@@ -26,7 +26,7 @@ public class FireballNBT extends EntityNBT {
 	
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Fireball");
-		variables.add("power", new VectorVariable("power"));
+		variables.add("Power", new VectorVariable("power"));
 		registerVariables(FireballNBT.class, variables);
 	}
 	

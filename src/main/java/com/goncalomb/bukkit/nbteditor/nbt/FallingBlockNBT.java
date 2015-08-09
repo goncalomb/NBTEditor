@@ -34,12 +34,12 @@ public class FallingBlockNBT extends EntityNBT {
 	
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("FallingBlock");
-		variables.add("block", new BlockVariable("TileID", "Data"));
-		variables.add("time", new ByteVariable("Time", (byte)0));
-		variables.add("drop-item", new BooleanVariable("DropItem"));
-		variables.add("hurt-entities", new BooleanVariable("HurtEntities"));
-		variables.add("fall-hurt-amount", new FloatVariable("FallHurtAmount", 0));
-		variables.add("fall-hurt-max", new IntegerVariable("FallHurtMax", 0));
+		variables.add("Block", new BlockVariable("TileID", "Data"));
+		variables.add("Time", new ByteVariable("Time", (byte)0));
+		variables.add("DropItem", new BooleanVariable("DropItem"));
+		variables.add("HurtEntities", new BooleanVariable("HurtEntities"));
+		variables.add("FallHurtAmount", new FloatVariable("FallHurtAmount", 0));
+		variables.add("FallHurtMax", new IntegerVariable("FallHurtMax", 0));
 		registerVariables(FallingBlockNBT.class, variables);
 	}
 	

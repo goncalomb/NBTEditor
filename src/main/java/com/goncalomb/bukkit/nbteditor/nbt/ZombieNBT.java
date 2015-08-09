@@ -27,10 +27,10 @@ public class ZombieNBT extends MobNBT {
 	
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Zombie");
-		variables.add("is-villager", new BooleanVariable("IsVillager"));
-		variables.add("is-baby", new BooleanVariable("IsBaby"));
-		variables.add("conversion-time", new IntegerVariable("ConversionTime", -1));
-		variables.add("can-break-doors", new BooleanVariable("CanBreakDoors"));
+		variables.add("IsVillager", new BooleanVariable("IsVillager"));
+		variables.add("IsBaby", new BooleanVariable("IsBaby"));
+		variables.add("ConversionTime", new IntegerVariable("ConversionTime", -1));
+		variables.add("CanBreakDoors", new BooleanVariable("CanBreakDoors"));
 		registerVariables(ZombieNBT.class, variables);
 	}
 	

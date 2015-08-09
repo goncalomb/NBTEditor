@@ -31,13 +31,13 @@ public class MinecartSpawnerNBT extends MinecartNBT {
 	
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("MinecartSpawner");
-		variables.add("count", new ShortVariable("SpawnCount", (short) 0));
-		variables.add("range", new ShortVariable("SpawnRange", (short) 0));
-		variables.add("delay", new ShortVariable("Delay", (short) 0));
-		variables.add("min-delay", new ShortVariable("MinSpawnDelay", (short) 0));
-		variables.add("max-delay", new ShortVariable("MaxSpawnDelay", (short) 0));
-		variables.add("max-entities", new ShortVariable("MaxNearbyEntities", (short) 0));
-		variables.add("player-range", new ShortVariable("RequiredPlayerRange", (short) 0));
+		variables.add("Count", new ShortVariable("SpawnCount", (short) 0));
+		variables.add("Range", new ShortVariable("SpawnRange", (short) 0));
+		variables.add("Delay", new ShortVariable("Delay", (short) 0));
+		variables.add("MinDelay", new ShortVariable("MinSpawnDelay", (short) 0));
+		variables.add("MaxDelay", new ShortVariable("MaxSpawnDelay", (short) 0));
+		variables.add("MaxEntities", new ShortVariable("MaxNearbyEntities", (short) 0));
+		variables.add("PlayerRange", new ShortVariable("RequiredPlayerRange", (short) 0));
 		registerVariables(EntityType.MINECART_MOB_SPAWNER, variables);
 	}
 	

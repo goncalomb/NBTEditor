@@ -28,7 +28,7 @@ public class XPOrbNBT extends EntityNBT {
 	
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("XPOrb");
-		variables.add("value", new ShortVariable("Value", (short) 0));
+		variables.add("Value", new ShortVariable("Value", (short) 0));
 		registerVariables(EntityType.EXPERIENCE_ORB, variables);
 	}
 

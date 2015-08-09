@@ -32,8 +32,8 @@ public final class FireworkNBT extends EntityNBT {
 	
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Firework");
-		variables.add("life", new IntegerVariable("Life", 0, 200)); // Limited to 200
-		variables.add("lifetime", new IntegerVariable("LifeTime", 0, 200)); // Limited to 200
+		variables.add("Life", new IntegerVariable("Life", 0, 200)); // Limited to 200
+		variables.add("Lifetime", new IntegerVariable("LifeTime", 0, 200)); // Limited to 200
 		registerVariables(FireworkNBT.class, variables);
 	}
 	

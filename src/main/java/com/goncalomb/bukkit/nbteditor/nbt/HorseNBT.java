@@ -29,12 +29,12 @@ public final class HorseNBT extends BreedNBT {
 	
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Horse");
-		variables.add("type", new IntegerVariable("Type", 0, 4));
-		variables.add("tamed", new BooleanVariable("Tame"));
-		variables.add("chested", new BooleanVariable("ChestedHorse"));
-		variables.add("eating", new BooleanVariable("EatingHaystack"));
-		variables.add("owner", new StringVariable("OwnerName"));
-		variables.add("variant", new HorseVariantVariable());
+		variables.add("Type", new IntegerVariable("Type", 0, 4));
+		variables.add("Tamed", new BooleanVariable("Tame"));
+		variables.add("Chested", new BooleanVariable("ChestedHorse"));
+		variables.add("Eating", new BooleanVariable("EatingHaystack"));
+		variables.add("Owner", new StringVariable("OwnerName"));
+		variables.add("Variant", new HorseVariantVariable());
 		registerVariables(HorseNBT.class, variables);
 	}
 	
