@@ -157,8 +157,22 @@ public class CommandBOS extends MyCommand {
 	}
 	
 	@TabComplete(args = "var")
-	public List<String> var_tab(CommandSender sender, String[] args) {
-		return (args.length == 1 ? findBosVars((Player) sender, args[0]) : null);
+	public List<String> var_tab(CommandSender sender, String[] args) throws MyCommandException /* Never throws */ {
+		if (args.length == 1) {
+			return findBosVars((Player) sender, args[0]);
+		} else if (args.length == 2) {
+			BookOfSouls bos = getBos((Player) sender, true);
+			if (bos != null) {
+				NBTVariable variable = bos.getEntityNBT().getVariable(args[0]);
+				if (variable != null) {
+					List<String> possibleValues = variable.getPossibleValues();
+					if (possibleValues != null) {
+						return Utils.getElementsWithPrefix(possibleValues, args[1]);
+					}
+				}
+			}
+		}
+		return null;
 	}
 	
 	@Command(args = "clearvar", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<variable>")

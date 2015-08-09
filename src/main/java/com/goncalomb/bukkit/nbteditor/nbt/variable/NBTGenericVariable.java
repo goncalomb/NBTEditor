@@ -19,6 +19,8 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
+import java.util.List;
+
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public abstract class NBTGenericVariable {
@@ -38,5 +40,9 @@ public abstract class NBTGenericVariable {
 	}
 	
 	abstract String getFormat();
+	
+	public List<String> getPossibleValues() {
+		return null;
+	}
 	
 }

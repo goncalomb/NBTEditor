@@ -19,11 +19,17 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public final class BooleanVariable extends NBTGenericVariable{
+	
+	private static final List<String> POSSIBLE_VALUES = Collections.unmodifiableList(Arrays.asList(new String[] { "true", "false" }));
 
 	public BooleanVariable(String nbtKey) {
 		super(nbtKey);
@@ -50,6 +56,10 @@ public final class BooleanVariable extends NBTGenericVariable{
 	
 	String getFormat() {
 		return Lang._(NBTEditor.class, "variable.formats.boolean");
+	}
+	
+	public List<String> getPossibleValues() {
+		return POSSIBLE_VALUES;
 	}
 	
 }

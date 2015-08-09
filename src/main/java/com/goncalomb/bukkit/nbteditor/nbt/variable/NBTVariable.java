@@ -19,6 +19,8 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
+import java.util.List;
+
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public final class NBTVariable {
@@ -51,6 +53,10 @@ public final class NBTVariable {
 	
 	public String getFormat() {
 		return _generic.getFormat();
+	}
+	
+	public List<String> getPossibleValues() {
+		return _generic.getPossibleValues();
 	}
 	
 }
