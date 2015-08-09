@@ -19,6 +19,10 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.bukkit.Material;
 
 import com.goncalomb.bukkit.mylib.Lang;
@@ -26,6 +30,27 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public final class BlockVariable extends NBTGenericVariable2X {
+
+	private static final List<String> POSSIBLE_VALUES;
+	private static final List<String> POSSIBLE_VALUES_SHORT;
+	
+	static {
+		Material[] allMats = Material.values();
+		List<String> possibleValues = new ArrayList<String>(allMats.length);
+		List<String> possibleValuesShort = new ArrayList<String>(allMats.length);
+		for (Material mat : allMats) {
+			if (mat.isBlock()) {
+				possibleValues.add(mat.toString() + ":0");
+				if (mat.getId() <= 127) {
+					possibleValuesShort.add(mat.toString() + ":0");
+				}
+			}
+		}
+		Collections.sort(possibleValues, String.CASE_INSENSITIVE_ORDER);
+		Collections.sort(possibleValuesShort, String.CASE_INSENSITIVE_ORDER);
+		POSSIBLE_VALUES = Collections.unmodifiableList(possibleValues);
+		POSSIBLE_VALUES_SHORT = Collections.unmodifiableList(possibleValuesShort);
+	}
 	
 	private boolean _asShort;
 	private boolean _dataAsInt;
@@ -107,6 +132,10 @@ public final class BlockVariable extends NBTGenericVariable2X {
 	
 	String getFormat() {
 		return Lang._(NBTEditor.class, "variable.formats.block");
+	}
+	
+	public List<String> getPossibleValues() {
+		return (_asShort ? POSSIBLE_VALUES_SHORT : POSSIBLE_VALUES);
 	}
 	
 }
