@@ -212,6 +212,12 @@ public class EntityNBT extends EntityNBTBase {
 		variables.add("NoGravity", new BooleanVariable("NoGravity"));
 		variables.add("ShowArms", new BooleanVariable("ShowArms"));
 		variables.add("Small", new BooleanVariable("Small"));
+		variables.add("PoseBody", new RotationVariable("Body", true, "Pose"));
+		variables.add("PoseLeftArm", new RotationVariable("LeftArm", true, "Pose"));
+		variables.add("PoseRightArm", new RotationVariable("RightArm", true, "Pose"));
+		variables.add("PoseLeftLeg", new RotationVariable("LeftLeg", true, "Pose"));
+		variables.add("PoseRightLeg", new RotationVariable("RightLeg", true, "Pose"));
+		variables.add("PoseHead", new RotationVariable("Head", true, "Pose"));
 		registerVariables(EntityType.ARMOR_STAND, variables);
 		
 	}
