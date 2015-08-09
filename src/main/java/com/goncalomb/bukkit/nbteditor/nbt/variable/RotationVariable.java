@@ -24,36 +24,81 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public class RotationVariable extends NBTGenericVariable {
+	
+	private int _count;
+	private String _parentNbtKey;
+
+	public RotationVariable(String nbtKey, boolean triple, String parentNbtKey) {
+		super(nbtKey);
+		_count = (triple ? 3 : 2);
+		_parentNbtKey = parentNbtKey;
+	}
 
 	public RotationVariable(String nbtKey) {
-		super(nbtKey);
+		this(nbtKey, false, null);
 	}
 	
 	boolean set(NBTTagCompound data, String value) {
-		String[] pieces = value.replace(',', '.').split("\\s+", 2);
-		float yaw, pitch;
-		if (pieces.length == 2) {
+		String[] pieces = value.replace(',', '.').split("\\s+", _count);
+		if (pieces.length == _count) {
+			Object[] values = new Object[_count];
 			try {
-				yaw = Float.parseFloat(pieces[0]);
-				pitch = Float.parseFloat(pieces[1]);
+				for (int i = 0; i < _count; i++) {
+					values[i] = Float.parseFloat(pieces[i]);
+				}
 			} catch (NumberFormatException e) {
 				return false;
 			}
-			data.setList(_nbtKey, yaw, pitch);
+			if (_parentNbtKey != null) {
+				NBTTagCompound subData = data.getCompound(_parentNbtKey);
+				if (subData == null) {
+					subData = new NBTTagCompound();
+					data.setCompound(_parentNbtKey, subData);
+				}
+				data = subData;
+			}
+			data.setList(_nbtKey, values);
 			return true;
 		}
 		return false;
 	}
 	
 	String get(NBTTagCompound data) {
+		if (_parentNbtKey != null) {
+			data = data.getCompound(_parentNbtKey);
+			if (data == null) {
+				return null;
+			}
+		}
 		if (data.hasKey(_nbtKey)) {
 			Object[] vector = data.getListAsArray(_nbtKey);
-			return (Float) vector[0] + " " + (Float) vector[1];
+			if (vector.length == 2) {
+				return (Float) vector[0] + "";
+			} else if (vector.length == 3) {
+				return (Float) vector[0] + " " + (Float) vector[1];
+			}
 		}
 		return null;
 	}
 	
+	void clear(NBTTagCompound data) {
+		if (_parentNbtKey == null) {
+			super.clear(data);
+		} else {
+			NBTTagCompound subData = data.getCompound(_parentNbtKey);
+			if (subData != null) {
+				subData.remove(_nbtKey);
+				if (subData.isEmpty()) {
+					data.remove(_parentNbtKey);
+				}
+			}
+		}
+	}
+	
 	String getFormat() {
+		if (_count == 3) {
+			return Lang._(NBTEditor.class, "variable.formats.rotation3");
+		}
 		return Lang._(NBTEditor.class, "variable.formats.rotation");
 	}
 
