@@ -172,6 +172,18 @@ public final class NBTTagCompound extends NBTBase {
 		_map.remove(key);
 	}
 	
+	public int size() {
+		return _map.size();
+	}
+	
+	public boolean isEmpty() {
+		return _map.isEmpty();
+	}
+	
+	public void clear() {
+		_map.clear();
+	}
+	
 	public byte[] serialize() {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		serialize(out);
