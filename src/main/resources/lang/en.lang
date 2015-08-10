@@ -96,8 +96,7 @@ commands.nbtenchant.description=Used to enchant any item without limitation. Als
 commands.nbtenchant.invalid-enchant=§cInvalid enchantment.
 commands.nbtenchant.added=§aEnchantment added.
 commands.nbtenchant.removed=§aEnchantment removed.
-commands.nbtenchant.info=§eUse level = 0 to remove enchantments. Use 'glow' as enchantment name to apply only the glow effect.
-commands.nbtenchant.glow=§aGlow added.
+commands.nbtenchant.info=§eUse level = 0 to remove enchantments.
 commands.nbtenchant.cleared=§aAll enchantments removed.
 
 commands.nbthead.description=Used to get players heads (skulls).

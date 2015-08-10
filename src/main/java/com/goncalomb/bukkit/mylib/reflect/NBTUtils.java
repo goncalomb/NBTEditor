@@ -213,10 +213,4 @@ public final class NBTUtils {
 		Object handle = BukkitReflect.getFieldValue(item, _CraftItemStack_handle);
 		BukkitReflect.invokeMethod(handle, _ItemStack_setTag, tag._handle);
 	}
-	
-	public static void setItemStackFakeEnchantment(ItemStack item) {
-		NBTTagCompound tag = getItemStackTag(item);
-		tag.setList("ench", new NBTTagList());
-		setItemStackTag(item, tag);
-	}
 }

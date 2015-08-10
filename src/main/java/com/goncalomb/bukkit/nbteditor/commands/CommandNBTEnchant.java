@@ -32,7 +32,6 @@ import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.namemaps.EnchantmentsMap;
-import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
@@ -46,11 +45,6 @@ public class CommandNBTEnchant extends MyCommand {
 	public boolean enchantCommand(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length > 0) {
 			HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
-			if (args[0].equalsIgnoreCase("glow")) {
-				NBTUtils.setItemStackFakeEnchantment(item.item);
-				sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtenchant.glow"));
-				return true;
-			}
 			Enchantment enchant = EnchantmentsMap.getByName(args[0]);
 			if (enchant == null) {
 				sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtenchant.invalid-enchant"));
@@ -87,19 +81,10 @@ public class CommandNBTEnchant extends MyCommand {
 	public List<String> tab(CommandSender sender, String[] args) {
 		if (args.length == 1) {
 			List<String> names = new ArrayList<String>(EnchantmentsMap.getNames());
-			names.add("glow");
 			names.add("clear");
 			return Utils.getElementsWithPrefix(names, args[0]);
 		}
 		return null;
-	}
-	
-	@Command(args = "glow", type = CommandType.PLAYER_ONLY)
-	public boolean enchant_glowCommand(CommandSender sender, String[] args) throws MyCommandException {
-		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
-		NBTUtils.setItemStackFakeEnchantment(item.item);
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtenchant.glow"));
-		return true;
 	}
 	
 	@Command(args = "clear", type = CommandType.PLAYER_ONLY)

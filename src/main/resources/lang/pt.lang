@@ -96,8 +96,7 @@ commands.nbtenchant.description=Usado para encantar qualquer item sem limitaçã
 commands.nbtenchant.invalid-enchant=§cEncantamento inválido.
 commands.nbtenchant.added=§aEncantamento adicionado.
 commands.nbtenchant.removed=§aEncantamento removido.
-commands.nbtenchant.info=§eUsa nível = 0 para remover encantamentos. Usa 'glow' como nome do encantamento para aplicar apenas o brilho.
-commands.nbtenchant.glow=§aBrilho adicionado.
+commands.nbtenchant.info=§eUsa nível = 0 para remover encantamentos.
 commands.nbtenchant.cleared=§aTodos os encahntamentos removidos.
 
 commands.nbthead.description=Usado para obter cabeças de jogadores.
