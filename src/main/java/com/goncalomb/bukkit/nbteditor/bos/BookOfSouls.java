@@ -24,8 +24,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-import net.iharder.Base64;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -52,6 +50,8 @@ import com.goncalomb.bukkit.nbteditor.nbt.attributes.Attribute;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.Modifier;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
+
+import net.iharder.Base64;
 
 public class BookOfSouls {
 	
