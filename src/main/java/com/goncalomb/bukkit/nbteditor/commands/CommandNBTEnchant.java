@@ -28,12 +28,10 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.namemaps.EnchantmentsMap;
 import com.goncalomb.bukkit.mylib.utils.Utils;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public class CommandNBTEnchant extends MyCommand {
 	
@@ -47,7 +45,7 @@ public class CommandNBTEnchant extends MyCommand {
 			HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 			Enchantment enchant = EnchantmentsMap.getByName(args[0]);
 			if (enchant == null) {
-				sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtenchant.invalid-enchant"));
+				sender.sendMessage("§cInvalid enchantment.");
 			} else {
 				int level = enchant.getMaxLevel();
 				if (args.length == 2) {
@@ -59,21 +57,21 @@ public class CommandNBTEnchant extends MyCommand {
 					} else {
 						item.meta.removeEnchant(enchant);
 					}
-					sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtenchant.removed"));
+					sender.sendMessage("§aEnchantment removed.");
 				} else {
 					if (item.item.getType() == Material.ENCHANTED_BOOK) {
 						((EnchantmentStorageMeta) item.meta).addStoredEnchant(enchant, level, true);
 					} else {
 						item.meta.addEnchant(enchant, level, true);
 					}
-					sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtenchant.added"));
+					sender.sendMessage("§aEnchantment added.");
 				}
 				item.save();
 				return true;
 			}
 		}
-		sender.sendMessage(Lang._(NBTEditor.class, "enchants-prefix") + EnchantmentsMap.getNamesAsString());
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtenchant.info"));
+		sender.sendMessage("§7Enchantments:" + EnchantmentsMap.getNamesAsString());
+		sender.sendMessage("§eUse level = 0 to remove enchantments.");
 		return false;
 	}
 	
@@ -94,7 +92,7 @@ public class CommandNBTEnchant extends MyCommand {
 			item.meta.removeEnchant(ench);
 		}
 		item.save();
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtenchant.cleared"));
+		sender.sendMessage("§aAll enchantments removed.");
 		return true;
 	}
 	

@@ -27,8 +27,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.goncalomb.bukkit.mylib.Lang;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.nbt.FireworkNBT;
 
 public final class InventoryForFirework extends InventoryForSingleItem {
@@ -36,13 +34,13 @@ public final class InventoryForFirework extends InventoryForSingleItem {
 	private static HashMap<Integer, ItemStack> _placeholders = new HashMap<Integer, ItemStack>();
 	
 	static {
-		_placeholders.put(4, createPlaceholder(Material.PAPER, Lang._(NBTEditor.class, "bos.firework.pholder")));
+		_placeholders.put(4, createPlaceholder(Material.PAPER, "§6The firework rocket goes here."));
 	}
 	
 	private BookOfSouls _bos;
 	
 	public InventoryForFirework(BookOfSouls bos, Player owner) {
-		super(Lang._(NBTEditor.class, "bos.firework.title"), _placeholders, ((FireworkNBT) bos.getEntityNBT()).getFirework(), bos, owner);
+		super("Define the firework here...", _placeholders, ((FireworkNBT) bos.getEntityNBT()).getFirework(), bos, owner);
 		_bos = bos;
 	}
 	
@@ -51,7 +49,7 @@ public final class InventoryForFirework extends InventoryForSingleItem {
 		super.inventoryClick(event);
 		ItemStack itemToCheck = getItemToCheck(event);
 		if (itemToCheck != null && itemToCheck.getType() != Material.FIREWORK) {
-			((Player)event.getWhoClicked()).sendMessage(Lang._(NBTEditor.class, "bos.firework.nop"));
+			((Player)event.getWhoClicked()).sendMessage("§cThat must be a firework rocket!");
 			event.setCancelled(true);
 		}
 	}
@@ -60,7 +58,7 @@ public final class InventoryForFirework extends InventoryForSingleItem {
 	protected void inventoryClose(InventoryCloseEvent event) {
 		((FireworkNBT) _bos.getEntityNBT()).setFirework(getContents()[4]);
 		_bos.saveBook();
-		((Player)event.getPlayer()).sendMessage(Lang._(NBTEditor.class, "bos.firework.done"));
+		((Player)event.getPlayer()).sendMessage("§aFirework rocket set.");
 	}
 
 }

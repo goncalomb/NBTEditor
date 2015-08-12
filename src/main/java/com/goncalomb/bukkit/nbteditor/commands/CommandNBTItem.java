@@ -30,7 +30,6 @@ import org.bukkit.block.CommandBlock;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.command.MyCommandManager;
@@ -38,7 +37,6 @@ import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeType;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.ItemModifier;
 
@@ -60,7 +58,7 @@ public class CommandNBTItem extends MyCommand {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		item.meta.setDisplayName(args.length == 0 ? null : UtilsMc.parseColors(StringUtils.join(args, " ")));
 		item.save();
-		sender.sendMessage(args.length == 0 ? Lang._(NBTEditor.class, "commands.nbtitem.name-removed") : Lang._(NBTEditor.class, "commands.nbtitem.renamed"));
+		sender.sendMessage(args.length == 0 ? "§aItem name removed." : "§aItem renamed.");
 		return true;
 	}
 	
@@ -74,7 +72,7 @@ public class CommandNBTItem extends MyCommand {
 		lores.add(UtilsMc.parseColors(StringUtils.join(args, " ")));
 		item.meta.setLore(lores);
 		item.save();
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.lore-added"));
+		sender.sendMessage("§aItem lore line added.");
 		return true;
 	}
 	
@@ -84,14 +82,14 @@ public class CommandNBTItem extends MyCommand {
 		List<String> lores = item.meta.getLore();
 		int index = Utils.parseInt(args[0], -1);
 		if (index < 1) {
-			sender.sendMessage(Lang._(NBTEditor.class, "invalid-index"));
+			sender.sendMessage("§cInvalid index. The index is an integer greater than 0.");
 		} else if (lores == null || index > lores.size()) {
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.lore-nop", index));
+			sender.sendMessage(String.format("§cLore line with index {0} doesn''t exist!", index));
 		} else {
 			lores.remove(index - 1);
 			item.meta.setLore(lores);
 			item.save();
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.lore-removed"));
+			sender.sendMessage("§aItem lore line removed.");
 		}
 		return true;
 	}
@@ -101,7 +99,7 @@ public class CommandNBTItem extends MyCommand {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		item.meta.setLore(null);
 		item.save();
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.lore-cleared"));
+		sender.sendMessage("§aItem lore cleared.");
 		return true;
 	}
 	
@@ -111,18 +109,18 @@ public class CommandNBTItem extends MyCommand {
 			HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 			AttributeType attributeType = AttributeType.getByName(args[0]);
 			if (attributeType == null) {
-				sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.mod-invalid-attr"));
+				sender.sendMessage("§cInvalid attribute!");
 			} else {
 				int operation = Utils.parseInt(args[1], 2, 0, -1);
 				if (operation == -1) {
-					sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.mod-invalid-op"));
+					sender.sendMessage("§cOperation must be 0, 1 or 2!");
 					return true;
 				} else {
 					double amount;
 					try {
 						amount = Double.parseDouble(args[2]);
 					} catch (NumberFormatException e) {
-						sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.mod-invalid-amount"));
+						sender.sendMessage("§cAmount must be a number!");
 						return true;
 					}
 					String name = "Modifier";
@@ -132,12 +130,12 @@ public class CommandNBTItem extends MyCommand {
 					List<ItemModifier> modifiers = ItemModifier.getItemStackModifiers(item.item);
 					modifiers.add(new ItemModifier(attributeType, name, amount, operation));
 					ItemModifier.setItemStackModifiers(item.item, modifiers);
-					sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.mod-added"));
+					sender.sendMessage("§aItem modifier added.");
 					return true;
 				}
 			}
 		}
-		sender.sendMessage(Lang._(NBTEditor.class, "attributes-prefix") + StringUtils.join(AttributeType.values(), ", "));
+		sender.sendMessage("§7Attributes:" + StringUtils.join(AttributeType.values(), ", "));
 		return false;
 	}
 	
@@ -157,13 +155,13 @@ public class CommandNBTItem extends MyCommand {
 		List<ItemModifier> modifiers = ItemModifier.getItemStackModifiers(item.item);
 		int index = Utils.parseInt(args[0], -1);
 		if (index < 1) {
-			sender.sendMessage(Lang._(NBTEditor.class, "invalid-index"));
+			sender.sendMessage("§cInvalid index. The index is an integer greater than 0.");
 		} else if (index > modifiers.size()) {
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.mod-nop", index));
+			sender.sendMessage(String.format("§cModifier with index {0} doesn''t exist!", index));
 		} else {
 			modifiers.remove(index - 1);
 			ItemModifier.setItemStackModifiers(item.item, modifiers);
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.mod-removed"));
+			sender.sendMessage("§aItem modifier removed.");
 		}
 		return true;
 	}
@@ -172,7 +170,7 @@ public class CommandNBTItem extends MyCommand {
 	public boolean mod_delallCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		ItemModifier.setItemStackModifiers(item.item, new ArrayList<ItemModifier>());
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.mod-cleared"));
+		sender.sendMessage("§aModifiers cleared.");
 		return true;
 	}
 	
@@ -183,22 +181,22 @@ public class CommandNBTItem extends MyCommand {
 		if (block.getType() == Material.COMMAND) {
 			String command = "give";
 			if (!MyCommandManager.isVanillaCommand(command)) {
-				sender.sendMessage(Lang._(NBTEditor.class, "non-vanilla-command", command));
+				sender.sendMessage(String.format("§7Non-vanilla /{0} command detected, using /minecraft:{0}.", command));
 				command = "minecraft:" + command;
 			}
 			command = "/" + command + " @p " + BukkitReflect.getMaterialName(item.item.getType()) + " " + item.item.getAmount() + " " + item.item.getDurability() + " " + NBTUtils.getItemStackTag(item.item).toString();
 			// We spare 50 characters of space so people can change the player.
 			if (command.length() > 32767 - 50) {
-				sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtitem.too-complex"));
+				sender.sendMessage("§cItem too complex!");
 				return true;
 			}
 			CommandBlock commandBlock = (CommandBlock) block.getState();
 			commandBlock.setCommand(command);
 			commandBlock.update();
-			sender.sendMessage(Lang._(NBTEditor.class, "command-block.set"));
+			sender.sendMessage("§aCommand set.");
 			return true;
 		}
-		sender.sendMessage(Lang._(NBTEditor.class, "command-block.no-sight"));
+		sender.sendMessage("§cNo Command Block in sight!");
 		return true;
 	}
 	

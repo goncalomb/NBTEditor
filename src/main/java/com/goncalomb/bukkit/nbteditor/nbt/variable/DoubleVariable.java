@@ -19,9 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public final class DoubleVariable extends NBTGenericVariable {
 	
@@ -47,7 +45,7 @@ public final class DoubleVariable extends NBTGenericVariable {
 
 	@Override
 	String getFormat() {
-		return Lang._(NBTEditor.class, "variable.formats.double");
+		return "Decimal.";
 	}
 	
 }

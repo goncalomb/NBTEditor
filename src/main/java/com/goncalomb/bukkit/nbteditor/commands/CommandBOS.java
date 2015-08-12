@@ -36,14 +36,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.util.StringUtil;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.command.MyCommandManager;
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.FallingBlockNBT;
@@ -71,9 +69,9 @@ public class CommandBOS extends MyCommand {
 			if (bos != null) {
 				return bos;
 			}
-			throw new MyCommandException(Lang._(NBTEditor.class, "bos.corrupted"));
+			throw new MyCommandException("§cThat Book of Souls is corrupted!");
 		} else if (!nullIfMissing) {
-			throw new MyCommandException(Lang._(NBTEditor.class, "commands.bookofsouls.holding"));
+			throw new MyCommandException("§cYou must be holding a Book of Souls!");
 		}
 		return null;
 	}
@@ -106,15 +104,15 @@ public class CommandBOS extends MyCommand {
 				PlayerInventory inv = CommandUtils.checkFullInventory((Player) sender);
 				BookOfSouls bos = new BookOfSouls(EntityNBT.fromEntityType(entityType));
 				inv.addItem(bos.getBook());
-				sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.give"));
+				sender.sendMessage("§aEnjoy your Book of Souls.");
 				if (entityType == EntityType.ENDERMAN) {
 					sender.sendMessage(ChatColor.YELLOW + "(Enderman's carring block id is limited to 127 due to a minecraft bug)");
 				}
 				return true;
 			}
-			sender.sendMessage(Lang._(NBTEditor.class, "invalid-entity"));
+			sender.sendMessage("§cInvalid entity!");
 		}
-		sender.sendMessage(Lang._(NBTEditor.class, "entities-prefix") + StringUtils.join(EntityTypeMap.getNames(EntityNBT.getValidEntityTypes()), ", "));
+		sender.sendMessage("§7Entities:" + StringUtils.join(EntityTypeMap.getNames(EntityNBT.getValidEntityTypes()), ", "));
 		return false;
 	}
 	
@@ -126,7 +124,7 @@ public class CommandBOS extends MyCommand {
 	@Command(args = "getempty", type = CommandType.PLAYER_ONLY)
 	public boolean getemptyCommand(CommandSender sender, String[] args) throws MyCommandException {
 		CommandUtils.checkFullInventory((Player) sender).addItem(BookOfSouls.getEmpty());
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.give"));
+		sender.sendMessage("§aEnjoy your Book of Souls.");
 		return true;
 	}
 	
@@ -137,21 +135,21 @@ public class CommandBOS extends MyCommand {
 		if (variable != null) {
 			if(args.length >= 2) {
 				if (bos.getEntityNBT() instanceof FallingBlockNBT && ((FallingBlockNBT) bos.getEntityNBT()).hasTileEntityData() && variable.getName().equals("block")) {
-					sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.falling-block-nop"));
+					sender.sendMessage("§eThis BoS has special block data associated, you cannot change the 'block' variable.");
 					return true;
 				}
 				String value = UtilsMc.parseColors(StringUtils.join(args, " ", 1, args.length));
 				if (variable.setValue(value)) {
 					bos.saveBook();
-					sender.sendMessage(Lang._(NBTEditor.class, "variable.updated"));
+					sender.sendMessage("§aVariable updated.");
 					return true;
 				} else {
-					sender.sendMessage(Lang._(NBTEditor.class, "variable.invalid-format", args[0]));
+					sender.sendMessage(String.format("§cInvalid format for variable {0}!", args[0]));
 				}
 			}
 			sender.sendMessage(ChatColor.YELLOW + variable.getFormat());
 		} else {
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.no-variable", args[0]));
+			sender.sendMessage(String.format("§cThat Entity doesn''t have the variable {0}!", args[0]));
 		}
 		return true;
 	}
@@ -182,9 +180,9 @@ public class CommandBOS extends MyCommand {
 		if (variable != null) {
 			variable.clear();
 			bos.saveBook();
-			sender.sendMessage(Lang._(NBTEditor.class, "variable.cleared"));
+			sender.sendMessage("§aVariable cleared.");
 		} else {
-			sender.sendMessage(Lang._(NBTEditor.class, "variable.invalid-format", args[0]));
+			sender.sendMessage(String.format("§cInvalid format for variable {0}!", args[0]));
 		}
 		return true;
 	}
@@ -207,7 +205,7 @@ public class CommandBOS extends MyCommand {
 		Player player = (Player) sender;
 		BookOfSouls bos = getBos(player);
 		if (!bos.openInventory(player)) {
-			player.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.no-inventory"));
+			player.sendMessage("§cThat must be a Mob, Item, ThrownPotion or FireworkRocket entity!");
 		}
 		return true;
 	}
@@ -220,9 +218,9 @@ public class CommandBOS extends MyCommand {
 			page = CommandUtils.parseInt(args[0], 9, 0);
 		}
 		if (!getBos(player).openOffersInventory(player, page)) {
-			player.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.no-villager"));
+			player.sendMessage("§cThat must be a Villager entity!");
 		} else {
-			player.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.villager-info"));
+			player.sendMessage("§eEach column represents one offer.");
 		}
 		return true;
 	}
@@ -241,10 +239,10 @@ public class CommandBOS extends MyCommand {
 		if (args.length == 0) {
 			BookOfSouls bos = getBos(player);
 			if (!bos.clearMobDropChance()) {
-				player.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.no-mob"));
+				player.sendMessage("§cThat must be a Mob entity!");
 			} else {
 				bos.saveBook();
-				player.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.drop-chance.cleared"));
+				player.sendMessage("§aDrop chance cleared.");
 			}
 			return true;
 		} else if (args.length == 5) {
@@ -257,16 +255,16 @@ public class CommandBOS extends MyCommand {
 				feet = parseDropchanceFloat(args[3]);
 				hand = parseDropchanceFloat(args[4]);
 			} catch (NumberFormatException e) {
-				player.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.drop-chance.invalid"));
+				player.sendMessage("§cThe values must be between 0 and 1 inclusive or 2.");
 				return true;
 			}
 			
 			BookOfSouls bos = getBos(player);
 			if (!bos.setMobDropChance(head, chest, legs, feet, hand)) {
-				player.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.no-mob"));
+				player.sendMessage("§cThat must be a Mob entity!");
 			} else {
 				bos.saveBook();
-				player.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.drop-chance.set"));
+				player.sendMessage("§aDrop chance set.");
 			}
 			return true;
 		}
@@ -279,30 +277,30 @@ public class CommandBOS extends MyCommand {
 			BookOfSouls bos = getBos((Player) sender);
 			EntityNBT entityNbt = bos.getEntityNBT();
 			if (!(entityNbt instanceof MobNBT)) {
-				sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.no-mob"));
+				sender.sendMessage("§cThat must be a Mob entity!");
 				return true;
 			} else {
 				AttributeType attributeType = AttributeType.getByName(args[0]);
 				if (attributeType == null) {
-					sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.attr-invalid"));
+					sender.sendMessage("§cInvalid attribute!");
 				} else {
 					double base;
 					try {
 						base = Double.parseDouble(args[1]);
 					} catch (NumberFormatException e) {
-						sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.attr-invalid-base"));
+						sender.sendMessage("§cBase must be a number!");
 						return true;
 					}
 					AttributeContainer attributes = ((MobNBT) entityNbt).getAttributes();
 					attributes.setAttribute(new Attribute(attributeType, base));
 					((MobNBT) entityNbt).setAttributes(attributes);
 					bos.saveBook();
-					sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.attr-add"));
+					sender.sendMessage("§aEntity attribute added.");
 					return true;
 				}
 			}
 		}
-		sender.sendMessage(Lang._(NBTEditor.class, "attributes-prefix") + StringUtils.join(AttributeType.values(), ", "));
+		sender.sendMessage("§7Attributes:" + StringUtils.join(AttributeType.values(), ", "));
 		return false;
 	}
 	
@@ -317,26 +315,26 @@ public class CommandBOS extends MyCommand {
 			BookOfSouls bos = getBos((Player) sender);
 			EntityNBT entityNbt = bos.getEntityNBT();
 			if (!(entityNbt instanceof MobNBT)) {
-				sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.no-mob"));
+				sender.sendMessage("§cThat must be a Mob entity!");
 				return true;
 			} else {
 				AttributeType attributeType = AttributeType.getByName(args[0]);
 				if (attributeType == null) {
-					sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.attr-invalid"));
+					sender.sendMessage("§cInvalid attribute!");
 				} else {
 					AttributeContainer attributes = ((MobNBT) entityNbt).getAttributes();
 					if (attributes.removeAttribute(attributeType) != null) {
 						((MobNBT) entityNbt).setAttributes(attributes);
 						bos.saveBook();
-						sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.attr-del"));
+						sender.sendMessage("§aEntity attribute removed.");
 						return true;
 					}
-					sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.attr-nop", attributeType.toString()));
+					sender.sendMessage(String.format("§cThis entity does no have the attribute {0}!", attributeType.toString()));
 					return true;
 				}
 			}
 		}
-		sender.sendMessage(Lang._(NBTEditor.class, "attributes-prefix") + StringUtils.join(AttributeType.values(), ", "));
+		sender.sendMessage("§7Attributes:" + StringUtils.join(AttributeType.values(), ", "));
 		return false;
 	}
 	
@@ -364,10 +362,10 @@ public class CommandBOS extends MyCommand {
 		if (entityNbt instanceof MobNBT) {
 			((MobNBT) entityNbt).setAttributes(null);
 			bos.saveBook();
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.attr-cleared"));
+			sender.sendMessage("§aEntity attributes cleared.");
 			return true;
 		}
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.no-mob"));
+		sender.sendMessage("§cThat must be a Mob entity!");
 		return true;
 	}
 	
@@ -379,22 +377,22 @@ public class CommandBOS extends MyCommand {
 			EntityNBT entityNbt = bos.getEntityNBT();
 			String command = "summon";
 			if (!MyCommandManager.isVanillaCommand(command)) {
-				sender.sendMessage(Lang._(NBTEditor.class, "non-vanilla-command", command));
+				sender.sendMessage(String.format("§7Non-vanilla /{0} command detected, using /minecraft:{0}.", command));
 				command = "minecraft:" + command;
 			}
 			command = "/" + command + " " + EntityTypeMap.getName(entityNbt.getEntityType()) + " ~ ~1 ~ " + entityNbt.getMetadataString();
 			// We spare 50 characters of space so people can change the position.
 			if (command.length() > 32767 - 50) {
-				sender.sendMessage(Lang._(NBTEditor.class, "commands.bookofsouls.too-complex"));
+				sender.sendMessage("§cEntity too complex!");
 				return true;
 			}
 			CommandBlock commandBlock = (CommandBlock) block.getState();
 			commandBlock.setCommand(command);
 			commandBlock.update();
-			sender.sendMessage(Lang._(NBTEditor.class, "command-block.set"));
+			sender.sendMessage("§aCommand set.");
 			return true;
 		}
-		sender.sendMessage(Lang._(NBTEditor.class, "command-block.no-sight"));
+		sender.sendMessage("§cNo Command Block in sight!");
 		return true;
 	}
 	

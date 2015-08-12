@@ -24,11 +24,9 @@ import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.commands.HandItemWrapper.Book.BookType;
 
 public class CommandNBTBook extends MyCommand {
@@ -50,7 +48,7 @@ public class CommandNBTBook extends MyCommand {
 			item.meta.setPage(i, UtilsMc.parseColors(item.meta.getPage(i)));
 		}
 		item.save();
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtbook.colors"));
+		sender.sendMessage("§aColor codes have been replaced.");
 		return true;
 	}
 	
@@ -59,7 +57,7 @@ public class CommandNBTBook extends MyCommand {
 		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
 		item.meta.setTitle(UtilsMc.parseColors(UtilsMc.parseColors(StringUtils.join(args, " "))));
 		item.save();
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtbook.title"));
+		sender.sendMessage("§aBook title set.");
 		return true;
 	}
 	
@@ -68,7 +66,7 @@ public class CommandNBTBook extends MyCommand {
 		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
 		item.meta.setAuthor(UtilsMc.parseColors(UtilsMc.parseColors(StringUtils.join(args, " "))));
 		item.save();
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtbook.author"));
+		sender.sendMessage("§aBook author set.");
 		return true;
 	}
 	
@@ -79,7 +77,7 @@ public class CommandNBTBook extends MyCommand {
 		item.meta.setAuthor(null);
 		item.item.setType(Material.BOOK_AND_QUILL);
 		item.save();
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtbook.unsign"));
+		sender.sendMessage("§aBook unsigned.");
 		return true;
 	}
 	

@@ -33,7 +33,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.command.MyCommandManager;
@@ -43,7 +42,6 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.nbt.BeaconNBTWrapper;
 import com.goncalomb.bukkit.nbteditor.nbt.JukeboxNBTWrapper;
 import com.goncalomb.bukkit.nbteditor.nbt.TileNBTWrapper;
@@ -57,7 +55,7 @@ public class CommandNBTTile extends MyCommand {
 	private static BeaconNBTWrapper getBeacon(Player player) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock(player, 5);
 		if (block.getType() != Material.BEACON) {
-			throw new MyCommandException(Lang._(NBTEditor.class, "commands.nbttile.beacon.no-sight"));
+			throw new MyCommandException("§cNo beacon in sight!");
 		}
 		return new BeaconNBTWrapper(block);
 	}
@@ -65,7 +63,7 @@ public class CommandNBTTile extends MyCommand {
 	private static JukeboxNBTWrapper getJukebox(Player player) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock(player, 5);
 		if (block.getType() != Material.JUKEBOX) {
-			throw new MyCommandException(Lang._(NBTEditor.class, "commands.nbttile.jukebox.no-sight"));
+			throw new MyCommandException("§cNo jukebox in sight!");
 		}
 		return new JukeboxNBTWrapper(block);
 	}
@@ -79,7 +77,7 @@ public class CommandNBTTile extends MyCommand {
 			if (!clear) {
 				effect = PotionEffectsMap.getByName(args[1]);
 				if (effect == null) {
-					sender.sendMessage(Lang._(NBTEditor.class, "commands.nbttile.beacon.invalid-effect"));
+					sender.sendMessage("§cInvalid effect!");
 				}
 			}
 			if (clear || effect != null) {
@@ -89,12 +87,12 @@ public class CommandNBTTile extends MyCommand {
 					beacon.setSecondary(effect);
 				}
 				beacon.save();
-				sender.sendMessage(Lang._(NBTEditor.class, (clear ? "commands.nbttile.beacon.cleared" : "commands.nbttile.beacon.set"), args[0].toLowerCase()));
+				sender.sendMessage(String.format((clear ? "§aEffect cleared ({0})." : "§aEffect set ({0})."), args[0].toLowerCase()));
 				return true;
 			}
 		}
-		sender.sendMessage(Lang._(NBTEditor.class, "effects-prefix") + PotionEffectsMap.getNamesAsString());
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbttile.beacon.info"));
+		sender.sendMessage("§7Effects:" + PotionEffectsMap.getNamesAsString());
+		sender.sendMessage("§eUse 'clear' as affect clear the effect.");
 		return false;
 	}
 	
@@ -115,9 +113,9 @@ public class CommandNBTTile extends MyCommand {
 		jukebox.setRecord(item);
 		jukebox.save();
 		if (item == null || item.getType() == Material.AIR) {
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbttile.jukebox.cleared"));
+			sender.sendMessage("§aRecord cleared.");
 		} else {
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbttile.jukebox.set"));
+			sender.sendMessage("§aRecord set.");
 		}
 		return true;
 	}
@@ -129,9 +127,9 @@ public class CommandNBTTile extends MyCommand {
 			TileNBTWrapper tile = new TileNBTWrapper(block);
 			tile.setCustomName(args.length == 0 ? null : UtilsMc.parseColors(StringUtils.join(args, " ")));
 			tile.save();
-			sender.sendMessage(args.length == 0 ? Lang._(NBTEditor.class, "commands.nbttile.name.cleared") : Lang._(NBTEditor.class, "commands.nbttile.name.set"));
+			sender.sendMessage(args.length == 0 ? "§aName cleared." : "§aName set.");
 		} else {
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbttile.name.no-sight"));
+			sender.sendMessage("§cYou must be looking at a Chest, Furnace, Dispenser, Dropper, Hopper, Brewing Stand, Enchantment Table or Commmand Block!");
 		}
 		return true;
 	}
@@ -140,12 +138,12 @@ public class CommandNBTTile extends MyCommand {
 	public boolean colorsCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
 		if (block.getType() != Material.COMMAND) {
-			throw new MyCommandException(Lang._(NBTEditor.class, "command-block.no-sight"));
+			throw new MyCommandException("§cNo Command Block in sight!");
 		}
 		CommandBlock commandBlock = (CommandBlock) block.getState();
 		commandBlock.setCommand(UtilsMc.parseColors(commandBlock.getCommand()));
 		commandBlock.update();
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtbook.colors"));
+		sender.sendMessage("§aColor codes have been replaced.");
 		return true;
 	}
 	
@@ -153,13 +151,13 @@ public class CommandNBTTile extends MyCommand {
 	public boolean signCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
 		if (block.getType() != Material.SIGN_POST) {
-			throw new MyCommandException(Lang._(NBTEditor.class, "commands.nbttile.sign.no-sight"));
+			throw new MyCommandException("§cNo Sign in sight!");
 		}
 		int line = CommandUtils.parseInt(args[0], 4, 1);
 		Sign sign = (Sign) block.getState();
 		sign.setLine(line - 1, UtilsMc.parseColors(StringUtils.join(args, " ", 1, args.length)));
 		sign.update();
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbttile.line-set"));
+		sender.sendMessage("§aLine set.");
 		return true;
 	}
 	
@@ -167,12 +165,12 @@ public class CommandNBTTile extends MyCommand {
 	public boolean tocommandCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
 		if (block == null || block.getType() == Material.AIR) {
-			sender.sendMessage(Lang._(null, "no-sight"));
+			sender.sendMessage("§cNo block in sight!");
 			return true;
 		}
 		String command = "setblock";
 		if (!MyCommandManager.isVanillaCommand(command)) {
-			sender.sendMessage(Lang._(NBTEditor.class, "non-vanilla-command", command));
+			sender.sendMessage(String.format("§7Non-vanilla /{0} command detected, using /minecraft:{0}.", command));
 			command = "minecraft:" + command;
 		}
 		command = "/" + command + " " + block.getX() + " " + block.getY() + " " + block.getZ() + " " + BukkitReflect.getMaterialName(block.getType()) + " " + block.getData() + " destroy";
@@ -185,7 +183,7 @@ public class CommandNBTTile extends MyCommand {
 			command += " " + data.toString();
 			// We spare 50 characters of space so people can change the position.
 			if (command.length() > 32767 - 50) {
-				sender.sendMessage(Lang._(NBTEditor.class, "commands.nbttile.too-complex"));
+				sender.sendMessage("§cTile entity too complex!");
 				return true;
 			}
 		}
@@ -194,7 +192,7 @@ public class CommandNBTTile extends MyCommand {
 		CommandBlock commandBlock = (CommandBlock) newBlock.getState();
 		commandBlock.setCommand(command);
 		commandBlock.update();
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbttile.command-created"));
+		sender.sendMessage("§aCommand block created below the tile.");
 		return true;
 	}
 	

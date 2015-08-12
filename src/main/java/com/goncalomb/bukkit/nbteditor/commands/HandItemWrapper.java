@@ -27,16 +27,17 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public abstract class HandItemWrapper<T extends ItemMeta> {
 	
 	public static final class Item extends HandItemWrapper<ItemMeta> {
 		
 		public Item(Player player) throws MyCommandException {
-			super(ItemMeta.class, player, true);
+			super(ItemMeta.class, player);
+			if (meta == null) {
+				throw new MyCommandException("§cYou must be holding an Item.");
+			}
 		}
 		
 	}
@@ -44,7 +45,10 @@ public abstract class HandItemWrapper<T extends ItemMeta> {
 	public static final class Potion extends HandItemWrapper<PotionMeta> {
 		
 		public Potion(Player player) throws MyCommandException {
-			super(PotionMeta.class, player, true);
+			super(PotionMeta.class, player);
+			if (meta == null) {
+				throw new MyCommandException("§cYou must be holding a Potion.");
+			}
 		}
 		
 	}
@@ -54,9 +58,15 @@ public abstract class HandItemWrapper<T extends ItemMeta> {
 		public static enum BookType { BOTH, BOOK_AND_QUILL, WRITTEN }
 		
 		public Book(Player player, BookType bookType) throws MyCommandException {
-			super(BookMeta.class, player, (bookType == BookType.BOTH));
+			super(BookMeta.class, player);
 			if (meta == null) {
-				throw new MyCommandException(Lang._(NBTEditor.class, "meta-error.format", Lang._(NBTEditor.class, "meta-error.book-" + (bookType == BookType.BOOK_AND_QUILL ? "quill" : "written"))));
+				if (bookType == BookType.BOOK_AND_QUILL) {
+					throw new MyCommandException("§cYou must be holding a Book and Quill or a Written Book.");
+				} else if (bookType == BookType.WRITTEN) {
+					throw new MyCommandException("§cYou must be holding a Book and Quill.");
+				} else {
+					throw new MyCommandException("§cYou must be holding a Written Book.");
+				}
 			}
 		}
 		
@@ -65,7 +75,10 @@ public abstract class HandItemWrapper<T extends ItemMeta> {
 	public static final class LeatherArmor extends HandItemWrapper<LeatherArmorMeta> {
 		
 		public LeatherArmor(Player player) throws MyCommandException {
-			super(LeatherArmorMeta.class, player, true);
+			super(LeatherArmorMeta.class, player);
+			if (meta == null) {
+				throw new MyCommandException("§cYou must be holding Leather Armor.");
+			}
 		}
 		
 	}
@@ -74,7 +87,7 @@ public abstract class HandItemWrapper<T extends ItemMeta> {
 	public final T meta;
 	
 	@SuppressWarnings("unchecked")
-	private HandItemWrapper(Class<T> clazz, Player player, boolean throwEx) throws MyCommandException {
+	private HandItemWrapper(Class<T> clazz, Player player) {
 		item = player.getItemInHand();
 		if (item.getType() != Material.AIR) {
 			ItemMeta m = item.getItemMeta();
@@ -84,9 +97,6 @@ public abstract class HandItemWrapper<T extends ItemMeta> {
 			}
 		}
 		meta = null;
-		if (throwEx) {
-			throw new MyCommandException(Lang._(NBTEditor.class, "meta-error.format", Lang._(NBTEditor.class, "meta-error." + this.getClass().getSimpleName().toLowerCase())));
-		}
 	}
 	
 	public void save() {

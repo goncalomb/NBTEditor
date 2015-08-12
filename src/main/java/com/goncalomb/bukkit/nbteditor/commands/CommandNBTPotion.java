@@ -26,12 +26,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.namemaps.PotionEffectsMap;
 import com.goncalomb.bukkit.mylib.utils.Utils;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public class CommandNBTPotion extends MyCommand {
 	
@@ -45,7 +43,7 @@ public class CommandNBTPotion extends MyCommand {
 			HandItemWrapper.Potion item = new HandItemWrapper.Potion((Player) sender);
 			PotionEffectType effect = PotionEffectsMap.getByName(args[0]);
 			if (effect == null) {
-				sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtpotion.invalid-effect"));
+				sender.sendMessage("§cInvalid potion effect!");
 			} else {
 				int level = 1;
 				if (args.length >= 2) {
@@ -65,17 +63,17 @@ public class CommandNBTPotion extends MyCommand {
 							item.meta.addCustomEffect(eff, true);
 						}
 					}
-					sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtpotion.removed"));
+					sender.sendMessage("§aPotion effect removed.");
 				} else {
 					item.meta.addCustomEffect(new PotionEffect(effect, duration, level - 1), true);
-					sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtpotion.added"));
+					sender.sendMessage("§aPotion effect added.");
 				}
 				item.save();
 				return true;
 			}
 		}
-		sender.sendMessage(Lang._(NBTEditor.class, "effects-prefix") + PotionEffectsMap.getNamesAsString());
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtpotion.info"));
+		sender.sendMessage("§7Effects:" + PotionEffectsMap.getNamesAsString());
+		sender.sendMessage("§eUse level = 0 to remove potion effects.");
 		return false;
 	}
 	

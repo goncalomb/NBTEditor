@@ -19,9 +19,6 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
-import com.goncalomb.bukkit.mylib.Lang;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
-
 public abstract class NumericVariable extends NBTGenericVariable {
 	
 	protected int _min;
@@ -34,7 +31,7 @@ public abstract class NumericVariable extends NBTGenericVariable {
 	}
 	
 	String getFormat() {
-		return Lang._(NBTEditor.class, "variable.formats.integer", _min, _max);
+		return String.format("Integer between {0} and {1}.", _min, _max);
 	}
 	
 }

@@ -28,8 +28,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.goncalomb.bukkit.mylib.Lang;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBTOffer;
 
@@ -38,16 +36,16 @@ public final class InventoryForVillagers extends IInventoryForBos {
 	private static HashMap<Integer, ItemStack> _placeholders = new HashMap<Integer, ItemStack>();
 	
 	static {
-		_placeholders.put(0, createPlaceholder(Material.PAPER, Lang._(NBTEditor.class, "bos.offers.pholder.buy1")));
-		_placeholders.put(9, createPlaceholder(Material.PAPER, Lang._(NBTEditor.class, "bos.offers.pholder.buy2"), Lang._(NBTEditor.class, "bos.offers.pholder.optional")));
-		_placeholders.put(18, createPlaceholder(Material.PAPER, Lang._(NBTEditor.class, "bos.offers.pholder.sell")));
+		_placeholders.put(0, createPlaceholder(Material.PAPER, "§6Buy item 1"));
+		_placeholders.put(9, createPlaceholder(Material.PAPER, "§6Buy item 2", "§bThis is optional."));
+		_placeholders.put(18, createPlaceholder(Material.PAPER, "§6Sell item"));
 	}
 	
 	private BookOfSouls _bos;
 	private int _page;
 	
 	public InventoryForVillagers(BookOfSouls bos, int page, Player owner) {
-		super(owner, 27, Lang._(NBTEditor.class, "bos.offers.title"), _placeholders);
+		super(owner, 27, "Villager Offers", _placeholders);
 		_bos = bos;
 		_page = Math.min(Math.max(page, 0), 9);
 		Inventory inv = getInventory();
@@ -87,9 +85,9 @@ public final class InventoryForVillagers extends IInventoryForBos {
 
 		Player player = (Player)event.getPlayer();
 		if (invalidOffer) {
-			player.sendMessage(Lang._(NBTEditor.class, "bos.offers.invalid"));
+			player.sendMessage("§eSome offers were invalid.");
 		}
-		player.sendMessage(Lang._(NBTEditor.class, "bos.offers.done"));
+		player.sendMessage("§aVillager offers set.");
 	}
 
 }

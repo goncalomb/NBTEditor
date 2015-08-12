@@ -29,8 +29,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.goncalomb.bukkit.mylib.Lang;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;
 
 public final class InventoryForMobs extends IInventoryForBos {
@@ -38,18 +36,18 @@ public final class InventoryForMobs extends IInventoryForBos {
 	private static HashMap<Integer, ItemStack> _placeholders = new HashMap<Integer, ItemStack>();
 	
 	static {
-		_placeholders.put(0, createPlaceholder(Material.PAPER, Lang._(NBTEditor.class, "bos.mob.pholder.head")));
-		_placeholders.put(1, createPlaceholder(Material.PAPER, Lang._(NBTEditor.class, "bos.mob.pholder.chest")));
-		_placeholders.put(2, createPlaceholder(Material.PAPER, Lang._(NBTEditor.class, "bos.mob.pholder.legs")));
-		_placeholders.put(3, createPlaceholder(Material.PAPER, Lang._(NBTEditor.class, "bos.mob.pholder.feet")));
-		_placeholders.put(4, createPlaceholder(Material.PAPER, Lang._(NBTEditor.class, "bos.mob.pholder.hand")));
-		_placeholders.put(8, createPlaceholder(Material.GLASS_BOTTLE, Lang._(NBTEditor.class, "bos.mob.pholder.effects"), Lang._(NBTEditor.class, "bos.mob.pholder.effects-lore")));
+		_placeholders.put(0, createPlaceholder(Material.PAPER, "§6Head Equipment"));
+		_placeholders.put(1, createPlaceholder(Material.PAPER, "§6Chest Equipment"));
+		_placeholders.put(2, createPlaceholder(Material.PAPER, "§6Legs Equipment"));
+		_placeholders.put(3, createPlaceholder(Material.PAPER, "§6Feet Equipment"));
+		_placeholders.put(4, createPlaceholder(Material.PAPER, "§6Hand Item"));
+		_placeholders.put(8, createPlaceholder(Material.GLASS_BOTTLE, "§6Effects", "§bPotion here to apply the effects."));
 	}
 	
 	private BookOfSouls _bos;
 	
 	public InventoryForMobs(BookOfSouls bos, Player owner) {
-		super(owner, 9, Lang._(NBTEditor.class, "bos.mob.title") + " - " + ChatColor.BLACK + bos.getEntityNBT().getEntityType().getName(), _placeholders);
+		super(owner, 9, "Inventory" + " - " + ChatColor.BLACK + bos.getEntityNBT().getEntityType().getName(), _placeholders);
 		_bos = bos;
 		Inventory inv = getInventory();
 		MobNBT mob = (MobNBT) _bos.getEntityNBT();
@@ -85,7 +83,7 @@ public final class InventoryForMobs extends IInventoryForBos {
 		}
 		if (itemToCheck != null) {
 			if (itemToCheck.getType() != Material.POTION) {
-				((Player)event.getWhoClicked()).sendMessage(Lang._(NBTEditor.class, "bos.mob.potion"));
+				((Player)event.getWhoClicked()).sendMessage("§cThat must be a potion!");
 				event.setCancelled(true);
 			}
 		}
@@ -98,7 +96,7 @@ public final class InventoryForMobs extends IInventoryForBos {
 		mob.setEquipment(items[4], items[3], items[2], items[1], items[0]);
 		mob.setEffectsFromPotion(items[8]);
 		_bos.saveBook();
-		((Player)event.getPlayer()).sendMessage(Lang._(NBTEditor.class, "bos.mob.done"));
+		((Player)event.getPlayer()).sendMessage("§aItems set.");
 	}
 
 }

@@ -19,9 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public final class FloatVariable extends NBTGenericVariable {
 	
@@ -62,7 +60,7 @@ public final class FloatVariable extends NBTGenericVariable {
 
 	@Override
 	String getFormat() {
-		return Lang._(NBTEditor.class, "variable.formats.float", _min, _max);
+		return String.format("Decimal between {0} and {1}.", _min, _max);
 	}
 	
 }

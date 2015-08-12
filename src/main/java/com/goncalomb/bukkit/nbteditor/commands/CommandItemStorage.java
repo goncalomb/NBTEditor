@@ -27,12 +27,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.nbteditor.ItemStorage;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public class CommandItemStorage extends MyCommand {
 
@@ -42,13 +40,13 @@ public class CommandItemStorage extends MyCommand {
 	
 	private static void validateName(String name) throws MyCommandException {
 		if (!ItemStorage.isValidName(name)) {
-			throw new MyCommandException(Lang._(NBTEditor.class, "commands.itemstorage.invalid-name"));
+			throw new MyCommandException("§cInvalid name. Use [0-9a-zA-Z_-], 64 characters max.");
 		}
 	}
 	
 	private static void checkItemExistance(String name) throws MyCommandException {
 		if (!ItemStorage.existsItem(name)) {
-			throw new MyCommandException(Lang._(NBTEditor.class, "commands.itemstorage.not-found"));
+			throw new MyCommandException("§cThat item does not exist.");
 		}
 	}
 	
@@ -56,13 +54,13 @@ public class CommandItemStorage extends MyCommand {
 	public boolean command_store(CommandSender sender, String[] args) throws MyCommandException {
 		ItemStack item = ((Player) sender).getItemInHand();
 		if (item == null || item.getType() == Material.AIR) {
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.itemstorage.not-holding"));
+			sender.sendMessage("§cYou must be holding an item.");
 		} else {
 			validateName(args[0]);
 			if (ItemStorage.addItem(item, args[0])) {
-				sender.sendMessage(Lang._(NBTEditor.class, "commands.itemstorage.stored"));
+				sender.sendMessage("§aStored.");
 			} else {
-				sender.sendMessage(Lang._(NBTEditor.class, "commands.itemstorage.found"));
+				sender.sendMessage("§cDuplicated name.");
 			}
 		}
 		return true;
@@ -78,11 +76,11 @@ public class CommandItemStorage extends MyCommand {
 		} else if (sender instanceof Player) {
 			player = (Player) sender;
 		} else {
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.itemstorage.no-player"));
+			sender.sendMessage("§cArgument 'player' missing!");
 			return false;
 		}
 		CommandUtils.giveItem(player, ItemStorage.getItem(args[0]));
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.itemstorage.got"));
+		sender.sendMessage("§aDone.");
 		return true;
 	}
 	
@@ -111,13 +109,13 @@ public class CommandItemStorage extends MyCommand {
 	public boolean command_update(CommandSender sender, String[] args) throws MyCommandException {
 		ItemStack item = ((Player) sender).getItemInHand();
 		if (item == null || item.getType() == Material.AIR) {
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.itemstorage.not-holding"));
+			sender.sendMessage("§cYou must be holding an item.");
 		} else {
 			validateName(args[0]);
 			checkItemExistance(args[0]);
 			ItemStack storedItem = ItemStorage.getItem(args[0]);
 			if (item.getType() != storedItem.getType()) {
-				sender.sendMessage(Lang._(NBTEditor.class, "commands.itemstorage.different-type", storedItem.getType()));
+				sender.sendMessage(String.format("§cThe stored item is from a different type, §e{0}§c, cannot update. Remove it first.", storedItem.getType()));
 				return true;
 			}
 			String itemName = item.getItemMeta().getDisplayName();
@@ -125,12 +123,12 @@ public class CommandItemStorage extends MyCommand {
 			itemName = (itemName == null ? "" : itemName);
 			storedItemName = (storedItemName == null ? "" : storedItemName);
 			if (!itemName.equals(storedItemName)) {
-				sender.sendMessage(Lang._(NBTEditor.class, "commands.itemstorage.different-name", storedItemName));
+				sender.sendMessage(String.format("§cThe stored item has a different name, §e\"§r{0}§r§e\"§c, cannot update. Remove it first.", storedItemName));
 				return true;
 			}
 			ItemStorage.removeItem(args[0]);
 			ItemStorage.addItem(item, args[0]);
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.itemstorage.updated"));
+			sender.sendMessage("§aUpdated.");
 		}
 		return true;
 	}
@@ -145,7 +143,7 @@ public class CommandItemStorage extends MyCommand {
 		validateName(args[0]);
 		checkItemExistance(args[0]);
 		ItemStorage.removeItem(args[0]);
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.itemstorage.removed"));
+		sender.sendMessage("§aRemoved.");
 		return true;
 	}
 	
@@ -156,7 +154,7 @@ public class CommandItemStorage extends MyCommand {
 	
 	@Command(args = "list", type = CommandType.PLAYER_ONLY)
 	public boolean command_list(CommandSender sender, String[] args) throws MyCommandException {
-		sender.sendMessage(Lang._(NBTEditor.class, "storeditems-prefix") + StringUtils.join(ItemStorage.listItems(), ", "));
+		sender.sendMessage("§7Stored items:" + StringUtils.join(ItemStorage.listItems(), ", "));
 		return true;
 	}
 	

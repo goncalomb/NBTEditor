@@ -46,9 +46,6 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import com.goncalomb.bukkit.mylib.Lang;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
-
 final class CustomItemListener implements Listener {
 	
 	private static final HashSet<Material> _interationMaterials = new HashSet<Material>(Arrays.asList(new Material[] { Material.WORKBENCH, Material.CHEST, Material.ENDER_CHEST, Material.BREWING_STAND, Material.ENCHANTMENT_TABLE }));
@@ -60,11 +57,11 @@ final class CustomItemListener implements Listener {
 	private static boolean verifyCustomItem(CustomItem customItem, Player player, boolean silent) {
 		if (customItem != null) {
 			if (!customItem.isEnabled()) {
-				if (!silent) player.sendMessage(Lang._(NBTEditor.class, "customitems.disabled"));
+				if (!silent) player.sendMessage("§cThis item is disabled!");
 			} else if (player != null && !player.hasPermission("nbteditor.customitems.use." + customItem.getSlug())) {
-				if (!silent) player.sendMessage(Lang._(NBTEditor.class, "customitems.no-perm"));
+				if (!silent) player.sendMessage("§cYou don't have permission to use this item!");
 			} else if (!customItem.isValidWorld(player.getWorld()) && !player.hasPermission("nbteditor.customitems.world-override." + customItem.getSlug())) {
-				if (!silent) player.sendMessage(Lang._(NBTEditor.class, "customitems.invalid-world"));
+				if (!silent) player.sendMessage("§cThis item is disabled on this world!");
 			} else {
 				return true;
 			}

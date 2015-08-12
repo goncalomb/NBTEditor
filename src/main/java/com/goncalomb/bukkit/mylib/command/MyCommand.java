@@ -38,7 +38,6 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.StringUtil;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 
@@ -65,7 +64,7 @@ public abstract class MyCommand extends MySubCommand {
 		public static Player findPlayer(String name) throws MyCommandException {
 			Player player = Bukkit.getPlayer(name);
 			if (player == null) {
-				throw new MyCommandException(Lang._(null, "player-not-found.name", name));
+				throw new MyCommandException(String.format("§cPlayer §e{0} §cnot found!", name));
 			}
 			return player;
 		}
@@ -73,21 +72,21 @@ public abstract class MyCommand extends MySubCommand {
 		public static PlayerInventory checkFullInventory(Player player) throws MyCommandException {
 			PlayerInventory inv = player.getInventory();
 			if (inv.firstEmpty() == -1) {
-				throw new MyCommandException(Lang._(null, "inventory-full"));
+				throw new MyCommandException("§cInventory full!");
 			}
 			return inv;
 		}
 		
 		public static void giveItem(Player player, ItemStack item) throws MyCommandException {
 			if (player.getInventory().addItem(item).size() > 0) {
-				throw new MyCommandException(Lang._(null, "inventory-full"));
+				throw new MyCommandException("§cInventory full!");
 			}
 		}
 		
 		public static int parseInt(String str) throws MyCommandException {
 			int i = Utils.parseInt(str, -1);
 			if (i == -1) {
-				throw new MyCommandException(Lang._(null, "invalid-int", str));
+				throw new MyCommandException(String.format("§cInvalid integer §e{0}§c.", str));
 			}
 			return i;
 		}
@@ -95,7 +94,7 @@ public abstract class MyCommand extends MySubCommand {
 		public static int parseInt(String str, int max, int min) throws MyCommandException {
 			int i = Utils.parseInt(str, max, min, -1);
 			if (i == -1) {
-				throw new MyCommandException(Lang._(null, "invalid-int.bounds", str, min, max));
+				throw new MyCommandException(String.format("§cInvalid integer §e{0}§c. Use value between §e{1} §cand §e{2}§c.", str, min, max));
 			}
 			return i;
 		}
@@ -103,7 +102,7 @@ public abstract class MyCommand extends MySubCommand {
 		public static int parseTimeDuration(String str) throws MyCommandException {
 			int i = Utils.parseTimeDuration(str);
 			if (i == -1) {
-				throw new MyCommandException(Lang._(null, "invalid-duration"));
+				throw new MyCommandException("§cInvalid duration. Use the format 0000d00h00m00s.");
 			}
 			return i;
 		}
@@ -111,7 +110,7 @@ public abstract class MyCommand extends MySubCommand {
 		public static int parseTickDuration(String str) throws MyCommandException {
 			int i = UtilsMc.parseTickDuration(str);
 			if (i == -1) {
-				throw new MyCommandException(Lang._(null, "invalid-tick"));
+				throw new MyCommandException("§cInvalid duration. Use value in ticks or 0000d00h00m00s.");
 			}
 			return i;
 		}
@@ -120,11 +119,17 @@ public abstract class MyCommand extends MySubCommand {
 	}
 	
 	public enum CommandType {
-		DEFAULT, // All
-		PLAYER_ONLY, // Player
-		NO_PLAYER, // Console, Remote, Block
-		CONSOLE_ONLY, // Console, Remote
-		BLOCK_ONLY; // Block
+		DEFAULT(""), // All
+		PLAYER_ONLY("§cThis command can only be used by players."), // Player
+		NO_PLAYER("§cThis command cannot be used by players."), // Console, Remote, Block
+		CONSOLE_ONLY("§cThis command can only be used on the console."), // Console, Remote
+		BLOCK_ONLY("§cThis command can only be used on a command block."); // Block
+		
+		public final String INVALID_MESSAGE;
+		
+		private CommandType(String invalidMessage) {
+			INVALID_MESSAGE = invalidMessage;
+		}
 		
 		public boolean isValidSender(CommandSender sender) {
 			switch (this) {
@@ -140,10 +145,6 @@ public abstract class MyCommand extends MySubCommand {
 				return true;
 			}
 			return false;
-		}
-		
-		public String getInvalidSenderMessage() {
-			return Lang._(null, "commands.invalid-sender." + this.toString());
 		}
 	}
 	
@@ -172,7 +173,7 @@ public abstract class MyCommand extends MySubCommand {
 	void setup(SimpleCommandMap commandMap, Plugin owner) {
 		// Set the owner and permissions.
 		_owner = owner;
-		_internalCommand.setDescription(Lang._(owner.getClass(), "commands." + getName() + ".description"));
+		_internalCommand.setDescription("No description.");
 		setupPermissions(getName(), UtilsMc.getRootPermission(owner));
 		// Register the command with Bukkit.
 		commandMap.register(owner.getName(), _internalCommand);

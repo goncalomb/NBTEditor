@@ -19,9 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public final class HorseVariantVariable extends NBTGenericVariable{
 
@@ -56,7 +54,7 @@ public final class HorseVariantVariable extends NBTGenericVariable{
 	}
 	
 	String getFormat() {
-		return Lang._(NBTEditor.class, "variable.formats.horse-variant");
+		return "Two integers, the fist one controls the horse markings (0 to 4), the second one controls the color (0 to 6), e.g. '4 1'.";
 	}
 	
 }

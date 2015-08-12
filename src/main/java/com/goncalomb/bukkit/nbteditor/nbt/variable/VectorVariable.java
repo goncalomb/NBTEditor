@@ -19,9 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public final class VectorVariable extends NBTGenericVariable{
 
@@ -55,7 +53,7 @@ public final class VectorVariable extends NBTGenericVariable{
 	}
 	
 	String getFormat() {
-		return Lang._(NBTEditor.class, "variable.formats.vector");
+		return "Set of 3 decimal numbers, '0.00 0.00 0.00'.";
 	}
 	
 }

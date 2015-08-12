@@ -24,10 +24,8 @@ import java.awt.Color;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public class CommandNBTArmor extends MyCommand {
 	
@@ -47,14 +45,14 @@ public class CommandNBTArmor extends MyCommand {
 					Color color = Color.decode(args[0]);
 					item.meta.setColor(org.bukkit.Color.fromRGB(color.getRed(), color.getGreen(), color.getBlue()));
 					item.save();
-					sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtarmor.ok"));
+					sender.sendMessage("§aColor set.");
 					return true;
 				} catch (NumberFormatException e) {
 				}
 			}
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtarmor.nop"));
+			sender.sendMessage("§cInvalid color format.");
 		}
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtarmor.info"));
+		sender.sendMessage("§eThe color as the RGB format, #FFFFFF (e.g. #FF0000 for red).");
 		return false;
 	}
 }

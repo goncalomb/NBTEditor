@@ -32,13 +32,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.FireworkNBT;
@@ -55,7 +53,7 @@ public class CommandNBTSpawner extends MyCommand {
 	private static SpawnerNBTWrapper getSpawner(Player player) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock(player, 5);
 		if (block.getType() != Material.MOB_SPAWNER) {
-			throw new MyCommandException(Lang._(NBTEditor.class, "commands.nbtspawner.no-sight"));
+			throw new MyCommandException("§cNo spawner in sight!");
 		}
 		return new SpawnerNBTWrapper(block);
 	}
@@ -64,7 +62,7 @@ public class CommandNBTSpawner extends MyCommand {
 		if (args.length > index) {
 			int weight = Utils.parseInt(args[index], -1);
 			if (weight < 1) {
-				throw new MyCommandException(Lang._(NBTEditor.class, "commands.nbtspawner.invalid-weight"));
+				throw new MyCommandException("§cInvalid weight. The weight is an integer between 1 and 2147483647.");
 			}
 			return weight;
 		}
@@ -74,9 +72,9 @@ public class CommandNBTSpawner extends MyCommand {
 	private static int parseIndex(String str, List<SpawnerEntityNBT> entities) throws MyCommandException {
 		int index = Utils.parseInt(str, -1);
 		if (index < 1) {
-			throw new MyCommandException(Lang._(NBTEditor.class, "invalid-index"));
+			throw new MyCommandException("§cInvalid index. The index is an integer greater than 0.");
 		} else if (index > entities.size()) {
-			throw new MyCommandException(Lang._(NBTEditor.class, "commands.nbtspawner.entity-nop", index));
+			throw new MyCommandException(String.format("§cEntity with index {0} doesn''t exist!", index));
 		}
 		return index;
 	}
@@ -106,19 +104,19 @@ public class CommandNBTSpawner extends MyCommand {
 				if(args.length == 2) {
 					if (variable.setValue(args[1])) {
 						spawner.save();
-						sender.sendMessage(Lang._(NBTEditor.class, "variable.updated"));
+						sender.sendMessage("§aVariable updated.");
 						return true;
 					} else {
-						sender.sendMessage(Lang._(NBTEditor.class, "variable.invalid-format", args[0]));
+						sender.sendMessage(String.format("§cInvalid format for variable {0}!", args[0]));
 					}
 				}
 				sender.sendMessage(ChatColor.YELLOW + variable.getFormat());
 				return true;
 			} else if(args.length <= 3) {
-				sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtspawner.no-variable", args[0]));
+				sender.sendMessage(String.format("§cSpawners don''t have the variable {0}!", args[0]));
 			}
 		}
-		sender.sendMessage(Lang._(NBTEditor.class, "variables-prefix") + StringUtils.join(spawner.getVariables().getVarNames(), ", "));
+		sender.sendMessage("§7Variables:" + StringUtils.join(spawner.getVariables().getVarNames(), ", "));
 		return false;
 	}
 	
@@ -141,12 +139,12 @@ public class CommandNBTSpawner extends MyCommand {
 				int weight = parseWeight(args, 1);
 				spawner.addEntity(new SpawnerEntityNBT(entityType, weight));
 				spawner.save();
-				sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtspawner.entity-added"));
+				sender.sendMessage("§aEntity added to the spawner.");
 				return true;
 			}
-			sender.sendMessage(Lang._(NBTEditor.class, "invalid-entity"));
+			sender.sendMessage("§cInvalid entity!");
 		}
-		sender.sendMessage(Lang._(NBTEditor.class, "entities-prefix") + EntityTypeMap.getLivingNamesAsString());
+		sender.sendMessage("§7Entities:" + EntityTypeMap.getLivingNamesAsString());
 		return false;
 	}
 	
@@ -165,15 +163,15 @@ public class CommandNBTSpawner extends MyCommand {
 			if (EntityNBT.isValidType(entityType)) {
 				spawner.addEntity(new SpawnerEntityNBT(EntityNBT.fromEntityType(entityType), weight));
 				spawner.save();
-				sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtspawner.entity-added"));
+				sender.sendMessage("§aEntity added to the spawner.");
 			} else {
-				sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtspawner.invalid-egg"));
+				sender.sendMessage("§cInvalid spawn egg!");
 			}
 		} else if (item.getType() == Material.FIREWORK) {
 			int weight = parseWeight(args, 0);
 			spawner.addEntity(new SpawnerEntityNBT(new FireworkNBT(item), weight));
 			spawner.save();
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtspawner.firework-added"));
+			sender.sendMessage("§aFirework rocket added to the spawner.");
 		} else {
 			BookOfSouls bos = CommandBOS.getBos((Player) sender, true);
 			if (bos != null) {
@@ -191,9 +189,9 @@ public class CommandNBTSpawner extends MyCommand {
 				// -------------------------------------------
 				spawner.addEntity(new SpawnerEntityNBT(entityNbt, weight));
 				spawner.save();
-				sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtspawner.bos-added"));
+				sender.sendMessage("§aEntity from the Book of Souls added to the spawner.");
 			} else {
-				sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtspawner.no-item"));
+				sender.sendMessage("§cYou must be holding a Book of Souls, Firework Rocket or a Spawn Egg!");
 			}
 		}
 		return true;
@@ -205,7 +203,7 @@ public class CommandNBTSpawner extends MyCommand {
 		int index = parseIndex(args[0], spawner.getEntities());
 		spawner.removeEntity(index - 1);
 		spawner.save();
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtspawner.entity-removed"));
+		sender.sendMessage("§aEntity removed.");
 		return true;
 	}
 	
@@ -218,7 +216,7 @@ public class CommandNBTSpawner extends MyCommand {
 			y = Double.parseDouble(args[1]);
 			z = Double.parseDouble(args[2]);
 		} catch (NumberFormatException e) {
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtspawner.invalid-position"));
+			sender.sendMessage(String.format( "commands.nbtspawner.invalid-position"));
 			return true;
 		}
 		if (args.length == 4) {
@@ -226,12 +224,12 @@ public class CommandNBTSpawner extends MyCommand {
 			int index = parseIndex(args[3], entities);
 			EntityNBT entityNBT = entities.get(index - 1).getEntityNBT();
 			entityNBT.setPos(x, y, z);
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtspawner.position-set", EntityTypeMap.getName(entityNBT.getEntityType())));
+			sender.sendMessage(String.format("commands.nbtspawner.position-set", EntityTypeMap.getName(entityNBT.getEntityType())));
 		} else {
 			for (SpawnerEntityNBT spawnerEntity : spawner.getEntities()) {
 				spawnerEntity.getEntityNBT().setPos(x, y, z);
 			}
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtspawner.position-set-all"));
+			sender.sendMessage("§aPostition set for all entities.");
 		}
 		spawner.save();
 		return true;
@@ -242,7 +240,7 @@ public class CommandNBTSpawner extends MyCommand {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
 		spawner.clearEntities();
 		spawner.save();
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtspawner.cleared"));
+		sender.sendMessage("§aEntities cleared.");
 		return true;
 	}
 	
@@ -259,7 +257,7 @@ public class CommandNBTSpawner extends MyCommand {
 		Player player = (Player) sender;
 		SpawnerNBTWrapper clipboard = getSpawner(player);
 		player.setMetadata("NBTEditor-spawner", new FixedMetadataValue(getOwner(), clipboard));
-		sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtspawner.copy"));
+		sender.sendMessage("§aSpawner copied.");
 		return true;
 	}
 	
@@ -270,9 +268,9 @@ public class CommandNBTSpawner extends MyCommand {
 			SpawnerNBTWrapper spawner = getSpawner(player);
 			spawner.cloneFrom((SpawnerNBTWrapper) player.getMetadata("NBTEditor-spawner").get(0).value());
 			spawner.save();
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtspawner.paste"));
+			sender.sendMessage("§aSpawner pasted.");
 		} else {
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbtspawner.no-copy"));
+			sender.sendMessage("§cYou must copy a spawner first!");
 		}
 		return true;
 	}

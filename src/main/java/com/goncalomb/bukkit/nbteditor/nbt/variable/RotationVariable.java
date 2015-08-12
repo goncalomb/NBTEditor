@@ -19,9 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public class RotationVariable extends NBTGenericVariable {
 	
@@ -97,9 +95,9 @@ public class RotationVariable extends NBTGenericVariable {
 	
 	String getFormat() {
 		if (_count == 3) {
-			return Lang._(NBTEditor.class, "variable.formats.rotation3");
+			return "Set of 3 decimal numbers: x , y and z angles, e.g. '25.6 -90 23'.";
 		}
-		return Lang._(NBTEditor.class, "variable.formats.rotation");
+		return "Set of 2 decimal numbers: yaw and pitch angles, e.g. '25.6 -90'.";
 	}
 
 }

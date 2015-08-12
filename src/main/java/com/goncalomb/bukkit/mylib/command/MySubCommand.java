@@ -33,7 +33,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.command.MyCommand.Command;
 import com.goncalomb.bukkit.mylib.command.MyCommand.CommandType;
 
@@ -125,11 +124,11 @@ class MySubCommand {
 						}
 					}
 				} else {
-					sender.sendMessage(Lang._(null, "commands.no-perm"));
+					sender.sendMessage("§cYou don't have permission to use that command!");
 					return;
 				}
 			} else {
-				sender.sendMessage(_type.getInvalidSenderMessage());
+				sender.sendMessage(_type.INVALID_MESSAGE);
 				return;
 			}
 		}
@@ -141,7 +140,7 @@ class MySubCommand {
 			sentUsage = true;
 		}
 		if (sendAllSubCommands(sender, this, prefix) == 0 && !sentUsage) {
-			sender.sendMessage(Lang._(null, "commands.no-perm"));
+			sender.sendMessage("§cYou don't have permission to use that command!");
 		}
 	}
 	

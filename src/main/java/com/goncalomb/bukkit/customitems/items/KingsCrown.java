@@ -34,9 +34,7 @@ import org.bukkit.material.MaterialData;
 
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public class KingsCrown extends CustomItem {
 	
@@ -71,7 +69,7 @@ public class KingsCrown extends CustomItem {
 			event.getItem().remove();
 			event.setCancelled(true);
 			if (shouldBroadcastMessage()) {
-				UtilsMc.broadcastToWorld(event.getPlayer().getWorld(), Lang._(NBTEditor.class, "crown.found", event.getPlayer().getName(), getName()));
+				UtilsMc.broadcastToWorld(event.getPlayer().getWorld(), String.format("§6{0} §fhas been crown §6King§f!", event.getPlayer().getName(), getName()));
 			}
 		}
 	}
@@ -84,7 +82,7 @@ public class KingsCrown extends CustomItem {
 	@Override
 	public void onDespawn(ItemDespawnEvent event) {
 		if (shouldBroadcastMessage()) {
-			UtilsMc.broadcastToWorld(event.getEntity().getWorld(), Lang._(NBTEditor.class, "crown.despawn", getName()));
+			UtilsMc.broadcastToWorld(event.getEntity().getWorld(), String.format("The {0}§f has been lost forever!", getName()));
 		}
 	}
 	
@@ -95,7 +93,7 @@ public class KingsCrown extends CustomItem {
 	
 	private void lostCrown(Player player) {
 		if (shouldBroadcastMessage()) {
-			UtilsMc.broadcastToWorld(player.getWorld(), Lang._(NBTEditor.class, "crown.lost", player.getName(), getName()));
+			UtilsMc.broadcastToWorld(player.getWorld(), String.format("§6{0} §fhas lost his crown!", player.getName(), getName()));
 		}
 	}
 	

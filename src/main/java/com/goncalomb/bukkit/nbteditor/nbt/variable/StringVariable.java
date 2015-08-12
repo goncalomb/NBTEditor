@@ -19,9 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public class StringVariable extends NBTGenericVariable {
 	
@@ -45,7 +43,7 @@ public class StringVariable extends NBTGenericVariable {
 	}
 	
 	String getFormat() {
-		return Lang._(NBTEditor.class, "variable.formats.string");
+		return "String (max length: 64).";
 	}
 	
 }

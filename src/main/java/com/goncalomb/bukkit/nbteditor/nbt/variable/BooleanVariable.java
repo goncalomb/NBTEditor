@@ -23,9 +23,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public final class BooleanVariable extends NBTGenericVariable{
 	
@@ -55,7 +53,7 @@ public final class BooleanVariable extends NBTGenericVariable{
 	}
 	
 	String getFormat() {
-		return Lang._(NBTEditor.class, "variable.formats.boolean");
+		return "Boolean value 'true' or 'false'.";
 	}
 	
 	public List<String> getPossibleValues() {

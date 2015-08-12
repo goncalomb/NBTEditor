@@ -41,7 +41,6 @@ import com.goncalomb.bukkit.customitems.items.SunStick;
 import com.goncalomb.bukkit.customitems.items.TorchBow;
 import com.goncalomb.bukkit.customitems.items.TreeVaporizer;
 import com.goncalomb.bukkit.customitems.items.WitherBow;
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.command.MyCommandManager;
 import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
 import com.goncalomb.bukkit.mylib.reflect.NBTBase;
@@ -77,8 +76,6 @@ public final class NBTEditor extends JavaPlugin {
 		}
 		
 		MobNBT a = new MobNBT();
-		
-		Lang.load(this);
 		
 		MyCommandManager.register(new CommandBOS(), this);
 		MyCommandManager.register(new CommandNBTSpawner(), this);
@@ -127,7 +124,6 @@ public final class NBTEditor extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
-		Lang.unload(this);
 		_instance = null;
 	}
 	

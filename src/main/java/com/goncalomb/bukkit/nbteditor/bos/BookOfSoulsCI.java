@@ -33,9 +33,7 @@ import org.bukkit.material.MaterialData;
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.DispenserDetails;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.nbt.FallingBlockNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MinecartContainerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MinecartSpawnerNBT;
@@ -51,7 +49,7 @@ final class BookOfSoulsCI extends CustomItem {
 		Player player = event.getPlayer();
 		BookOfSouls bos = BookOfSouls.getFromBook(event.getItem());
 		if (bos == null) {
-			player.sendMessage(Lang._(NBTEditor.class, "bos.corrupted"));
+			player.sendMessage("§cThat Book of Souls is corrupted!");
 			return;
 		}
 		
@@ -61,29 +59,29 @@ final class BookOfSoulsCI extends CustomItem {
 			if (bos.getEntityNBT() instanceof MinecartSpawnerNBT && block.getType() == Material.MOB_SPAWNER) {
 				if (event.getPlayer().isSneaking()) {
 					((MinecartSpawnerNBT) bos.getEntityNBT()).copyToSpawner(block);
-					player.sendMessage(Lang._(NBTEditor.class, "bos.minecart-from"));
+					player.sendMessage("§aVariables and entities copied to the spawner.");
 				} else {
 					((MinecartSpawnerNBT) bos.getEntityNBT()).copyFromSpawner(block);
 					bos.saveBook();
-					player.sendMessage(Lang._(NBTEditor.class, "bos.minecart-to"));
+					player.sendMessage("§aVariables and entities copied from the spawner.");
 				}
 				event.setCancelled(true);
 				return;
 			} else if (bos.getEntityNBT() instanceof MinecartContainerNBT && block.getType() == Material.CHEST) {
 				if (event.getPlayer().isSneaking()) {
 					((MinecartContainerNBT) bos.getEntityNBT()).copyToChest(block);
-					player.sendMessage(Lang._(NBTEditor.class, "bos.chest-from"));
+					player.sendMessage("§aItems copied to the chest.");
 				} else {
 					((MinecartContainerNBT) bos.getEntityNBT()).copyFromChest(block);
 					bos.saveBook();
-					player.sendMessage(Lang._(NBTEditor.class, "bos.chest-to"));
+					player.sendMessage("§aItems copied from the chest.");
 				}
 				event.setCancelled(true);
 				return;
 			} else if (event.getPlayer().isSneaking() && bos.getEntityNBT() instanceof FallingBlockNBT) {
 				((FallingBlockNBT) bos.getEntityNBT()).copyFromTileEntity(block);
 				bos.saveBook();
-				player.sendMessage(Lang._(NBTEditor.class, "bos.from-block"));
+				player.sendMessage("§aBlock copied.");
 				event.setCancelled(true);
 				return;
 			}
@@ -100,7 +98,7 @@ final class BookOfSoulsCI extends CustomItem {
 			bos.getEntityNBT().spawn(location);
 			event.setCancelled(true);
 		} else {
-			player.sendMessage(Lang._(null, "no-sight"));
+			player.sendMessage("§cNo block in sight!");
 		}
 		return;
 	};

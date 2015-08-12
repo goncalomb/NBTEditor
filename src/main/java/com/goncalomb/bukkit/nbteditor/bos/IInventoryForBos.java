@@ -27,24 +27,22 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.utils.CustomInventory;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 abstract class IInventoryForBos extends CustomInventory {
 	
-	protected final static ItemStack _itemFiller = UtilsMc.newItem(Material.ENDER_PORTAL, Lang._(NBTEditor.class, "bos.inv.nothing"));
+	protected final static ItemStack _itemFiller = UtilsMc.newItem(Material.ENDER_PORTAL, "Nothing here!");
 	
 	private HashMap<Integer, ItemStack> _placeholders;
 	private boolean _allowBos;
 	
 	protected final static ItemStack createPlaceholder(Material material, String name) {
-		return UtilsMc.newItem(material, name, Lang._(NBTEditor.class, "bos.inv.pholder"));
+		return UtilsMc.newItem(material, name, "§oThis is a placeholder item, it will not be saved!");
 	}
 	
 	protected final static ItemStack createPlaceholder(Material material, String name, String lore) {
-		return UtilsMc.newItem(material, name, lore, Lang._(NBTEditor.class, "bos.inv.pholder"));
+		return UtilsMc.newItem(material, name, lore, "§oThis is a placeholder item, it will not be saved!");
 	}
 	
 	public IInventoryForBos(Player owner, int size, String title, HashMap<Integer, ItemStack> placeholders) {

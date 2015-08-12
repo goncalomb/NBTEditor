@@ -25,9 +25,7 @@ import java.util.List;
 
 import org.bukkit.Material;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public final class BlockVariable extends NBTGenericVariable2X {
 
@@ -131,7 +129,7 @@ public final class BlockVariable extends NBTGenericVariable2X {
 	}
 	
 	String getFormat() {
-		return Lang._(NBTEditor.class, "variable.formats.block");
+		return "Valid block id and data, 'id:data'.";
 	}
 	
 	public List<String> getPossibleValues() {

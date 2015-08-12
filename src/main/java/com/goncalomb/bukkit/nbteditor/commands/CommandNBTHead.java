@@ -27,10 +27,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import com.goncalomb.bukkit.mylib.Lang;
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
-import com.goncalomb.bukkit.nbteditor.NBTEditor;
 
 public class CommandNBTHead extends MyCommand {
 	
@@ -46,7 +44,7 @@ public class CommandNBTHead extends MyCommand {
 		} else if (sender instanceof Player) {
 			other = (Player) sender;
 		} else {
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbthead.nop"));
+			sender.sendMessage("§cParameter 'player-name' missing!");
 			return false;
 		}
 		ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
@@ -54,9 +52,9 @@ public class CommandNBTHead extends MyCommand {
 		if (meta.setOwner(args[0])) {
 			head.setItemMeta(meta);
 			CommandUtils.giveItem(other, head);
-			sender.sendMessage(Lang._(NBTEditor.class, (other == sender ? "commands.nbthead.done1" : "commands.nbthead.done")));
+			sender.sendMessage("§aEnjoy your new head.");
 		} else {
-			sender.sendMessage(Lang._(NBTEditor.class, "commands.nbthead.invalid"));
+			sender.sendMessage("§cPlayer name too long!");
 		}
 		return true;
 	}
