@@ -59,14 +59,12 @@ public abstract class HandItemWrapper<T extends ItemMeta> {
 		
 		public Book(Player player, BookType bookType) throws MyCommandException {
 			super(BookMeta.class, player);
-			if (meta == null) {
-				if (bookType == BookType.BOOK_AND_QUILL) {
-					throw new MyCommandException("§cYou must be holding a Book and Quill or a Written Book.");
-				} else if (bookType == BookType.WRITTEN) {
-					throw new MyCommandException("§cYou must be holding a Book and Quill.");
-				} else {
-					throw new MyCommandException("§cYou must be holding a Written Book.");
-				}
+			if ((meta == null || item.getType() != Material.BOOK_AND_QUILL) && bookType == BookType.BOOK_AND_QUILL) {
+				throw new MyCommandException("§cYou must be holding a Book and Quill.");
+			} else if ((meta == null || item.getType() != Material.WRITTEN_BOOK) && bookType == BookType.WRITTEN) {
+				throw new MyCommandException("§cYou must be holding a Written Book.");
+			} else if (meta == null || (item.getType() != Material.BOOK_AND_QUILL && item.getType() != Material.WRITTEN_BOOK)) {
+				throw new MyCommandException("§cYou must be holding a Book and Quill or a Written Book.");
 			}
 		}
 		
