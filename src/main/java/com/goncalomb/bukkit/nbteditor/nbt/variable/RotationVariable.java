@@ -71,9 +71,9 @@ public class RotationVariable extends NBTGenericVariable {
 		if (data.hasKey(_nbtKey)) {
 			Object[] vector = data.getListAsArray(_nbtKey);
 			if (vector.length == 2) {
-				return (Float) vector[0] + "";
-			} else if (vector.length == 3) {
 				return (Float) vector[0] + " " + (Float) vector[1];
+			} else if (vector.length == 3) {
+				return (Float) vector[0] + " " + (Float) vector[1] + " " + (Float) vector[2];
 			}
 		}
 		return null;
