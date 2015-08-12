@@ -22,13 +22,12 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
 
-public class ItemsNBT extends EntityNBT {
+public class ItemNBT extends EntityNBT {
 	
 	static {
-		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Items");
-		variables.add("Health", new ShortVariable("Health", (short) 0));
-		variables.add("Age", new ShortVariable("Age", (short) 0, (short) 6000));
-		registerVariables(ItemsNBT.class, variables);
+		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Item");
+		variables.add("Age", new ShortVariable("Age"));
+		registerVariables(ItemNBT.class, variables);
 	}
 	
 }

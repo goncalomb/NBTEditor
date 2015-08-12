@@ -161,6 +161,7 @@ public class EntityNBT extends EntityNBTBase {
 		variables.add("Powered", new BooleanVariable("powered"));
 		variables.add("ExplosionRadius", new ByteVariable("ExplosionRadius", (byte) 0, (byte) 25)); // Limited to 25
 		variables.add("Fuse", new ShortVariable("Fuse", (short) 0));
+		variables.add("Ignited", new BooleanVariable("ignited"));
 		registerVariables(EntityType.CREEPER, variables);
 		
 		variables = new NBTGenericVariableContainer("Enderman");

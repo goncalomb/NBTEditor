@@ -21,14 +21,16 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 
 import org.bukkit.entity.EntityType;
 
+import com.goncalomb.bukkit.nbteditor.nbt.variable.ByteVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
 
-public class XPOrbNBT extends EntityNBT {
+public class XPOrbNBT extends ItemNBT {
 	
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("XPOrb");
-		variables.add("Value", new ShortVariable("Value", (short) 0));
+		variables.add("Health", new ByteVariable("Health"));
+		variables.add("Value", new ShortVariable("Value"));
 		registerVariables(EntityType.EXPERIENCE_ORB, variables);
 	}
 

@@ -22,8 +22,17 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
 
-public class DroppedItemNBT extends ItemsNBT {
+public class DroppedItemNBT extends ItemNBT {
+	
+	static {
+		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("DroppedItem");
+		variables.add("Health", new ShortVariable("Health"));
+		variables.add("PickupDelay", new ShortVariable("PickupDelay"));
+		registerVariables(DroppedItemNBT.class, variables);
+	}
 	
 	public void setItem(ItemStack item) {
 		if (item == null) {
