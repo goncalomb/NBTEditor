@@ -21,6 +21,7 @@ package com.goncalomb.bukkit.mylib.command;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -64,7 +65,7 @@ public abstract class MyCommand extends MySubCommand {
 		public static Player findPlayer(String name) throws MyCommandException {
 			Player player = Bukkit.getPlayer(name);
 			if (player == null) {
-				throw new MyCommandException(String.format("§cPlayer §e{0} §cnot found!", name));
+				throw new MyCommandException(MessageFormat.format("§cPlayer §e{0} §cnot found!", name));
 			}
 			return player;
 		}
@@ -86,7 +87,7 @@ public abstract class MyCommand extends MySubCommand {
 		public static int parseInt(String str) throws MyCommandException {
 			int i = Utils.parseInt(str, -1);
 			if (i == -1) {
-				throw new MyCommandException(String.format("§cInvalid integer §e{0}§c.", str));
+				throw new MyCommandException(MessageFormat.format("§cInvalid integer §e{0}§c.", str));
 			}
 			return i;
 		}
@@ -94,7 +95,7 @@ public abstract class MyCommand extends MySubCommand {
 		public static int parseInt(String str, int max, int min) throws MyCommandException {
 			int i = Utils.parseInt(str, max, min, -1);
 			if (i == -1) {
-				throw new MyCommandException(String.format("§cInvalid integer §e{0}§c. Use value between §e{1} §cand §e{2}§c.", str, min, max));
+				throw new MyCommandException(MessageFormat.format("§cInvalid integer §e{0}§c. Use value between §e{1} §cand §e{2}§c.", str, min, max));
 			}
 			return i;
 		}

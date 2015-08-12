@@ -19,6 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.commands;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -84,7 +85,7 @@ public class CommandNBTItem extends MyCommand {
 		if (index < 1) {
 			sender.sendMessage("§cInvalid index. The index is an integer greater than 0.");
 		} else if (lores == null || index > lores.size()) {
-			sender.sendMessage(String.format("§cLore line with index {0} doesn''t exist!", index));
+			sender.sendMessage(MessageFormat.format("§cLore line with index {0} doesn''t exist!", index));
 		} else {
 			lores.remove(index - 1);
 			item.meta.setLore(lores);
@@ -157,7 +158,7 @@ public class CommandNBTItem extends MyCommand {
 		if (index < 1) {
 			sender.sendMessage("§cInvalid index. The index is an integer greater than 0.");
 		} else if (index > modifiers.size()) {
-			sender.sendMessage(String.format("§cModifier with index {0} doesn''t exist!", index));
+			sender.sendMessage(MessageFormat.format("§cModifier with index {0} doesn''t exist!", index));
 		} else {
 			modifiers.remove(index - 1);
 			ItemModifier.setItemStackModifiers(item.item, modifiers);
@@ -181,7 +182,7 @@ public class CommandNBTItem extends MyCommand {
 		if (block.getType() == Material.COMMAND) {
 			String command = "give";
 			if (!MyCommandManager.isVanillaCommand(command)) {
-				sender.sendMessage(String.format("§7Non-vanilla /{0} command detected, using /minecraft:{0}.", command));
+				sender.sendMessage(MessageFormat.format("§7Non-vanilla /{0} command detected, using /minecraft:{0}.", command));
 				command = "minecraft:" + command;
 			}
 			command = "/" + command + " @p " + BukkitReflect.getMaterialName(item.item.getType()) + " " + item.item.getAmount() + " " + item.item.getDurability() + " " + NBTUtils.getItemStackTag(item.item).toString();

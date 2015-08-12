@@ -19,6 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.commands;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -74,7 +75,7 @@ public class CommandNBTSpawner extends MyCommand {
 		if (index < 1) {
 			throw new MyCommandException("§cInvalid index. The index is an integer greater than 0.");
 		} else if (index > entities.size()) {
-			throw new MyCommandException(String.format("§cEntity with index {0} doesn''t exist!", index));
+			throw new MyCommandException(MessageFormat.format("§cEntity with index {0} doesn''t exist!", index));
 		}
 		return index;
 	}
@@ -107,13 +108,13 @@ public class CommandNBTSpawner extends MyCommand {
 						sender.sendMessage("§aVariable updated.");
 						return true;
 					} else {
-						sender.sendMessage(String.format("§cInvalid format for variable {0}!", args[0]));
+						sender.sendMessage(MessageFormat.format("§cInvalid format for variable {0}!", args[0]));
 					}
 				}
 				sender.sendMessage(ChatColor.YELLOW + variable.getFormat());
 				return true;
 			} else if(args.length <= 3) {
-				sender.sendMessage(String.format("§cSpawners don''t have the variable {0}!", args[0]));
+				sender.sendMessage(MessageFormat.format("§cSpawners don''t have the variable {0}!", args[0]));
 			}
 		}
 		sender.sendMessage("§7Variables:" + StringUtils.join(spawner.getVariables().getVarNames(), ", "));
@@ -216,7 +217,7 @@ public class CommandNBTSpawner extends MyCommand {
 			y = Double.parseDouble(args[1]);
 			z = Double.parseDouble(args[2]);
 		} catch (NumberFormatException e) {
-			sender.sendMessage(String.format( "commands.nbtspawner.invalid-position"));
+			sender.sendMessage("§cInvalid position!");
 			return true;
 		}
 		if (args.length == 4) {
@@ -224,7 +225,7 @@ public class CommandNBTSpawner extends MyCommand {
 			int index = parseIndex(args[3], entities);
 			EntityNBT entityNBT = entities.get(index - 1).getEntityNBT();
 			entityNBT.setPos(x, y, z);
-			sender.sendMessage(String.format("commands.nbtspawner.position-set", EntityTypeMap.getName(entityNBT.getEntityType())));
+			sender.sendMessage(MessageFormat.format("§aPosition set for {0}.", EntityTypeMap.getName(entityNBT.getEntityType())));
 		} else {
 			for (SpawnerEntityNBT spawnerEntity : spawner.getEntities()) {
 				spawnerEntity.getEntityNBT().setPos(x, y, z);

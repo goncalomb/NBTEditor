@@ -19,6 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.commands;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -144,12 +145,12 @@ public class CommandBOS extends MyCommand {
 					sender.sendMessage("§aVariable updated.");
 					return true;
 				} else {
-					sender.sendMessage(String.format("§cInvalid format for variable {0}!", args[0]));
+					sender.sendMessage(MessageFormat.format("§cInvalid format for variable {0}!", args[0]));
 				}
 			}
 			sender.sendMessage(ChatColor.YELLOW + variable.getFormat());
 		} else {
-			sender.sendMessage(String.format("§cThat Entity doesn''t have the variable {0}!", args[0]));
+			sender.sendMessage(MessageFormat.format("§cThat Entity doesn''t have the variable {0}!", args[0]));
 		}
 		return true;
 	}
@@ -182,7 +183,7 @@ public class CommandBOS extends MyCommand {
 			bos.saveBook();
 			sender.sendMessage("§aVariable cleared.");
 		} else {
-			sender.sendMessage(String.format("§cInvalid format for variable {0}!", args[0]));
+			sender.sendMessage(MessageFormat.format("§cInvalid format for variable {0}!", args[0]));
 		}
 		return true;
 	}
@@ -329,7 +330,7 @@ public class CommandBOS extends MyCommand {
 						sender.sendMessage("§aEntity attribute removed.");
 						return true;
 					}
-					sender.sendMessage(String.format("§cThis entity does no have the attribute {0}!", attributeType.toString()));
+					sender.sendMessage(MessageFormat.format("§cThis entity does no have the attribute {0}!", attributeType.toString()));
 					return true;
 				}
 			}
@@ -377,7 +378,7 @@ public class CommandBOS extends MyCommand {
 			EntityNBT entityNbt = bos.getEntityNBT();
 			String command = "summon";
 			if (!MyCommandManager.isVanillaCommand(command)) {
-				sender.sendMessage(String.format("§7Non-vanilla /{0} command detected, using /minecraft:{0}.", command));
+				sender.sendMessage(MessageFormat.format("§7Non-vanilla /{0} command detected, using /minecraft:{0}.", command));
 				command = "minecraft:" + command;
 			}
 			command = "/" + command + " " + EntityTypeMap.getName(entityNbt.getEntityType()) + " ~ ~1 ~ " + entityNbt.getMetadataString();

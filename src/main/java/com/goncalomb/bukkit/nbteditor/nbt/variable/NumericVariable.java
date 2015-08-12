@@ -31,7 +31,7 @@ public abstract class NumericVariable extends NBTGenericVariable {
 	}
 	
 	String getFormat() {
-		return String.format("Integer between {0} and {1}.", _min, _max);
+		return String.format("Integer between %s and %s.", _min, _max);
 	}
 	
 }

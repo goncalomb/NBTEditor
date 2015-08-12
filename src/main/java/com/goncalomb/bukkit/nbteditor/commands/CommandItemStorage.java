@@ -19,6 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.commands;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -115,7 +116,7 @@ public class CommandItemStorage extends MyCommand {
 			checkItemExistance(args[0]);
 			ItemStack storedItem = ItemStorage.getItem(args[0]);
 			if (item.getType() != storedItem.getType()) {
-				sender.sendMessage(String.format("§cThe stored item is from a different type, §e{0}§c, cannot update. Remove it first.", storedItem.getType()));
+				sender.sendMessage(MessageFormat.format("§cThe stored item is from a different type, §e{0}§c, cannot update. Remove it first.", storedItem.getType()));
 				return true;
 			}
 			String itemName = item.getItemMeta().getDisplayName();
@@ -123,7 +124,7 @@ public class CommandItemStorage extends MyCommand {
 			itemName = (itemName == null ? "" : itemName);
 			storedItemName = (storedItemName == null ? "" : storedItemName);
 			if (!itemName.equals(storedItemName)) {
-				sender.sendMessage(String.format("§cThe stored item has a different name, §e\"§r{0}§r§e\"§c, cannot update. Remove it first.", storedItemName));
+				sender.sendMessage(MessageFormat.format("§cThe stored item has a different name, §e\"§r{0}§r§e\"§c, cannot update. Remove it first.", storedItemName));
 				return true;
 			}
 			ItemStorage.removeItem(args[0]);

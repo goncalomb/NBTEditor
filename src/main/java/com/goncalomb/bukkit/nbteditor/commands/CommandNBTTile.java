@@ -19,6 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.commands;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -87,7 +88,7 @@ public class CommandNBTTile extends MyCommand {
 					beacon.setSecondary(effect);
 				}
 				beacon.save();
-				sender.sendMessage(String.format((clear ? "§aEffect cleared ({0})." : "§aEffect set ({0})."), args[0].toLowerCase()));
+				sender.sendMessage(MessageFormat.format((clear ? "§aEffect cleared ({0})." : "§aEffect set ({0})."), args[0].toLowerCase()));
 				return true;
 			}
 		}
@@ -170,7 +171,7 @@ public class CommandNBTTile extends MyCommand {
 		}
 		String command = "setblock";
 		if (!MyCommandManager.isVanillaCommand(command)) {
-			sender.sendMessage(String.format("§7Non-vanilla /{0} command detected, using /minecraft:{0}.", command));
+			sender.sendMessage(MessageFormat.format("§7Non-vanilla /{0} command detected, using /minecraft:{0}.", command));
 			command = "minecraft:" + command;
 		}
 		command = "/" + command + " " + block.getX() + " " + block.getY() + " " + block.getZ() + " " + BukkitReflect.getMaterialName(block.getType()) + " " + block.getData() + " destroy";

@@ -19,6 +19,8 @@
 
 package com.goncalomb.bukkit.customitems.items;
 
+import java.text.MessageFormat;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -69,7 +71,7 @@ public class KingsCrown extends CustomItem {
 			event.getItem().remove();
 			event.setCancelled(true);
 			if (shouldBroadcastMessage()) {
-				UtilsMc.broadcastToWorld(event.getPlayer().getWorld(), String.format("§6{0} §fhas been crown §6King§f!", event.getPlayer().getName(), getName()));
+				UtilsMc.broadcastToWorld(event.getPlayer().getWorld(), MessageFormat.format("§6{0} §fhas been crown §6King§f!", event.getPlayer().getName(), getName()));
 			}
 		}
 	}
@@ -82,7 +84,7 @@ public class KingsCrown extends CustomItem {
 	@Override
 	public void onDespawn(ItemDespawnEvent event) {
 		if (shouldBroadcastMessage()) {
-			UtilsMc.broadcastToWorld(event.getEntity().getWorld(), String.format("The {0}§f has been lost forever!", getName()));
+			UtilsMc.broadcastToWorld(event.getEntity().getWorld(), MessageFormat.format("The {0}§f has been lost forever!", getName()));
 		}
 	}
 	
@@ -93,7 +95,7 @@ public class KingsCrown extends CustomItem {
 	
 	private void lostCrown(Player player) {
 		if (shouldBroadcastMessage()) {
-			UtilsMc.broadcastToWorld(player.getWorld(), String.format("§6{0} §fhas lost his crown!", player.getName(), getName()));
+			UtilsMc.broadcastToWorld(player.getWorld(), MessageFormat.format("§6{0} §fhas lost his crown!", player.getName(), getName()));
 		}
 	}
 	

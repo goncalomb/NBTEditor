@@ -60,7 +60,7 @@ public final class FloatVariable extends NBTGenericVariable {
 
 	@Override
 	String getFormat() {
-		return String.format("Decimal between {0} and {1}.", _min, _max);
+		return String.format("Decimal between %s and %s.", _min, _max);
 	}
 	
 }
