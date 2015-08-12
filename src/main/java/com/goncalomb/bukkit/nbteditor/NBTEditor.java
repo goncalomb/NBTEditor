@@ -55,7 +55,6 @@ import com.goncalomb.bukkit.nbteditor.commands.CommandNBTItem;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTPotion;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTSpawner;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTTile;
-import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;
 import com.goncalomb.bukkit.nbteditor.tools.EntityInspectorTool;
 import com.goncalomb.bukkit.nbteditor.tools.EntityRemoverTool;
 import com.goncalomb.bukkit.nbteditor.tools.SuperLeadTool;
@@ -74,8 +73,6 @@ public final class NBTEditor extends JavaPlugin {
 			getLogger().warning("NBTEditor version not compatible with this version of Bukkit. Please install the apropriated version.");
 			return;
 		}
-		
-		MobNBT a = new MobNBT();
 		
 		MyCommandManager.register(new CommandBOS(), this);
 		MyCommandManager.register(new CommandNBTSpawner(), this);
