@@ -52,10 +52,10 @@ public final class InventoryForVillagers extends InventoryForBos<VillagerNBT> {
 			setItem(9 + i, offer.getBuyB());
 			setItem(18 + i, offer.getSell());
 		}
-		if (i != 0) {
+		if (i == 0) {
 			setPlaceholder(0, placeholders[0]);
-			setPlaceholder(9, placeholders[9]);
-			setPlaceholder(18, placeholders[18]);
+			setPlaceholder(9, placeholders[1]);
+			setPlaceholder(18, placeholders[2]);
 		}
 	}
 
