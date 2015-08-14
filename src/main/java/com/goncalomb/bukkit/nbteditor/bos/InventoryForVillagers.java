@@ -19,6 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.bos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Material;
@@ -69,12 +70,20 @@ public final class InventoryForVillagers extends InventoryForBos<VillagerNBT> {
 		for (int l = offers.size(); j < l && j < k; ++j) {
 			_entityNbt.addOffer(offers.get(j));
 		}
-		boolean invalidOffer = false;
+		ArrayList<ItemStack> extraItems = new ArrayList<ItemStack>();
 		for (int i = 0; i < 9; ++i, ++j) {
 			if (items[i] != null && items[18 + i] != null) {
 				_entityNbt.addOffer(new VillagerNBTOffer(items[i], items[9 + i], items[18 + i], Integer.MAX_VALUE));
-			} else if (items[i] != null || items[9 + i] != null || items[18 + i] != null) {
-				invalidOffer = true;
+			} else {
+				if (items[i] != null) {
+					extraItems.add(items[i]);
+				}
+				if (items[9 + i] != null) {
+					extraItems.add(items[9 + i]);
+				}
+				if (items[18 + i] != null) {
+					extraItems.add(items[18 + i]);
+				}
 			}
 		}
 		for (int l = offers.size(); j < l; ++j) {
@@ -82,9 +91,10 @@ public final class InventoryForVillagers extends InventoryForBos<VillagerNBT> {
 		}
 		_bos.saveBook();
 
-		Player player = (Player)event.getPlayer();
-		if (invalidOffer) {
-			player.sendMessage("§eSome offers were invalid.");
+		Player player = (Player) event.getPlayer();
+		if (extraItems.size() > 0) {
+			player.sendMessage("§eSome offers are invalid. The items were returned.");
+			player.getInventory().addItem(extraItems.toArray(new ItemStack[extraItems.size()]));
 		}
 		player.sendMessage("§aVillager offers set.");
 	}
