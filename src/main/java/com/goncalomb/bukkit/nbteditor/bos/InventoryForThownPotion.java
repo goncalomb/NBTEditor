@@ -21,7 +21,6 @@ package com.goncalomb.bukkit.nbteditor.bos;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -32,29 +31,21 @@ public final class InventoryForThownPotion extends InventoryForSingleItem<Thrown
 	private static ItemStack placeholder = createPlaceholder(Material.GLASS_BOTTLE, "§6The potion goes here.");
 	
 	public InventoryForThownPotion(BookOfSouls bos, Player owner) {
-		super(bos, owner, "Define the potion here...");
-		ItemStack item = _entityNbt.getPotion();
-		if (item != null) {
-			setItem(4, item);
-		} else {
-			setPlaceholder(4, placeholder);
-		}
+		super(bos, owner, "Define the potion here...", placeholder);
 	}
 	
 	@Override
-	protected void inventoryClick(InventoryClickEvent event) {
-		super.inventoryClick(event);
-		ItemStack itemToCheck = getItemToCheck(event);
-		if (itemToCheck != null && itemToCheck.getType() != Material.POTION) {
-			((Player)event.getWhoClicked()).sendMessage("§cThat must be a potion!");
-			event.setCancelled(true);
+	protected boolean isValidItem(Player player, ItemStack item) {
+		if (item.getType() != Material.POTION) {
+			player.sendMessage("§cThat must be a must be a potion!");
+			return false;
 		}
+		return true;
 	}
 	
 	@Override
 	protected void inventoryClose(InventoryCloseEvent event) {
-		_entityNbt.setPotion(getContents()[4]);
-		_bos.saveBook();
+		super.inventoryClose(event);
 		((Player)event.getPlayer()).sendMessage("§aPotion set.");
 	}
 

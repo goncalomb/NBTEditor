@@ -22,18 +22,26 @@ package com.goncalomb.bukkit.nbteditor.bos;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
+import com.goncalomb.bukkit.nbteditor.nbt.SingleItemBasedNBT;
 
-public abstract class InventoryForSingleItem<T extends EntityNBT> extends InventoryForBos<T> {
+public abstract class InventoryForSingleItem<T extends EntityNBT & SingleItemBasedNBT> extends InventoryForBos<T> {
 	
-	public InventoryForSingleItem(BookOfSouls bos, Player owner, String title) {
+	public InventoryForSingleItem(BookOfSouls bos, Player owner, String title, ItemStack placeholder) {
 		super(bos, owner, 9, title);
 		for (int i = 0; i < 9; ++i) {
 			if (i != 4) {
 				setItem(i, ITEM_FILLER);
 			}
+		}
+		ItemStack item = _entityNbt.getItem();
+		if (item != null) {
+			setItem(4, item);
+		} else {
+			setPlaceholder(4, placeholder);
 		}
 	}
 	
@@ -46,6 +54,32 @@ public abstract class InventoryForSingleItem<T extends EntityNBT> extends Invent
 			return event.getCursor();
 		}
 		return null;
+	}
+	
+	@Override
+	protected void inventoryClick(InventoryClickEvent event) {
+		super.inventoryClick(event);
+		int slot = event.getRawSlot();
+		boolean isShift = event.isShiftClick();
+		ItemStack item = null;
+		if (isShift && slot > 8 && event.getInventory().firstEmpty() == 4) {
+			item = event.getCurrentItem();
+		} else if (slot == 4 && !isShift && event.getCursor().getType() != Material.AIR) {
+			item = event.getCursor();
+		}
+		if (item != null) {
+			if (!isValidItem((Player) event.getWhoClicked(), item)) {
+				event.setCancelled(true);
+			}
+		}
+	}
+	
+	protected abstract boolean isValidItem(Player player, ItemStack item);
+	
+	@Override
+	protected void inventoryClose(InventoryCloseEvent event) {
+		_entityNbt.setItem(getContents()[4]);
+		_bos.saveBook();
 	}
 	
 }

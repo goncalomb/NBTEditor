@@ -31,19 +31,17 @@ public final class InventoryForDroppedItems extends InventoryForSingleItem<Dropp
 	private static ItemStack placeholder = createPlaceholder(Material.PAPER, "§6The item goes here.");
 	
 	public InventoryForDroppedItems(BookOfSouls bos, Player owner) {
-		super(bos, owner, "Define the item here...");
-		ItemStack item = _entityNbt.getItem();
-		if (item != null) {
-			setItem(4, item);
-		} else {
-			setPlaceholder(4, placeholder);
-		}
+		super(bos, owner, "Define the item here...", placeholder);
+	}
+	
+	@Override
+	protected boolean isValidItem(Player player, ItemStack item) {
+		return true;
 	}
 
 	@Override
 	protected void inventoryClose(InventoryCloseEvent event) {
-		_entityNbt.setItem(getContents()[4]);
-		_bos.saveBook();
+		super.inventoryClose(event);
 		((Player)event.getPlayer()).sendMessage("§aItem set.");
 	}
 

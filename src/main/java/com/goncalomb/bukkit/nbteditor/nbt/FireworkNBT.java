@@ -28,7 +28,7 @@ import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 
-public final class FireworkNBT extends EntityNBT {
+public final class FireworkNBT extends EntityNBT implements SingleItemBasedNBT {
 	
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Firework");
@@ -57,7 +57,7 @@ public final class FireworkNBT extends EntityNBT {
 		}
 	}
 	
-	public void setFirework(ItemStack firework) {
+	public void setItem(ItemStack firework) {
 		if (firework == null) {
 			_data.remove("FireworksItem");
 		} else {
@@ -66,7 +66,7 @@ public final class FireworkNBT extends EntityNBT {
 		setLifeTimeFromItem(firework);
 	}
 	
-	public ItemStack getFirework() {
+	public ItemStack getItem() {
 		if (_data.hasKey("FireworksItem")) {
 			return NBTUtils.itemStackFromNBTData(_data.getCompound("FireworksItem"));
 		}

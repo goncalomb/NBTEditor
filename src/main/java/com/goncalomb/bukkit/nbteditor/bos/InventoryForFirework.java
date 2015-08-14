@@ -21,7 +21,6 @@ package com.goncalomb.bukkit.nbteditor.bos;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -32,29 +31,21 @@ public final class InventoryForFirework extends InventoryForSingleItem<FireworkN
 	private static ItemStack placeholder = createPlaceholder(Material.PAPER, "§6The firework rocket goes here.");
 	
 	public InventoryForFirework(BookOfSouls bos, Player owner) {
-		super(bos, owner, "Define the firework here...");
-		ItemStack item = _entityNbt.getFirework();
-		if (item != null) {
-			setItem(4, item);
-		} else {
-			setPlaceholder(4, placeholder);
-		}
+		super(bos, owner, "Define the firework here...", placeholder);
 	}
 	
 	@Override
-	protected void inventoryClick(InventoryClickEvent event) {
-		super.inventoryClick(event);
-		ItemStack itemToCheck = getItemToCheck(event);
-		if (itemToCheck != null && itemToCheck.getType() != Material.FIREWORK) {
-			((Player)event.getWhoClicked()).sendMessage("§cThat must be a firework rocket!");
-			event.setCancelled(true);
+	protected boolean isValidItem(Player player, ItemStack item) {
+		if (item.getType() != Material.FIREWORK) {
+			player.sendMessage("§cThat must be a firework rocket!");
+			return false;
 		}
+		return true;
 	}
 	
 	@Override
 	protected void inventoryClose(InventoryCloseEvent event) {
-		_entityNbt.setFirework(getContents()[4]);
-		_bos.saveBook();
+		super.inventoryClose(event);
 		((Player)event.getPlayer()).sendMessage("§aFirework rocket set.");
 	}
 

@@ -21,27 +21,12 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 
 import org.bukkit.inventory.ItemStack;
 
-import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
-
-public class ThrownPotionNBT extends EntityNBT implements SingleItemBasedNBT {
+public interface SingleItemBasedNBT {
 	
-	public void setItem(ItemStack potion) {
-		if (potion == null) {
-			_data.remove("Potion");
-		} else {
-			_data.setCompound("Potion", NBTUtils.itemStackToNBTData(potion));
-		}
-	}
+	public ItemStack getItem();
 	
-	public ItemStack getItem() {
-		if (_data.hasKey("Potion")) {
-			return NBTUtils.itemStackFromNBTData(_data.getCompound("Potion"));
-		}
-		return null;
-	}
+	public void setItem(ItemStack item);
 	
-	public boolean isSet() {
-		return _data.hasKey("Potion");
-	}
+	public boolean isSet();
 	
 }
