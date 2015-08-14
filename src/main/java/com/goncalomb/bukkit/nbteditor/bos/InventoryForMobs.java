@@ -19,60 +19,50 @@
 
 package com.goncalomb.bukkit.nbteditor.bos;
 
-import java.util.HashMap;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;
 
-public final class InventoryForMobs extends IInventoryForBos {
+public final class InventoryForMobs extends InventoryForBos<MobNBT> {
 	
-	private static HashMap<Integer, ItemStack> _placeholders = new HashMap<Integer, ItemStack>();
-	
-	static {
-		_placeholders.put(0, createPlaceholder(Material.PAPER, "§6Head Equipment"));
-		_placeholders.put(1, createPlaceholder(Material.PAPER, "§6Chest Equipment"));
-		_placeholders.put(2, createPlaceholder(Material.PAPER, "§6Legs Equipment"));
-		_placeholders.put(3, createPlaceholder(Material.PAPER, "§6Feet Equipment"));
-		_placeholders.put(4, createPlaceholder(Material.PAPER, "§6Hand Item"));
-		_placeholders.put(8, createPlaceholder(Material.GLASS_BOTTLE, "§6Effects", "§bPotion here to apply the effects."));
-	}
-	
-	private BookOfSouls _bos;
+	private static ItemStack[] placeholders = new ItemStack[] {
+		createPlaceholder(Material.PAPER, "§6Head Equipment"),
+		createPlaceholder(Material.PAPER, "§6Chest Equipment"),
+		createPlaceholder(Material.PAPER, "§6Legs Equipment"),
+		createPlaceholder(Material.PAPER, "§6Feet Equipment"),
+		createPlaceholder(Material.PAPER, "§6Hand Item")
+	};
+	private static ItemStack potionPlaceholder = createPlaceholder(Material.GLASS_BOTTLE, "§6Effects", "§bPotion here to apply the effects.");
 	
 	public InventoryForMobs(BookOfSouls bos, Player owner) {
-		super(owner, 9, "Inventory" + " - " + ChatColor.BLACK + bos.getEntityNBT().getEntityType().getName(), _placeholders);
-		_bos = bos;
-		Inventory inv = getInventory();
-		MobNBT mob = (MobNBT) _bos.getEntityNBT();
-		ItemStack[] equip = mob.getEquipment();
+		super(bos, owner, 9, "Inventory" + " - " + ChatColor.BLACK + bos.getEntityNBT().getEntityType().getName());
+		ItemStack[] equip = _entityNbt.getEquipment();
 		for (int i = 0; i < 5; ++i) {
 			if (equip[i] != null && equip[i].getType() != Material.AIR) {
-				inv.setItem(4 - i, equip[i]);
+				setItem(4 - i, equip[i]);
+			} else {
+				setPlaceholder(i, placeholders[i]);
 			}
 		}
-		inv.setItem(5, _itemFiller);
-		inv.setItem(6, _itemFiller);
-		inv.setItem(7, _itemFiller);
-		ItemStack potion = mob.getEffectsAsPotion();
+		setItem(5, ITEM_FILLER);
+		setItem(6, ITEM_FILLER);
+		setItem(7, ITEM_FILLER);
+		ItemStack potion = _entityNbt.getEffectsAsPotion();
 		if (potion != null) {
-			inv.setItem(8, potion);
+			setItem(8, potion);
+		} else {
+			setPlaceholder(8, potionPlaceholder);
 		}
 	}
 
 	@Override
 	protected void inventoryClick(InventoryClickEvent event) {
 		super.inventoryClick(event);
-		if (event.getRawSlot() > 4 && event.getRawSlot() < 8) {
-			event.setCancelled(true);
-		}
-		
 		int slot = event.getRawSlot();
 		boolean isShift = event.isShiftClick();
 		ItemStack itemToCheck = null;
@@ -91,10 +81,9 @@ public final class InventoryForMobs extends IInventoryForBos {
 
 	@Override
 	protected void inventoryClose(InventoryCloseEvent event) {
-		MobNBT mob = (MobNBT) _bos.getEntityNBT();
 		ItemStack[] items = getContents();
-		mob.setEquipment(items[4], items[3], items[2], items[1], items[0]);
-		mob.setEffectsFromPotion(items[8]);
+		_entityNbt.setEquipment(items[4], items[3], items[2], items[1], items[0]);
+		_entityNbt.setEffectsFromPotion(items[8]);
 		_bos.saveBook();
 		((Player)event.getPlayer()).sendMessage("§aItems set.");
 	}

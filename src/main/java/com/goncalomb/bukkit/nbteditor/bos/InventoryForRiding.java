@@ -20,38 +20,29 @@
 package com.goncalomb.bukkit.nbteditor.bos;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 
-public final class InventoryForRiding extends IInventoryForBos {
+public final class InventoryForRiding extends InventoryForBos<EntityNBT> {
 	
-	private static HashMap<Integer, ItemStack> _placeholders = new HashMap<Integer, ItemStack>();
-	
-	static {
-		_placeholders.put(53, createPlaceholder(Material.PAPER, "§6Put Books of Souls here, to add entities.", "§bRemember, the book that you're holding is the top entity."));
-	}
-	
-	private BookOfSouls _bos;
+	private static ItemStack placeholder = createPlaceholder(Material.PAPER, "§6Put Books of Souls here, to add entities.", "§bRemember, the book that you're holding is the top entity.");
 	
 	public InventoryForRiding(BookOfSouls bos, Player owner) {
-		super(owner, 54, "Define the entities here...", _placeholders, true);
-		_bos = bos;
-		Inventory inv = getInventory();
+		super(bos, owner, 54, "Define the entities here...", true);
+		setPlaceholder(53, placeholder);
 		int i = 0;
-		EntityNBT entityNBT = bos.getEntityNBT();
+		EntityNBT entityNBT = _entityNbt;
 		while ((entityNBT = entityNBT.getRiding()) != null) {
 			EntityNBT riding = entityNBT.clone();
 			riding.setRiding((EntityNBT[]) null);
-			inv.setItem(i++, (new BookOfSouls(riding)).getBook());
+			setItem(i++, (new BookOfSouls(riding)).getBook());
 		}
 	}
 	
@@ -88,7 +79,7 @@ public final class InventoryForRiding extends IInventoryForBos {
 				rides.add(BookOfSouls.bookToEntityNBT(item));
 			}
 		}
-		_bos.getEntityNBT().setRiding(rides.toArray(new EntityNBT[rides.size()]));
+		_entityNbt.setRiding(rides.toArray(new EntityNBT[rides.size()]));
 		_bos.saveBook();
 		((Player)event.getPlayer()).sendMessage("§aRiding entities set.");
 	}

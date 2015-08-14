@@ -19,8 +19,6 @@
 
 package com.goncalomb.bukkit.nbteditor.bos;
 
-import java.util.HashMap;
-
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -28,24 +26,23 @@ import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.nbteditor.nbt.DroppedItemNBT;
 
-public final class InventoryForDroppedItems extends InventoryForSingleItem {
+public final class InventoryForDroppedItems extends InventoryForSingleItem<DroppedItemNBT> {
 	
-	private static HashMap<Integer, ItemStack> _placeholders = new HashMap<Integer, ItemStack>();
-	
-	static {
-		_placeholders.put(4, createPlaceholder(Material.PAPER, "§6The item goes here."));
-	}
-	
-	private BookOfSouls _bos;
+	private static ItemStack placeholder = createPlaceholder(Material.PAPER, "§6The item goes here.");
 	
 	public InventoryForDroppedItems(BookOfSouls bos, Player owner) {
-		super("Define the item here...", _placeholders, ((DroppedItemNBT) bos.getEntityNBT()).getItem(), bos, owner);
-		_bos = bos;
+		super(bos, owner, "Define the item here...");
+		ItemStack item = _entityNbt.getItem();
+		if (item != null) {
+			setItem(4, item);
+		} else {
+			setPlaceholder(4, placeholder);
+		}
 	}
 
 	@Override
 	protected void inventoryClose(InventoryCloseEvent event) {
-		((DroppedItemNBT) _bos.getEntityNBT()).setItem(getContents()[4]);
+		_entityNbt.setItem(getContents()[4]);
 		_bos.saveBook();
 		((Player)event.getPlayer()).sendMessage("§aItem set.");
 	}

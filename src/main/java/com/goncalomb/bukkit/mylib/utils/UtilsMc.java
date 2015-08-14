@@ -33,7 +33,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
@@ -116,23 +115,19 @@ public final class UtilsMc {
 		return new Vector(-0.5, -0.5, -0.5).add(delta).normalize().multiply(distance).add(delta);
 	}
 	
-	public static ItemStack newItem(Material material, String name) {
-		return newItem(new MaterialData(material), name);
+	public static ItemStack newSingleItemStack(Material material, String name) {
+		return newSingleItemStack(material, name, (String[]) null);
 	}
 	
-	public static ItemStack newItem(Material material, String name, String... lore) {
-		return newItem(new MaterialData(material), name, lore);
+	public static ItemStack newSingleItemStack(Material material, String name, String... lore) {
+		return newSingleItemStack(material, name, (lore == null ? null : Arrays.asList(lore)));
 	}
 	
-	public static ItemStack newItem(MaterialData material, String name) {
-		return newItem(material, name, (String[]) null);
-	}
-	
-	public static ItemStack newItem(MaterialData material, String name, String... lore) {
-		ItemStack item = material.toItemStack();
+	public static ItemStack newSingleItemStack(Material material, String name, List<String> lore) {
+		ItemStack item = new ItemStack(material, 1);
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(name);
-		meta.setLore(lore == null ? null : Arrays.asList(lore));
+		meta.setLore(lore);
 		item.setItemMeta(meta);
 		return item;
 	}

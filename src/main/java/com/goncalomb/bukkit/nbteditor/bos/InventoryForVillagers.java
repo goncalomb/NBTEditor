@@ -19,67 +19,66 @@
 
 package com.goncalomb.bukkit.nbteditor.bos;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBTOffer;
 
-public final class InventoryForVillagers extends IInventoryForBos {
+public final class InventoryForVillagers extends InventoryForBos<VillagerNBT> {
 	
-	private static HashMap<Integer, ItemStack> _placeholders = new HashMap<Integer, ItemStack>();
-	
-	static {
-		_placeholders.put(0, createPlaceholder(Material.PAPER, "§6Buy item 1"));
-		_placeholders.put(9, createPlaceholder(Material.PAPER, "§6Buy item 2", "§bThis is optional."));
-		_placeholders.put(18, createPlaceholder(Material.PAPER, "§6Sell item"));
-	}
+	private static ItemStack[] placeholders = new ItemStack[] {
+		createPlaceholder(Material.PAPER, "§6Buy item 1"),
+		createPlaceholder(Material.PAPER, "§6Buy item 2", "§bThis is optional."),
+		createPlaceholder(Material.PAPER, "§6Sell item")
+	};
 	
 	private BookOfSouls _bos;
 	private int _page;
 	
 	public InventoryForVillagers(BookOfSouls bos, int page, Player owner) {
-		super(owner, 27, "Villager Offers", _placeholders);
+		super(bos, owner, 27, "Villager Offers");
 		_bos = bos;
 		_page = Math.min(Math.max(page, 0), 9);
-		Inventory inv = getInventory();
-		VillagerNBT villager = (VillagerNBT) _bos.getEntityNBT();
-		List<VillagerNBTOffer> offers = villager.getOffers();
-		for (int i = 0, j = _page * 9, l = offers.size(); i < 9 && j < l ; ++i, ++j) {
+		List<VillagerNBTOffer> offers = _entityNbt.getOffers();
+		int i = 0;
+		for (int j = _page * 9, l = offers.size(); i < 9 && j < l ; ++i, ++j) {
 			VillagerNBTOffer offer = offers.get(j);
-			inv.setItem(i, offer.getBuyA());
-			inv.setItem(9 + i, offer.getBuyB());
-			inv.setItem(18 + i, offer.getSell());
+			setItem(i, offer.getBuyA());
+			setItem(9 + i, offer.getBuyB());
+			setItem(18 + i, offer.getSell());
+		}
+		if (i != 0) {
+			setPlaceholder(0, placeholders[0]);
+			setPlaceholder(9, placeholders[9]);
+			setPlaceholder(18, placeholders[18]);
 		}
 	}
 
 	@Override
 	protected void inventoryClose(InventoryCloseEvent event) {
-		VillagerNBT villager = (VillagerNBT) _bos.getEntityNBT();
 		ItemStack[] items = getContents();
-		List<VillagerNBTOffer> offers = villager.getOffers();
-		villager.clearOffers();
+		List<VillagerNBTOffer> offers = _entityNbt.getOffers();
+		_entityNbt.clearOffers();
 		int j = 0;
 		int k = _page * 9;
 		for (int l = offers.size(); j < l && j < k; ++j) {
-			villager.addOffer(offers.get(j));
+			_entityNbt.addOffer(offers.get(j));
 		}
 		boolean invalidOffer = false;
 		for (int i = 0; i < 9; ++i, ++j) {
 			if (items[i] != null && items[18 + i] != null) {
-				villager.addOffer(new VillagerNBTOffer(items[i], items[9 + i], items[18 + i], Integer.MAX_VALUE));
+				_entityNbt.addOffer(new VillagerNBTOffer(items[i], items[9 + i], items[18 + i], Integer.MAX_VALUE));
 			} else if (items[i] != null || items[9 + i] != null || items[18 + i] != null) {
 				invalidOffer = true;
 			}
 		}
 		for (int l = offers.size(); j < l; ++j) {
-			villager.addOffer(offers.get(j));
+			_entityNbt.addOffer(offers.get(j));
 		}
 		_bos.saveBook();
 

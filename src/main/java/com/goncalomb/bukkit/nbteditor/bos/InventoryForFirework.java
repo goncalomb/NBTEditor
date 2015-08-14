@@ -19,8 +19,6 @@
 
 package com.goncalomb.bukkit.nbteditor.bos;
 
-import java.util.HashMap;
-
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -29,19 +27,18 @@ import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.nbteditor.nbt.FireworkNBT;
 
-public final class InventoryForFirework extends InventoryForSingleItem {
+public final class InventoryForFirework extends InventoryForSingleItem<FireworkNBT> {
 	
-	private static HashMap<Integer, ItemStack> _placeholders = new HashMap<Integer, ItemStack>();
-	
-	static {
-		_placeholders.put(4, createPlaceholder(Material.PAPER, "§6The firework rocket goes here."));
-	}
-	
-	private BookOfSouls _bos;
+	private static ItemStack placeholder = createPlaceholder(Material.PAPER, "§6The firework rocket goes here.");
 	
 	public InventoryForFirework(BookOfSouls bos, Player owner) {
-		super("Define the firework here...", _placeholders, ((FireworkNBT) bos.getEntityNBT()).getFirework(), bos, owner);
-		_bos = bos;
+		super(bos, owner, "Define the firework here...");
+		ItemStack item = _entityNbt.getFirework();
+		if (item != null) {
+			setItem(4, item);
+		} else {
+			setPlaceholder(4, placeholder);
+		}
 	}
 	
 	@Override
@@ -56,7 +53,7 @@ public final class InventoryForFirework extends InventoryForSingleItem {
 	
 	@Override
 	protected void inventoryClose(InventoryCloseEvent event) {
-		((FireworkNBT) _bos.getEntityNBT()).setFirework(getContents()[4]);
+		_entityNbt.setFirework(getContents()[4]);
 		_bos.saveBook();
 		((Player)event.getPlayer()).sendMessage("§aFirework rocket set.");
 	}
