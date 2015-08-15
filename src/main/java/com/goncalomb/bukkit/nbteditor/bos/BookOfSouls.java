@@ -26,6 +26,7 @@ import java.util.Random;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
@@ -39,6 +40,7 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.utils.BookSerialize;
 import com.goncalomb.bukkit.nbteditor.nbt.DroppedItemNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
+import com.goncalomb.bukkit.nbteditor.nbt.EquippableNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.FallingBlockNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.FireworkNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MinecartContainerNBT;
@@ -144,13 +146,16 @@ public class BookOfSouls {
 		if (_entityNbt instanceof MobNBT) {
 			(new InventoryForMobs(this, player)).openInventory(player, _plugin);
 			return true;
+		} else if (_entityNbt.getEntityType() == EntityType.ARMOR_STAND) {
+			(new InventoryForEquippable<EquippableNBT>(this, player)).openInventory(player, _plugin);
+			return true;
 		} else if (_entityNbt instanceof DroppedItemNBT) {
 			(new InventoryForDroppedItems(this, player)).openInventory(player, _plugin);
 			return true;
 		} else if (_entityNbt instanceof ThrownPotionNBT) {
 			(new InventoryForThownPotion(this, player)).openInventory(player, _plugin);
 			return true;
-		}else if (_entityNbt instanceof FireworkNBT) {
+		} else if (_entityNbt instanceof FireworkNBT) {
 			(new InventoryForFirework(this, player)).openInventory(player, _plugin);
 			return true;
 		}

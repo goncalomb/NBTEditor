@@ -19,7 +19,6 @@
 
 package com.goncalomb.bukkit.nbteditor.bos;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -28,30 +27,12 @@ import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;
 
-public final class InventoryForMobs extends InventoryForBos<MobNBT> {
+public final class InventoryForMobs extends InventoryForEquippable<MobNBT> {
 	
-	private static ItemStack[] placeholders = new ItemStack[] {
-		createPlaceholder(Material.PAPER, "§6Head Equipment"),
-		createPlaceholder(Material.PAPER, "§6Chest Equipment"),
-		createPlaceholder(Material.PAPER, "§6Legs Equipment"),
-		createPlaceholder(Material.PAPER, "§6Feet Equipment"),
-		createPlaceholder(Material.PAPER, "§6Hand Item")
-	};
 	private static ItemStack potionPlaceholder = createPlaceholder(Material.GLASS_BOTTLE, "§6Effects", "§bPotion here to apply the effects.");
 	
 	public InventoryForMobs(BookOfSouls bos, Player owner) {
-		super(bos, owner, 9, "Inventory" + " - " + ChatColor.BLACK + bos.getEntityNBT().getEntityType().getName());
-		ItemStack[] equip = _entityNbt.getEquipment();
-		for (int i = 0; i < 5; ++i) {
-			if (equip[i] != null && equip[i].getType() != Material.AIR) {
-				setItem(4 - i, equip[i]);
-			} else {
-				setPlaceholder(i, placeholders[i]);
-			}
-		}
-		setItem(5, ITEM_FILLER);
-		setItem(6, ITEM_FILLER);
-		setItem(7, ITEM_FILLER);
+		super(bos, owner);
 		ItemStack potion = _entityNbt.getEffectsAsPotion();
 		if (potion != null) {
 			setItem(8, potion);
@@ -81,11 +62,8 @@ public final class InventoryForMobs extends InventoryForBos<MobNBT> {
 
 	@Override
 	protected void inventoryClose(InventoryCloseEvent event) {
-		ItemStack[] items = getContents();
-		_entityNbt.setEquipment(items[4], items[3], items[2], items[1], items[0]);
-		_entityNbt.setEffectsFromPotion(items[8]);
-		_bos.saveBook();
-		((Player)event.getPlayer()).sendMessage("§aItems set.");
+		_entityNbt.setEffectsFromPotion(getItem(8));
+		super.inventoryClose(event);
 	}
 
 }

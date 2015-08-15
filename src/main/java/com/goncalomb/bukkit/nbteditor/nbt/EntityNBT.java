@@ -91,7 +91,7 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.FIREBALL, FireballNBT.class);
 		registerEntity(EntityType.SMALL_FIREBALL, FireballNBT.class);
 		registerEntity(EntityType.WITHER_SKULL, FireballNBT.class);
-		registerEntity(EntityType.ARMOR_STAND, EntityNBT.class);
+		registerEntity(EntityType.ARMOR_STAND, EquippableNBT.class);
 		
 		registerEntity(EntityType.BOAT, EntityNBT.class);
 		

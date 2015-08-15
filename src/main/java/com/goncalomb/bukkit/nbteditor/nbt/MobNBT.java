@@ -24,7 +24,6 @@ import java.util.Arrays;
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.inventory.ItemStack;
 
-import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeContainer;
@@ -34,9 +33,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
 
-public class MobNBT extends EntityNBT {
-	
-	private ItemStack[] _equipment;
+public class MobNBT extends EquippableNBT {
 	
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Mob");
@@ -50,41 +47,6 @@ public class MobNBT extends EntityNBT {
 		variables.add("Name", new StringVariable("CustomName"));
 		variables.add("NameVisible", new BooleanVariable("CustomNameVisible"));
 		registerVariables(MobNBT.class, variables);
-	}
-	
-	public void setEquipment(ItemStack hand, ItemStack feet, ItemStack legs, ItemStack chest, ItemStack head) {
-		if (hand == null && feet == null && legs == null && chest == null && head == null) {
-			clearEquipment();
-			return;
-		}
-		_equipment = new ItemStack[] { hand, feet, legs, chest, head };
-		Object[] equipmentData = new Object[5];
-		for (int i = 0; i < 5; ++i) {
-			if (_equipment[i] != null) {
-				equipmentData[i] = NBTUtils.itemStackToNBTData(_equipment[i]);
-			} else {
-				equipmentData[i] = new NBTTagCompound();
-			}
-		}
-		_data.setList("Equipment", equipmentData);
-	}
-	
-	public ItemStack[] getEquipment() {
-		if (_equipment == null) {
-			_equipment = new ItemStack[5];
-			if (_data.hasKey("Equipment")) {
-				Object[] equipmentData = _data.getListAsArray("Equipment");
-				for (int i = 0; i < 5; ++i) {
-					_equipment[i] = NBTUtils.itemStackFromNBTData((NBTTagCompound) equipmentData[i]);
-				}
-			}
-		}
-		return _equipment;
-	}
-	
-	public void clearEquipment() {
-		_data.remove("Equipment");
-		_equipment = null;
 	}
 	
 	public void setDropChances(float hand, float feet, float legs, float chest, float head) {

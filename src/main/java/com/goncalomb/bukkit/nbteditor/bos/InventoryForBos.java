@@ -59,7 +59,11 @@ abstract class InventoryForBos<T extends EntityNBT> extends CustomInventory {
 	}
 	
 	protected ItemStack getItem(int slot) {
-		return _inventory.getItem(slot);
+		ItemStack item = _inventory.getItem(slot);
+		if (item != null && item.equals(_placeholders.get(slot))) {
+			return null;
+		}
+		return item;
 	}
 	
 	protected void setPlaceholder(int slot, Material material, String name) {
