@@ -256,9 +256,36 @@ public class BookOfSouls {
 		}
 		meta.addPage(sb.toString());
 		
+		if (_entityNbt instanceof EquippableNBT) {
+			sb = new StringBuilder();
+			sb.append("" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Equipment:\n");
+			ItemStack[] items = ((EquippableNBT) _entityNbt).getEquipment();
+			for (int i = 0; i < 5; ++i) {
+				sb.append(ChatColor.DARK_BLUE + _mobEquipSlotName[i] + ":\n");
+				if (items[4 - i] != null) {
+					sb.append("  " + ChatColor.BLACK + items[4 - i].getType().name() + ":" + items[4 - i].getDurability() + "(" + items[4 - i].getAmount() + ")" + "\n");
+				} else {
+					sb.append("  " + ChatColor.BLACK + ChatColor.ITALIC +"none\n");
+				}
+			}
+			meta.addPage(sb.toString());
+		}
 
 		if (_entityNbt instanceof MobNBT) {
 			MobNBT mob = (MobNBT) _entityNbt;
+			
+			sb = new StringBuilder();
+			sb.append("" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Drop chance:\n");
+			float[] chances = mob.getDropChances();
+			if (chances != null) {
+				for (int i = 0; i < 5; ++i) {
+					sb.append(ChatColor.DARK_BLUE + _mobEquipSlotName[i] + ":\n");
+					sb.append("  " + ChatColor.BLACK + chances[4 - i] + "\n");
+				}
+			} else {
+				sb.append("" + ChatColor.BLACK + ChatColor.ITALIC + "not defined,\ndefault 0.085");
+			}
+			meta.addPage(sb.toString());
 			
 			sb = new StringBuilder();
 			sb.append("" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Attributes:\n");
@@ -295,32 +322,6 @@ public class BookOfSouls {
 					sb.append("\n");
 					--x;
 				}
-			}
-			meta.addPage(sb.toString());
-			
-			sb = new StringBuilder();
-			sb.append("" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Equipment:\n");
-			ItemStack[] items = mob.getEquipment();
-			for (int i = 0; i < 5; ++i) {
-				sb.append(ChatColor.DARK_BLUE + _mobEquipSlotName[i] + ":\n");
-				if (items[4 - i] != null) {
-					sb.append("  " + ChatColor.BLACK + items[4 - i].getType().name() + ":" + items[4 - i].getDurability() + "(" + items[4 - i].getAmount() + ")" + "\n");
-				} else {
-					sb.append("  " + ChatColor.BLACK + ChatColor.ITALIC +"none\n");
-				}
-			}
-			meta.addPage(sb.toString());
-			
-			sb = new StringBuilder();
-			sb.append("" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Drop chance:\n");
-			float[] chances = mob.getDropChances();
-			if (chances != null) {
-				for (int i = 0; i < 5; ++i) {
-					sb.append(ChatColor.DARK_BLUE + _mobEquipSlotName[i] + ":\n");
-					sb.append("  " + ChatColor.BLACK + chances[4 - i] + "\n");
-				}
-			} else {
-				sb.append("" + ChatColor.BLACK + ChatColor.ITALIC + "not defined,\ndefault 0.085");
 			}
 			meta.addPage(sb.toString());
 		}
