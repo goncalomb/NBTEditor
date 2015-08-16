@@ -74,10 +74,10 @@ public class BookOfSouls {
 		_plugin = plugin;
 		
 		_bosEmptyCustomItem = new BookOfSoulsEmptyCI();
-		CustomItemManager.register(_bosEmptyCustomItem, plugin, "nbteditor");
+		CustomItemManager.register(_bosEmptyCustomItem, plugin, _plugin.getName());
 		
 		_bosCustomItem = new BookOfSoulsCI();
-		CustomItemManager.register(_bosCustomItem, plugin, "nbteditor");
+		CustomItemManager.register(_bosCustomItem, plugin, _plugin.getName());
 	}
 	
 	static EntityNBT bookToEntityNBT(ItemStack book) {
