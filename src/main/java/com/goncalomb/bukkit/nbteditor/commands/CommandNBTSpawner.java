@@ -132,11 +132,6 @@ public class CommandNBTSpawner extends MyCommand {
 			SpawnerNBTWrapper spawner = getSpawner((Player) sender);
 			EntityType entityType = EntityTypeMap.getByName(args[0]);
 			if (entityType != null && entityType.isAlive()) {
-				if (entityType == EntityType.HORSE) {
-					sender.sendMessage(ChatColor.YELLOW + "Due to a Minecraft bug, horse spawners are disabled!");
-					sender.sendMessage(ChatColor.YELLOW + "Please go talk to Dinnerbone.");
-					return true;
-				}
 				int weight = parseWeight(args, 1);
 				spawner.addEntity(new SpawnerEntityNBT(entityType, weight));
 				spawner.save();
@@ -178,16 +173,6 @@ public class CommandNBTSpawner extends MyCommand {
 			if (bos != null) {
 				int weight = parseWeight(args, 0);
 				EntityNBT entityNbt = bos.getEntityNBT();
-				// ----- 1.6 Bug ----- No Horse Spawners -----
-				EntityNBT foo = entityNbt;
-				do {
-					if (foo.getEntityType() == EntityType.HORSE) {
-						sender.sendMessage(ChatColor.YELLOW + "Due to a Minecraft bug, horse spawners are disabled!");
-						sender.sendMessage(ChatColor.YELLOW + "Please go talk to Dinnerbone.");
-						return true;
-					}
-				} while ((foo = foo.getRiding()) != null);
-				// -------------------------------------------
 				spawner.addEntity(new SpawnerEntityNBT(entityNbt, weight));
 				spawner.save();
 				sender.sendMessage("§aEntity from the Book of Souls added to the spawner.");
