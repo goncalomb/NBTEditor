@@ -35,6 +35,7 @@ import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -152,6 +153,8 @@ public abstract class CustomItem {
 	public void onAttack(EntityDamageByEntityEvent event, PlayerDetails details) { }
 	
 	public void onInteractEntity(PlayerInteractEntityEvent event, PlayerDetails details) { };
+	
+	public void onInteractAtEntity(PlayerInteractAtEntityEvent event, PlayerDetails details) { };
 	
 	public void onPickup(PlayerPickupItemEvent event) { };
 	

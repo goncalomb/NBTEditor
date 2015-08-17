@@ -40,6 +40,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -114,6 +115,20 @@ final class CustomItemListener implements Listener {
 			if (verifyCustomItem(customItem, event.getPlayer(), false)) {
 				event.setCancelled(true);
 				customItem.onInteractEntity(event, new PlayerDetails(item, event.getPlayer()));
+			}
+		}
+	}
+	
+	@EventHandler
+	private void playerInteractAtEntity(PlayerInteractAtEntityEvent event) {
+		Player player = event.getPlayer();
+		ItemStack item = player.getItemInHand();
+		CustomItem customItem = CustomItemManager.getCustomItem(item);
+		
+		if (customItem != null) {
+			if (verifyCustomItem(customItem, event.getPlayer(), false)) {
+				event.setCancelled(true);
+				customItem.onInteractAtEntity(event, new PlayerDetails(item, event.getPlayer()));
 			}
 		}
 	}
