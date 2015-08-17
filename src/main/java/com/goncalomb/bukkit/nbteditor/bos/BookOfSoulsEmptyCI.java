@@ -22,7 +22,7 @@ package com.goncalomb.bukkit.nbteditor.bos;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.material.MaterialData;
 
 import com.goncalomb.bukkit.customitems.api.CustomItem;
@@ -38,7 +38,7 @@ final class BookOfSoulsEmptyCI extends CustomItem {
 	}
 	
 	@Override
-	public void onInteractEntity(final PlayerInteractEntityEvent event, PlayerDetails details) {
+	public void onInteractAtEntity(final PlayerInteractAtEntityEvent event, PlayerDetails details) {
 		if (EntityNBT.isValidType(event.getRightClicked().getType())) {
 			details.consumeItem();
 			Bukkit.getScheduler().runTask(getPlugin(), new Runnable() {
