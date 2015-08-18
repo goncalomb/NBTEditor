@@ -19,6 +19,8 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
+import org.bukkit.entity.Player;
+
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public final class DoubleVariable extends NBTGenericVariable {
@@ -27,7 +29,7 @@ public final class DoubleVariable extends NBTGenericVariable {
 		super(nbtKey);
 	}
 	
-	boolean set(NBTTagCompound data, String value) {
+	boolean set(NBTTagCompound data, String value, Player player) {
 		try {
 			data.setDouble(_nbtKey, Double.parseDouble(value));
 			return true;

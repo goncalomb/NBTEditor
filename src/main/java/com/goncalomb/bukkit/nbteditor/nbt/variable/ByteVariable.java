@@ -19,6 +19,8 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
+import org.bukkit.entity.Player;
+
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public final class ByteVariable extends NumericVariable {
@@ -35,7 +37,7 @@ public final class ByteVariable extends NumericVariable {
 		super(nbtKey, min, max);
 	}
 	
-	boolean set(NBTTagCompound data, String value) {
+	boolean set(NBTTagCompound data, String value, Player player) {
 		try {
 			byte v = Byte.parseByte(value);
 			if (v < _min || v > _max) return false;

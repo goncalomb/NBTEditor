@@ -107,7 +107,7 @@ public class EntityNBT extends EntityNBTBase {
 		NBTGenericVariableContainer variables = null;
 		
 		variables = new NBTGenericVariableContainer("Entity");
-		variables.add("Position", new VectorVariable("Pos"));
+		variables.add("Position", new VectorVariable("Pos", true));
 		variables.add("Velocity", new VectorVariable("Motion"));
 		variables.add("Rotation", new RotationVariable("Rotation"));
 		variables.add("FallDistance", new FloatVariable("FallDistance", 0.0f));

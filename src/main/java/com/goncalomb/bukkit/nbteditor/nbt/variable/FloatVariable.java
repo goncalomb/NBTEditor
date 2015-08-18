@@ -19,6 +19,8 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
+import org.bukkit.entity.Player;
+
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public final class FloatVariable extends NBTGenericVariable {
@@ -40,7 +42,7 @@ public final class FloatVariable extends NBTGenericVariable {
 		_max = max;
 	}
 	
-	boolean set(NBTTagCompound data, String value) {
+	boolean set(NBTTagCompound data, String value, Player player) {
 		try {
 			float v = Float.parseFloat(value);
 			if (v < _min || v > _max) return false;

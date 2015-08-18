@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
@@ -67,7 +68,7 @@ public final class BlockVariable extends NBTGenericVariable2X {
 		_dataAsInt = dataAsInt;
 	}
 	
-	boolean set(NBTTagCompound data, String value) {
+	boolean set(NBTTagCompound data, String value, Player player) {
 		String[] pieces = value.split(":", 2);
 		Material material = Material.getMaterial(pieces[0]);
 		if (material == null) {

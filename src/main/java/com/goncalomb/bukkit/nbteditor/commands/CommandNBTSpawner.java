@@ -103,7 +103,7 @@ public class CommandNBTSpawner extends MyCommand {
 			NBTVariable variable = spawner.getVariable(args[0]);
 			if (variable != null) {
 				if(args.length == 2) {
-					if (variable.setValue(args[1])) {
+					if (variable.setValue(args[1], (Player) sender)) {
 						spawner.save();
 						sender.sendMessage("§aVariable updated.");
 						return true;

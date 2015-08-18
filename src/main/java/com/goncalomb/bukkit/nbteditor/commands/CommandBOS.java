@@ -140,7 +140,7 @@ public class CommandBOS extends MyCommand {
 					return true;
 				}
 				String value = UtilsMc.parseColors(StringUtils.join(args, " ", 1, args.length));
-				if (variable.setValue(value)) {
+				if (variable.setValue(value, (Player) sender)) {
 					bos.saveBook();
 					sender.sendMessage("§aVariable updated.");
 					return true;

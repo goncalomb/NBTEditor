@@ -19,6 +19,8 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
+import org.bukkit.entity.Player;
+
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public class RotationVariable extends NBTGenericVariable {
@@ -36,7 +38,7 @@ public class RotationVariable extends NBTGenericVariable {
 		this(nbtKey, false, null);
 	}
 	
-	boolean set(NBTTagCompound data, String value) {
+	boolean set(NBTTagCompound data, String value, Player player) {
 		String[] pieces = value.replace(',', '.').split("\\s+", _count);
 		if (pieces.length == _count) {
 			Object[] values = new Object[_count];

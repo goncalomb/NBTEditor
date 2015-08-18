@@ -23,6 +23,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.bukkit.entity.Player;
+
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public final class BooleanVariable extends NBTGenericVariable{
@@ -33,7 +35,7 @@ public final class BooleanVariable extends NBTGenericVariable{
 		super(nbtKey);
 	}
 	
-	boolean set(NBTTagCompound data, String value) {
+	boolean set(NBTTagCompound data, String value, Player player) {
 		String lower = value.toLowerCase();
 		if ("true".startsWith(lower)) {
 			data.setByte(_nbtKey, (byte)1);

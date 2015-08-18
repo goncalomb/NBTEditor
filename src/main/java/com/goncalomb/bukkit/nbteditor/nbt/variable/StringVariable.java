@@ -19,6 +19,8 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
+import org.bukkit.entity.Player;
+
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public class StringVariable extends NBTGenericVariable {
@@ -27,7 +29,7 @@ public class StringVariable extends NBTGenericVariable {
 		super(nbtKey);
 	}
 	
-	boolean set(NBTTagCompound data, String value) {
+	boolean set(NBTTagCompound data, String value, Player player) {
 		if (value.length() > 64) {
 			return false;
 		}

@@ -19,6 +19,8 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
+import org.bukkit.entity.Player;
+
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public final class HorseVariantVariable extends NBTGenericVariable{
@@ -27,7 +29,7 @@ public final class HorseVariantVariable extends NBTGenericVariable{
 		super("Variant");
 	}
 	
-	boolean set(NBTTagCompound data, String value) {
+	boolean set(NBTTagCompound data, String value, Player player) {
 		String[] pieces = value.split("\\s+", 2);
 		if (pieces.length == 2) {
 			int markings, color;

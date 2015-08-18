@@ -21,6 +21,8 @@ package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
 import java.util.List;
 
+import org.bukkit.entity.Player;
+
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public final class NBTVariable {
@@ -40,7 +42,11 @@ public final class NBTVariable {
 	}
 	
 	public boolean setValue(String value) {
-		return _generic.set(_data, value);
+		return _generic.set(_data, value, null);
+	}
+	
+	public boolean setValue(String value, Player player) {
+		return _generic.set(_data, value, player);
 	}
 	
 	public String getValue() {

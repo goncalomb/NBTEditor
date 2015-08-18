@@ -21,6 +21,8 @@ package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
 import java.util.List;
 
+import org.bukkit.entity.Player;
+
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public abstract class NBTGenericVariable {
@@ -31,7 +33,7 @@ public abstract class NBTGenericVariable {
 		_nbtKey = nbtKey;
 	}
 	
-	abstract boolean set(NBTTagCompound data, String value);
+	abstract boolean set(NBTTagCompound data, String value, Player player);
 	
 	abstract String get(NBTTagCompound data);
 	
