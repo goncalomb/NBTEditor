@@ -35,7 +35,6 @@ import com.goncalomb.bukkit.customitems.api.DispenserDetails;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.nbt.FallingBlockNBT;
-import com.goncalomb.bukkit.nbteditor.nbt.MinecartContainerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MinecartSpawnerNBT;
 
 final class BookOfSoulsCI extends CustomItem {
@@ -64,17 +63,6 @@ final class BookOfSoulsCI extends CustomItem {
 					((MinecartSpawnerNBT) bos.getEntityNBT()).copyFromSpawner(block);
 					bos.saveBook();
 					player.sendMessage("§aVariables and entities copied from the spawner.");
-				}
-				event.setCancelled(true);
-				return;
-			} else if (bos.getEntityNBT() instanceof MinecartContainerNBT && block.getType() == Material.CHEST) {
-				if (event.getPlayer().isSneaking()) {
-					((MinecartContainerNBT) bos.getEntityNBT()).copyToChest(block);
-					player.sendMessage("§aItems copied to the chest.");
-				} else {
-					((MinecartContainerNBT) bos.getEntityNBT()).copyFromChest(block);
-					bos.saveBook();
-					player.sendMessage("§aItems copied from the chest.");
 				}
 				event.setCancelled(true);
 				return;

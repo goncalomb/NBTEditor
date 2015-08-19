@@ -96,9 +96,9 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.BOAT, EntityNBT.class);
 		
 		registerEntity(EntityType.MINECART, MinecartNBT.class);
-		registerEntity(EntityType.MINECART_CHEST, MinecartChestNBT.class);
+		registerEntity(EntityType.MINECART_CHEST, MinecartContainerNBT.class);
 		registerEntity(EntityType.MINECART_FURNACE, MinecartNBT.class);
-		registerEntity(EntityType.MINECART_HOPPER, MinecartHopperNBT.class);
+		registerEntity(EntityType.MINECART_HOPPER, MinecartContainerNBT.class);
 		registerEntity(EntityType.MINECART_MOB_SPAWNER, MinecartSpawnerNBT.class);
 		registerEntity(EntityType.MINECART_TNT, MinecartNBT.class);
 		registerEntity(EntityType.MINECART_COMMAND, MinecartCommandNBT.class);

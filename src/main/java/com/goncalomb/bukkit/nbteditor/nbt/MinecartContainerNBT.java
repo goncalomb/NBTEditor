@@ -19,8 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -28,13 +27,13 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
-public abstract class MinecartContainerNBT extends MinecartNBT {
+public class MinecartContainerNBT extends MinecartNBT {
 	
-	protected final void internalCopyFromChest(Block block, int count) {
-		Inventory inv = ((Chest) block.getState()).getBlockInventory();
+	public void setItemsFromInventory(Inventory inventory) {
+		int l = Math.min(inventory.getSize(), getInventorySize());
 		NBTTagList items = new NBTTagList();
-		for (int i = 0, l = count; i < l; ++i) {
-			ItemStack item = inv.getItem(i);
+		for (int i = 0; i < l; ++i) {
+			ItemStack item = inventory.getItem(i);
 			if (item != null) {
 				NBTTagCompound itemNBT = NBTUtils.itemStackToNBTData(item);
 				itemNBT.setByte("Slot", (byte) i);
@@ -44,18 +43,25 @@ public abstract class MinecartContainerNBT extends MinecartNBT {
 		_data.setList("Items", items);
 	}
 	
-	public abstract void copyFromChest(Block block);
-	
-	public final void copyToChest(Block block) {
-		Inventory inv = ((Chest) block.getState()).getBlockInventory();
-		inv.clear();
+	public void setItemsToInventory(Inventory inventory) {
+		inventory.clear();
 		if (_data.hasKey("Items")) {
 			NBTTagList items = _data.getList("Items");
-			for (int i = 0, l = items.size(); i < l; ++i) {
+			int l = Math.min(items.size(), Math.min(inventory.getSize(), getInventorySize()));
+			for (int i = 0; i < l; ++i) {
 				NBTTagCompound itemNBT = (NBTTagCompound) items.get(i);
-				inv.setItem(itemNBT.getByte("Slot"), NBTUtils.itemStackFromNBTData(itemNBT));
+				inventory.setItem(itemNBT.getByte("Slot"), NBTUtils.itemStackFromNBTData(itemNBT));
 			}
 		}
+	}
+	
+	public int getInventorySize() {
+		if (getEntityType() == EntityType.MINECART_CHEST) {
+			return 27;
+		} else if (getEntityType() == EntityType.MINECART_HOPPER) {
+			return 5;
+		}
+		return 0;
 	}
 	
 }

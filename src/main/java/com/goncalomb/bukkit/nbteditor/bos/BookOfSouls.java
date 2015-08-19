@@ -158,6 +158,9 @@ public class BookOfSouls {
 		} else if (_entityNbt instanceof FireworkNBT) {
 			(new InventoryForFirework(this, player)).openInventory(player, _plugin);
 			return true;
+		} else if (_entityNbt instanceof MinecartContainerNBT) {
+			(new InventoryForMinecartContainer(this, player)).openInventory(player, _plugin);
+			return true;
 		}
 		return false;
 	}
@@ -224,11 +227,6 @@ public class BookOfSouls {
 		int x = 7;
 		if (_entityNbt instanceof MinecartSpawnerNBT) {
 			sb.append(ChatColor.BLACK + "Left-click a existing spawner to copy the entities and variables from the spawner, left-click while sneaking to copy them back to the spawner.");
-			meta.addPage(sb.toString());
-			sb = new StringBuilder();
-			x = 11;
-		} else if (_entityNbt instanceof MinecartContainerNBT) {
-			sb.append(ChatColor.BLACK + "Left-click a chest to copy the items from it, left-click while sneaking to copy them back to the chest.");
 			meta.addPage(sb.toString());
 			sb = new StringBuilder();
 			x = 11;
