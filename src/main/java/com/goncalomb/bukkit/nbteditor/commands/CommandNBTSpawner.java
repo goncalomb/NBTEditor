@@ -96,7 +96,7 @@ public class CommandNBTSpawner extends MyCommand {
 		return true;
 	}
 	
-	@Command(args = "var", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<variable> <value>")
+	@Command(args = "var", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<variable> [value]")
 	public boolean varCommand(CommandSender sender, String[] args) throws MyCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
 		if(args.length > 0) {

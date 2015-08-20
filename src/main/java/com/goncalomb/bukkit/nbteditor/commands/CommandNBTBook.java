@@ -52,7 +52,7 @@ public class CommandNBTBook extends MyCommand {
 		return true;
 	}
 	
-	@Command(args = "title", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<title>")
+	@Command(args = "title", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<title ...>")
 	public boolean titleCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
 		item.meta.setTitle(UtilsMc.parseColors(UtilsMc.parseColors(StringUtils.join(args, " "))));
@@ -61,7 +61,7 @@ public class CommandNBTBook extends MyCommand {
 		return true;
 	}
 	
-	@Command(args = "author", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<author>")
+	@Command(args = "author", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<author ...>")
 	public boolean authorCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
 		item.meta.setAuthor(UtilsMc.parseColors(UtilsMc.parseColors(StringUtils.join(args, " "))));

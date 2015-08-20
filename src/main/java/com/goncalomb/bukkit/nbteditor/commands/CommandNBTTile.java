@@ -69,7 +69,7 @@ public class CommandNBTTile extends MyCommand {
 		return new JukeboxNBTWrapper(block);
 	}
 	
-	@Command(args = "beacon", type = CommandType.PLAYER_ONLY, minargs = 0, maxargs = 2, usage = "<primary|secondary> <effect>")
+	@Command(args = "beacon", type = CommandType.PLAYER_ONLY, minargs = 0, maxargs = 2, usage = "primary/secondary <effect>")
 	public boolean beaconEffectCommand(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length == 2 && (args[0].equalsIgnoreCase("primary") || args[0].equalsIgnoreCase("secondary"))) {
 			BeaconNBTWrapper beacon = getBeacon((Player) sender);
@@ -121,7 +121,7 @@ public class CommandNBTTile extends MyCommand {
 		return true;
 	}
 	
-	@Command(args = "name", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "[name]")
+	@Command(args = "name", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "[name ...]")
 	public boolean nameCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
 		if (TileNBTWrapper.allowsCustomName(block.getType())) {
