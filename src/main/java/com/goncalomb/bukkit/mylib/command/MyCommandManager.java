@@ -85,17 +85,4 @@ public final class MyCommandManager {
 		return false;
 	}
 	
-	// Bukkit is an asshole, getCommands() now returns UnmodifiableCollection.
-	/*
-	public static void unregisterAll(SimpleCommandMap commandMap, Plugin plugin) {
-		for (Iterator<Command> it = commandMap.getCommands().iterator(); it.hasNext(); ) {
-			Command command = it.next();
-			if (command instanceof InternalCommand && ((InternalCommand) command).getOwner() == plugin) {
-				((InternalCommand) command).getCommand().removePermissions();
-				it.remove();
-			}
-		}
-	}
-	*/
-	
 }
