@@ -10,16 +10,13 @@
     <file>
       <source>${project.build.directory}/${project.build.finalName}.jar</source>
       <destName>${project.name}.jar</destName>
-      <outputDirectory>/</outputDirectory>
     </file>
     <file>
       <source>${project.basedir}/src/main/resources/README.txt</source>
-      <outputDirectory>/</outputDirectory>
       <filtered>true</filtered>
     </file>
     <file>
       <source>${project.basedir}/LICENSE.txt</source>
-      <outputDirectory>/</outputDirectory>
     </file>
   </files>
 </assembly>
