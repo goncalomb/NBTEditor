@@ -101,9 +101,13 @@ public final class NBTEditor extends JavaPlugin {
 		CustomItemManager.register(new EntityRemoverTool(), this, this.getName());
 		CustomItemManager.register(new SuperLeadTool(), this, this.getName());
 		
-		this.saveDefaultConfig();
+		saveDefaultConfig();
 		
-		if (getConfig().getBoolean("enable-customitems", false)) {
+		if (getConfig().getBoolean("customitems.enable-command", true)) {
+			MyCommandManager.register(new CommandCustomItems(), this);
+		}
+		
+		if (getConfig().getBoolean("customitems.enable-items", false)) {
 			CustomItemManager.register(new BatBomb(), this, "Bombs");
 			CustomItemManager.register(new FireBomb(), this, "Bombs");
 			CustomItemManager.register(new RepulsionBomb(), this, "Bombs");
@@ -119,9 +123,6 @@ public final class NBTEditor extends JavaPlugin {
 			CustomItemManager.register(new AntiMatterBomb(), this, "Bombs");
 			CustomItemManager.register(new GravitationalAxe(), this, "Axes");
 			CustomItemManager.register(new TreeVaporizer(), this, "Axes");
-			
-			MyCommandManager.register(new CommandCustomItems(), this);
-			getLogger().info("CustomItems enabled.");
 		}
 		
 		_instance = this;
