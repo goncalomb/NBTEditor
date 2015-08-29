@@ -80,7 +80,7 @@ final class CustomItemConfig {
 		try {
 			_config.save(_configFile);
 		} catch (IOException e) {
-			Bukkit.getLogger().log(Level.SEVERE, "Cannot save file " + _configFile + ".", e);
+			Bukkit.getLogger().log(Level.SEVERE, "Cannot save file " + _configFile, e);
 		}
 	}
 	

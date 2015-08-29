@@ -113,7 +113,7 @@ public class CommandBOS extends MyCommand {
 			}
 			sender.sendMessage("§cInvalid entity!");
 		}
-		sender.sendMessage("§7Entities:" + StringUtils.join(EntityTypeMap.getNames(EntityNBT.getValidEntityTypes()), ", "));
+		sender.sendMessage("§7Entities: " + StringUtils.join(EntityTypeMap.getNames(EntityNBT.getValidEntityTypes()), ", "));
 		return false;
 	}
 	
@@ -301,7 +301,7 @@ public class CommandBOS extends MyCommand {
 				}
 			}
 		}
-		sender.sendMessage("§7Attributes:" + StringUtils.join(AttributeType.values(), ", "));
+		sender.sendMessage("§7Attributes: " + StringUtils.join(AttributeType.values(), ", "));
 		return false;
 	}
 	
@@ -335,7 +335,7 @@ public class CommandBOS extends MyCommand {
 				}
 			}
 		}
-		sender.sendMessage("§7Attributes:" + StringUtils.join(AttributeType.values(), ", "));
+		sender.sendMessage("§7Attributes: " + StringUtils.join(AttributeType.values(), ", "));
 		return false;
 	}
 	

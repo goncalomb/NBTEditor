@@ -136,7 +136,7 @@ public class CommandNBTItem extends MyCommand {
 				}
 			}
 		}
-		sender.sendMessage("§7Attributes:" + StringUtils.join(AttributeType.values(), ", "));
+		sender.sendMessage("§7Attributes: " + StringUtils.join(AttributeType.values(), ", "));
 		return false;
 	}
 	

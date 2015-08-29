@@ -70,7 +70,7 @@ public class CommandNBTEnchant extends MyCommand {
 				return true;
 			}
 		}
-		sender.sendMessage("§7Enchantments:" + EnchantmentsMap.getNamesAsString());
+		sender.sendMessage("§7Enchantments: " + EnchantmentsMap.getNamesAsString());
 		sender.sendMessage("§eUse level = 0 to remove enchantments.");
 		return false;
 	}

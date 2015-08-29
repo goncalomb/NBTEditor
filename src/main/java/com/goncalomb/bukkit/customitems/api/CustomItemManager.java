@@ -96,7 +96,7 @@ public final class CustomItemManager {
 		if (_plugin == null) {
 			return false;
 		} else if (customItem._owner != null || _container.contains(customItem)) {
-			_plugin.getLogger().warning(plugin.getName() + " tried to register an already registed Custom Item, " + customItem.getSlug() + "!");
+			_plugin.getLogger().warning(plugin.getName() + " tried to register an already registered CustomItem, " + customItem.getSlug());
 			return false;
 		}
 		

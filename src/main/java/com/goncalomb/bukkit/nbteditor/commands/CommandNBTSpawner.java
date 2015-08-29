@@ -117,7 +117,7 @@ public class CommandNBTSpawner extends MyCommand {
 				sender.sendMessage(MessageFormat.format("§cSpawners don''t have the variable {0}!", args[0]));
 			}
 		}
-		sender.sendMessage("§7Variables:" + StringUtils.join(spawner.getVariables().getVarNames(), ", "));
+		sender.sendMessage("§7Variables: " + StringUtils.join(spawner.getVariables().getVarNames(), ", "));
 		return false;
 	}
 	
@@ -140,7 +140,7 @@ public class CommandNBTSpawner extends MyCommand {
 			}
 			sender.sendMessage("§cInvalid entity!");
 		}
-		sender.sendMessage("§7Entities:" + EntityTypeMap.getLivingNamesAsString());
+		sender.sendMessage("§7Entities: " + EntityTypeMap.getLivingNamesAsString());
 		return false;
 	}
 	

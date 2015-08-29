@@ -92,7 +92,7 @@ public class CommandNBTTile extends MyCommand {
 				return true;
 			}
 		}
-		sender.sendMessage("§7Effects:" + PotionEffectsMap.getNamesAsString());
+		sender.sendMessage("§7Effects: " + PotionEffectsMap.getNamesAsString());
 		sender.sendMessage("§eUse 'clear' as affect clear the effect.");
 		return false;
 	}

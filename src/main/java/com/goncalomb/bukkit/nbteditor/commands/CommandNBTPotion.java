@@ -72,7 +72,7 @@ public class CommandNBTPotion extends MyCommand {
 				return true;
 			}
 		}
-		sender.sendMessage("§7Effects:" + PotionEffectsMap.getNamesAsString());
+		sender.sendMessage("§7Effects: " + PotionEffectsMap.getNamesAsString());
 		sender.sendMessage("§eUse level = 0 to remove potion effects.");
 		return false;
 	}

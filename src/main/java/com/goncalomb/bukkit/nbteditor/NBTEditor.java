@@ -71,8 +71,8 @@ public final class NBTEditor extends JavaPlugin {
 			BukkitReflect.prepareReflection();
 			NBTBase.prepareReflection();
 		} catch (Throwable e) {
-			getLogger().log(Level.SEVERE, "Error preparing reflection objects. This means that this version of NBTEditor is not compatible with this version of Bukkit.", e);
-			getLogger().warning("NBTEditor version not compatible with this version of Bukkit. Please install the apropriated version.");
+			getLogger().log(Level.SEVERE, "Error preparing reflection objects", e);
+			getLogger().severe("This version NBTEditor is not compatible with this version of Bukkit");
 			return;
 		}
 		
@@ -126,7 +126,7 @@ public final class NBTEditor extends JavaPlugin {
 		}
 		
 		_instance = this;
-		getLogger().info("NBTEditor has been enabled.");
+		getLogger().info("NBTEditor has been enabled");
 	}
 	
 	@Override

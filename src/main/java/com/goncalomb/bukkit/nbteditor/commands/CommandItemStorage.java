@@ -61,7 +61,7 @@ public class CommandItemStorage extends MyCommand {
 			if (ItemStorage.addItem(item, args[0])) {
 				sender.sendMessage("§aStored.");
 			} else {
-				sender.sendMessage("§cDuplicated name.");
+				sender.sendMessage("§cDuplicate name.");
 			}
 		}
 		return true;
@@ -155,7 +155,7 @@ public class CommandItemStorage extends MyCommand {
 	
 	@Command(args = "list", type = CommandType.PLAYER_ONLY)
 	public boolean command_list(CommandSender sender, String[] args) throws MyCommandException {
-		sender.sendMessage("§7Stored items:" + StringUtils.join(ItemStorage.listItems(), ", "));
+		sender.sendMessage("§7Stored items: " + StringUtils.join(ItemStorage.listItems(), ", "));
 		return true;
 	}
 	
