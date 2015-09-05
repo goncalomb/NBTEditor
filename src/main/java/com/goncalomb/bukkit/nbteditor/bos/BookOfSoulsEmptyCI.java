@@ -34,7 +34,7 @@ final class BookOfSoulsEmptyCI extends CustomItem {
 	public BookOfSoulsEmptyCI() {
 		super("bos-empty", ChatColor.GREEN + "Book of Souls" + ChatColor.RESET + " - " + ChatColor.RED + "Empty", new MaterialData(Material.BOOK));
 		setLore("§bThis is a empty Book of Souls.",
-				"§bRight-click an existing entity to capture the soul.");
+				"§bRight-click an entity to capture the soul.");
 	}
 	
 	@Override

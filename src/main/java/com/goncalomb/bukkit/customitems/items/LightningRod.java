@@ -29,7 +29,7 @@ public final class LightningRod extends GenericBomb {
 	
 	public LightningRod() {
 		super("lightning-rod", ChatColor.GRAY + "Lightning Rod", new MaterialData(Material.IRON_INGOT));
-		setLore("§bLeft-click or drop key to throw the rod.",
+		setLore("§bLeft-click to throw the rod.",
 				"§bLightning will strike after a few seconds.");
 		setDefaultConfig("fuse", 40);
 	}

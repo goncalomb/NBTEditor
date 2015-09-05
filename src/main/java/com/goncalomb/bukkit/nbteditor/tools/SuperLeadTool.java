@@ -37,9 +37,9 @@ public final class SuperLeadTool extends CustomItem {
 
 	public SuperLeadTool() {
 		super("super-lead", ChatColor.GOLD + "Super Lead", new MaterialData(Material.LEASH));
-		setLore(ChatColor.YELLOW + "Right-click on entities to rope them.",
-				ChatColor.YELLOW + "Right-click another entity while sneaking",
-				ChatColor.YELLOW + "  to rope them together.");
+		setLore(ChatColor.YELLOW + "Right-click an entity to tie it.",
+				ChatColor.YELLOW + "Then right-click another entity",
+				ChatColor.YELLOW + "while sneaking to tie them together.");
 	}
 	
 	private static List<LivingEntity> findLeashPrisoners(Entity holder) {

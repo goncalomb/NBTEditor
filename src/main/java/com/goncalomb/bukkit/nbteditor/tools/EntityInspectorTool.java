@@ -41,7 +41,7 @@ public final class EntityInspectorTool extends CustomItem {
 
 	public EntityInspectorTool() {
 		super("entity-inspector", ChatColor.AQUA + "Entity Inspector", new MaterialData(Material.STICK));
-		setLore(ChatColor.YELLOW + "Right-click on entities to see their information.");
+		setLore(ChatColor.YELLOW + "Right-click an entity to get their information.");
 	}
 	
 	@Override

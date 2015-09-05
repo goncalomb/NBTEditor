@@ -37,7 +37,7 @@ public final class SimpleMine extends CustomItem {
 	
 	public SimpleMine() {
 		super("simple-mine", ChatColor.GREEN + "Mine", new MaterialData(Material.FLOWER_POT_ITEM));
-		setLore("§bDrop it and don't pick it up.");
+		setLore("§bDrop it and walk away.");
 	}
 	
 	@Override

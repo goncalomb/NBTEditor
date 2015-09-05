@@ -41,8 +41,8 @@ public final class BatBomb extends GenericBomb {
 	
 	public BatBomb() {
 		super("bat-bomb", ChatColor.RED + "Bat Bomb", new MaterialData(Material.MONSTER_EGG, (byte)65));
-		setLore("§bLeft-click or drop key to throw the bomb.",
-				"§bRight-Click to spawn the bats at your location.",
+		setLore("§bLeft-click to throw the bomb.",
+				"§bRight-click to spawn the bats at your location.",
 				"§bThe bats will explode after a few seconds.");
 		setDefaultConfig("fuse", 50);
 		setDefaultConfig("power", 3.8d);

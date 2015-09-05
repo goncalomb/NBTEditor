@@ -41,8 +41,8 @@ public final class FireBomb extends RadiusBomb {
 	
 	public FireBomb() {
 		super("fire-bomb", ChatColor.RED + "Fire Bomb", new MaterialData(Material.FIREBALL));
-		setLore("§bLeft-click or drop key to throw the bomb.",
-				"§bThe bomb will explode after a few seconds.");
+		setLore("§bLeft-click to throw the bomb.",
+				"§bIt will explode after a few seconds.");
 		setDefaultConfig("fuse", 40);
 		setDefaultConfig("radius", 9);
 	}

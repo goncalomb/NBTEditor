@@ -35,7 +35,7 @@ public final class EntityRemoverTool extends CustomItem {
 
 	public EntityRemoverTool() {
 		super("entity-remover", ChatColor.AQUA + "Entity Remover", new MaterialData(Material.BLAZE_ROD));
-		setLore(ChatColor.YELLOW + "Right-click on entities remove them.");
+		setLore(ChatColor.YELLOW + "Right-click an entity to remove it.");
 	}
 	
 	@Override

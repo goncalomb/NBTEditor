@@ -41,7 +41,7 @@ public final class AntiMatterBomb extends GenericBomb {
 	
 	public AntiMatterBomb() {
 		super("anti-matter-bomb", ChatColor.GREEN + "Anti-Matter Bomb", new MaterialData(Material.ENDER_PEARL));
-		setLore("§c§k----- §c§lCaution! §r§c§k-----");
+		setLore("§c§k-----§r §c§lCaution! §r§c§k-----");
 		setDefaultConfig("enabled", false);
 		setDefaultConfig("fuse", 60);
 		setDefaultConfig("cleanup", true);
