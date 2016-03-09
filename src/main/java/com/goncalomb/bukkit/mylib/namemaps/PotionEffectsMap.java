@@ -58,6 +58,10 @@ public final class PotionEffectsMap {
 		_potionEffects.put("HealthBoost", PotionEffectType.HEALTH_BOOST);
 		_potionEffects.put("Absorption", PotionEffectType.ABSORPTION);
 		_potionEffects.put("Saturation", PotionEffectType.SATURATION);
+		_potionEffects.put("Glowing", PotionEffectType.GLOWING);
+		_potionEffects.put("Levitation", PotionEffectType.LEVITATION);
+		_potionEffects.put("Luck", PotionEffectType.LUCK);
+		_potionEffects.put("BadLuck", PotionEffectType.UNLUCK);
 		
 		List<String> potionEffectNames = new ArrayList<String>(_potionEffects.names());
 		Collections.sort(potionEffectNames, String.CASE_INSENSITIVE_ORDER);
