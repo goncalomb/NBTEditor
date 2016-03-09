@@ -54,18 +54,18 @@ public final class GravitationalAxe extends GenericSuperAxe {
 			// Find the blocks
 			Set<Block> blocks = getTreeBlocks(root);
 			if (blocks.size() > 0) {
-				world.playSound(location, Sound.ZOMBIE_WOODBREAK, 0.5f, 1);
+				world.playSound(location, Sound.ENTITY_ZOMBIE_BREAK_DOOR_WOOD, 0.5f, 1);
 			}
 			double durability = blocks.size()*0.25;
 			// Bring 'em down.
 			for (Block block : blocks) {
 				Material mat = block.getType();
 				if (mat == Material.LOG && random.nextFloat() < 0.1f) {
-					world.playSound(block.getLocation(), Sound.ZOMBIE_WOODBREAK, 0.6f, 1);
+					world.playSound(block.getLocation(), Sound.ENTITY_ZOMBIE_BREAK_DOOR_WOOD, 0.6f, 1);
 					block.breakNaturally();
 					durability += 1;
 				} else if (mat == Material.LEAVES && random.nextFloat() < 0.4f) {
-					world.playSound(block.getLocation(), Sound.DIG_GRASS, 0.5f, 1);
+					world.playSound(block.getLocation(), Sound.BLOCK_GRASS_BREAK, 0.5f, 1);
 					block.breakNaturally();
 					durability += 1;
 				} else {

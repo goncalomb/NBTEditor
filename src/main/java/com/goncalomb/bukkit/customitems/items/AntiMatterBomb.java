@@ -81,7 +81,7 @@ public final class AntiMatterBomb extends GenericBomb {
 			}
 		}
 		if (fallingBlocks.size() > 0) {
-			world.playSound(location, Sound.BAT_TAKEOFF, 5, 0.1f);
+			world.playSound(location, Sound.ENTITY_BAT_TAKEOFF, 5, 0.1f);
 			if (_cleanup) {
 				Bukkit.getScheduler().runTaskLater(getPlugin(), new Runnable() {
 					@Override

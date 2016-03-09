@@ -60,7 +60,7 @@ public final class RepulsionBomb extends RadiusBomb {
 	@Override
 	public void onExplode(Item item, Location location) {
 		World world = location.getWorld();
-		world.playSound(location, Sound.EXPLODE, 2f, 2f);
+		world.playSound(location, Sound.ENTITY_GENERIC_EXPLODE, 2f, 2f);
 		world.playEffect(location, Effect.ENDER_SIGNAL, 0);
 		world.playEffect(location, Effect.STEP_SOUND, Material.OBSIDIAN.getId());
 		super.onExplode(item, location);

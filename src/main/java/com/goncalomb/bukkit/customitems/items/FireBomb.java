@@ -71,7 +71,7 @@ public final class FireBomb extends RadiusBomb {
 	@Override
 	public void onExplode(Item item, Location location) {
 		World world = location.getWorld();
-		world.playSound(location, Sound.EXPLODE, 2f, 1f);
+		world.playSound(location, Sound.ENTITY_GENERIC_EXPLODE, 2f, 1f);
 		world.playEffect(location, Effect.ENDER_SIGNAL, 0);
 		world.playEffect(location, Effect.STEP_SOUND, Material.FIRE.getId());
 		super.onExplode(item, location);
