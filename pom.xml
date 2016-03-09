@@ -17,7 +17,7 @@
   <inceptionYear>2013</inceptionYear>
 
   <properties>
-    <bukkit.version>1.8-R0.1-SNAPSHOT</bukkit.version>
+    <bukkit.version>1.9-R0.1-SNAPSHOT</bukkit.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.timestamp>${maven.build.timestamp}</project.build.timestamp>
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
