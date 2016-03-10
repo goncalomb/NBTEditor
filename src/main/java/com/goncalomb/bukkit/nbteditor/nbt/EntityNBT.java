@@ -71,6 +71,7 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.GUARDIAN, MobNBT.class);
 		registerEntity(EntityType.ENDERMITE, MobNBT.class);
 		registerEntity(EntityType.RABBIT, MobNBT.class);
+		registerEntity(EntityType.SHULKER, MobNBT.class);
 
 		registerEntity(EntityType.ENDER_DRAGON, MobNBT.class);
 		registerEntity(EntityType.WITHER, MobNBT.class);
@@ -90,6 +91,7 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.SPLASH_POTION, ThrownPotionNBT.class);
 		registerEntity(EntityType.FIREBALL, FireballNBT.class);
 		registerEntity(EntityType.SMALL_FIREBALL, FireballNBT.class);
+		registerEntity(EntityType.DRAGON_FIREBALL, FireballNBT.class);
 		registerEntity(EntityType.WITHER_SKULL, FireballNBT.class);
 		registerEntity(EntityType.ARMOR_STAND, EquippableNBT.class);
 		
