@@ -61,6 +61,8 @@ public final class EntityTypeMap {
 			return EntityType.EGG;
 		} else if (name.equalsIgnoreCase("MinecartSpawner")) {
 			return EntityType.MINECART_MOB_SPAWNER;
+		} else if (name.equalsIgnoreCase("AreaEffectCloud")) {
+			return EntityType.AREA_EFFECT_CLOUD;
 		} else {
 			return EntityType.fromName(name);
 		}
@@ -73,6 +75,8 @@ public final class EntityTypeMap {
 			return "ThrownEgg";
 		} else if (type == EntityType.MINECART_MOB_SPAWNER) {
 			return "MinecartSpawner";
+		} else if (type == EntityType.AREA_EFFECT_CLOUD) {
+			return "AreaEffectCloud";
 		} else {
 			return type.getName();
 		}
