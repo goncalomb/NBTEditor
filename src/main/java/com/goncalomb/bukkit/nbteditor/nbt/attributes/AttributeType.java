@@ -28,6 +28,7 @@ public enum AttributeType {
 	KNOCKBACK_RESISTANCE("KnockbackResistance", "generic.knockbackResistance", 0.0, 1.0),
 	MOVEMENT_SPEED("MovementSpeed", "generic.movementSpeed", 0.0, Double.MAX_VALUE),
 	ATTACK_DAMAGE("AttackDamage", "generic.attackDamage", 0.0, Double.MAX_VALUE),
+	ARMOR("Armor", "generic.armor", 0.0, 30.0),
 	// Horses
 	JUMP_STRENGTH("JumpStrength", "horse.jumpStrength", 0.0, 2),
 	// Zombies
