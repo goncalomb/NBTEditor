@@ -63,7 +63,7 @@ public final class BukkitReflect {
 	
 	private static Field _Item_REGISTRY;
 	private static Method _Item_getById; // Get Item instance from id.
-	private static Method _RegistryMaterials_c; // Get item name from Item instance.
+	private static Method _RegistryMaterials_b; // Get item name from Item instance.
 	
 	public static void prepareReflection() {
 		if (!_isPrepared) {
@@ -83,7 +83,7 @@ public final class BukkitReflect {
 				Class<?> minecraftItemClass = getMinecraftClass("Item");
 				_Item_REGISTRY = minecraftItemClass.getField("REGISTRY");
 				_Item_getById = minecraftItemClass.getMethod("getById", int.class);
-				_RegistryMaterials_c = _Item_REGISTRY.getType().getMethod("c", Object.class);
+				_RegistryMaterials_b = _Item_REGISTRY.getType().getMethod("b", Object.class);
 			} catch (Exception e) {
 				throw new RuntimeException("Error while preparing item name methods.", e);
 			}
@@ -112,7 +112,7 @@ public final class BukkitReflect {
 			Object item = _Item_getById.invoke(null, material.getId());
 			if (item != null) {
 				Object REGISTRY = _Item_REGISTRY.get(null);
-				return _RegistryMaterials_c.invoke(REGISTRY, item).toString();
+				return _RegistryMaterials_b.invoke(REGISTRY, item).toString();
 			}
 		} catch (Exception e) { }
 		return "minecraft:air";

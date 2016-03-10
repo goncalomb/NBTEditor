@@ -46,7 +46,7 @@ public final class NBTUtils {
 	
 	// Minecraft's Entity Class;
 	private static Method _Entity_e; // Save data to NBTTagCompound.
-	private static Method _Entity_mount;
+	private static Method _Entity_startRiding;
 	private static Method _Entity_getBukkitEntity;
 	private static Method _Entity_setPositionRotation;
 	private static Field _Entity_pitch;
@@ -57,7 +57,7 @@ public final class NBTUtils {
 	
 	// Minecraft's TileEntity
 	private static Method _TileEntity_a; // Load data from NBTTagCompound.
-	private static Method _TileEntity_b; // Save data to NBTTagCompound.
+	private static Method _TileEntity_save; // Save data to NBTTagCompound.
 	
 	// CraftWorld
 	private static Method _CraftWorld_getHandle;
@@ -88,14 +88,14 @@ public final class NBTUtils {
 		_Entity_setPositionRotation = minecraftEntityClass.getMethod("setPositionRotation", double.class, double.class, double.class, float.class, float.class);
 		_Entity_yaw = minecraftEntityClass.getField("yaw");
 		_Entity_pitch = minecraftEntityClass.getField("pitch");
-		_Entity_mount = minecraftEntityClass.getMethod("mount", minecraftEntityClass);
+		_Entity_startRiding = minecraftEntityClass.getMethod("startRiding", minecraftEntityClass);
 		_Entity_getBukkitEntity = minecraftEntityClass.getMethod("getBukkitEntity");
 		
 		Class<?> craftEntityClass = BukkitReflect.getCraftBukkitClass("entity.CraftEntity");
 		_CraftEntity_getHandle = craftEntityClass.getMethod("getHandle");
 		
 		Class<?> minecraftTileEntityClass = BukkitReflect.getMinecraftClass("TileEntity");
-		_TileEntity_b = minecraftTileEntityClass.getMethod("b", nbtTagCompoundClass);
+		_TileEntity_save = minecraftTileEntityClass.getMethod("save", nbtTagCompoundClass);
 		_TileEntity_a = minecraftTileEntityClass.getMethod("a", nbtTagCompoundClass);
 		
 		Class<?> craftWorldClass = BukkitReflect.getCraftBukkitClass("CraftWorld");
@@ -133,7 +133,7 @@ public final class NBTUtils {
 				BukkitReflect.invokeMethod(entityHandle, _Entity_setPositionRotation, location.getX(), location.getY(), location.getZ(), yaw, pitch);
 				BukkitReflect.invokeMethod(worldHandle, _World_addEntity, entityHandle);
 				if (prevEntityHandle != null) {
-					BukkitReflect.invokeMethod(prevEntityHandle, _Entity_mount, entityHandle);
+					BukkitReflect.invokeMethod(prevEntityHandle, _Entity_startRiding, entityHandle);
 				}
 				prevEntityHandle = entityHandle;
 			} else {
@@ -189,7 +189,7 @@ public final class NBTUtils {
 		Object tileEntity = getTileEntity(block);
 		if (tileEntity != null) {
 			NBTTagCompound data = new NBTTagCompound();
-			BukkitReflect.invokeMethod(tileEntity, _TileEntity_b, data._handle);
+			BukkitReflect.invokeMethod(tileEntity, _TileEntity_save, data._handle);
 			return data;
 		}
 		return null;
