@@ -23,6 +23,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.ColorVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.FloatVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
@@ -33,7 +34,7 @@ public class AreaEffectCloudNBT extends ThrownPotionNBT {
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("AreaEffectCloud");
 		variables.add("Age", new IntegerVariable("Age", 0));
-		variables.add("Color", new IntegerVariable("Color")); // TODO: create variable type color
+		variables.add("Color", new ColorVariable("Color"));
 		variables.add("Duration", new IntegerVariable("Duration", 0));
 		variables.add("ReapplicationDelay", new IntegerVariable("ReapplicationDelay", 0));
 		variables.add("WaitTime", new IntegerVariable("WaitTime", 0));
