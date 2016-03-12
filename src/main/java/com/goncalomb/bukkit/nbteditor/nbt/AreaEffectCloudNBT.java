@@ -27,6 +27,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.ColorVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.FloatVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.ParticleVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
 
 public class AreaEffectCloudNBT extends ThrownPotionNBT {
@@ -41,7 +42,7 @@ public class AreaEffectCloudNBT extends ThrownPotionNBT {
 		variables.add("Radius", new FloatVariable("Radius", 0f));
 		variables.add("RadiusOnUse", new FloatVariable("RadiusOnUse"));
 		variables.add("RadiusPerTick", new FloatVariable("RadiusPerTick"));
-		variables.add("Particle", new StringVariable("Particle"));
+		variables.add("Particle", new ParticleVariable("Particle"));
 		variables.add("Potion", new StringVariable("Potion"));
 		registerVariables(ThrownPotionNBT.class, variables);
 	}
