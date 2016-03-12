@@ -28,11 +28,11 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.enchantments.Enchantment;
 
 public final class EnchantmentsMap {
-	
+
 	private final static NamingMap<Enchantment> _enchantments = new NamingMap<Enchantment>();
 	private final static List<String> _enchantmentNames;
 	private final static String _enchantmentNamesAsString;
-	
+
 	static {
 		_enchantments.put("Protection", Enchantment.PROTECTION_ENVIRONMENTAL);
 		_enchantments.put("FireProtection", Enchantment.PROTECTION_FIRE);
@@ -61,28 +61,28 @@ public final class EnchantmentsMap {
 		_enchantments.put("LuckOfTheSea", Enchantment.LUCK);
 		_enchantments.put("Lure", Enchantment.LURE);
 		_enchantments.put("Mending", Enchantment.MENDING);
-		
+
 		List<String> enchantmentNames = new ArrayList<String>(_enchantments.names());
 		Collections.sort(enchantmentNames, String.CASE_INSENSITIVE_ORDER);
 		_enchantmentNames = Collections.unmodifiableList(enchantmentNames);
-		
+
 		_enchantmentNamesAsString = StringUtils.join(_enchantmentNames, ", ");
 	}
-	
+
 	private EnchantmentsMap() { }
-	
+
 	public static Enchantment getByName(String name) {
 		return _enchantments.getByName(name);
 	}
-	
+
 	public static String getName(Enchantment enchantment) {
 		return _enchantments.getName(enchantment);
 	}
-	
+
 	public static List<String> getNames() {
 		return _enchantmentNames;
 	}
-	
+
 	public static List<String> getNames(Collection<Enchantment> enchantments) {
 		ArrayList<String> names = new ArrayList<String>(enchantments.size());
 		for (Enchantment enchantment : enchantments) {
@@ -90,9 +90,9 @@ public final class EnchantmentsMap {
 		}
 		return names;
 	}
-	
+
 	public static String getNamesAsString() {
 		return _enchantmentNamesAsString;
 	}
-	
+
 }

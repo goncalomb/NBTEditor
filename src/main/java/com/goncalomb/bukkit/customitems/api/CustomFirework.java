@@ -34,11 +34,11 @@ import org.bukkit.scheduler.BukkitTask;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 
 public abstract class CustomFirework extends CustomItem {
-	
+
 	protected CustomFirework(String slug, String name) {
 		super(slug, name, new MaterialData(Material.FIREWORK));
 	}
-	
+
 	@Override
 	public final void onRightClick(PlayerInteractEvent event, PlayerDetails details) {
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
@@ -49,12 +49,12 @@ public abstract class CustomFirework extends CustomItem {
 			event.setCancelled(true);
 		}
 	}
-	
+
 	@Override
 	public void onDispense(BlockDispenseEvent event, DispenserDetails details) {
 		event.setCancelled(true);
 	}
-	
+
 	protected final Firework fire(Location location, IConsumableDetails details, Object userObject) {
 		final Firework firework = (Firework) location.getWorld().spawnEntity(location, EntityType.FIREWORK);
 		FireworkMeta meta = firework.getFireworkMeta();
@@ -64,7 +64,7 @@ public abstract class CustomFirework extends CustomItem {
 			return null;
 		}
 		firework.setFireworkMeta(meta);
-		
+
 		final BukkitTask[] task = new BukkitTask[1];
 		task[0] = Bukkit.getScheduler().runTaskTimer(getPlugin(), new Runnable() {
 			@Override
@@ -78,9 +78,9 @@ public abstract class CustomFirework extends CustomItem {
 		}, 10 * (1 + meta.getPower()), 2);
 		return firework;
 	}
-	
+
 	public boolean onFire(FireworkPlayerDetails details, FireworkMeta meta) { return true; };
-	
+
 	public void onExplode(FireworkPlayerDetails details) { };
-	
+
 }

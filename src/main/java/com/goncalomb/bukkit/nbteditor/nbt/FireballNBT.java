@@ -23,15 +23,15 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.VectorVariable;
 
 public class FireballNBT extends EntityNBT {
-	
+
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Fireball");
 		variables.add("Power", new VectorVariable("power"));
 		registerVariables(FireballNBT.class, variables);
 	}
-	
+
 	public FireballNBT() {
 		_data.setList("power", 0.0d, 0.0d, 0.0d);
 	}
-	
+
 }

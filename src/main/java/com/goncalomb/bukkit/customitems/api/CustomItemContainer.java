@@ -30,16 +30,16 @@ import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.Plugin;
 
 final class CustomItemContainer {
-	
+
 	private HashMap<MaterialData, HashMap<String, CustomItem>> _customItems = new HashMap<MaterialData, HashMap<String, CustomItem>>();
 	private HashMap<Plugin, ArrayList<CustomItem>> _customItemsByPlugin = new HashMap<Plugin, ArrayList<CustomItem>>();
 	private HashMap<String, ArrayList<CustomItem>> _customItemsByGroup = new HashMap<String, ArrayList<CustomItem>>();
 	private HashMap<String, CustomItem> _customItemsBySlug = new HashMap<String, CustomItem>();
-	
+
 	public boolean contains(CustomItem customItem) {
 		return _customItemsBySlug.containsKey(customItem.getSlug());
 	}
-	
+
 	public boolean put(CustomItem customItem, Plugin owner, String group) {
 		if (customItem._owner != null && !contains(customItem)) {
 			// Insert into the HashMap by item type.
@@ -69,7 +69,7 @@ final class CustomItemContainer {
 		}
 		return true;
 	}
-	
+
 	public CustomItem get(ItemStack item) {
 		String name = CustomItem.getItemName(item);
 		if (name != null) {
@@ -87,33 +87,33 @@ final class CustomItemContainer {
 		}
 		return null;
 	}
-	
+
 	public CustomItem get(String slug) {
 		return _customItemsBySlug.get(slug);
 	}
-	
+
 	public Collection<CustomItem> getByGroup(String group) {
 		ArrayList<CustomItem> list = _customItemsByGroup.get(group);
 		return Collections.unmodifiableCollection(list == null ? new ArrayList<CustomItem>() : list);
 	}
-	
+
 	public Collection<CustomItem> getByOwner(Plugin plugin) {
 		ArrayList<CustomItem> list = _customItemsByPlugin.get(plugin);
 		return Collections.unmodifiableCollection(list == null ? new ArrayList<CustomItem>() : list);
 	}
-	
+
 	public Collection<CustomItem> getAll() {
 		return Collections.unmodifiableCollection(_customItemsBySlug.values());
 	}
-	
+
 	public Collection<Plugin> getOwners() {
 		return Collections.unmodifiableCollection(_customItemsByPlugin.keySet());
 	}
-	
+
 	public Collection<String> getGroups() {
 		return Collections.unmodifiableCollection(_customItemsByGroup.keySet());
 	}
-	
+
 	private static void remove(Collection<CustomItem> col, Plugin plugin) {
 		for (Iterator<CustomItem> it = col.iterator(); it.hasNext(); ) {
 			if (it.next()._owner == plugin) {
@@ -121,7 +121,7 @@ final class CustomItemContainer {
 			}
 		}
 	}
-	
+
 	public void remove(Plugin plugin) {
 		for (HashMap<String, CustomItem> map : _customItems.values()) {
 			remove(map.values(), plugin);
@@ -132,12 +132,12 @@ final class CustomItemContainer {
 		}
 		_customItemsByPlugin.remove(plugin);
 	}
-	
+
 	public void clear() {
 		_customItems.clear();
 		_customItemsByPlugin.clear();
 		_customItemsByGroup.clear();
 		_customItemsBySlug.clear();
 	}
-	
+
 }

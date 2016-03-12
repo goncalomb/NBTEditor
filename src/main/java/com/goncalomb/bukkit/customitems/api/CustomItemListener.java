@@ -48,13 +48,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
 final class CustomItemListener implements Listener {
-	
+
 	private static final HashSet<Material> _interationMaterials = new HashSet<Material>(Arrays.asList(new Material[] { Material.WORKBENCH, Material.CHEST, Material.ENDER_CHEST, Material.BREWING_STAND, Material.ENCHANTMENT_TABLE }));
-	
+
 	private static boolean verifyCustomItem(CustomItem customItem, World world) {
 		return (customItem != null && customItem.isEnabled() && customItem.isValidWorld(world));
 	}
-	
+
 	private static boolean verifyCustomItem(CustomItem customItem, Player player, boolean silent) {
 		if (customItem != null) {
 			if (!customItem.isEnabled()) {
@@ -69,7 +69,7 @@ final class CustomItemListener implements Listener {
 		}
 		return false;
 	}
-	
+
 	@EventHandler
 	private void playerInteract(PlayerInteractEvent event) {
 		Action action = event.getAction();
@@ -91,7 +91,7 @@ final class CustomItemListener implements Listener {
 			}
 		}
 	}
-	
+
 	@EventHandler
 	private void playerInteract(BlockBreakEvent event) {
 		ItemStack item = event.getPlayer().getItemInHand();
@@ -104,13 +104,13 @@ final class CustomItemListener implements Listener {
 			}
 		}
 	}
-	
+
 	@EventHandler
 	private void playerInteractEntity(PlayerInteractEntityEvent event) {
 		Player player = event.getPlayer();
 		ItemStack item = player.getItemInHand();
 		CustomItem customItem = CustomItemManager.getCustomItem(item);
-		
+
 		if (customItem != null) {
 			if (verifyCustomItem(customItem, event.getPlayer(), false)) {
 				event.setCancelled(true);
@@ -118,13 +118,13 @@ final class CustomItemListener implements Listener {
 			}
 		}
 	}
-	
+
 	@EventHandler
 	private void playerInteractAtEntity(PlayerInteractAtEntityEvent event) {
 		Player player = event.getPlayer();
 		ItemStack item = player.getItemInHand();
 		CustomItem customItem = CustomItemManager.getCustomItem(item);
-		
+
 		if (customItem != null) {
 			if (verifyCustomItem(customItem, event.getPlayer(), false)) {
 				event.setCancelled(true);
@@ -132,7 +132,7 @@ final class CustomItemListener implements Listener {
 			}
 		}
 	}
-	
+
 	@EventHandler
 	private void entityDamageByEntity(EntityDamageByEntityEvent event) {
 		Entity damager = event.getDamager();
@@ -140,7 +140,7 @@ final class CustomItemListener implements Listener {
 			Player player = (Player) damager;
 			ItemStack item = player.getItemInHand();
 			CustomItem customItem = CustomItemManager.getCustomItem(item);
-			
+
 			if (customItem != null) {
 				if (verifyCustomItem(customItem, player, true)) {
 					customItem.onAttack(event, new PlayerDetails(item, player));
@@ -153,7 +153,7 @@ final class CustomItemListener implements Listener {
 			}
 		}
 	}
-	
+
 	@EventHandler
 	private void playerPickupItem(PlayerPickupItemEvent event) {
 		CustomItem customItem = CustomItemManager.getCustomItem(event.getItem().getItemStack());
@@ -161,7 +161,7 @@ final class CustomItemListener implements Listener {
 			customItem.onPickup(event);
 		}
 	}
-	
+
 	@EventHandler
 	private void playerDropItem(PlayerDropItemEvent event) {
 		CustomItem customItem = CustomItemManager.getCustomItem(event.getItemDrop().getItemStack());
@@ -169,7 +169,7 @@ final class CustomItemListener implements Listener {
 			customItem.onDrop(event);
 		}
 	}
-	
+
 	@EventHandler
 	private void itemDespawnItem(ItemDespawnEvent event) {
 		CustomItem customItem = CustomItemManager.getCustomItem(event.getEntity().getItemStack());
@@ -177,7 +177,7 @@ final class CustomItemListener implements Listener {
 			customItem.onDespawn(event);
 		}
 	}
-	
+
 	@EventHandler
 	private void inventoryPickupItemItem(InventoryPickupItemEvent event) {
 		CustomItem customItem = CustomItemManager.getCustomItem(event.getItem().getItemStack());
@@ -185,7 +185,7 @@ final class CustomItemListener implements Listener {
 			customItem.onDropperPickup(event);
 		}
 	}
-	
+
 	@EventHandler
 	private void entityShootBow(EntityShootBowEvent event) {
 		if (event.getEntity() instanceof Player) {
@@ -201,7 +201,7 @@ final class CustomItemListener implements Listener {
 			}
 		}
 	}
-	
+
 	@EventHandler
 	private void projectileHit(ProjectileHitEvent event) {
 		Projectile projectile = event.getEntity();
@@ -210,7 +210,7 @@ final class CustomItemListener implements Listener {
 			((CustomBow) data[0]).onProjectileHit(event, (DelayedPlayerDetails) data[1]);
 		}
 	}
-	
+
 	@EventHandler
 	private void blockDispense(BlockDispenseEvent event) {
 		if (event.getBlock().getType() != Material.DISPENSER) {
@@ -225,7 +225,7 @@ final class CustomItemListener implements Listener {
 			}
 		}
 	}
-	
+
 	@EventHandler
 	private void playerDeath(PlayerDeathEvent event) {
 		Player player = event.getEntity();
@@ -243,5 +243,5 @@ final class CustomItemListener implements Listener {
 			}
 		}
 	}
-	
+
 }

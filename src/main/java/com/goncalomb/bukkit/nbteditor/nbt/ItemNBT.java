@@ -23,11 +23,11 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
 
 public class ItemNBT extends EntityNBT {
-	
+
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Item");
 		variables.add("Age", new ShortVariable("Age"));
 		registerVariables(ItemNBT.class, variables);
 	}
-	
+
 }

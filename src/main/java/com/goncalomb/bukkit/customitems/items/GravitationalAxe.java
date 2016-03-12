@@ -37,11 +37,11 @@ import org.bukkit.util.Vector;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 
 public final class GravitationalAxe extends GenericSuperAxe {
-	
+
 	public GravitationalAxe() {
 		super("gravitational-axe", ChatColor.GRAY + "Gravitational Axe");
 	}
-	
+
 	@Override
 	public void onBlockBreak(BlockBreakEvent event, PlayerDetails details) {
 		Block root = event.getBlock();
@@ -84,5 +84,5 @@ public final class GravitationalAxe extends GenericSuperAxe {
 			}
 		}
 	}
-	
+
 }

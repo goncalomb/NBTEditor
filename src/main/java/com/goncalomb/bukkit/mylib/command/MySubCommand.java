@@ -37,7 +37,7 @@ import com.goncalomb.bukkit.mylib.command.MyCommand.Command;
 import com.goncalomb.bukkit.mylib.command.MyCommand.CommandType;
 
 class MySubCommand {
-	
+
 	private Permission _perm;
 	private MyCommand _command;
 	private Method _exeMethod = null;
@@ -47,17 +47,17 @@ class MySubCommand {
 	private int _minArgs;
 	private int _maxArgs;
 	private LinkedHashMap<String, MySubCommand> _subCommands = new LinkedHashMap<String, MySubCommand>();
-	
+
 	public MySubCommand() {
 		if (this instanceof MyCommand) {
 			_command = (MyCommand) this;
 		}
 	}
-	
+
 	private MySubCommand(MyCommand command) {
 		_command = command;
 	}
-	
+
 	void setupPermissions(String name, Permission parent) {
 		String permName = parent.getName();
 		if (permName.endsWith(".*")) {
@@ -71,14 +71,14 @@ class MySubCommand {
 		Bukkit.getPluginManager().addPermission(_perm);
 		parent.recalculatePermissibles();
 	}
-	
+
 	void removePermissions() {
 		for (MySubCommand command : _subCommands.values()) {
 			command.removePermissions();
 		}
 		Bukkit.getPluginManager().removePermission(_perm);
 	}
-	
+
 	boolean addSubCommand(String[] args, int argsIndex, Command config, MyCommand command, Method exeMethod, Method tabMethod) {
 		if (args.length == argsIndex) {
 			if (_exeMethod == null) {
@@ -103,7 +103,7 @@ class MySubCommand {
 			return subCommand.addSubCommand(args, argsIndex + 1, config, command, exeMethod, tabMethod);
 		}
 	}
-	
+
 	void execute(CommandSender sender, String label, String[] args, int argsIndex) {
 		// Find sub-command.
 		if (argsIndex < args.length) {
@@ -143,7 +143,7 @@ class MySubCommand {
 			sender.sendMessage("§cYou don't have permission to use that command!");
 		}
 	}
-	
+
 	private static int sendAllSubCommands(CommandSender sender, MySubCommand command, String prefix) {
 		int i = 0;
 		for (Entry<String, MySubCommand> subCommandEntry : command._subCommands.entrySet()) {
@@ -159,7 +159,7 @@ class MySubCommand {
 		}
 		return i;
 	}
-	
+
 	List<String> tabComplete(CommandSender sender, String[] args, int argsIndex) {
 		// Find sub-command.
 		if (argsIndex < args.length) {
@@ -190,7 +190,7 @@ class MySubCommand {
 		}
 		return null;
 	}
-	
+
 	private boolean invokeExeMethod(CommandSender sender, String[] args) {
 		try {
 			return (Boolean) _exeMethod.invoke(_command, sender, args);
@@ -205,7 +205,7 @@ class MySubCommand {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private List<String> invokeTabMethod(CommandSender sender, String[] args) {
 		try {
@@ -214,5 +214,5 @@ class MySubCommand {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 }

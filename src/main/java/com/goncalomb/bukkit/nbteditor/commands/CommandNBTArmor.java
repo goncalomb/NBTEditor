@@ -28,11 +28,11 @@ import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 
 public class CommandNBTArmor extends MyCommand {
-	
+
 	public CommandNBTArmor() {
 		super("nbtarmor", "nbta");
 	}
-	
+
 	@Command(args = "", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "<color>")
 	public boolean potionCommand(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length > 0) {

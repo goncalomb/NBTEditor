@@ -33,17 +33,17 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionType;
 
 public final class NBTUtils {
-	
+
 	// Minecraft's ItemStack Class;
 	private static Method _ItemStack_createStack;
 	private static Method _ItemStack_save;
 	private static Method _ItemStack_getTag;
 	private static Method _ItemStack_setTag;
-	
+
 	// CraftItemStack Class;
 	private static Method _CraftItemStack_asCraftMirror;
 	private static Field _CraftItemStack_handle;
-	
+
 	// Minecraft's Entity Class;
 	private static Method _Entity_e; // Save data to NBTTagCompound.
 	private static Method _Entity_startRiding;
@@ -51,38 +51,38 @@ public final class NBTUtils {
 	private static Method _Entity_setPositionRotation;
 	private static Field _Entity_pitch;
 	private static Field _Entity_yaw;
-	
+
 	// CraftEntity Class
 	private static Method _CraftEntity_getHandle;
-	
+
 	// Minecraft's TileEntity
 	private static Method _TileEntity_a; // Load data from NBTTagCompound.
 	private static Method _TileEntity_save; // Save data to NBTTagCompound.
-	
+
 	// CraftWorld
 	private static Method _CraftWorld_getHandle;
 	private static Method _CraftWorld_getTileEntityAt;
-	
+
 	// Minecraft's World Class
 	private static Method _World_addEntity;
-	
+
 	// Minecraft's EntityTypes Class
 	private static Method _EntityTypes_a; // Creates an entity from a NBTCompound.
-	
+
 	static void prepareReflection() throws SecurityException, NoSuchMethodException, NoSuchFieldException {
 		Class<?> nbtTagCompoundClass = BukkitReflect.getMinecraftClass("NBTTagCompound");
-		
+
 		Class<?> minecraftItemStackClass = BukkitReflect.getMinecraftClass("ItemStack");
 		_ItemStack_createStack = minecraftItemStackClass.getMethod("createStack", nbtTagCompoundClass);
 		_ItemStack_save = minecraftItemStackClass.getMethod("save", nbtTagCompoundClass);
 		_ItemStack_getTag = minecraftItemStackClass.getMethod("getTag");
 		_ItemStack_setTag = minecraftItemStackClass.getMethod("setTag", nbtTagCompoundClass);
-		
+
 		Class<?> craftItemStackClass = BukkitReflect.getCraftBukkitClass("inventory.CraftItemStack");
 		_CraftItemStack_asCraftMirror = craftItemStackClass.getMethod("asCraftMirror", minecraftItemStackClass);
 		_CraftItemStack_handle = craftItemStackClass.getDeclaredField("handle");
 		_CraftItemStack_handle.setAccessible(true);
-		
+
 		Class<?> minecraftEntityClass = BukkitReflect.getMinecraftClass("Entity");
 		_Entity_e = minecraftEntityClass.getMethod("e", nbtTagCompoundClass);
 		_Entity_setPositionRotation = minecraftEntityClass.getMethod("setPositionRotation", double.class, double.class, double.class, float.class, float.class);
@@ -90,38 +90,38 @@ public final class NBTUtils {
 		_Entity_pitch = minecraftEntityClass.getField("pitch");
 		_Entity_startRiding = minecraftEntityClass.getMethod("startRiding", minecraftEntityClass);
 		_Entity_getBukkitEntity = minecraftEntityClass.getMethod("getBukkitEntity");
-		
+
 		Class<?> craftEntityClass = BukkitReflect.getCraftBukkitClass("entity.CraftEntity");
 		_CraftEntity_getHandle = craftEntityClass.getMethod("getHandle");
-		
+
 		Class<?> minecraftTileEntityClass = BukkitReflect.getMinecraftClass("TileEntity");
 		_TileEntity_save = minecraftTileEntityClass.getMethod("save", nbtTagCompoundClass);
 		_TileEntity_a = minecraftTileEntityClass.getMethod("a", nbtTagCompoundClass);
-		
+
 		Class<?> craftWorldClass = BukkitReflect.getCraftBukkitClass("CraftWorld");
 		_CraftWorld_getHandle = craftWorldClass.getMethod("getHandle");
 		_CraftWorld_getTileEntityAt = craftWorldClass.getMethod("getTileEntityAt", int.class, int.class, int.class);
-		
+
 		Class<?> minecraftWorldClass = BukkitReflect.getMinecraftClass("World");
 		_World_addEntity = minecraftWorldClass.getMethod("addEntity", minecraftEntityClass);
-		
+
 		Class<?> minecraftEntityTypesClass = BukkitReflect.getMinecraftClass("EntityTypes");
 		_EntityTypes_a = minecraftEntityTypesClass.getMethod("a", nbtTagCompoundClass, minecraftWorldClass);
 	}
-	
+
 	private NBTUtils() { }
-	
+
 	public static ItemStack itemStackFromNBTData(NBTTagCompound data) {
 		return (ItemStack) BukkitReflect.invokeMethod(null, _CraftItemStack_asCraftMirror, BukkitReflect.invokeMethod(null, _ItemStack_createStack, data._handle));
 	}
-	
+
 	public static NBTTagCompound itemStackToNBTData(ItemStack stack) {
 		NBTTagCompound data = new NBTTagCompound();
 		Object handle = BukkitReflect.getFieldValue(stack, _CraftItemStack_handle);
 		BukkitReflect.invokeMethod(handle, _ItemStack_save, data._handle);
 		return data;
 	}
-	
+
 	public static Entity spawnEntity(NBTTagCompound data, Location location) {
 		Object worldHandle = BukkitReflect.invokeMethod(location.getWorld(), _CraftWorld_getHandle);
 		Object prevEntityHandle = null;
@@ -143,14 +143,14 @@ public final class NBTUtils {
 		} while (data != null);
 		return (Entity) BukkitReflect.invokeMethod(prevEntityHandle, _Entity_getBukkitEntity);
 	}
-	
+
 	public static NBTTagCompound getEntityNBTData(Entity entity) {
 		Object entityHandle = BukkitReflect.invokeMethod(entity, _CraftEntity_getHandle);
 		NBTTagCompound data = new NBTTagCompound();
 		BukkitReflect.invokeMethod(entityHandle, _Entity_e, data._handle);
 		return data;
 	}
-	
+
 	public static NBTTagList potionToNBTEffectsList(ItemStack potion) {
 		NBTTagCompound tag = getItemStackTag(potion);
 		if (tag.hasKey("CustomPotionEffects")) {
@@ -168,7 +168,7 @@ public final class NBTUtils {
 		}
 		return effectList;
 	}
-	
+
 	public static ItemStack potionFromNBTEffectsList(NBTTagList effects) {
 		NBTTagCompound tag = new NBTTagCompound();
 		tag.setList("CustomPotionEffects", effects.clone());
@@ -179,11 +179,11 @@ public final class NBTUtils {
 		data.setCompound("tag", tag);
 		return itemStackFromNBTData(data);
 	}
-	
+
 	private static Object getTileEntity(Block block) {
 		return BukkitReflect.invokeMethod(block.getWorld(), _CraftWorld_getTileEntityAt, block.getX(), block.getY(), block.getZ());
 	}
-	
+
 	public static NBTTagCompound getTileEntityNBTData(Block block) {
 		NBTBase.prepareReflection();
 		Object tileEntity = getTileEntity(block);
@@ -194,7 +194,7 @@ public final class NBTUtils {
 		}
 		return null;
 	}
-	
+
 	public static void setTileEntityNBTData(Block block, NBTTagCompound data) {
 		NBTBase.prepareReflection();
 		Object tileEntity = getTileEntity(block);
@@ -202,13 +202,13 @@ public final class NBTUtils {
 			BukkitReflect.invokeMethod(tileEntity, _TileEntity_a, data._handle);
 		}
 	}
-	
+
 	public static NBTTagCompound getItemStackTag(ItemStack item) {
 		Object handle = BukkitReflect.getFieldValue(item, _CraftItemStack_handle);
 		Object tag = BukkitReflect.invokeMethod(handle, _ItemStack_getTag);
 		return (tag == null ? new NBTTagCompound() : new NBTTagCompound(tag));
 	}
-	
+
 	public static void setItemStackTag(ItemStack item, NBTTagCompound tag) {
 		Object handle = BukkitReflect.getFieldValue(item, _CraftItemStack_handle);
 		BukkitReflect.invokeMethod(handle, _ItemStack_setTag, tag._handle);

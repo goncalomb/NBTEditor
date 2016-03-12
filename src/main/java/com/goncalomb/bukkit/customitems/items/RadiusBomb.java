@@ -28,23 +28,23 @@ import org.bukkit.material.MaterialData;
 import org.bukkit.util.Vector;
 
 public abstract class RadiusBomb extends GenericBomb {
-	
+
 	private int _radius;
-	
+
 	protected RadiusBomb(String slug, String name, MaterialData material) {
 		super(slug, name, material);
 	}
-	
+
 	protected int getRadius() {
 		return _radius;
 	}
-	
+
 	@Override
 	public void applyConfig(ConfigurationSection section) {
 		super.applyConfig(section);
 		_radius = section.getInt("radius", 8);
 	}
-	
+
 	@Override
 	public void onExplode(Item item, Location location) {
 		Vector locV = item.getLocation().toVector();
@@ -58,7 +58,7 @@ public abstract class RadiusBomb extends GenericBomb {
 			}
 		}
 	}
-	
+
 	public abstract void affectEntity(Item item, Location location, LivingEntity entity, Vector delta, double factor);
 
 }

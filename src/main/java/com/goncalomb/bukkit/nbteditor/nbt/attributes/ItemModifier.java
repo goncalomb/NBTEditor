@@ -30,13 +30,13 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
 public final class ItemModifier extends Modifier {
-	
+
 	private AttributeType _attributeType;
-	
+
 	public static ItemModifier fromNBT(NBTTagCompound data) {
 		return new ItemModifier(AttributeType.getByInternalName(data.getString("AttributeName")), data.getString("Name"), data.getDouble("Amount"), data.getInt("Operation"), new UUID(data.getLong("UUIDMost"), data.getLong("UUIDLeast")));
 	}
-	
+
 	public static List<ItemModifier> getItemStackModifiers(ItemStack item) {
 		NBTTagCompound tag = NBTUtils.getItemStackTag(item);
 		if (tag.hasKey("AttributeModifiers")) {
@@ -49,7 +49,7 @@ public final class ItemModifier extends Modifier {
 		}
 		return new ArrayList<ItemModifier>();
 	}
-	
+
 	public static void setItemStackModifiers(ItemStack item, List<ItemModifier> modifiers) {
 		NBTTagList modifiersData = new NBTTagList();
 		for (ItemModifier modifier : modifiers) {
@@ -59,26 +59,26 @@ public final class ItemModifier extends Modifier {
 		tag.setList("AttributeModifiers", modifiersData);
 		NBTUtils.setItemStackTag(item, tag);
 	}
-	
+
 	public ItemModifier(AttributeType attributeType, String name, double amount, int operation) {
 		super(name, amount, operation);
 		_attributeType = attributeType;
 	}
-	
+
 	public ItemModifier(AttributeType attributeType, String name, double amount, int operation, UUID uuid) {
 		super(name, amount, operation, uuid);
 		_attributeType = attributeType;
 	}
-	
+
 	public AttributeType getAttributeType() {
 		return _attributeType;
 	}
-	
+
 	@Override
 	public NBTTagCompound toNBT() {
 		NBTTagCompound data = super.toNBT();
 		data.setString("AttributeName", _attributeType._internalName);
 		return data;
 	}
-	
+
 }

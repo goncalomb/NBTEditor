@@ -26,14 +26,14 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
 
 public class DroppedItemNBT extends ItemNBT implements SingleItemBasedNBT {
-	
+
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("DroppedItem");
 		variables.add("Health", new ShortVariable("Health"));
 		variables.add("PickupDelay", new ShortVariable("PickupDelay"));
 		registerVariables(DroppedItemNBT.class, variables);
 	}
-	
+
 	public void setItem(ItemStack item) {
 		if (item == null) {
 			_data.remove("Item");
@@ -41,16 +41,16 @@ public class DroppedItemNBT extends ItemNBT implements SingleItemBasedNBT {
 			_data.setCompound("Item", NBTUtils.itemStackToNBTData(item));
 		}
 	}
-	
+
 	public ItemStack getItem() {
 		if (_data.hasKey("Item")) {
 			return NBTUtils.itemStackFromNBTData(_data.getCompound("Item"));
 		}
 		return null;
 	}
-	
+
 	public boolean isSet() {
 		return _data.hasKey("Item");
 	}
-	
+
 }

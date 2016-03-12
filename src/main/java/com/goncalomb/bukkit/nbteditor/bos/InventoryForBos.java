@@ -33,18 +33,18 @@ import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 
 abstract class InventoryForBos<T extends EntityNBT> extends CustomInventory {
-	
+
 	protected static final ItemStack ITEM_FILLER = UtilsMc.newSingleItemStack(Material.BARRIER, "Nothing here!");
-	
+
 	private HashMap<Integer, ItemStack> _placeholders = new HashMap<Integer, ItemStack>();
 	protected final BookOfSouls _bos;
 	protected final T _entityNbt;
 	private boolean _allowBos;
-	
+
 	protected static ItemStack createPlaceholder(Material material, String name) {
 		return createPlaceholder(material, name, null);
 	}
-	
+
 	protected static ItemStack createPlaceholder(Material material, String name, String lore) {
 		ArrayList<String> loreList = new ArrayList<String>(2);
 		if (lore != null) {
@@ -53,11 +53,11 @@ abstract class InventoryForBos<T extends EntityNBT> extends CustomInventory {
 		loreList.add("§oThis is a placeholder item, it will not be saved!");
 		return UtilsMc.newSingleItemStack(material, name, loreList);
 	}
-	
+
 	protected void setItem(int slot, ItemStack item) {
 		_inventory.setItem(slot, item);
 	}
-	
+
 	protected ItemStack getItem(int slot) {
 		ItemStack item = _inventory.getItem(slot);
 		if (item != null && item.equals(_placeholders.get(slot))) {
@@ -65,24 +65,24 @@ abstract class InventoryForBos<T extends EntityNBT> extends CustomInventory {
 		}
 		return item;
 	}
-	
+
 	protected void setPlaceholder(int slot, Material material, String name) {
 		setPlaceholder(slot, material, name, null);
 	}
-	
+
 	protected void setPlaceholder(int slot, Material material, String name, String lore) {
 		setPlaceholder(slot, createPlaceholder(material, name, lore));
 	}
-	
+
 	protected void setPlaceholder(int slot, ItemStack item) {
 		_placeholders.put(slot, item);
 		_inventory.setItem(slot, item);
 	}
-	
+
 	public InventoryForBos(BookOfSouls bos, Player owner, int size, String title) {
 		this(bos, owner, size, title, false);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public InventoryForBos(BookOfSouls bos, Player owner, int size, String title, boolean allowBos) {
 		super(owner, size, title);
@@ -90,7 +90,7 @@ abstract class InventoryForBos<T extends EntityNBT> extends CustomInventory {
 		_entityNbt = (T) bos.getEntityNBT();
 		_allowBos = allowBos;
 	}
-	
+
 	protected final ItemStack[] getContents() {
 		ItemStack[] items = _inventory.getContents();
 		for (Entry<Integer, ItemStack> entry : _placeholders.entrySet()) {
@@ -101,7 +101,7 @@ abstract class InventoryForBos<T extends EntityNBT> extends CustomInventory {
 		}
 		return items;
 	}
-	
+
 	@Override
 	protected void inventoryClick(InventoryClickEvent event) {
 		int slot = event.getRawSlot();
@@ -114,7 +114,7 @@ abstract class InventoryForBos<T extends EntityNBT> extends CustomInventory {
 					event.setCancelled(true);
 				}
 			}
-			
+
 		}
 		if (!_allowBos && BookOfSouls.isValidBook(event.getCurrentItem())) {
 			event.setCancelled(true);

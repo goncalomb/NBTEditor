@@ -42,18 +42,18 @@ import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeType;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.ItemModifier;
 
 public class CommandNBTItem extends MyCommand {
-	
+
 	public CommandNBTItem() {
 		super("nbtitem", "nbti");
 	}
-	
+
 	@Command(args = "info", type = CommandType.PLAYER_ONLY)
 	public boolean infoCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		ItemUtils.sendItemStackInformation(item.item, sender);
 		return true;
 	}
-	
+
 	@Command(args = "name", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "[name ...]")
 	public boolean nameCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
@@ -62,7 +62,7 @@ public class CommandNBTItem extends MyCommand {
 		sender.sendMessage(args.length == 0 ? "§aItem name removed." : "§aItem renamed.");
 		return true;
 	}
-	
+
 	@Command(args = "lore add", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<lore ...>")
 	public boolean lore_addCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
@@ -76,7 +76,7 @@ public class CommandNBTItem extends MyCommand {
 		sender.sendMessage("§aItem lore line added.");
 		return true;
 	}
-	
+
 	@Command(args = "lore del", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<index>")
 	public boolean lore_delCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
@@ -94,7 +94,7 @@ public class CommandNBTItem extends MyCommand {
 		}
 		return true;
 	}
-	
+
 	@Command(args = "lore delall", type = CommandType.PLAYER_ONLY)
 	public boolean lore_delallCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
@@ -103,7 +103,7 @@ public class CommandNBTItem extends MyCommand {
 		sender.sendMessage("§aItem lore cleared.");
 		return true;
 	}
-	
+
 	@Command(args = "mod add", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "<attribute> <operation> <amount> [name ...]")
 	public boolean mod_add(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length >= 3) {
@@ -139,7 +139,7 @@ public class CommandNBTItem extends MyCommand {
 		sender.sendMessage("§7Attributes: " + StringUtils.join(AttributeType.values(), ", "));
 		return false;
 	}
-	
+
 	@TabComplete(args = "mod add")
 	public List<String> tab_mod_add(CommandSender sender, String[] args) {
 		if (args.length == 1) {
@@ -149,7 +149,7 @@ public class CommandNBTItem extends MyCommand {
 		}
 		return null;
 	}
-	
+
 	@Command(args = "mod del", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<index>")
 	public boolean mod_delCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
@@ -166,7 +166,7 @@ public class CommandNBTItem extends MyCommand {
 		}
 		return true;
 	}
-	
+
 	@Command(args = "mod delall", type = CommandType.PLAYER_ONLY)
 	public boolean mod_delallCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
@@ -174,7 +174,7 @@ public class CommandNBTItem extends MyCommand {
 		sender.sendMessage("§aModifiers cleared.");
 		return true;
 	}
-	
+
 	@Command(args = "tocommand", type = CommandType.PLAYER_ONLY)
 	public boolean tocommandCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
@@ -200,5 +200,5 @@ public class CommandNBTItem extends MyCommand {
 		sender.sendMessage("§cNo Command Block in sight!");
 		return true;
 	}
-	
+
 }

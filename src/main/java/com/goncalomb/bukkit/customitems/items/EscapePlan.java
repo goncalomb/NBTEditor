@@ -36,7 +36,7 @@ import com.goncalomb.bukkit.customitems.api.FireworkPlayerDetails;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 
 public final class EscapePlan extends CustomFirework {
-	
+
 	public EscapePlan() {
 		super("escape-plan", ChatColor.YELLOW + "Escape Plan");
 		setLore("§bSteve Co. Space Program!",
@@ -44,7 +44,7 @@ public final class EscapePlan extends CustomFirework {
 				"§b... or just send 'em into spaaaace!",
 				"§bUse on open areas.");
 	}
-	
+
 	@Override
 	public void onAttack(EntityDamageByEntityEvent event, PlayerDetails details) {
 		Entity entity = event.getEntity();
@@ -53,7 +53,7 @@ public final class EscapePlan extends CustomFirework {
 			fire(entity.getLocation(), details, entity);
 		}
 	}
-	
+
 	@Override
 	public boolean onFire(FireworkPlayerDetails details, FireworkMeta meta) {
 		if (details.getUserObject() == null) {
@@ -68,7 +68,7 @@ public final class EscapePlan extends CustomFirework {
 		meta.addEffect(FireworkEffect.builder().withColor(Color.YELLOW).withFade(Color.WHITE).withFlicker().withTrail().build());
 		return true;
 	}
-	
+
 	@Override
 	public void onExplode(final FireworkPlayerDetails details) {
 		final Vector v = details.getFirework().getVelocity().setY(0).normalize().multiply(7).setY(1);
@@ -83,5 +83,5 @@ public final class EscapePlan extends CustomFirework {
 			}, 2);
 		}
 	}
-	
+
 }

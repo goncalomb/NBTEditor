@@ -43,7 +43,7 @@ public final class EntityInspectorTool extends CustomItem {
 		super("entity-inspector", ChatColor.AQUA + "Entity Inspector", new MaterialData(Material.STICK));
 		setLore(ChatColor.YELLOW + "Right-click an entity to get their information.");
 	}
-	
+
 	@Override
 	public  void onInteractEntity(PlayerInteractEntityEvent event, PlayerDetails details) {
 		Player player = event.getPlayer();
@@ -59,7 +59,7 @@ public final class EntityInspectorTool extends CustomItem {
 				}
 			}
 			player.sendMessage(ChatColor.YELLOW + "Extra information:");
-			
+
 			boolean extra = false;
 			if (entityNBT instanceof MobNBT) {
 				float[] chances = ((MobNBT) entityNBT).getDropChances();
@@ -88,7 +88,7 @@ public final class EntityInspectorTool extends CustomItem {
 			player.sendMessage(ChatColor.RED + "Not a valid entity!");
 		}
 	}
-	
+
 	@Override
 	public void onDrop(PlayerDropItemEvent event) {
 		event.getItemDrop().remove();

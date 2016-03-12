@@ -26,7 +26,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
 
 public class XPOrbNBT extends ItemNBT {
-	
+
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("XPOrb");
 		variables.add("Health", new ByteVariable("Health"));

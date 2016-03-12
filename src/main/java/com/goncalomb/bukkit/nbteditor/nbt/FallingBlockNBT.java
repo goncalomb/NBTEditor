@@ -31,7 +31,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 
 public class FallingBlockNBT extends EntityNBT {
-	
+
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("FallingBlock");
 		variables.add("Block", new BlockVariable("TileID", "Data"));
@@ -42,11 +42,11 @@ public class FallingBlockNBT extends EntityNBT {
 		variables.add("FallHurtMax", new IntegerVariable("FallHurtMax", 0));
 		registerVariables(FallingBlockNBT.class, variables);
 	}
-	
+
 	public FallingBlockNBT() {
 		_data.setByte("Time", (byte) 1);
 	}
-	
+
 	public void copyFromTileEntity(Block block) {
 		_data.setInt("TileID", block.getTypeId());
 		_data.setByte("Data", block.getData());
@@ -57,9 +57,9 @@ public class FallingBlockNBT extends EntityNBT {
 			_data.remove("TileEntityData");
 		}
 	}
-	
+
 	public boolean hasTileEntityData() {
 		return _data.hasKey("TileEntityData");
 	}
-	
+
 }

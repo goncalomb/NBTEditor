@@ -29,7 +29,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.SingleItemBasedNBT;
 
 public abstract class InventoryForSingleItem<T extends EntityNBT & SingleItemBasedNBT> extends InventoryForBos<T> {
-	
+
 	public InventoryForSingleItem(BookOfSouls bos, Player owner, String title, ItemStack placeholder) {
 		super(bos, owner, 9, title);
 		for (int i = 0; i < 9; ++i) {
@@ -44,7 +44,7 @@ public abstract class InventoryForSingleItem<T extends EntityNBT & SingleItemBas
 			setPlaceholder(4, placeholder);
 		}
 	}
-	
+
 	protected ItemStack getItemToCheck(InventoryClickEvent event) {
 		int slot = event.getRawSlot();
 		boolean isShift = event.isShiftClick();
@@ -55,7 +55,7 @@ public abstract class InventoryForSingleItem<T extends EntityNBT & SingleItemBas
 		}
 		return null;
 	}
-	
+
 	@Override
 	protected void inventoryClick(InventoryClickEvent event) {
 		super.inventoryClick(event);
@@ -73,13 +73,13 @@ public abstract class InventoryForSingleItem<T extends EntityNBT & SingleItemBas
 			}
 		}
 	}
-	
+
 	protected abstract boolean isValidItem(Player player, ItemStack item);
-	
+
 	@Override
 	protected void inventoryClose(InventoryCloseEvent event) {
 		_entityNbt.setItem(getContents()[4]);
 		_bos.saveBook();
 	}
-	
+
 }

@@ -30,11 +30,11 @@ import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.commands.HandItemWrapper.Book.BookType;
 
 public class CommandNBTBook extends MyCommand {
-	
+
 	public CommandNBTBook() {
 		super("nbtbook", "nbtb");
 	}
-	
+
 	@Command(args = "colors", type = CommandType.PLAYER_ONLY)
 	public boolean colorsCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.BOTH);
@@ -51,7 +51,7 @@ public class CommandNBTBook extends MyCommand {
 		sender.sendMessage("§aColor codes have been replaced.");
 		return true;
 	}
-	
+
 	@Command(args = "title", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<title ...>")
 	public boolean titleCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
@@ -60,7 +60,7 @@ public class CommandNBTBook extends MyCommand {
 		sender.sendMessage("§aBook title set.");
 		return true;
 	}
-	
+
 	@Command(args = "author", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<author ...>")
 	public boolean authorCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
@@ -69,7 +69,7 @@ public class CommandNBTBook extends MyCommand {
 		sender.sendMessage("§aBook author set.");
 		return true;
 	}
-	
+
 	@Command(args = "unsign", type = CommandType.PLAYER_ONLY)
 	public boolean unsignCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
@@ -80,5 +80,5 @@ public class CommandNBTBook extends MyCommand {
 		sender.sendMessage("§aBook unsigned.");
 		return true;
 	}
-	
+
 }

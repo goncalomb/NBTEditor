@@ -26,7 +26,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
 
 public final class HorseNBT extends BreedNBT {
-	
+
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Horse");
 		variables.add("Type", new IntegerVariable("Type", 0, 4));
@@ -37,5 +37,5 @@ public final class HorseNBT extends BreedNBT {
 		variables.add("Variant", new HorseVariantVariable());
 		registerVariables(HorseNBT.class, variables);
 	}
-	
+
 }

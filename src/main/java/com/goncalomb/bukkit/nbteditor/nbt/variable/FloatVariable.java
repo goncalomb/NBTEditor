@@ -24,24 +24,24 @@ import org.bukkit.entity.Player;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public final class FloatVariable extends NBTGenericVariable {
-	
+
 	private float _min;
 	float _max;
-	
+
 	public FloatVariable(String nbtKey) {
 		this(nbtKey, -Float.MAX_VALUE);
 	}
-	
+
 	public FloatVariable(String nbtKey, float min) {
 		this(nbtKey, min, Float.MAX_VALUE);
 	}
-	
+
 	public FloatVariable(String nbtKey, float min, float max) {
 		super(nbtKey);
 		_min = min;
 		_max = max;
 	}
-	
+
 	boolean set(NBTTagCompound data, String value, Player player) {
 		try {
 			float v = Float.parseFloat(value);
@@ -52,7 +52,7 @@ public final class FloatVariable extends NBTGenericVariable {
 			return false;
 		}
 	}
-	
+
 	String get(NBTTagCompound data) {
 		if (data.hasKey(_nbtKey)) {
 			return String.valueOf(data.getFloat(_nbtKey));
@@ -64,5 +64,5 @@ public final class FloatVariable extends NBTGenericVariable {
 	String getFormat() {
 		return String.format("Decimal between %s and %s.", _min, _max);
 	}
-	
+
 }

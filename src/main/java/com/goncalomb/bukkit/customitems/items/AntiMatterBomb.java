@@ -36,9 +36,9 @@ import org.bukkit.material.MaterialData;
 import org.bukkit.util.Vector;
 
 public final class AntiMatterBomb extends GenericBomb {
-	
+
 	private boolean _cleanup;
-	
+
 	public AntiMatterBomb() {
 		super("anti-matter-bomb", ChatColor.GREEN + "Anti-Matter Bomb", new MaterialData(Material.ENDER_PEARL));
 		setLore("§c§k-----§r §c§lCaution! §r§c§k-----");
@@ -46,13 +46,13 @@ public final class AntiMatterBomb extends GenericBomb {
 		setDefaultConfig("fuse", 60);
 		setDefaultConfig("cleanup", true);
 	}
-	
+
 	@Override
 	public void applyConfig(ConfigurationSection section) {
 		super.applyConfig(section);
 		_cleanup = section.getBoolean("cleanup", true);
 	}
-	
+
 	@Override
 	public void onExplode(Item item, Location location) {
 		World world = location.getWorld();
@@ -98,5 +98,5 @@ public final class AntiMatterBomb extends GenericBomb {
 			}
 		}
 	}
-	
+
 }

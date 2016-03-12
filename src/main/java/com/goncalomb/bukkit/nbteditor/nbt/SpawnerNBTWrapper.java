@@ -38,9 +38,9 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
 
 public final class SpawnerNBTWrapper {
-	
+
 	private static NBTGenericVariableContainer _variables;
-	
+
 	static {
 		_variables = new NBTGenericVariableContainer("Spawner");
 		_variables.add("Count", new ShortVariable("SpawnCount", (short) 0));
@@ -51,23 +51,23 @@ public final class SpawnerNBTWrapper {
 		_variables.add("MaxEntities", new ShortVariable("MaxNearbyEntities", (short) 0));
 		_variables.add("PlayerRange", new ShortVariable("RequiredPlayerRange", (short) 0));
 	}
-	
+
 	private Block _spawnerBlock;
 	private NBTTagCompound _data;
 	private List<SpawnerEntityNBT> _entities;
-	
+
 	public static Collection<String> variableNames() {
 		return Collections.unmodifiableCollection(_variables.getVarNames());
 	}
-	
+
 	public SpawnerNBTWrapper(Block block) {
 		_spawnerBlock = block;
 		_data = NBTUtils.getTileEntityNBTData(block);
-		
+
 		if (_data.hasKey("SpawnPotentials")) {
 			NBTTagList spawnPotentials = _data.getList("SpawnPotentials");
 			int l = spawnPotentials.size();
-			
+
 			_entities = new ArrayList<SpawnerEntityNBT>(l);
 			for (int i = 0; i < l; ++i) {
 				NBTTagCompound potential = (NBTTagCompound) spawnPotentials.get(i);
@@ -87,13 +87,13 @@ public final class SpawnerNBTWrapper {
 			_entities = new ArrayList<SpawnerEntityNBT>();
 		}
 	}
-	
+
 	public void addEntity(SpawnerEntityNBT spawnerEntityNbt) {
 		_data.setString("EntityId", EntityTypeMap.getName(spawnerEntityNbt.getEntityType()));
 		_data.setCompound("SpawnData", spawnerEntityNbt.getEntityNBT()._data.clone());
 		_entities.add(spawnerEntityNbt);
 	}
-	
+
 	public void clearEntities() {
 		_entities.clear();
 	}
@@ -110,31 +110,31 @@ public final class SpawnerNBTWrapper {
 			this._entities.add(spawnerEntityNBT.clone());
 		}
 	}
-	
+
 	public List<SpawnerEntityNBT> getEntities() {
 		return _entities;
 	}
-	
+
 	public void removeEntity(int index) {
 		_entities.remove(index);
 	}
-	
+
 	public EntityType getCurrentEntity() {
 		return EntityTypeMap.getByName(_data.getString("EntityId"));
 	}
-	
+
 	public Location getLocation() {
 		return _spawnerBlock.getLocation();
 	}
-	
+
 	public NBTVariableContainer getVariables() {
 		return _variables.boundToData(_data);
 	}
-	
+
 	public NBTVariable getVariable(String name) {
 		return _variables.getVariable(name, _data);
 	}
-	
+
 	public void save() {
 		if (_entities.size() > 0) {
 			NBTTagList spawnPotentials = new NBTTagList();
@@ -149,5 +149,5 @@ public final class SpawnerNBTWrapper {
 		}
 		NBTUtils.setTileEntityNBTData(_spawnerBlock, _data);
 	}
-	
+
 }

@@ -25,20 +25,20 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
 public final class VillagerNBTOffer {
-	
+
 	private ItemStack _buyA;
 	private ItemStack _buyB;
 	private ItemStack _sell;
 	private int _maxUses;
 	private int _uses;
-	
+
 	public VillagerNBTOffer(ItemStack buyA, ItemStack buyB, ItemStack sell) {
 		this(buyA, buyB, sell, 7);
 	}
 	public VillagerNBTOffer(ItemStack buyA, ItemStack buyB, ItemStack sell, int maxUses) {
 		this(buyA, buyB, sell, maxUses, 0);
 	}
-	
+
 	public VillagerNBTOffer(ItemStack buyA, ItemStack buyB, ItemStack sell, int maxUses, int uses) {
 		_buyA = buyA;
 		_buyB = buyB;
@@ -46,7 +46,7 @@ public final class VillagerNBTOffer {
 		_maxUses = maxUses;
 		_uses = uses;
 	}
-	
+
 	VillagerNBTOffer(NBTTagCompound offer) {
 		_buyA = NBTUtils.itemStackFromNBTData(offer.getCompound("buy"));
 		if (offer.hasKey("buyB")) {
@@ -58,7 +58,7 @@ public final class VillagerNBTOffer {
 		_maxUses = offer.getInt("maxUses");
 		_uses = offer.getInt("uses");
 	}
-	
+
 	NBTTagCompound getCompound() {
 		NBTTagCompound offer = new NBTTagCompound();
 		offer.setCompound("buy", NBTUtils.itemStackToNBTData(_buyA));
@@ -70,23 +70,23 @@ public final class VillagerNBTOffer {
 		offer.setInt("uses", _uses);
 		return offer;
 	}
-	
+
 	public ItemStack getBuyA() {
 		return _buyA;
 	}
-	
+
 	public ItemStack getBuyB() {
 		return _buyB;
 	}
-	
+
 	public ItemStack getSell() {
 		return _sell;
 	}
-	
+
 	public int getMaxUses() {
 		return _maxUses;
 	}
-	
+
 	public int getUses() {
 		return _uses;
 	}

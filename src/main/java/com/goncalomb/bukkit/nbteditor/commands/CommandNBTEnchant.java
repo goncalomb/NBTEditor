@@ -34,11 +34,11 @@ import com.goncalomb.bukkit.mylib.namemaps.EnchantmentsMap;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 
 public class CommandNBTEnchant extends MyCommand {
-	
+
 	public CommandNBTEnchant() {
 		super("nbtenchant", "nbte");
 	}
-	
+
 	@Command(args = "", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<enchantment> [level]")
 	public boolean enchantCommand(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length > 0) {
@@ -74,7 +74,7 @@ public class CommandNBTEnchant extends MyCommand {
 		sender.sendMessage("§eUse level = 0 to remove enchantments.");
 		return false;
 	}
-	
+
 	@TabComplete(args = "")
 	public List<String> tab(CommandSender sender, String[] args) {
 		if (args.length == 1) {
@@ -84,7 +84,7 @@ public class CommandNBTEnchant extends MyCommand {
 		}
 		return null;
 	}
-	
+
 	@Command(args = "clear", type = CommandType.PLAYER_ONLY)
 	public boolean enchant_clearCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
@@ -95,5 +95,5 @@ public class CommandNBTEnchant extends MyCommand {
 		sender.sendMessage("§aAll enchantments removed.");
 		return true;
 	}
-	
+
 }

@@ -32,11 +32,11 @@ import com.goncalomb.bukkit.mylib.namemaps.PotionEffectsMap;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 
 public class CommandNBTPotion extends MyCommand {
-	
+
 	public CommandNBTPotion() {
 		super("nbtpotion", "nbtp");
 	}
-	
+
 	@Command(args = "", type = CommandType.PLAYER_ONLY, maxargs = 3, usage = "<effect> [level] [duration]")
 	public boolean potionCommand(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length > 0) {
@@ -76,7 +76,7 @@ public class CommandNBTPotion extends MyCommand {
 		sender.sendMessage("§eUse level = 0 to remove potion effects.");
 		return false;
 	}
-	
+
 	@TabComplete(args = "")
 	public List<String> tab(CommandSender sender, String[] args) {
 		return (args.length == 1 ? Utils.getElementsWithPrefix(PotionEffectsMap.getNames(), args[0]) : null);

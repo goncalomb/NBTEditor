@@ -44,26 +44,26 @@ public final class CustomItemManager {
 	private static CustomItemContainer _container = new CustomItemContainer();
 	private static CustomItemListener _listener = new CustomItemListener();
 	private static HashMap<String, CustomItemConfig> _configsByGroup = new HashMap<String, CustomItemConfig>();
-	
+
 	private CustomItemManager() { }
-	
+
 	public static void initialize() {
 		// Find NBTEditor plugin...
 		if (_plugin != null || (_plugin = Bukkit.getPluginManager().getPlugin("NBTEditor")) == null) {
 			return;
 		}
-		
+
 		Permission mainPermission = new Permission("nbteditor.customitems.*");
 		mainPermission.addParent(UtilsMc.getRootPermission(_plugin), true);
-		
+
 		_usePermission = new Permission("nbteditor.customitems.use.*");
 		_usePermission.addParent(mainPermission, true);
 		Bukkit.getPluginManager().addPermission(_usePermission);
-		
+
 		_worldOverridePermission = new Permission("nbteditor.customitems.world-override.*");
 		_worldOverridePermission.addParent(mainPermission, true);
 		Bukkit.getPluginManager().addPermission(_worldOverridePermission);
-		
+
 		_mainListener = new Listener() {
 			@EventHandler
 			private void onInventoryClick(InventoryClickEvent event) {
@@ -86,11 +86,11 @@ public final class CustomItemManager {
 				}
 			}
 		};
-		
+
 		Bukkit.getPluginManager().registerEvents(_mainListener, _plugin);
 		Bukkit.getPluginManager().registerEvents(_listener, _plugin);
 	}
-	
+
 	public static boolean register(CustomItem customItem, Plugin plugin, String group) {
 		initialize();
 		if (_plugin == null) {
@@ -99,52 +99,52 @@ public final class CustomItemManager {
 			_plugin.getLogger().warning(plugin.getName() + " tried to register an already registered CustomItem, " + customItem.getSlug());
 			return false;
 		}
-		
+
 		CustomItemConfig config = _configsByGroup.get(group);
 		if (config == null) {
 			config = new CustomItemConfig(group);
 		}
 		config.configureItem(customItem);
-		
+
 		config.saveToFile();
 		_configsByGroup.put(group, config);
 
 		customItem._owner = plugin;
 		customItem._group = group;
-		
+
 		(new Permission("nbteditor.customitems.use." + customItem.getSlug())).addParent(_usePermission, true);
 		(new Permission("nbteditor.customitems.world-override." + customItem.getSlug())).addParent(_worldOverridePermission, true);
-		
+
 		_container.put(customItem, plugin, group);
 		return true;
 	}
-	
+
 	public static CustomItem getCustomItem(ItemStack item) {
 		return _container.get(item);
 	}
-	
+
 	public static CustomItem getCustomItem(String slug) {
 		return _container.get(slug);
 	}
-	
+
 	public static Collection<CustomItem> getCustomItems(Plugin plugin) {
 		return _container.getByOwner(plugin);
 	}
-	
+
 	public static Collection<CustomItem> getCustomItems(String group) {
 		return _container.getByGroup(group);
 	}
-	
+
 	public static Collection<CustomItem> getCustomItems() {
 		return _container.getAll();
 	}
-	
+
 	public static Collection<Plugin> getOwningPlugins() {
 		return _container.getOwners();
 	}
-	
+
 	public static Collection<String> getGroups() {
 		return _container.getGroups();
 	}
-	
+
 }

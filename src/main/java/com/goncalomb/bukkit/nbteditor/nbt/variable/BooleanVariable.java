@@ -28,13 +28,13 @@ import org.bukkit.entity.Player;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public final class BooleanVariable extends NBTGenericVariable{
-	
+
 	private static final List<String> POSSIBLE_VALUES = Collections.unmodifiableList(Arrays.asList(new String[] { "true", "false" }));
 
 	public BooleanVariable(String nbtKey) {
 		super(nbtKey);
 	}
-	
+
 	boolean set(NBTTagCompound data, String value, Player player) {
 		String lower = value.toLowerCase();
 		if ("true".startsWith(lower)) {
@@ -46,20 +46,20 @@ public final class BooleanVariable extends NBTGenericVariable{
 		}
 		return true;
 	}
-	
+
 	String get(NBTTagCompound data) {
 		if (data.hasKey(_nbtKey)) {
 			return (data.getByte(_nbtKey) > 0 ? "true" : "false");
 		}
 		return null;
 	}
-	
+
 	String getFormat() {
 		return "Boolean value 'true' or 'false'.";
 	}
-	
+
 	public List<String> getPossibleValues() {
 		return POSSIBLE_VALUES;
 	}
-	
+
 }

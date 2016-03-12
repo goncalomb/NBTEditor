@@ -75,7 +75,7 @@ public final class MyCommandManager {
 		}
 		command.setup(BukkitReflect.getCommandMap(), plugin);
 	}
-	
+
 	public static boolean isVanillaCommand(String name) {
 		Command mineCommand = BukkitReflect.getCommandMap().getCommand("minecraft:" + name);
 		if (mineCommand != null) {
@@ -84,5 +84,5 @@ public final class MyCommandManager {
 		}
 		return false;
 	}
-	
+
 }

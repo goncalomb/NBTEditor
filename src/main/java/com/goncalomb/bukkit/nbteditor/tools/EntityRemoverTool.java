@@ -37,7 +37,7 @@ public final class EntityRemoverTool extends CustomItem {
 		super("entity-remover", ChatColor.AQUA + "Entity Remover", new MaterialData(Material.BLAZE_ROD));
 		setLore(ChatColor.YELLOW + "Right-click an entity to remove it.");
 	}
-	
+
 	@Override
 	public void onInteractEntity(PlayerInteractEntityEvent event, PlayerDetails details) {
 		Player player = event.getPlayer();
@@ -49,7 +49,7 @@ public final class EntityRemoverTool extends CustomItem {
 			player.sendMessage(ChatColor.RED + "You cannot remove players!");
 		}
 	}
-	
+
 	@Override
 	public void onDrop(PlayerDropItemEvent event) {
 		event.getItemDrop().remove();

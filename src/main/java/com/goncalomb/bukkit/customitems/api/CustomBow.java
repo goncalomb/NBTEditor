@@ -27,14 +27,14 @@ import org.bukkit.material.MaterialData;
 
 
 public abstract class CustomBow extends CustomItem {
-	
+
 	protected CustomBow(String slug, String name) {
 		super(slug, name, new MaterialData(Material.BOW));
 	}
-	
+
 	public void onShootBow(EntityShootBowEvent event, DelayedPlayerDetails details) { }
-	
+
 	public void onProjectileHit(ProjectileHitEvent event, DelayedPlayerDetails details) { }
-	
+
 	public void onProjectileDamageEntity(EntityDamageByEntityEvent event, DelayedPlayerDetails details) { }
 }

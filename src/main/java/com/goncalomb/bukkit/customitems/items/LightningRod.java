@@ -26,14 +26,14 @@ import org.bukkit.entity.Item;
 import org.bukkit.material.MaterialData;
 
 public final class LightningRod extends GenericBomb {
-	
+
 	public LightningRod() {
 		super("lightning-rod", ChatColor.GRAY + "Lightning Rod", new MaterialData(Material.IRON_INGOT));
 		setLore("§bLeft-click to throw the rod.",
 				"§bLightning will strike after a few seconds.");
 		setDefaultConfig("fuse", 40);
 	}
-	
+
 	@Override
 	public void onExplode(Item item, Location location) {
 		item.getWorld().strikeLightning(location);

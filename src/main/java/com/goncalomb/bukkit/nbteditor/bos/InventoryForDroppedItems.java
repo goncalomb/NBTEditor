@@ -27,13 +27,13 @@ import org.bukkit.inventory.ItemStack;
 import com.goncalomb.bukkit.nbteditor.nbt.DroppedItemNBT;
 
 public final class InventoryForDroppedItems extends InventoryForSingleItem<DroppedItemNBT> {
-	
+
 	private static ItemStack placeholder = createPlaceholder(Material.PAPER, "§6The item goes here.");
-	
+
 	public InventoryForDroppedItems(BookOfSouls bos, Player owner) {
 		super(bos, owner, "Define the item here...", placeholder);
 	}
-	
+
 	@Override
 	protected boolean isValidItem(Player player, ItemStack item) {
 		return true;

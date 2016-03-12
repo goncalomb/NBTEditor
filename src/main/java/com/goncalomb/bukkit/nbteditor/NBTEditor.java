@@ -62,9 +62,9 @@ import com.goncalomb.bukkit.nbteditor.tools.EntityRemoverTool;
 import com.goncalomb.bukkit.nbteditor.tools.SuperLeadTool;
 
 public final class NBTEditor extends JavaPlugin {
-	
+
 	private static NBTEditor _instance;
-	
+
 	@Override
 	public void onEnable() {
 		try {
@@ -75,14 +75,14 @@ public final class NBTEditor extends JavaPlugin {
 			getLogger().severe("This version of NBTEditor is not compatible with this version of Bukkit");
 			return;
 		}
-		
+
 		try {
 			Metrics metrics = new Metrics(this);
 			metrics.start();
 		} catch (Exception e) {
 			Bukkit.getLogger().log(Level.INFO, "[Metrics] " + e.getMessage());
 		}
-		
+
 		MyCommandManager.register(new CommandBOS(), this);
 		MyCommandManager.register(new CommandNBTSpawner(), this);
 		MyCommandManager.register(new CommandNBTItem(), this);
@@ -92,21 +92,21 @@ public final class NBTEditor extends JavaPlugin {
 		MyCommandManager.register(new CommandNBTArmor(), this);
 		MyCommandManager.register(new CommandNBTHead(), this);
 		MyCommandManager.register(new CommandNBTTile(), this);
-		
+
 		ItemStorage.setDataFolder(new File(getDataFolder(), "ItemStorage"));
 		MyCommandManager.register(new CommandItemStorage(), this);
-		
+
 		BookOfSouls.initialize(this);
 		CustomItemManager.register(new EntityInspectorTool(), this, this.getName());
 		CustomItemManager.register(new EntityRemoverTool(), this, this.getName());
 		CustomItemManager.register(new SuperLeadTool(), this, this.getName());
-		
+
 		saveDefaultConfig();
-		
+
 		if (getConfig().getBoolean("customitems.enable-command", true)) {
 			MyCommandManager.register(new CommandCustomItems(), this);
 		}
-		
+
 		if (getConfig().getBoolean("customitems.enable-items", false)) {
 			CustomItemManager.register(new BatBomb(), this, "Bombs");
 			CustomItemManager.register(new FireBomb(), this, "Bombs");
@@ -124,18 +124,18 @@ public final class NBTEditor extends JavaPlugin {
 			CustomItemManager.register(new GravitationalAxe(), this, "Axes");
 			CustomItemManager.register(new TreeVaporizer(), this, "Axes");
 		}
-		
+
 		_instance = this;
 		getLogger().info("NBTEditor has been enabled");
 	}
-	
+
 	@Override
 	public void onDisable() {
 		_instance = null;
 	}
-	
+
 	public static NBTEditor getInstance() {
 		return _instance;
 	}
-	
+
 }

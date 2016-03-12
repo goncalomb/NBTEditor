@@ -33,52 +33,52 @@ public enum AttributeType {
 	JUMP_STRENGTH("JumpStrength", "horse.jumpStrength", 0.0, 2),
 	// Zombies
 	SPAWN_REINFORCEMENTS("SpawnReinforcements", "zombie.spawnReinforcements", 0.0, 1.0);
-	
+
 	private static final HashMap<String, AttributeType> _attributes = new HashMap<String, AttributeType>();
 	private static final HashMap<String, AttributeType> _attributesInternal = new HashMap<String, AttributeType>();
-	
+
 	private String _name;
 	String _internalName;
 	private double _min;
 	private double _max;
-	
+
 	static {
 		for (AttributeType type : values()) {
 			_attributes.put(type._name.toLowerCase(), type);
 			_attributesInternal.put(type._internalName, type);
 		}
 	}
-	
+
 	private AttributeType(String name, String internalName, double min, double max) {
 		_name = name;
 		_internalName = internalName;
 		_min = min;
 		_max = max;
 	}
-	
+
 	public String getName() {
 		return _name;
 	}
-	
+
 	public double getMin() {
 		return _min;
 	}
-	
+
 	public double getMax() {
 		return _max;
 	}
-	
+
 	public static AttributeType getByName(String name) {
 		return _attributes.get(name.toLowerCase());
 	}
-	
+
 	static AttributeType getByInternalName(String name) {
 		return _attributesInternal.get(name);
 	}
-	
+
 	@Override
 	public String toString() {
 		return _name;
 	}
-	
+
 }

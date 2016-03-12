@@ -40,9 +40,9 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 public final class UtilsMc {
-	
+
 	private static HashSet<Byte> NON_SOLID_BLOCK_IDS = new HashSet<Byte>();
-	
+
 	static {
 		NON_SOLID_BLOCK_IDS.add((byte) 0);
 		for (Material mat : Material.values()) {
@@ -51,16 +51,16 @@ public final class UtilsMc {
 			}
 		}
 	}
-	
+
 	private UtilsMc() { }
-	
+
 	public static String parseColors(String str) {
 		return ChatColor.translateAlternateColorCodes('&', str);
 	}
-	
+
 	public static int parseTickDuration(String str) {
 		int duration;
-		try { 
+		try {
 			duration = Integer.parseInt(str);
 		} catch (NumberFormatException e) {
 			duration = Utils.parseTimeDuration(str)*20;
@@ -70,7 +70,7 @@ public final class UtilsMc {
 		}
 		return duration;
 	}
-	
+
 	public static Location airLocation(Location loc) {
 		World world = loc.getWorld();
 		int x = loc.getBlockX();
@@ -82,16 +82,16 @@ public final class UtilsMc {
 		}
 		return new Location(world, x + 0.5, y + 0.2, z + 0.5);
 	}
-	
+
 	public static Block getTargetBlock(Player player) {
 		return getTargetBlock(player, 50);
 	}
-	
+
 	public static Block getTargetBlock(Player player, int distance) {
 		List<Block> blocks = player.getLastTwoTargetBlocks(NON_SOLID_BLOCK_IDS, distance);
 		return blocks.get(blocks.size() - 1);
 	}
-	
+
 	public static ItemStack newWrittenBook(String title, String author) {
 		ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
 		BookMeta meta = (BookMeta) book.getItemMeta();
@@ -100,30 +100,30 @@ public final class UtilsMc {
 		book.setItemMeta(meta);
 		return book;
 	}
-	
+
 	public static void broadcastToWorld(World world, String message) {
 		for (Player player : world.getPlayers()) {
 			player.sendMessage(message);
 		}
 	}
-	
+
 	public static Vector faceToDelta(BlockFace face) {
 		return new Vector(1, 1, 1).add(new Vector(face.getModX(), face.getModY(), face.getModZ())).multiply(0.5);
 	}
-	
+
 	public static Vector faceToDelta(BlockFace face, double distance) {
 		Vector delta = faceToDelta(face);
 		return new Vector(-0.5, -0.5, -0.5).add(delta).normalize().multiply(distance).add(delta);
 	}
-	
+
 	public static ItemStack newSingleItemStack(Material material, String name) {
 		return newSingleItemStack(material, name, (String[]) null);
 	}
-	
+
 	public static ItemStack newSingleItemStack(Material material, String name, String... lore) {
 		return newSingleItemStack(material, name, (lore == null ? null : Arrays.asList(lore)));
 	}
-	
+
 	public static ItemStack newSingleItemStack(Material material, String name, List<String> lore) {
 		ItemStack item = new ItemStack(material, 1);
 		ItemMeta meta = item.getItemMeta();
@@ -132,7 +132,7 @@ public final class UtilsMc {
 		item.setItemMeta(meta);
 		return item;
 	}
-	
+
 	public static Permission getRootPermission(Plugin plugin) {
 		String permName = plugin.getName().toLowerCase() + ".*";
 		Permission perm = Bukkit.getPluginManager().getPermission(permName);
@@ -142,5 +142,5 @@ public final class UtilsMc {
 		}
 		return perm;
 	}
-	
+
 }

@@ -39,14 +39,14 @@ import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 
 public class KingsCrown extends CustomItem {
-	
+
 	private boolean _shouldBroadcastMessage = true;
-	
+
 	public KingsCrown() {
 		super("kings-crown", ChatColor.GOLD + "King's Crown", new MaterialData(Material.GOLD_HELMET));
 		addEnchantment(Enchantment.PROTECTION_FALL, 4);
 	}
-	
+
 	private boolean shouldBroadcastMessage() {
 		if (_shouldBroadcastMessage) {
 			_shouldBroadcastMessage = false;
@@ -61,7 +61,7 @@ public class KingsCrown extends CustomItem {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public void onPickup(PlayerPickupItemEvent event) {
 		PlayerInventory inv = event.getPlayer().getInventory();
@@ -75,28 +75,28 @@ public class KingsCrown extends CustomItem {
 			}
 		}
 	}
-	
+
 	@Override
 	public void onDrop(PlayerDropItemEvent event) {
 		lostCrown(event.getPlayer());
 	}
-	
+
 	@Override
 	public void onDespawn(ItemDespawnEvent event) {
 		if (shouldBroadcastMessage()) {
 			UtilsMc.broadcastToWorld(event.getEntity().getWorld(), MessageFormat.format("The {0}§f has been lost forever!", getName()));
 		}
 	}
-	
+
 	@Override
 	public void onPlayerDeath(PlayerDeathEvent event, PlayerDetails details) {
 		lostCrown(event.getEntity());
 	}
-	
+
 	private void lostCrown(Player player) {
 		if (shouldBroadcastMessage()) {
 			UtilsMc.broadcastToWorld(player.getWorld(), MessageFormat.format("§6{0} §fhas lost his crown!", player.getName(), getName()));
 		}
 	}
-	
+
 }

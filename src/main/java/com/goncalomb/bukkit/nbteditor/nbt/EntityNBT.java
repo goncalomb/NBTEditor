@@ -36,7 +36,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.VectorVariable;
 
 public class EntityNBT extends EntityNBTBase {
-	
+
 	static {
 		registerEntity(EntityType.PIG, BreedNBT.class);
 		registerEntity(EntityType.SHEEP, BreedNBT.class);
@@ -44,15 +44,15 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.CHICKEN, BreedNBT.class);
 		registerEntity(EntityType.MUSHROOM_COW, BreedNBT.class);
 		registerEntity(EntityType.SQUID, MobNBT.class);
-		
+
 		registerEntity(EntityType.WOLF, TamedNBT.class);
 		registerEntity(EntityType.OCELOT, TamedNBT.class);
 		registerEntity(EntityType.HORSE, HorseNBT.class);
-		
+
 		registerEntity(EntityType.VILLAGER, VillagerNBT.class);
 		registerEntity(EntityType.IRON_GOLEM, MobNBT.class);
 		registerEntity(EntityType.SNOWMAN, MobNBT.class);
-		
+
 		registerEntity(EntityType.ZOMBIE, ZombieNBT.class);
 		registerEntity(EntityType.PIG_ZOMBIE, ZombieNBT.class);
 		registerEntity(EntityType.SLIME, SlimeNBT.class);
@@ -75,7 +75,7 @@ public class EntityNBT extends EntityNBTBase {
 
 		registerEntity(EntityType.ENDER_DRAGON, MobNBT.class);
 		registerEntity(EntityType.WITHER, MobNBT.class);
-		
+
 		registerEntity(EntityType.PRIMED_TNT, EntityNBT.class);
 		registerEntity(EntityType.FALLING_BLOCK, FallingBlockNBT.class);
 		registerEntity(EntityType.DROPPED_ITEM, DroppedItemNBT.class);
@@ -95,9 +95,9 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.WITHER_SKULL, FireballNBT.class);
 		registerEntity(EntityType.ARMOR_STAND, EquippableNBT.class);
 		registerEntity(EntityType.AREA_EFFECT_CLOUD, AreaEffectCloudNBT.class);
-		
+
 		registerEntity(EntityType.BOAT, EntityNBT.class);
-		
+
 		registerEntity(EntityType.MINECART, MinecartNBT.class);
 		registerEntity(EntityType.MINECART_CHEST, MinecartContainerNBT.class);
 		registerEntity(EntityType.MINECART_FURNACE, MinecartNBT.class);
@@ -105,10 +105,10 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.MINECART_MOB_SPAWNER, MinecartSpawnerNBT.class);
 		registerEntity(EntityType.MINECART_TNT, MinecartNBT.class);
 		registerEntity(EntityType.MINECART_COMMAND, MinecartCommandNBT.class);
-		
-		
+
+
 		NBTGenericVariableContainer variables = null;
-		
+
 		variables = new NBTGenericVariableContainer("Entity");
 		variables.add("Position", new VectorVariable("Pos", true));
 		variables.add("Velocity", new VectorVariable("Motion"));
@@ -119,96 +119,96 @@ public class EntityNBT extends EntityNBTBase {
 		variables.add("Invulnerable", new BooleanVariable("Invulnerable"));
 		variables.add("Silent", new BooleanVariable("Silent"));
 		registerVariables(EntityNBT.class, variables);
-		
+
 		variables = new NBTGenericVariableContainer("Pig");
 		variables.add("Saddle", new BooleanVariable("Saddle"));
 		registerVariables(EntityType.PIG, variables);
-		
+
 		variables = new NBTGenericVariableContainer("Sheep");
 		variables.add("Sheared", new BooleanVariable("Sheared"));
 		variables.add("Color", new ByteVariable("Color", (byte) 0, (byte) 15));
 		registerVariables(EntityType.SHEEP, variables);
-		
+
 		variables = new NBTGenericVariableContainer("Chicken");
 		variables.add("EggLayTime", new IntegerVariable("EggLayTime"));
 		registerVariables(EntityType.CHICKEN, variables);
-		
+
 		variables = new NBTGenericVariableContainer("Wolf");
 		variables.add("Angry", new BooleanVariable("Angry"));
 		variables.add("CollarColor", new ByteVariable("CollarColor", (byte) 0, (byte) 15));
 		registerVariables(EntityType.WOLF, variables);
-		
+
 		variables = new NBTGenericVariableContainer("Ocelot");
 		variables.add("Type", new IntegerVariable("CatType", 0, 3));
 		registerVariables(EntityType.OCELOT, variables);
-		
-		
+
+
 		variables = new NBTGenericVariableContainer("IronGolem");
 		variables.add("PlayerCreated", new BooleanVariable("PlayerCreated"));
 		registerVariables(EntityType.IRON_GOLEM, variables);
-		
-		
+
+
 		variables = new NBTGenericVariableContainer("PigZombie");
 		variables.add("Anger", new ShortVariable("Anger"));
 		registerVariables(EntityType.PIG_ZOMBIE, variables);
-		
+
 		variables = new NBTGenericVariableContainer("Ghast");
 		variables.add("ExplosionPower", new IntegerVariable("ExplosionPower", 0, 25)); // Limited to 25
 		registerVariables(EntityType.GHAST, variables);
-		
+
 		variables = new NBTGenericVariableContainer("Skeleton");
 		variables.add("IsWither", new BooleanVariable("SkeletonType"));
 		registerVariables(EntityType.SKELETON, variables);
-		
+
 		variables = new NBTGenericVariableContainer("Creeper");
 		variables.add("Powered", new BooleanVariable("powered"));
 		variables.add("ExplosionRadius", new ByteVariable("ExplosionRadius", (byte) 0, (byte) 25)); // Limited to 25
 		variables.add("Fuse", new ShortVariable("Fuse", (short) 0));
 		variables.add("Ignited", new BooleanVariable("ignited"));
 		registerVariables(EntityType.CREEPER, variables);
-		
+
 		variables = new NBTGenericVariableContainer("Enderman");
 		variables.add("Block", new BlockVariable("carried", "carriedData", true));
 		registerVariables(EntityType.ENDERMAN, variables);
-		
+
 		variables = new NBTGenericVariableContainer("Guardian");
 		variables.add("Elder", new BooleanVariable("Elder"));
 		registerVariables(EntityType.GUARDIAN, variables);
-		
+
 		variables = new NBTGenericVariableContainer("Endermite");
 		variables.add("Lifetime", new IntegerVariable("Lifetime"));
 		variables.add("PlayerSpawned", new BooleanVariable("PlayerSpawned"));
 		registerVariables(EntityType.ENDERMITE, variables);
-		
+
 		variables = new NBTGenericVariableContainer("Rabbit");
 		variables.add("Type", new IntegerVariable("RabbitType", 0, 99));
 		registerVariables(EntityType.RABBIT, variables);
-		
-		
+
+
 		variables = new NBTGenericVariableContainer("Wither");
 		variables.add("InvulnerableTime", new IntegerVariable("Invul", 0));
 		registerVariables(EntityType.WITHER, variables);
-		
-		
+
+
 		variables = new NBTGenericVariableContainer("PrimedTNT");
 		variables.add("Fuse", new ByteVariable("Fuse", (byte) 0));
 		registerVariables(EntityType.PRIMED_TNT, variables);
-		
-		
+
+
 		variables = new NBTGenericVariableContainer("Arrow");
 		variables.add("Pickup", new ByteVariable("pickup", (byte) 0, (byte) 2));
 		variables.add("Player", new BooleanVariable("player"));
 		variables.add("Damage", new DoubleVariable("damage"));
 		registerVariables(EntityType.ARROW, variables);
-		
+
 		variables = new NBTGenericVariableContainer("Enderpearl");
 		variables.add("Owner", new StringVariable("ownerName"));
 		registerVariables(EntityType.ENDER_PEARL, variables);
-		
+
 		variables = new NBTGenericVariableContainer("LargeFireball");
 		variables.add("ExplosionPower", new IntegerVariable("ExplosionPower", 0, 25)); // Limited to 25
 		registerVariables(EntityType.FIREBALL, variables);
-		
+
 		variables = new NBTGenericVariableContainer("ArmorStand");
 		variables.add("Marker", new BooleanVariable("Marker"));
 		variables.add("Invisible", new BooleanVariable("Invisible"));
@@ -223,33 +223,33 @@ public class EntityNBT extends EntityNBTBase {
 		variables.add("PoseRightLeg", new RotationVariable("RightLeg", true, "Pose"));
 		variables.add("PoseHead", new RotationVariable("Head", true, "Pose"));
 		registerVariables(EntityType.ARMOR_STAND, variables);
-		
+
 	}
-	
+
 	protected EntityNBT() {
 		this(null);
 	}
-	
+
 	protected EntityNBT(EntityType entityType) {
 		super(entityType);
 	}
-	
+
 	public void setPos(double x, double y, double z) {
 		_data.setList("Pos", x, y, z);
 	}
-	
+
 	public void removePos() {
 		_data.remove("Pos");
 	}
-	
+
 	public void setMotion(double x, double y, double z) {
 		_data.setList("Motion", x, y, z);
 	}
-	
+
 	public void removeMotion() {
 		_data.remove("Motion");
 	}
-	
+
 	public EntityNBT getRiding() {
 		NBTTagCompound ridingData = _data.getCompound("Riding");
 		if (ridingData != null) {
@@ -257,7 +257,7 @@ public class EntityNBT extends EntityNBTBase {
 		}
 		return null;
 	}
-	
+
 	public void setRiding(EntityNBT... riding) {
 		if (riding == null || riding.length == 0) {
 			_data.remove("Riding");
@@ -270,5 +270,5 @@ public class EntityNBT extends EntityNBTBase {
 			rider = rideData;
 		}
 	}
-	
+
 }

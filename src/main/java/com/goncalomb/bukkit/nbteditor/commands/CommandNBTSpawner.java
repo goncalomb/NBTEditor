@@ -46,11 +46,11 @@ import com.goncalomb.bukkit.nbteditor.nbt.SpawnerNBTWrapper;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 
 public class CommandNBTSpawner extends MyCommand {
-	
+
 	public CommandNBTSpawner() {
 		super("nbtspawner", "nbts");
 	}
-	
+
 	private static SpawnerNBTWrapper getSpawner(Player player) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock(player, 5);
 		if (block.getType() != Material.MOB_SPAWNER) {
@@ -58,7 +58,7 @@ public class CommandNBTSpawner extends MyCommand {
 		}
 		return new SpawnerNBTWrapper(block);
 	}
-	
+
 	private static int parseWeight(String[] args, int index) throws MyCommandException {
 		if (args.length > index) {
 			int weight = Utils.parseInt(args[index], -1);
@@ -69,7 +69,7 @@ public class CommandNBTSpawner extends MyCommand {
 		}
 		return 1;
 	}
-	
+
 	private static int parseIndex(String str, List<SpawnerEntityNBT> entities) throws MyCommandException {
 		int index = Utils.parseInt(str, -1);
 		if (index < 1) {
@@ -79,7 +79,7 @@ public class CommandNBTSpawner extends MyCommand {
 		}
 		return index;
 	}
-	
+
 	@Command(args = "info", type = CommandType.PLAYER_ONLY)
 	public boolean infoCommand(CommandSender sender, String[] args) throws MyCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
@@ -95,7 +95,7 @@ public class CommandNBTSpawner extends MyCommand {
 		}
 		return true;
 	}
-	
+
 	@Command(args = "var", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<variable> [value]")
 	public boolean varCommand(CommandSender sender, String[] args) throws MyCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
@@ -120,12 +120,12 @@ public class CommandNBTSpawner extends MyCommand {
 		sender.sendMessage("§7Variables: " + StringUtils.join(spawner.getVariables().getVarNames(), ", "));
 		return false;
 	}
-	
+
 	@TabComplete(args = "var")
 	public List<String> var_tab(CommandSender sender, String[] args) {
 		return (args.length == 1 ? Utils.getElementsWithPrefix(SpawnerNBTWrapper.variableNames(), args[0], true) : null);
 	}
-	
+
 	@Command(args = "add", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<entity> [weight]")
 	public boolean addCommand(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length >= 1) {
@@ -143,12 +143,12 @@ public class CommandNBTSpawner extends MyCommand {
 		sender.sendMessage("§7Entities: " + EntityTypeMap.getLivingNamesAsString());
 		return false;
 	}
-	
+
 	@TabComplete(args = "add")
 	public List<String> add_tab(CommandSender sender, String[] args) {
 		return (args.length == 1 ? Utils.getElementsWithPrefix(EntityTypeMap.getLivingNames(), args[0]) : null);
 	}
-	
+
 	@Command(args = "additem", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "[weight]")
 	public boolean additemCommand(CommandSender sender, String[] args) throws MyCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
@@ -182,7 +182,7 @@ public class CommandNBTSpawner extends MyCommand {
 		}
 		return true;
 	}
-	
+
 	@Command(args = "del", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<index>")
 	public boolean delCommand(CommandSender sender, String[] args) throws MyCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
@@ -192,7 +192,7 @@ public class CommandNBTSpawner extends MyCommand {
 		sender.sendMessage("§aEntity removed.");
 		return true;
 	}
-	
+
 	@Command(args = "setpos", type = CommandType.PLAYER_ONLY, minargs = 3, maxargs = 4, usage = "<x> <y> <z> [index]")
 	public boolean setposCommand(CommandSender sender, String[] args) throws MyCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
@@ -220,7 +220,7 @@ public class CommandNBTSpawner extends MyCommand {
 		spawner.save();
 		return true;
 	}
-	
+
 	@Command(args = "clear", type = CommandType.PLAYER_ONLY)
 	public boolean clearCommand(CommandSender sender, String[] args) throws MyCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
@@ -229,7 +229,7 @@ public class CommandNBTSpawner extends MyCommand {
 		sender.sendMessage("§aEntities cleared.");
 		return true;
 	}
-	
+
 	@Command(args = "see", type = CommandType.PLAYER_ONLY)
 	public boolean seeCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Player player = (Player) sender;
@@ -237,7 +237,7 @@ public class CommandNBTSpawner extends MyCommand {
 		(new InventoryForSpawnerEntities(player, spawner)).openInventory(player, getOwner());
 		return true;
 	}
-	
+
 	@Command(args = "copy", type = CommandType.PLAYER_ONLY)
 	public boolean copyCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Player player = (Player) sender;
@@ -246,7 +246,7 @@ public class CommandNBTSpawner extends MyCommand {
 		sender.sendMessage("§aSpawner copied.");
 		return true;
 	}
-	
+
 	@Command(args = "paste", type = CommandType.PLAYER_ONLY)
 	public boolean pasteCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Player player = (Player) sender;
@@ -260,5 +260,5 @@ public class CommandNBTSpawner extends MyCommand {
 		}
 		return true;
 	}
-	
+
 }

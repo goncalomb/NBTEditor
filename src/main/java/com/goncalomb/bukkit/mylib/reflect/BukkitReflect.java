@@ -29,16 +29,16 @@ import org.bukkit.Material;
 import org.bukkit.command.SimpleCommandMap;
 
 public final class BukkitReflect {
-	
+
 	private final static class CachedPackage {
-		
+
 		private String _packageName;
 		private HashMap<String, Class<?>> _cache = new HashMap<String, Class<?>>();
-		
+
 		public CachedPackage(String packageName) {
 			_packageName = packageName;
 		}
-		
+
 		public Class<?> getClass(String className) {
 			Class <?> clazz = _cache.get(className);
 			if (clazz == null) {
@@ -51,20 +51,20 @@ public final class BukkitReflect {
 			}
 			return clazz;
 		}
-		
+
 	}
-	
+
 	private static boolean _isPrepared = false;
-	
+
 	private static CachedPackage _craftBukkitPackage;
 	private static CachedPackage _minecraftPackage;
-	
+
 	private static Method _getCommandMap;
-	
+
 	private static Field _Item_REGISTRY;
 	private static Method _Item_getById; // Get Item instance from id.
 	private static Method _RegistryMaterials_b; // Get item name from Item instance.
-	
+
 	public static void prepareReflection() {
 		if (!_isPrepared) {
 			Class<?> craftServerClass = Bukkit.getServer().getClass();
@@ -76,9 +76,9 @@ public final class BukkitReflect {
 			} catch (NoSuchMethodException e) {
 				throw new RuntimeException("Cannot find the required methods on the server class.", e);
 			}
-			
+
 			_isPrepared = true;
-			
+
 			try {
 				Class<?> minecraftItemClass = getMinecraftClass("Item");
 				_Item_REGISTRY = minecraftItemClass.getField("REGISTRY");
@@ -89,24 +89,24 @@ public final class BukkitReflect {
 			}
 		}
 	}
-	
+
 	private BukkitReflect() { }
-	
+
 	public static Class<?> getCraftBukkitClass(String className) {
 		prepareReflection();
 		return _craftBukkitPackage.getClass(className);
 	}
-	
+
 	public static Class<?> getMinecraftClass(String className) {
 		prepareReflection();
 		return _minecraftPackage.getClass(className);
 	}
-	
+
 	public static SimpleCommandMap getCommandMap() {
 		prepareReflection();
 		return (SimpleCommandMap) invokeMethod(Bukkit.getServer(), _getCommandMap);
 	}
-	
+
 	public static String getMaterialName(Material material) {
 		try {
 			Object item = _Item_getById.invoke(null, material.getId());
@@ -117,9 +117,9 @@ public final class BukkitReflect {
 		} catch (Exception e) { }
 		return "minecraft:air";
 	}
-	
+
 	// Other helper methods...
-	
+
 	static Object invokeMethod(Object object, Method method, Object... args) {
 		try {
 			return method.invoke(object, args);
@@ -127,7 +127,7 @@ public final class BukkitReflect {
 			throw new RuntimeException("Error while invoking " + method.getName() + ".", e);
 		}
 	}
-	
+
 	static Object getFieldValue(Object object, Field field) {
 		try {
 			return field.get(object);
@@ -135,7 +135,7 @@ public final class BukkitReflect {
 			throw new RuntimeException("Error while getting field value " + field.getName() + " of class " + field.getDeclaringClass().getName() + ".", e);
 		}
 	}
-	
+
 	static void setFieldValue(Object object, Field field, Object value) {
 		try {
 			field.set(object, value);
@@ -143,7 +143,7 @@ public final class BukkitReflect {
 			throw new RuntimeException("Error while setting field value " + field.getName() + " of class " + field.getDeclaringClass().getName() + ".", e);
 		}
 	}
-	
+
 	static Object newInstance(Class<?> clazz) {
 		try {
 			return clazz.newInstance();
@@ -151,7 +151,7 @@ public final class BukkitReflect {
 			throw new RuntimeException("Error creating instance of " + clazz.getName() + ".", e);
 		}
 	}
-	
+
 	static Object newInstance(Constructor<?> contructor, Object... initargs) {
 		try {
 			return contructor.newInstance(initargs);
@@ -159,5 +159,5 @@ public final class BukkitReflect {
 			throw new RuntimeException("Error creating instance of " + contructor.getDeclaringClass().getName() + ".", e);
 		}
 	}
-	
+
 }

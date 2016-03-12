@@ -25,48 +25,48 @@ import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public class SpawnerEntityNBT {
-	
+
 	private int _weight;
 	private EntityNBT _entityNbt;
 
 	public static boolean isValidCreature(String name) {
 		return EntityType.fromName(name).isAlive();
 	}
-	
+
 	public SpawnerEntityNBT(EntityType entityType)  {
 		this(entityType, 1);
 	}
-	
+
 	public SpawnerEntityNBT(EntityType entityType, int weight) {
 		_weight = weight;
 		_entityNbt = EntityNBT.fromEntityType(entityType);
 	}
-	
+
 	public SpawnerEntityNBT(EntityNBT entityNbt) {
 		this(entityNbt, 1);
 	}
-	
+
 	public SpawnerEntityNBT(EntityNBT entityNbt, int weight) {
 		_weight = weight;
 		_entityNbt = entityNbt;
 	}
-	
+
 	public int getWeight() {
 		return _weight;
 	}
-	
+
 	public EntityNBT getEntityNBT() {
 		return _entityNbt;
 	}
-	
+
 	public EntityType getEntityType() {
 		return _entityNbt.getEntityType();
 	}
-	
+
 	public SpawnerEntityNBT clone() {
 		return new SpawnerEntityNBT(_entityNbt.clone(), _weight);
 	}
-	
+
 	NBTTagCompound buildTagCompound() {
 		NBTTagCompound data = new  NBTTagCompound();
 		data.setInt("Weight", _weight);
@@ -74,5 +74,5 @@ public class SpawnerEntityNBT {
 		data.setCompound("Properties", _entityNbt._data);
 		return data;
 	}
-	
+
 }

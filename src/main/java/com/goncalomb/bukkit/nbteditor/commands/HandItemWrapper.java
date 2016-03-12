@@ -30,33 +30,33 @@ import org.bukkit.inventory.meta.PotionMeta;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 
 public abstract class HandItemWrapper<T extends ItemMeta> {
-	
+
 	public static final class Item extends HandItemWrapper<ItemMeta> {
-		
+
 		public Item(Player player) throws MyCommandException {
 			super(ItemMeta.class, player);
 			if (meta == null) {
 				throw new MyCommandException("§cYou must be holding an Item.");
 			}
 		}
-		
+
 	}
-	
+
 	public static final class Potion extends HandItemWrapper<PotionMeta> {
-		
+
 		public Potion(Player player) throws MyCommandException {
 			super(PotionMeta.class, player);
 			if (meta == null) {
 				throw new MyCommandException("§cYou must be holding a Potion.");
 			}
 		}
-		
+
 	}
-	
+
 	public static final class Book extends HandItemWrapper<BookMeta> {
-		
+
 		public static enum BookType { BOTH, BOOK_AND_QUILL, WRITTEN }
-		
+
 		public Book(Player player, BookType bookType) throws MyCommandException {
 			super(BookMeta.class, player);
 			if ((meta == null || item.getType() != Material.BOOK_AND_QUILL) && bookType == BookType.BOOK_AND_QUILL) {
@@ -67,23 +67,23 @@ public abstract class HandItemWrapper<T extends ItemMeta> {
 				throw new MyCommandException("§cYou must be holding a Book and Quill or a Written Book.");
 			}
 		}
-		
+
 	}
-	
+
 	public static final class LeatherArmor extends HandItemWrapper<LeatherArmorMeta> {
-		
+
 		public LeatherArmor(Player player) throws MyCommandException {
 			super(LeatherArmorMeta.class, player);
 			if (meta == null) {
 				throw new MyCommandException("§cYou must be holding Leather Armor.");
 			}
 		}
-		
+
 	}
-	
+
 	public final ItemStack item;
 	public final T meta;
-	
+
 	@SuppressWarnings("unchecked")
 	private HandItemWrapper(Class<T> clazz, Player player) {
 		item = player.getItemInHand();
@@ -96,9 +96,9 @@ public abstract class HandItemWrapper<T extends ItemMeta> {
 		}
 		meta = null;
 	}
-	
+
 	public void save() {
 		item.setItemMeta(meta);
 	}
-	
+
 }

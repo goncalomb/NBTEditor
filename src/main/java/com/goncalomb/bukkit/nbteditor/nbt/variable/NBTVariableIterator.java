@@ -26,27 +26,27 @@ import java.util.Map.Entry;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public final class NBTVariableIterator implements Iterator<NBTVariable> {
-	
+
 	Iterator<Entry<String, NBTGenericVariable>> _state;
 	NBTTagCompound _data;
 	String _separator;
-	
+
 	NBTVariableIterator(LinkedHashMap<String, NBTGenericVariable> hashMap, NBTTagCompound data) {
 		_state = hashMap.entrySet().iterator();
 		_data = data;
 	}
-	
+
 	public boolean hasNext() {
 		return _state.hasNext();
 	}
-	
+
 	public NBTVariable next() {
 		Entry<String, NBTGenericVariable> entry = _state.next();
 		return new NBTVariable(entry.getKey(), entry.getValue(), _data);
 	}
-	
+
 	public void remove() {
 		throw new UnsupportedOperationException("Cannot remove NBTVariables.");
 	}
-	
+
 }

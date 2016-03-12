@@ -53,13 +53,13 @@ public abstract class CustomItem {
 	private String _name;
 	private MaterialData _material;
 	private ItemStack _item;
-	
+
 	LinkedHashMap<String, Object> _defaultConfig = new LinkedHashMap<String, Object>();
-	
+
 	private boolean _enabled;
 	private HashSet<String> _allowedWorlds = new HashSet<String>();
 	private HashSet<String> _blockedWorlds = new HashSet<String>();
-	
+
 	protected CustomItem(String slug, String name, MaterialData material) {
 		_slug = slug;
 		_name = name;
@@ -74,15 +74,15 @@ public abstract class CustomItem {
 		setDefaultConfig("allowed-worlds", new ArrayList<String>());
 		setDefaultConfig("blocked-worlds", new ArrayList<String>());
 	}
-	
+
 	protected final void setLore(List<String> lore) {
 		setDefaultConfig("lore", lore);
 	}
-	
+
 	protected final void setLore(String... lore) {
 		setDefaultConfig("lore", Arrays.asList(lore));
 	}
-	
+
 	protected final void addEnchantment(Enchantment enchantment, int level) {
 		if (_owner == null) {
 			ItemMeta meta = _item.getItemMeta();
@@ -90,41 +90,41 @@ public abstract class CustomItem {
 			_item.setItemMeta(meta);
 		}
 	}
-	
+
 	protected final void setDefaultConfig(String name, Object value) {
 		if (_owner == null) {
 			_defaultConfig.put(name, value);
 		}
 	}
-	
+
 	public final Plugin getPlugin() {
 		return _owner;
 	}
-	
+
 	public final String getGroup() {
 		return _group;
 	}
-	
+
 	public final String getSlug() {
 		return _slug;
 	}
-	
+
 	public final String getName() {
 		return _name;
 	}
-	
+
 	public final MaterialData getMaterial() {
 		return _material;
 	}
-	
+
 	public ItemStack getItem() {
 		return _item.clone();
 	}
-	
+
 	protected void applyConfig(ConfigurationSection section) {
 		_enabled = section.getBoolean("enabled");
 		_name = section.getString("name");
-		
+
 		ItemMeta meta = _item.getItemMeta();
 		if (meta instanceof BookMeta) {
 			((BookMeta) meta).setTitle(_name);
@@ -133,7 +133,7 @@ public abstract class CustomItem {
 		}
 		meta.setLore(section.getStringList("lore"));
 		_item.setItemMeta(meta);
-		
+
 		List<String> allowedWorlds = section.getStringList("allowed-worlds");
 		if (allowedWorlds == null || allowedWorlds.size() == 0) {
 			List<String> blockedWorlds = section.getStringList("blocked-worlds");
@@ -143,35 +143,35 @@ public abstract class CustomItem {
 			_allowedWorlds = new HashSet<String>(allowedWorlds);
 		}
 	};
-	
+
 	public void onLeftClick(PlayerInteractEvent event, PlayerDetails details) { };
-	
+
 	public void onRightClick(PlayerInteractEvent event, PlayerDetails details) { };
-	
+
 	public void onBlockBreak(BlockBreakEvent event, PlayerDetails details) { };
-	
+
 	public void onAttack(EntityDamageByEntityEvent event, PlayerDetails details) { }
-	
+
 	public void onInteractEntity(PlayerInteractEntityEvent event, PlayerDetails details) { };
-	
+
 	public void onInteractAtEntity(PlayerInteractAtEntityEvent event, PlayerDetails details) { };
-	
+
 	public void onPickup(PlayerPickupItemEvent event) { };
-	
+
 	public void onDrop(PlayerDropItemEvent event) { };
-	
+
 	public void onDespawn(ItemDespawnEvent event) { };
-	
+
 	public void onDropperPickup(InventoryPickupItemEvent event) { };
-	
+
 	public void onDispense(BlockDispenseEvent event, DispenserDetails details) { };
-	
+
 	public void onPlayerDeath(PlayerDeathEvent event, PlayerDetails details) { };
-	
+
 	public final boolean isEnabled() {
 		return _enabled;
 	}
-	
+
 	public final boolean isValidWorld(World world) {
 		String wName = world.getName();
 		if (_allowedWorlds == null) {
@@ -180,7 +180,7 @@ public abstract class CustomItem {
 			return _allowedWorlds.contains(wName);
 		}
 	}
-	
+
 	static String getItemName(ItemStack item) {
 		if (item != null) {
 			ItemMeta meta = item.getItemMeta();

@@ -29,18 +29,18 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 
 public final class FireworkNBT extends EntityNBT implements SingleItemBasedNBT {
-	
+
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Firework");
 		variables.add("Life", new IntegerVariable("Life", 0, 200)); // Limited to 200
 		variables.add("Lifetime", new IntegerVariable("LifeTime", 0, 200)); // Limited to 200
 		registerVariables(FireworkNBT.class, variables);
 	}
-	
+
 	public FireworkNBT() {
 		super(EntityType.FIREWORK);
 	}
-	
+
 	public FireworkNBT(ItemStack firework) {
 		this();
 		if (firework.getType() != Material.FIREWORK) throw new IllegalArgumentException("Invalid argument firework.");
@@ -48,7 +48,7 @@ public final class FireworkNBT extends EntityNBT implements SingleItemBasedNBT {
 		_data.setCompound("FireworksItem", NBTUtils.itemStackToNBTData(firework));
 		setLifeTimeFromItem(firework);
 	}
-	
+
 	private void setLifeTimeFromItem(ItemStack firework) {
 		if (firework == null) {
 			_data.remove("FireworksItem");
@@ -56,7 +56,7 @@ public final class FireworkNBT extends EntityNBT implements SingleItemBasedNBT {
 			_data.setInt("LifeTime", 12 + 12 * ((FireworkMeta) firework.getItemMeta()).getPower());
 		}
 	}
-	
+
 	public void setItem(ItemStack firework) {
 		if (firework == null) {
 			_data.remove("FireworksItem");
@@ -65,16 +65,16 @@ public final class FireworkNBT extends EntityNBT implements SingleItemBasedNBT {
 		}
 		setLifeTimeFromItem(firework);
 	}
-	
+
 	public ItemStack getItem() {
 		if (_data.hasKey("FireworksItem")) {
 			return NBTUtils.itemStackFromNBTData(_data.getCompound("FireworksItem"));
 		}
 		return null;
 	}
-	
+
 	public boolean isSet() {
 		return _data.hasKey("FireworksItem");
 	}
-	
+
 }

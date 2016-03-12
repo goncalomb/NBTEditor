@@ -25,9 +25,9 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
 public class EquippableNBT extends EntityNBT {
-	
+
 	private ItemStack[] _equipment;
-	
+
 	public void setEquipment(ItemStack hand, ItemStack feet, ItemStack legs, ItemStack chest, ItemStack head) {
 		if (hand == null && feet == null && legs == null && chest == null && head == null) {
 			clearEquipment();
@@ -44,7 +44,7 @@ public class EquippableNBT extends EntityNBT {
 		}
 		_data.setList("Equipment", equipmentData);
 	}
-	
+
 	public ItemStack[] getEquipment() {
 		if (_equipment == null) {
 			_equipment = new ItemStack[5];
@@ -57,7 +57,7 @@ public class EquippableNBT extends EntityNBT {
 		}
 		return _equipment;
 	}
-	
+
 	public void clearEquipment() {
 		_data.remove("Equipment");
 		_equipment = null;

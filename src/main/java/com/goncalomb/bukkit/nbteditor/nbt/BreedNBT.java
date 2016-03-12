@@ -23,12 +23,12 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 
 public class BreedNBT extends MobNBT {
-	
+
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Breed");
 		variables.add("InLove", new IntegerVariable("InLove", 0));
 		variables.add("Age", new IntegerVariable("Age"));
 		registerVariables(BreedNBT.class, variables);
 	}
-	
+
 }

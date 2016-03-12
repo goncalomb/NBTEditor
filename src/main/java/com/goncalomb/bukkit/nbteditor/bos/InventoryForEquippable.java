@@ -29,7 +29,7 @@ import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.nbteditor.nbt.EquippableNBT;
 
 public class InventoryForEquippable<T extends EquippableNBT> extends InventoryForBos<T> {
-	
+
 	private static ItemStack[] placeholders = new ItemStack[] {
 		createPlaceholder(Material.PAPER, "§6Head Equipment"),
 		createPlaceholder(Material.PAPER, "§6Chest Equipment"),
@@ -37,7 +37,7 @@ public class InventoryForEquippable<T extends EquippableNBT> extends InventoryFo
 		createPlaceholder(Material.PAPER, "§6Feet Equipment"),
 		createPlaceholder(Material.PAPER, "§6Hand Item")
 	};
-	
+
 	public InventoryForEquippable(BookOfSouls bos, Player owner) {
 		super(bos, owner, 9, "Inventory" + " - " + ChatColor.BLACK + EntityTypeMap.getName(bos.getEntityNBT().getEntityType()));
 		ItemStack[] equip = _entityNbt.getEquipment();

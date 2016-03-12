@@ -38,19 +38,19 @@ public class CommandItemStorage extends MyCommand {
 	public CommandItemStorage() {
 		super("itemstorage", "is");
 	}
-	
+
 	private static void validateName(String name) throws MyCommandException {
 		if (!ItemStorage.isValidName(name)) {
 			throw new MyCommandException("§cInvalid name. Use [0-9a-zA-Z_-], 64 characters max.");
 		}
 	}
-	
+
 	private static void checkItemExistance(String name) throws MyCommandException {
 		if (!ItemStorage.existsItem(name)) {
 			throw new MyCommandException("§cThat item does not exist.");
 		}
 	}
-	
+
 	@Command(args = "store", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<name>")
 	public boolean command_store(CommandSender sender, String[] args) throws MyCommandException {
 		ItemStack item = ((Player) sender).getItemInHand();
@@ -66,7 +66,7 @@ public class CommandItemStorage extends MyCommand {
 		}
 		return true;
 	}
-	
+
 	@Command(args = "get", type = CommandType.DEFAULT, minargs = 1, maxargs = 2, usage = "<name> [player]")
 	public boolean command_get(CommandSender sender, String[] args) throws MyCommandException {
 		validateName(args[0]);
@@ -84,7 +84,7 @@ public class CommandItemStorage extends MyCommand {
 		sender.sendMessage("§aDone.");
 		return true;
 	}
-	
+
 	@TabComplete(args = "get")
 	public List<String> tabcomplete_get(CommandSender sender, String[] args) {
 		if (args.length == 1) {
@@ -92,7 +92,7 @@ public class CommandItemStorage extends MyCommand {
 		}
 		return CommandUtils.playerTabComplete(sender, args[1]);
 	}
-	
+
 	@Command(args = "info", type = CommandType.DEFAULT, minargs = 1, usage = "<name>")
 	public boolean command_info(CommandSender sender, String[] args) throws MyCommandException {
 		validateName(args[0]);
@@ -100,12 +100,12 @@ public class CommandItemStorage extends MyCommand {
 		ItemUtils.sendItemStackInformation(ItemStorage.getItem(args[0]), sender);
 		return true;
 	}
-	
+
 	@TabComplete(args = "info")
 	public List<String> tabcomplete_info(CommandSender sender, String[] args) {
 		return Utils.getElementsWithPrefix(ItemStorage.listItems(), args[0]);
 	}
-	
+
 	@Command(args = "update", type = CommandType.DEFAULT, minargs = 1, usage = "<name>")
 	public boolean command_update(CommandSender sender, String[] args) throws MyCommandException {
 		ItemStack item = ((Player) sender).getItemInHand();
@@ -133,12 +133,12 @@ public class CommandItemStorage extends MyCommand {
 		}
 		return true;
 	}
-	
+
 	@TabComplete(args = "update")
 	public List<String> tabcomplete_update(CommandSender sender, String[] args) {
 		return Utils.getElementsWithPrefix(ItemStorage.listItems(), args[0]);
 	}
-	
+
 	@Command(args = "remove", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<name>")
 	public boolean command_remove(CommandSender sender, String[] args) throws MyCommandException {
 		validateName(args[0]);
@@ -147,16 +147,16 @@ public class CommandItemStorage extends MyCommand {
 		sender.sendMessage("§aRemoved.");
 		return true;
 	}
-	
+
 	@TabComplete(args = "remove")
 	public List<String> tabcomplete_remove(CommandSender sender, String[] args) {
 		return Utils.getElementsWithPrefix(ItemStorage.listItems(), args[0]);
 	}
-	
+
 	@Command(args = "list", type = CommandType.PLAYER_ONLY)
 	public boolean command_list(CommandSender sender, String[] args) throws MyCommandException {
 		sender.sendMessage("§7Stored items: " + StringUtils.join(ItemStorage.listItems(), ", "));
 		return true;
 	}
-	
+
 }

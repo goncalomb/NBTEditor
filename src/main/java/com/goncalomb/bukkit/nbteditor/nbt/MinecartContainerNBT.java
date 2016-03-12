@@ -28,7 +28,7 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
 public class MinecartContainerNBT extends MinecartNBT {
-	
+
 	public void setItemsFromInventory(Inventory inventory) {
 		int l = Math.min(inventory.getSize(), getInventorySize());
 		NBTTagList items = new NBTTagList();
@@ -42,7 +42,7 @@ public class MinecartContainerNBT extends MinecartNBT {
 		}
 		_data.setList("Items", items);
 	}
-	
+
 	public void setItemsToInventory(Inventory inventory) {
 		inventory.clear();
 		if (_data.hasKey("Items")) {
@@ -54,7 +54,7 @@ public class MinecartContainerNBT extends MinecartNBT {
 			}
 		}
 	}
-	
+
 	public int getInventorySize() {
 		if (getEntityType() == EntityType.MINECART_CHEST) {
 			return 27;
@@ -63,5 +63,5 @@ public class MinecartContainerNBT extends MinecartNBT {
 		}
 		return 0;
 	}
-	
+
 }

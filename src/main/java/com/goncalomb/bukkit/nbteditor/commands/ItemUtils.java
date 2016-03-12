@@ -42,7 +42,7 @@ import com.goncalomb.bukkit.mylib.namemaps.PotionEffectsMap;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.ItemModifier;
 
 public class ItemUtils {
-	
+
 	public static void sendItemStackInformation(ItemStack stack, CommandSender sender) {
 		ItemMeta meta = stack.getItemMeta();
 		sender.sendMessage("§eItem information:");
@@ -103,7 +103,7 @@ public class ItemUtils {
 			}
 		}
 	}
-	
+
 	private ItemUtils() { }
-	
+
 }

@@ -34,9 +34,9 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 public final class RepulsionBomb extends RadiusBomb {
-	
+
 	private double _force;
-	
+
 	public RepulsionBomb() {
 		super("repulsion-bomb", ChatColor.YELLOW + "Repulsion Bomb", new MaterialData(Material.COAL));
 		setLore("§bLeft-click to throw the bomb.",
@@ -45,18 +45,18 @@ public final class RepulsionBomb extends RadiusBomb {
 		setDefaultConfig("radius", 11);
 		setDefaultConfig("force", 1.8d);
 	}
-	
+
 	@Override
 	public void applyConfig(ConfigurationSection section) {
 		super.applyConfig(section);
 		_force = section.getDouble("force");
 	}
-	
+
 	@Override
 	public void onTrigger(Item item) {
 		item.setFireTicks(50);
 	}
-	
+
 	@Override
 	public void onExplode(Item item, Location location) {
 		World world = location.getWorld();

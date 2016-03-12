@@ -31,11 +31,11 @@ import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 
 public class CommandNBTHead extends MyCommand {
-	
+
 	public CommandNBTHead() {
 		super("nbthead", "nbth");
 	}
-	
+
 	@Command(args = "", type = CommandType.DEFAULT, minargs = 1, maxargs = 2, usage = "<skull-player-name> [player-name]")
 	public boolean headCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Player other;
@@ -58,7 +58,7 @@ public class CommandNBTHead extends MyCommand {
 		}
 		return true;
 	}
-	
+
 	@TabComplete(args = "")
 	public List<String> tab(CommandSender sender, String[] args) {
 		return CommandUtils.playerTabComplete(sender, args[args.length - 1]);

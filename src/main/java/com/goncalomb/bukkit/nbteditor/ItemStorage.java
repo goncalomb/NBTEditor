@@ -34,20 +34,20 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
 public final class ItemStorage {
-	
+
 	private static File _dataFolder;
-	
+
 	static void setDataFolder(File dataFolder) {
 		if (_dataFolder == null) {
 			_dataFolder = dataFolder;
 			_dataFolder.mkdirs();
 		}
 	}
-	
+
 	public static boolean isValidName(String name) {
 		return name.matches("^[0-9a-zA-Z\\-_]{1,64}$");
 	}
-	
+
 	public static boolean addItem(ItemStack item, String name) {
 		_dataFolder.mkdirs();
 		File file = new File(_dataFolder, name + ".dat");
@@ -65,7 +65,7 @@ public final class ItemStorage {
 		}
 		return false;
 	}
-	
+
 	public static ItemStack getItem(String name) {
 		File file = new File(_dataFolder, name + ".dat");
 		if (file.exists()) {
@@ -81,11 +81,11 @@ public final class ItemStorage {
 		}
 		return null;
 	}
-	
+
 	public static boolean existsItem(String name) {
 		return (new File(_dataFolder, name + ".dat")).exists();
 	}
-	
+
 	public static boolean removeItem(String name) {
 		File file = new File(_dataFolder, name + ".dat");
 		if (file.exists()) {
@@ -93,7 +93,7 @@ public final class ItemStorage {
 		}
 		return false;
 	}
-	
+
 	public static List<String> listItems() {
 		List<String> names = new ArrayList<String>();
 		Pattern pattern = Pattern.compile("^([0-9a-zA-Z\\-_]{1,64})\\.dat$");
@@ -109,5 +109,5 @@ public final class ItemStorage {
 		Collections.sort(names, String.CASE_INSENSITIVE_ORDER);
 		return Collections.unmodifiableList(names);
 	}
-	
+
 }

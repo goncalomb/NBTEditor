@@ -29,7 +29,7 @@ import org.junit.Test;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 
 public class TestBosEntities {
-	
+
 	@Test
 	public void testBosEntities() {
 		HashSet<EntityType> entityTypes = new HashSet<EntityType>();

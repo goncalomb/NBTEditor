@@ -28,7 +28,7 @@ import org.bukkit.entity.Player;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public final class VectorVariable extends NBTGenericVariable{
-	
+
 	private boolean _allowHere;
 
 	public VectorVariable(String nbtKey) {
@@ -39,7 +39,7 @@ public final class VectorVariable extends NBTGenericVariable{
 		super(nbtKey);
 		_allowHere = allowHere;
 	}
-	
+
 	boolean set(NBTTagCompound data, String value, Player player) {
 		if (_allowHere && player != null) {
 			if (value.equalsIgnoreCase("Here")) {
@@ -68,7 +68,7 @@ public final class VectorVariable extends NBTGenericVariable{
 		}
 		return false;
 	}
-	
+
 	String get(NBTTagCompound data) {
 		if (data.hasKey(_nbtKey)) {
 			Object[] vector = data.getListAsArray(_nbtKey);
@@ -76,19 +76,19 @@ public final class VectorVariable extends NBTGenericVariable{
 		}
 		return null;
 	}
-	
+
 	String getFormat() {
 		if (_allowHere) {
 			return "Set of 3 decimal numbers, '0.00 0.00 0.00'. Use 'Here' or 'HereExact' to set with your current position.";
 		}
 		return "Set of 3 decimal numbers, '0.00 0.00 0.00'.";
 	}
-	
+
 	public List<String> getPossibleValues() {
 		if (_allowHere) {
 			return Arrays.asList(new String[] { "Here", "HereExact" });
 		}
 		return null;
 	}
-	
+
 }

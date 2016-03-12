@@ -38,7 +38,7 @@ import org.bukkit.util.Vector;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 
 public final class FireBomb extends RadiusBomb {
-	
+
 	public FireBomb() {
 		super("fire-bomb", ChatColor.RED + "Fire Bomb", new MaterialData(Material.FIREBALL));
 		setLore("§bLeft-click to throw the bomb.",
@@ -46,12 +46,12 @@ public final class FireBomb extends RadiusBomb {
 		setDefaultConfig("fuse", 40);
 		setDefaultConfig("radius", 9);
 	}
-	
+
 	@Override
 	public void onRightClick(PlayerInteractEvent event, PlayerDetails details) {
 		event.setCancelled(true);
 	}
-	
+
 	@Override
 	public void onTrigger(final Item item) {
 		item.setFireTicks(50);
@@ -67,7 +67,7 @@ public final class FireBomb extends RadiusBomb {
 			}, jumpFuse);
 		}
 	}
-	
+
 	@Override
 	public void onExplode(Item item, Location location) {
 		World world = location.getWorld();

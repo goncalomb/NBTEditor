@@ -24,7 +24,7 @@ import org.bukkit.inventory.ItemStack;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
 public class ThrownPotionNBT extends EntityNBT implements SingleItemBasedNBT {
-	
+
 	public void setItem(ItemStack potion) {
 		if (potion == null) {
 			_data.remove("Potion");
@@ -32,16 +32,16 @@ public class ThrownPotionNBT extends EntityNBT implements SingleItemBasedNBT {
 			_data.setCompound("Potion", NBTUtils.itemStackToNBTData(potion));
 		}
 	}
-	
+
 	public ItemStack getItem() {
 		if (_data.hasKey("Potion")) {
 			return NBTUtils.itemStackFromNBTData(_data.getCompound("Potion"));
 		}
 		return null;
 	}
-	
+
 	public boolean isSet() {
 		return _data.hasKey("Potion");
 	}
-	
+
 }

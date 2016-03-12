@@ -29,9 +29,9 @@ import java.util.regex.Pattern;
 import org.bukkit.util.StringUtil;
 
 public final class Utils {
-	
+
 	private Utils() { }
-	
+
 	public static int parseInt(String str, int defaultValue) {
 		try {
 			return Integer.parseInt(str);
@@ -39,12 +39,12 @@ public final class Utils {
 			return defaultValue;
 		}
 	}
-	
+
 	public static int parseInt(String str, int max, int min, int defaultValue) {
 		int value = parseInt(str, defaultValue);
 		return (value > max || value < min ? defaultValue : value);
 	}
-	
+
 	public static int parseTimeDuration(String str) {
 		Matcher matcher = Pattern.compile("^(?:(\\d{1,4})d)?(?:(\\d{1,2})h)?(?:(\\d{1,2})m)?(?:(\\d{1,2})s)?$", Pattern.CASE_INSENSITIVE).matcher(str);
 		if (matcher.find()) {
@@ -58,11 +58,11 @@ public final class Utils {
 		}
 		return -1;
 	}
-	
+
 	public static List<String> getElementsWithPrefix(Collection<String> values, String prefix) {
 		return getElementsWithPrefix(values, prefix, false);
 	}
-	
+
 	public static List<String> getElementsWithPrefix(Collection<String> values, String prefix, boolean sort) {
 		if (prefix == null || prefix.isEmpty()) {
 			List<String> result = new ArrayList<String>(values);
@@ -83,11 +83,11 @@ public final class Utils {
 			return Collections.unmodifiableList(result);
 		}
 	}
-	
+
 	public static List<String> getElementsWithPrefixGeneric(Collection<?> values, String prefix) {
 		return getElementsWithPrefixGeneric(values, prefix, false);
 	}
-	
+
 	public static List<String> getElementsWithPrefixGeneric(Collection<?> values, String prefix, boolean sort) {
 		List<String> result = new ArrayList<String>(values.size());
 		if (prefix == null || prefix.isEmpty()) {
@@ -107,5 +107,5 @@ public final class Utils {
 		}
 		return Collections.unmodifiableList(result);
 	}
-	
+
 }

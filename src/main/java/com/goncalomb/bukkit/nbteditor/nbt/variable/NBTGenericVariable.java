@@ -26,25 +26,25 @@ import org.bukkit.entity.Player;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public abstract class NBTGenericVariable {
-	
+
 	protected String _nbtKey;
-	
+
 	NBTGenericVariable(String nbtKey) {
 		_nbtKey = nbtKey;
 	}
-	
+
 	abstract boolean set(NBTTagCompound data, String value, Player player);
-	
+
 	abstract String get(NBTTagCompound data);
-	
+
 	void clear(NBTTagCompound data) {
 		data.remove(_nbtKey);
 	}
-	
+
 	abstract String getFormat();
-	
+
 	public List<String> getPossibleValues() {
 		return null;
 	}
-	
+
 }

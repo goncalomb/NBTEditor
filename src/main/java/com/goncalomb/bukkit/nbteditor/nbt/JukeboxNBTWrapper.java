@@ -27,11 +27,11 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
 public final class JukeboxNBTWrapper extends TileNBTWrapper {
-	
+
 	public JukeboxNBTWrapper(Block block) {
 		super(block);
 	}
-	
+
 	public void setRecord(ItemStack item) {
 		if (item == null || item.getType() == Material.AIR) {
 			_data.setInt("Record", 0);
@@ -41,7 +41,7 @@ public final class JukeboxNBTWrapper extends TileNBTWrapper {
 			_data.setCompound("RecordItem", NBTUtils.itemStackToNBTData(item));
 		}
 	}
-	
+
 	@Override
 	public void save() {
 		if (_data.getInt("Record") != 0 && _block.getData() == 0) {

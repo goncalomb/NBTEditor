@@ -34,7 +34,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
 
 public class MobNBT extends EquippableNBT {
-	
+
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Mob");
 		variables.add("Health", new FloatVariable("HealF", 0.0f));
@@ -48,22 +48,22 @@ public class MobNBT extends EquippableNBT {
 		variables.add("NameVisible", new BooleanVariable("CustomNameVisible"));
 		registerVariables(MobNBT.class, variables);
 	}
-	
+
 	public void setDropChances(float hand, float feet, float legs, float chest, float head) {
 		_data.setList("DropChances", hand, feet, legs, chest, head);
 	}
-	
-	public float[] getDropChances() {	
+
+	public float[] getDropChances() {
 		if (_data.hasKey("DropChances")) {
 			return ArrayUtils.toPrimitive(Arrays.copyOfRange(_data.getListAsArray("DropChances"), 0, 5, Float[].class));
 		}
 		return null;
 	}
-	
+
 	public void clearDropChances() {
 		_data.remove("DropChances");
 	}
-	
+
 	public void setEffectsFromPotion(ItemStack potion) {
 		if (potion != null) {
 			NBTTagList effects = NBTUtils.potionToNBTEffectsList(potion);
@@ -75,21 +75,21 @@ public class MobNBT extends EquippableNBT {
 			_data.remove("ActiveEffects");
 		}
 	}
-	
+
 	public ItemStack getEffectsAsPotion() {
 		if (_data.hasKey("ActiveEffects")) {
 			return NBTUtils.potionFromNBTEffectsList(_data.getList("ActiveEffects"));
 		}
 		return null;
 	}
-	
+
 	public AttributeContainer getAttributes() {
 		if (_data.hasKey("Attributes")) {
 			return AttributeContainer.fromNBT(_data.getList("Attributes"));
 		}
 		return new AttributeContainer();
 	}
-	
+
 	public void setAttributes(AttributeContainer container) {
 		if (container == null || container.size() == 0) {
 			_data.remove("Attributes");
@@ -97,5 +97,5 @@ public class MobNBT extends EquippableNBT {
 			_data.setList("Attributes", container.toNBT());
 		}
 	}
-	
+
 }

@@ -23,17 +23,17 @@ import org.bukkit.ChatColor;
 import org.bukkit.inventory.meta.BookMeta;
 
 public abstract class BookSerialize {
-	
+
 	private static final String _dataPre = ChatColor.MAGIC.toString();
-	
+
 	private BookSerialize() { }
-	
+
 	public static String loadData(BookMeta meta, String dataTitle) {
 		int pageCount = meta.getPageCount();
 		if (pageCount == 0) {
 			return null;
 		}
-		
+
 		StringBuilder dataSB = new StringBuilder();
 		for (int i = 1; i <= pageCount; ++i) {
 			String page = meta.getPage(i);
@@ -52,7 +52,7 @@ public abstract class BookSerialize {
 		}
 		return null;
 	}
-	
+
 	public static void saveToBook(BookMeta meta, String data, String dataTitle) {
 		int max;
 		int pageMax = 255 - _dataPre.length();
@@ -61,5 +61,5 @@ public abstract class BookSerialize {
 			meta.addPage((i == 0 ? dataTitle : "") + _dataPre + data.substring(i, (i + max > l ? l : i + max)));
 		}
 	}
-	
+
 }

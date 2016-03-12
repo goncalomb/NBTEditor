@@ -25,5 +25,5 @@ public class MyCommandException extends Exception {
 	public MyCommandException(String message) {
 		super(message);
 	}
-	
+
 }

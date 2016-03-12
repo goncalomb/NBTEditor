@@ -32,7 +32,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.SpawnerEntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.SpawnerNBTWrapper;
 
 final class InventoryForSpawnerEntities extends CustomInventory {
-	
+
 	public InventoryForSpawnerEntities(Player owner, SpawnerNBTWrapper spawner) {
 		super(owner, 54, "Books of Souls (to grab a copy)");
 		int i = 0;

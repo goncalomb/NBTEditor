@@ -24,7 +24,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 
 public class ZombieNBT extends MobNBT {
-	
+
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Zombie");
 		variables.add("IsVillager", new BooleanVariable("IsVillager"));
@@ -33,5 +33,5 @@ public class ZombieNBT extends MobNBT {
 		variables.add("CanBreakDoors", new BooleanVariable("CanBreakDoors"));
 		registerVariables(ZombieNBT.class, variables);
 	}
-	
+
 }

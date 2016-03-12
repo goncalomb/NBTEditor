@@ -26,7 +26,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
 
 public class MinecartNBT extends EntityNBT {
-	
+
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Minecart");
 		variables.add("DisplayTile", new BooleanVariable("CustomDisplayTile"));
@@ -35,5 +35,5 @@ public class MinecartNBT extends EntityNBT {
 		variables.add("Name", new StringVariable("CustomName"));
 		registerVariables(MinecartNBT.class, variables);
 	}
-	
+
 }

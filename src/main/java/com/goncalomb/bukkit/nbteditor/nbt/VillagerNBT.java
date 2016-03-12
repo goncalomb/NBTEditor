@@ -28,20 +28,20 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 
 public class VillagerNBT extends BreedNBT {
-	
+
 	private ArrayList<VillagerNBTOffer> _offers;
-	
+
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Villager");
 		variables.add("Profession", new IntegerVariable("Profession", 0, 5));
 		registerVariables(VillagerNBT.class, variables);
 	}
-	
+
 	public void clearOffers() {
 		_data.remove("Offers");
 		_offers = null;
 	}
-	
+
 	public void addOffer(VillagerNBTOffer offer) {
 		NBTTagCompound offers = _data.getCompound("Offers");
 		if (offers == null) {
@@ -58,7 +58,7 @@ public class VillagerNBT extends BreedNBT {
 			_offers.add(offer);
 		}
 	}
-	
+
 	public List<VillagerNBTOffer> getOffers() {
 		if (_offers == null) {
 			_offers = new ArrayList<VillagerNBTOffer>();
@@ -74,5 +74,5 @@ public class VillagerNBT extends BreedNBT {
 		}
 		return _offers;
 	}
-	
+
 }

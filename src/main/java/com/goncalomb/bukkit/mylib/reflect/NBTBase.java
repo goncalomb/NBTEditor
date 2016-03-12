@@ -23,9 +23,9 @@ import java.lang.reflect.Method;
 import java.util.Map.Entry;
 
 public class NBTBase {
-	
+
 	private static boolean _isPrepared = false;
-	
+
 	protected static Class<?> _nbtBaseClass;
 	protected static Class<?> _nbtTagCompoundClass;
 	protected static Class<?> _nbtTagListClass;
@@ -33,9 +33,9 @@ public class NBTBase {
 
 	private static Method _getTypeId;
 	private static Method _clone;
-	
+
 	final Object _handle; // The wrapped Minecraft NBTBase instance.
-	
+
 	public static final void prepareReflection() {
 		if (!_isPrepared) {
 			_nbtBaseClass = BukkitReflect.getMinecraftClass("NBTBase");
@@ -55,7 +55,7 @@ public class NBTBase {
 			_isPrepared = true;
 		}
 	}
-	
+
 	// Wraps any Minecraft tags in MyLib tags.
 	// Primitives and strings are wrapped with NBTBase.
 	protected static final NBTBase wrap(Object object) {
@@ -69,29 +69,29 @@ public class NBTBase {
 			throw new RuntimeException(object.getClass() + " is not a valid NBT tag type.");
 		}
 	}
-	
+
 	// Helper method for NBTTagCompoundWrapper.merge().
 	// Clones any internal Minecraft tags.
 	protected static final Object clone(Object nbtBaseObject) {
 		return BukkitReflect.invokeMethod(nbtBaseObject, _clone);
 	}
-	
+
 	protected NBTBase(Object handle) {
 		_handle = handle;
 	}
-	
+
 	protected final Object invokeMethod(Method method, Object... args) {
 		return BukkitReflect.invokeMethod(_handle, method, args);
 	}
-	
+
 	static byte getTypeId(Object handle) {
 		return (Byte) BukkitReflect.invokeMethod(handle, _getTypeId);
 	}
-	
+
 	public NBTBase clone() {
 		return wrap(invokeMethod(_clone));
 	}
-	
+
 	private String toStringAny(Object object) {
 		// Some "dirty" code to fix the internal Mojanson encoder.
 		StringBuilder buffer = new StringBuilder();
@@ -146,10 +146,10 @@ public class NBTBase {
 		}
 		return buffer.toString();
 	}
-	
+
 	@Override
 	public String toString() {
 		return toStringAny(_handle);
 	}
-	
+
 }

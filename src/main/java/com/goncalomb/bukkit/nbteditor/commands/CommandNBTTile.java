@@ -48,11 +48,11 @@ import com.goncalomb.bukkit.nbteditor.nbt.JukeboxNBTWrapper;
 import com.goncalomb.bukkit.nbteditor.nbt.TileNBTWrapper;
 
 public class CommandNBTTile extends MyCommand {
-	
+
 	public CommandNBTTile() {
 		super("nbttile", "nbtt");
 	}
-	
+
 	private static BeaconNBTWrapper getBeacon(Player player) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock(player, 5);
 		if (block.getType() != Material.BEACON) {
@@ -60,7 +60,7 @@ public class CommandNBTTile extends MyCommand {
 		}
 		return new BeaconNBTWrapper(block);
 	}
-	
+
 	private static JukeboxNBTWrapper getJukebox(Player player) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock(player, 5);
 		if (block.getType() != Material.JUKEBOX) {
@@ -68,7 +68,7 @@ public class CommandNBTTile extends MyCommand {
 		}
 		return new JukeboxNBTWrapper(block);
 	}
-	
+
 	@Command(args = "beacon", type = CommandType.PLAYER_ONLY, minargs = 0, maxargs = 2, usage = "primary/secondary <effect>")
 	public boolean beaconEffectCommand(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length == 2 && (args[0].equalsIgnoreCase("primary") || args[0].equalsIgnoreCase("secondary"))) {
@@ -96,7 +96,7 @@ public class CommandNBTTile extends MyCommand {
 		sender.sendMessage("§eUse 'clear' as affect clear the effect.");
 		return false;
 	}
-	
+
 	@TabComplete(args = "beacon")
 	public List<String> tab_beacon(CommandSender sender, String[] args) {
 		if (args.length == 1) {
@@ -106,7 +106,7 @@ public class CommandNBTTile extends MyCommand {
 		}
 		return null;
 	}
-	
+
 	@Command(args = "record", type = CommandType.PLAYER_ONLY)
 	public boolean setRecordCommand(CommandSender sender, String[] args) throws MyCommandException {
 		JukeboxNBTWrapper jukebox = getJukebox((Player) sender);
@@ -120,7 +120,7 @@ public class CommandNBTTile extends MyCommand {
 		}
 		return true;
 	}
-	
+
 	@Command(args = "name", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "[name ...]")
 	public boolean nameCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
@@ -134,7 +134,7 @@ public class CommandNBTTile extends MyCommand {
 		}
 		return true;
 	}
-	
+
 	@Command(args = "command-colors", type = CommandType.PLAYER_ONLY)
 	public boolean colorsCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
@@ -147,7 +147,7 @@ public class CommandNBTTile extends MyCommand {
 		sender.sendMessage("§aColor codes have been replaced.");
 		return true;
 	}
-	
+
 	@Command(args = "sign", type = CommandType.PLAYER_ONLY, minargs = 2, maxargs = Integer.MAX_VALUE, usage = "<line> [content ...]")
 	public boolean signCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
@@ -161,7 +161,7 @@ public class CommandNBTTile extends MyCommand {
 		sender.sendMessage("§aLine set.");
 		return true;
 	}
-	
+
 	@Command(args = "tocommand", type = CommandType.PLAYER_ONLY)
 	public boolean tocommandCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
@@ -196,5 +196,5 @@ public class CommandNBTTile extends MyCommand {
 		sender.sendMessage("§aCommand block created below the tile.");
 		return true;
 	}
-	
+
 }

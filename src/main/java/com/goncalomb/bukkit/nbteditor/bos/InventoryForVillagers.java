@@ -31,16 +31,16 @@ import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBTOffer;
 
 public final class InventoryForVillagers extends InventoryForBos<VillagerNBT> {
-	
+
 	private static ItemStack[] placeholders = new ItemStack[] {
 		createPlaceholder(Material.PAPER, "§6Buy item 1"),
 		createPlaceholder(Material.PAPER, "§6Buy item 2", "§bThis is optional."),
 		createPlaceholder(Material.PAPER, "§6Sell item")
 	};
-	
+
 	private BookOfSouls _bos;
 	private int _page;
-	
+
 	public InventoryForVillagers(BookOfSouls bos, int page, Player owner) {
 		super(bos, owner, 27, "Villager Offers");
 		_bos = bos;

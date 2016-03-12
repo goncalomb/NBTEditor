@@ -35,7 +35,7 @@ public final class TreeVaporizer extends GenericSuperAxe {
 	public TreeVaporizer() {
 		super("tree-vaporizer", ChatColor.GREEN + "Tree Vaporizer");
 	}
-	
+
 	@Override
 	public void onBlockBreak(BlockBreakEvent event, PlayerDetails details) {
 		Block root = event.getBlock();
@@ -56,5 +56,5 @@ public final class TreeVaporizer extends GenericSuperAxe {
 			}
 		}
 	}
-	
+
 }

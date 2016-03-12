@@ -24,11 +24,11 @@ import org.bukkit.entity.Player;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public final class DoubleVariable extends NBTGenericVariable {
-	
+
 	public DoubleVariable(String nbtKey) {
 		super(nbtKey);
 	}
-	
+
 	boolean set(NBTTagCompound data, String value, Player player) {
 		try {
 			data.setDouble(_nbtKey, Double.parseDouble(value));
@@ -37,7 +37,7 @@ public final class DoubleVariable extends NBTGenericVariable {
 			return false;
 		}
 	}
-	
+
 	String get(NBTTagCompound data) {
 		if (data.hasKey(_nbtKey)) {
 			return String.valueOf(data.getDouble(_nbtKey));
@@ -49,5 +49,5 @@ public final class DoubleVariable extends NBTGenericVariable {
 	String getFormat() {
 		return "Decimal.";
 	}
-	
+
 }

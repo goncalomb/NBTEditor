@@ -32,17 +32,17 @@ import org.bukkit.plugin.Plugin;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 
 public final class DispenserDetails extends ItemDetails implements IConsumableDetails {
-	
+
 	private Plugin _plugin;
 	private Block _block;
 	private Location _location;
-	
+
 	DispenserDetails(BlockDispenseEvent event, Plugin plugin) {
 		super(event.getItem());
 		_block = event.getBlock();
 		_plugin = plugin;
 	}
-	
+
 	public Location getLocation() {
 		if (_location == null) {
 			BlockFace face = ((Dispenser) _block.getState().getData()).getFacing();
@@ -50,7 +50,7 @@ public final class DispenserDetails extends ItemDetails implements IConsumableDe
 		}
 		return _location;
 	}
-	
+
 	@Override
 	public void consumeItem() {
 		org.bukkit.block.Dispenser disp = (org.bukkit.block.Dispenser) _block.getState();
@@ -72,5 +72,5 @@ public final class DispenserDetails extends ItemDetails implements IConsumableDe
 			}
 		});
 	}
-	
+
 }

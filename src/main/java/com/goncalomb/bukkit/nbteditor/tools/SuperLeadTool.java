@@ -41,7 +41,7 @@ public final class SuperLeadTool extends CustomItem {
 				ChatColor.YELLOW + "Then right-click another entity",
 				ChatColor.YELLOW + "while sneaking to tie them together.");
 	}
-	
+
 	private static List<LivingEntity> findLeashPrisoners(Entity holder) {
 		List<LivingEntity> entities = new ArrayList<LivingEntity>();
 		for (LivingEntity living : holder.getWorld().getEntitiesByClass(LivingEntity.class)) {
@@ -51,7 +51,7 @@ public final class SuperLeadTool extends CustomItem {
 		}
 		return entities;
 	}
-	
+
 	@Override
 	public  void onInteractEntity(PlayerInteractEntityEvent event, PlayerDetails details) {
 		Entity other = event.getRightClicked();
@@ -73,7 +73,7 @@ public final class SuperLeadTool extends CustomItem {
 		}
 		event.setCancelled(true);
 	}
-	
+
 	@Override
 	public void onDrop(PlayerDropItemEvent event) {
 		event.getItemDrop().remove();

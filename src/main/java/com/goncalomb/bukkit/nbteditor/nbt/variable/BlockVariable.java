@@ -32,7 +32,7 @@ public final class BlockVariable extends NBTGenericVariable2X {
 
 	private static final List<String> POSSIBLE_VALUES;
 	private static final List<String> POSSIBLE_VALUES_SHORT;
-	
+
 	static {
 		Material[] allMats = Material.values();
 		List<String> possibleValues = new ArrayList<String>(allMats.length);
@@ -50,24 +50,24 @@ public final class BlockVariable extends NBTGenericVariable2X {
 		POSSIBLE_VALUES = Collections.unmodifiableList(possibleValues);
 		POSSIBLE_VALUES_SHORT = Collections.unmodifiableList(possibleValuesShort);
 	}
-	
+
 	private boolean _asShort;
 	private boolean _dataAsInt;
-	
+
 	public BlockVariable(String blockNbtKey, String dataNbtKey) {
 		this(blockNbtKey, dataNbtKey, false);
 	}
-	
+
 	public BlockVariable(String blockNbtKey, String dataNbtKey, boolean asShort) {
 		this(blockNbtKey, dataNbtKey, asShort, false);
 	}
-	
+
 	public BlockVariable(String blockNbtKey, String dataNbtKey, boolean asShort, boolean dataAsInt) {
 		super(blockNbtKey, dataNbtKey);
 		_asShort = asShort;
 		_dataAsInt = dataAsInt;
 	}
-	
+
 	boolean set(NBTTagCompound data, String value, Player player) {
 		String[] pieces = value.split(":", 2);
 		Material material = Material.getMaterial(pieces[0]);
@@ -109,7 +109,7 @@ public final class BlockVariable extends NBTGenericVariable2X {
 		}
 		return false;
 	}
-	
+
 	String get(NBTTagCompound data) {
 		if (data.hasKey(_nbtKey) && data.hasKey(_nbtKey2)) {
 			int materialId, materialData;
@@ -128,13 +128,13 @@ public final class BlockVariable extends NBTGenericVariable2X {
 		}
 		return null;
 	}
-	
+
 	String getFormat() {
 		return "Valid block id and data, 'id:data'.";
 	}
-	
+
 	public List<String> getPossibleValues() {
 		return (_asShort ? POSSIBLE_VALUES_SHORT : POSSIBLE_VALUES);
 	}
-	
+
 }

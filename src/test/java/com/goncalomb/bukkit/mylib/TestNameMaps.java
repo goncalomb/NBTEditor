@@ -33,7 +33,7 @@ import com.goncalomb.bukkit.mylib.namemaps.EnchantmentsMap;
 import com.goncalomb.bukkit.mylib.namemaps.PotionEffectsMap;
 
 public class TestNameMaps {
-	
+
 	@Test
 	public void testEnchantmentsMap() throws IllegalAccessException {
 		// Find all bukkit enchantments.
@@ -60,7 +60,7 @@ public class TestNameMaps {
 			Assert.fail(bukkitEnchantments.values().iterator().next().getName() + " is not registered on EnchantmentsMap.");
 		}
 	}
-	
+
 	@Test
 	public void testPotionEffectsMap() throws IllegalAccessException {
 		// Find all bukkit effects.
@@ -87,5 +87,5 @@ public class TestNameMaps {
 			Assert.fail(bukkitPotionEffects.values().iterator().next().getName() + " in not registered on PotionEffectsMap.");
 		}
 	}
-	
+
 }

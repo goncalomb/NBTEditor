@@ -42,7 +42,7 @@ final class BookOfSoulsCI extends CustomItem {
 	public BookOfSoulsCI() {
 		super("bos", ChatColor.AQUA + "Book of Souls", new MaterialData(Material.WRITTEN_BOOK));
 	}
-	
+
 	@Override
 	public void onLeftClick(PlayerInteractEvent event, PlayerDetails details) {
 		Player player = event.getPlayer();
@@ -51,7 +51,7 @@ final class BookOfSoulsCI extends CustomItem {
 			player.sendMessage("§cThat Book of Souls is corrupted!");
 			return;
 		}
-		
+
 		Location location = null;
 		if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
 			Block block = event.getClickedBlock();
@@ -73,7 +73,7 @@ final class BookOfSoulsCI extends CustomItem {
 				event.setCancelled(true);
 				return;
 			}
-			
+
 			location = event.getClickedBlock().getLocation().add(UtilsMc.faceToDelta(event.getBlockFace(), 0.5d));
 		} else {
 			Block block = UtilsMc.getTargetBlock(player);
@@ -81,7 +81,7 @@ final class BookOfSoulsCI extends CustomItem {
 				location = UtilsMc.airLocation(block.getLocation()).add(0.0d, 0.3d, 0.0d);
 			}
 		}
-		
+
 		if (location != null) {
 			bos.getEntityNBT().spawn(location);
 			event.setCancelled(true);
@@ -90,7 +90,7 @@ final class BookOfSoulsCI extends CustomItem {
 		}
 		return;
 	};
-	
+
 	@Override
     public void onDispense(BlockDispenseEvent event, DispenserDetails details) {
 		BookOfSouls bos = BookOfSouls.getFromBook(event.getItem());
@@ -99,10 +99,10 @@ final class BookOfSoulsCI extends CustomItem {
 		}
 		event.setCancelled(true);
     }
-	
+
 	@Override
 	public ItemStack getItem() {
 		return null;
 	}
-	
+
 }

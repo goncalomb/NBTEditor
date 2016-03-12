@@ -28,7 +28,7 @@ public final class HorseVariantVariable extends NBTGenericVariable{
 	public HorseVariantVariable() {
 		super("Variant");
 	}
-	
+
 	boolean set(NBTTagCompound data, String value, Player player) {
 		String[] pieces = value.split("\\s+", 2);
 		if (pieces.length == 2) {
@@ -46,7 +46,7 @@ public final class HorseVariantVariable extends NBTGenericVariable{
 		}
 		return false;
 	}
-	
+
 	String get(NBTTagCompound data) {
 		if (data.hasKey(_nbtKey)) {
 			int variant = data.getInt(_nbtKey);
@@ -54,9 +54,9 @@ public final class HorseVariantVariable extends NBTGenericVariable{
 		}
 		return null;
 	}
-	
+
 	String getFormat() {
 		return "Two integers, the fist one controls the horse markings (0 to 4), the second one controls the color (0 to 6), e.g. '4 1'.";
 	}
-	
+
 }

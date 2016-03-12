@@ -27,13 +27,13 @@ import org.bukkit.inventory.ItemStack;
 import com.goncalomb.bukkit.nbteditor.nbt.ThrownPotionNBT;
 
 public final class InventoryForThownPotion extends InventoryForSingleItem<ThrownPotionNBT> {
-	
+
 	private static ItemStack placeholder = createPlaceholder(Material.GLASS_BOTTLE, "§6The potion goes here.");
-	
+
 	public InventoryForThownPotion(BookOfSouls bos, Player owner) {
 		super(bos, owner, "Define the potion here...", placeholder);
 	}
-	
+
 	@Override
 	protected boolean isValidItem(Player player, ItemStack item) {
 		if (item.getType() != Material.POTION) {
@@ -42,7 +42,7 @@ public final class InventoryForThownPotion extends InventoryForSingleItem<Thrown
 		}
 		return true;
 	}
-	
+
 	@Override
 	protected void inventoryClose(InventoryCloseEvent event) {
 		super.inventoryClose(event);

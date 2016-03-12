@@ -36,9 +36,9 @@ import org.bukkit.metadata.FixedMetadataValue;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 
 public final class BatBomb extends GenericBomb {
-	
+
 	private float _power;
-	
+
 	public BatBomb() {
 		super("bat-bomb", ChatColor.RED + "Bat Bomb", new MaterialData(Material.MONSTER_EGG, (byte)65));
 		setLore("§bLeft-click to throw the bomb.",
@@ -47,33 +47,33 @@ public final class BatBomb extends GenericBomb {
 		setDefaultConfig("fuse", 50);
 		setDefaultConfig("power", 3.8d);
 	}
-	
+
 	@Override
 	public void applyConfig(ConfigurationSection section) {
 		super.applyConfig(section);
 		_power = (float) section.getDouble("power");
 	}
-	
+
 	@Override
 	public void onRightClick(PlayerInteractEvent event, PlayerDetails details) {
 		details.consumeItem();
 		spawnBatsAt(event.getPlayer().getEyeLocation(), 10, 100);
 	}
-	
+
 	@Override
 	public void onDropperPickup(InventoryPickupItemEvent event) {
 		if (event.getItem().hasMetadata("is-active")) {
 			event.setCancelled(true);
 		}
 	}
-	
+
 	@Override
 	public void onTrigger(Item item) {
 		Entity bat = item.getWorld().spawnEntity(item.getLocation(), EntityType.BAT);
 		item.setMetadata("is-active", new FixedMetadataValue(getPlugin(), true));
 		item.setPassenger(bat);
 	}
-	
+
 	@Override
 	public void onExplode(Item item, Location location) {
 		Entity bat = item.getPassenger();
@@ -82,7 +82,7 @@ public final class BatBomb extends GenericBomb {
 			spawnBatsAt(location, 10, 50);
 		}
 	}
-	
+
 	private void spawnBatsAt(final Location loc, final int count, int fuse) {
 		final World world = loc.getWorld();
 		final Entity[] bats = new Entity[count];
@@ -102,5 +102,5 @@ public final class BatBomb extends GenericBomb {
 			}
 		}, fuse);
 	}
-	
+
 }

@@ -28,12 +28,12 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.EntityType;
 
 public final class EntityTypeMap {
-	
+
 	private final static List<String> _entityNames;
 	private final static List<String> _livingEntityNames;
 	private final static String _entityNamesAsString;
 	private final static String _livingEntityNamesAsString;
-	
+
 	static {
 		List<String> entityNames = new ArrayList<String>();
 		List<String> livingEntityNames = new ArrayList<String>();
@@ -49,11 +49,11 @@ public final class EntityTypeMap {
 		_entityNames = Collections.unmodifiableList(entityNames);
 		_livingEntityNames = Collections.unmodifiableList(livingEntityNames);
 		_entityNamesAsString = StringUtils.join(_entityNames, ", ");
-		_livingEntityNamesAsString = StringUtils.join(_livingEntityNames, ", "); 
+		_livingEntityNamesAsString = StringUtils.join(_livingEntityNames, ", ");
 	}
-	
+
 	private EntityTypeMap() { }
-	
+
 	public static EntityType getByName(String name) {
 		if (name.equalsIgnoreCase("ThrownPotion")) {
 			return EntityType.SPLASH_POTION;
@@ -67,7 +67,7 @@ public final class EntityTypeMap {
 			return EntityType.fromName(name);
 		}
 	}
-	
+
 	public static String getName(EntityType type) {
 		if (type == EntityType.SPLASH_POTION) {
 			return "ThrownPotion";
@@ -81,11 +81,11 @@ public final class EntityTypeMap {
 			return type.getName();
 		}
 	}
-	
+
 	public static List<String> getNames() {
 		return _entityNames;
 	}
-	
+
 	public static List<String> getNames(Collection<EntityType> types) {
 		ArrayList<String> names = new ArrayList<String>(types.size());
 		for (EntityType type : types) {
@@ -93,17 +93,17 @@ public final class EntityTypeMap {
 		}
 		return names;
 	}
-	
+
 	public static String getNamesAsString() {
 		return _entityNamesAsString;
 	}
-	
+
 	public static List<String> getLivingNames() {
 		return _livingEntityNames;
 	}
-	
+
 	public static String getLivingNamesAsString() {
 		return _livingEntityNamesAsString;
 	}
-	
+
 }

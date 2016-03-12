@@ -36,7 +36,7 @@ final class BookOfSoulsEmptyCI extends CustomItem {
 		setLore("§bThis is a empty Book of Souls.",
 				"§bRight-click an entity to capture the soul.");
 	}
-	
+
 	@Override
 	public void onInteractAtEntity(final PlayerInteractAtEntityEvent event, PlayerDetails details) {
 		if (EntityNBT.isValidType(event.getRightClicked().getType())) {
@@ -50,5 +50,5 @@ final class BookOfSoulsEmptyCI extends CustomItem {
 			event.setCancelled(true);
 		}
 	}
-	
+
 }

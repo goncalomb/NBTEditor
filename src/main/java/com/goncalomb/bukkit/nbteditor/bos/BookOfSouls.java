@@ -57,30 +57,30 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
 import net.iharder.Base64;
 
 public class BookOfSouls {
-	
+
 	private static final String _author = ChatColor.GOLD + "The Creator";
 	private static final String _dataTitle = "" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Soul Data v0.2" + ChatColor.BLACK + "\n";
 	private static final String _dataTitleOLD = "" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Soul Data v0.1" + ChatColor.BLACK + "\n";
 	private static CustomItem _bosEmptyCustomItem;
 	private static CustomItem _bosCustomItem;
-	
+
 	private static Plugin _plugin = null;
 	private static final String[] _mobEquipSlotName = new String[] { "Head Equipment", "Chest Equipment", "Legs Equipment", "Feet Equipment", "Hand Item" };
 
 	private ItemStack _book;
 	private EntityNBT _entityNbt;
-	
+
 	public static void initialize(Plugin plugin) {
 		if (_plugin != null) return;
 		_plugin = plugin;
-		
+
 		_bosEmptyCustomItem = new BookOfSoulsEmptyCI();
 		CustomItemManager.register(_bosEmptyCustomItem, plugin, _plugin.getName());
-		
+
 		_bosCustomItem = new BookOfSoulsCI();
 		CustomItemManager.register(_bosCustomItem, plugin, _plugin.getName());
 	}
-	
+
 	static EntityNBT bookToEntityNBT(ItemStack book) {
 		if (isValidBook(book)) {
 			try {
@@ -111,7 +111,7 @@ public class BookOfSouls {
 		}
 		return null;
 	}
-	
+
 	public static BookOfSouls getFromBook(ItemStack book) {
 		EntityNBT entityNbt = bookToEntityNBT(book);
 		if (entityNbt != null) {
@@ -119,20 +119,20 @@ public class BookOfSouls {
 		}
 		return null;
 	}
-	
+
 	public static ItemStack getEmpty() {
 		return _bosEmptyCustomItem.getItem();
 	}
-	
+
 	public BookOfSouls(EntityNBT entityNBT) {
 		this(null, entityNBT);
 	}
-	
+
 	private BookOfSouls(ItemStack book, EntityNBT entityNBT) {
 		_book = book;
 		_entityNbt = entityNBT;
 	}
-	
+
 	public static boolean isValidBook(ItemStack book) {
 		if (book != null && book.getType() == Material.WRITTEN_BOOK) {
 			ItemMeta meta = book.getItemMeta();
@@ -143,7 +143,7 @@ public class BookOfSouls {
 		}
 		return false;
 	}
-	
+
 	public boolean openInventory(Player player) {
 		if (_entityNbt instanceof MobNBT) {
 			(new InventoryForMobs(this, player)).openInventory(player, _plugin);
@@ -166,7 +166,7 @@ public class BookOfSouls {
 		}
 		return false;
 	}
-	
+
 	public boolean openOffersInventory(Player player, int page) {
 		if (_entityNbt instanceof VillagerNBT) {
 			(new InventoryForVillagers(this, page, player)).openInventory(player, _plugin);
@@ -174,11 +174,11 @@ public class BookOfSouls {
 		}
 		return false;
 	}
-	
+
 	public void openRidingInventory(Player player) {
 		(new InventoryForRiding(this, player)).openInventory(player, _plugin);
 	}
-	
+
 	public boolean setMobDropChance(float head, float chest, float legs, float feet, float hand) {
 		if (_entityNbt instanceof MobNBT) {
 			((MobNBT) _entityNbt).setDropChances(hand, feet, legs, chest, head);
@@ -186,7 +186,7 @@ public class BookOfSouls {
 		}
 		return false;
 	}
-	
+
 	public boolean clearMobDropChance() {
 		if (_entityNbt instanceof MobNBT) {
 			((MobNBT) _entityNbt).clearDropChances();
@@ -194,11 +194,11 @@ public class BookOfSouls {
 		}
 		return false;
 	}
-	
+
 	public EntityNBT getEntityNBT() {
 		return _entityNbt;
 	}
-	
+
 	public ItemStack getBook() {
 		if (_book == null) {
 			_book = new ItemStack(Material.WRITTEN_BOOK);
@@ -206,26 +206,26 @@ public class BookOfSouls {
 		}
 		return _book;
 	}
-	
+
 	public void saveBook() {
 		saveBook(false);
 	}
-	
+
 	public void saveBook(boolean resetName) {
 		BookMeta meta = (BookMeta) _book.getItemMeta();
 		String entityName = EntityTypeMap.getName(_entityNbt.getEntityType());
-		
+
 		if (resetName) {
 			meta.setDisplayName(_bosCustomItem.getName() + ChatColor.RESET + " - " + ChatColor.RED + entityName);
 			meta.setTitle(_bosCustomItem.getName());
 			meta.setAuthor(_author);
 		}
-		
+
 		meta.setPages(new ArrayList<String>());
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("This book contains the soul of a " + ChatColor.RED + ChatColor.BOLD + entityName + "\n\n");
-		
+
 		int x = 7;
 		if (_entityNbt instanceof MinecartSpawnerNBT) {
 			sb.append(ChatColor.BLACK + "Left-click a existing spawner to copy the entities and variables from the spawner, left-click while sneaking to copy them back to the spawner.");
@@ -236,7 +236,7 @@ public class BookOfSouls {
 			sb.append(ChatColor.BLACK + "Left-click a block while sneaking to copy block data.\n\n");
 			x = 5;
 		}
-		
+
 		for (NBTVariableContainer vc : _entityNbt.getAllVariables()) {
 			if (x == 1) {
 				meta.addPage(sb.toString());
@@ -255,7 +255,7 @@ public class BookOfSouls {
 			}
 		}
 		meta.addPage(sb.toString());
-		
+
 		if (_entityNbt instanceof EquippableNBT) {
 			sb = new StringBuilder();
 			sb.append("" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Equipment:\n");
@@ -273,7 +273,7 @@ public class BookOfSouls {
 
 		if (_entityNbt instanceof MobNBT) {
 			MobNBT mob = (MobNBT) _entityNbt;
-			
+
 			sb = new StringBuilder();
 			sb.append("" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Drop chance:\n");
 			float[] chances = mob.getDropChances();
@@ -286,7 +286,7 @@ public class BookOfSouls {
 				sb.append("" + ChatColor.BLACK + ChatColor.ITALIC + "not defined,\ndefault 0.085");
 			}
 			meta.addPage(sb.toString());
-			
+
 			sb = new StringBuilder();
 			sb.append("" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Attributes:\n");
 			Collection<Attribute> attributes = mob.getAttributes().values();
@@ -325,11 +325,11 @@ public class BookOfSouls {
 			}
 			meta.addPage(sb.toString());
 		}
-		
+
 		BookSerialize.saveToBook(meta, _entityNbt.serialize(), _dataTitle);
 		meta.addPage("RandomId: " + Integer.toHexString((new Random()).nextInt()) + "\n\n\n"
 				+ ChatColor.DARK_BLUE + ChatColor.BOLD + "      The END.");
 		_book.setItemMeta(meta);
 	}
-	
+
 }

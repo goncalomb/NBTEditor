@@ -24,11 +24,11 @@ import org.bukkit.entity.Player;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public class StringVariable extends NBTGenericVariable {
-	
+
 	public StringVariable(String nbtKey) {
 		super(nbtKey);
 	}
-	
+
 	boolean set(NBTTagCompound data, String value, Player player) {
 		if (value.length() > 64) {
 			return false;
@@ -36,16 +36,16 @@ public class StringVariable extends NBTGenericVariable {
 		data.setString(_nbtKey, value);
 		return true;
 	}
-	
+
 	String get(NBTTagCompound data) {
 		if (data.hasKey(_nbtKey)) {
 			return data.getString(_nbtKey);
 		}
 		return null;
 	}
-	
+
 	String getFormat() {
 		return "String (max length: 64).";
 	}
-	
+
 }

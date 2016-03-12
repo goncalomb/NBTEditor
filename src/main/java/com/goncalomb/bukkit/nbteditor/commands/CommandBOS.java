@@ -54,7 +54,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
 
 public class CommandBOS extends MyCommand {
-	
+
 	public CommandBOS() {
 		super("bookofsouls", "bos");
 	}
@@ -62,7 +62,7 @@ public class CommandBOS extends MyCommand {
 	static BookOfSouls getBos(Player player) throws MyCommandException {
 		return getBos(player, false);
 	}
-	
+
 	static BookOfSouls getBos(Player player, boolean nullIfMissing) throws MyCommandException {
 		ItemStack item = player.getItemInHand();
 		if (BookOfSouls.isValidBook(item)) {
@@ -76,7 +76,7 @@ public class CommandBOS extends MyCommand {
 		}
 		return null;
 	}
-	
+
 	static List<String> findBosVars(Player player, String prefix) {
 		ItemStack item = player.getItemInHand();
 		if (BookOfSouls.isValidBook(item)) {
@@ -96,7 +96,7 @@ public class CommandBOS extends MyCommand {
 		}
 		return null;
 	}
-	
+
 	@Command(args = "get", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "<entity>")
 	public boolean getCommand(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length == 1) {
@@ -116,19 +116,19 @@ public class CommandBOS extends MyCommand {
 		sender.sendMessage("§7Entities: " + StringUtils.join(EntityTypeMap.getNames(EntityNBT.getValidEntityTypes()), ", "));
 		return false;
 	}
-	
+
 	@TabComplete(args = "get")
 	public List<String> get_tab(CommandSender sender, String[] args) {
 		return (args.length == 1 ? Utils.getElementsWithPrefix(EntityTypeMap.getNames(EntityNBT.getValidEntityTypes()), args[0], true) : null);
 	}
-	
+
 	@Command(args = "getempty", type = CommandType.PLAYER_ONLY)
 	public boolean getemptyCommand(CommandSender sender, String[] args) throws MyCommandException {
 		CommandUtils.checkFullInventory((Player) sender).addItem(BookOfSouls.getEmpty());
 		sender.sendMessage("§aEnjoy your Book of Souls.");
 		return true;
 	}
-	
+
 	@Command(args = "var", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<variable> [value]")
 	public boolean varCommand(CommandSender sender, String[] args) throws MyCommandException {
 		BookOfSouls bos = getBos((Player) sender);
@@ -154,7 +154,7 @@ public class CommandBOS extends MyCommand {
 		}
 		return true;
 	}
-	
+
 	@TabComplete(args = "var")
 	public List<String> var_tab(CommandSender sender, String[] args) throws MyCommandException /* Never throws */ {
 		if (args.length == 1) {
@@ -173,7 +173,7 @@ public class CommandBOS extends MyCommand {
 		}
 		return null;
 	}
-	
+
 	@Command(args = "clearvar", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<variable>")
 	public boolean clearvarCommand(CommandSender sender, String[] args) throws MyCommandException {
 		BookOfSouls bos = getBos((Player) sender);
@@ -187,12 +187,12 @@ public class CommandBOS extends MyCommand {
 		}
 		return true;
 	}
-	
+
 	@TabComplete(args = "clearvar")
 	public List<String> clearvar_tab(CommandSender sender, String[] args) {
 		return findBosVars((Player) sender, args[0]);
 	}
-	
+
 	@Command(args = "riding", type = CommandType.PLAYER_ONLY)
 	public boolean ridingCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Player player = (Player) sender;
@@ -200,7 +200,7 @@ public class CommandBOS extends MyCommand {
 		bos.openRidingInventory(player);
 		return true;
 	}
-	
+
 	@Command(args = "items", type = CommandType.PLAYER_ONLY)
 	public boolean itemsCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Player player = (Player) sender;
@@ -210,7 +210,7 @@ public class CommandBOS extends MyCommand {
 		}
 		return true;
 	}
-	
+
 	@Command(args = "offers", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "[page]")
 	public boolean offersCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Player player = (Player) sender;
@@ -225,7 +225,7 @@ public class CommandBOS extends MyCommand {
 		}
 		return true;
 	}
-	
+
 	private static float parseDropchanceFloat(String value) {
 		float f = Float.parseFloat(value);
 		if ((f < 0 || f > 1) && f != 2) {
@@ -233,7 +233,7 @@ public class CommandBOS extends MyCommand {
 		}
 		return f;
 	}
-	
+
 	@Command(args = "dropchance", type = CommandType.PLAYER_ONLY, maxargs = 5, usage = "[<head> <chest> <legs> <feet> <hand>]")
 	public boolean dropchanceCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Player player = (Player) sender;
@@ -259,7 +259,7 @@ public class CommandBOS extends MyCommand {
 				player.sendMessage("§cThe values must be between 0 and 1 inclusive or 2.");
 				return true;
 			}
-			
+
 			BookOfSouls bos = getBos(player);
 			if (!bos.setMobDropChance(head, chest, legs, feet, hand)) {
 				player.sendMessage("§cThat must be a Mob entity!");
@@ -271,7 +271,7 @@ public class CommandBOS extends MyCommand {
 		}
 		return false;
 	}
-	
+
 	@Command(args = "attr add", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<attribute> <base>")
 	public boolean attr_addCommand(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length == 2) {
@@ -304,12 +304,12 @@ public class CommandBOS extends MyCommand {
 		sender.sendMessage("§7Attributes: " + StringUtils.join(AttributeType.values(), ", "));
 		return false;
 	}
-	
+
 	@TabComplete(args = "attr add")
 	public List<String> tab_attr_add(CommandSender sender, String[] args) {
 		return (args.length == 1 ? Utils.getElementsWithPrefixGeneric(Arrays.asList(AttributeType.values()), args[0], true) : null);
 	}
-	
+
 	@Command(args = "attr del", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "<attribute>")
 	public boolean attr_delCommand(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length == 1) {
@@ -338,7 +338,7 @@ public class CommandBOS extends MyCommand {
 		sender.sendMessage("§7Attributes: " + StringUtils.join(AttributeType.values(), ", "));
 		return false;
 	}
-	
+
 	@TabComplete(args = "attr del")
 	public List<String> tab_del_add(CommandSender sender, String[] args) {
 		if (args.length == 1) {
@@ -355,7 +355,7 @@ public class CommandBOS extends MyCommand {
 		}
 		return null;
 	}
-	
+
 	@Command(args = "attr delall", type = CommandType.PLAYER_ONLY)
 	public boolean attr_delallCommand(CommandSender sender, String[] args) throws MyCommandException {
 		BookOfSouls bos = getBos((Player) sender);
@@ -369,7 +369,7 @@ public class CommandBOS extends MyCommand {
 		sender.sendMessage("§cThat must be a Mob entity!");
 		return true;
 	}
-	
+
 	@Command(args = "tocommand", type = CommandType.PLAYER_ONLY)
 	public boolean tocommandCommand(CommandSender sender, String[] args) throws MyCommandException {
 		BookOfSouls bos = getBos((Player) sender);
@@ -396,5 +396,5 @@ public class CommandBOS extends MyCommand {
 		sender.sendMessage("§cNo Command Block in sight!");
 		return true;
 	}
-	
+
 }

@@ -28,9 +28,9 @@ import org.bukkit.inventory.ItemStack;
 import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;
 
 public final class InventoryForMobs extends InventoryForEquippable<MobNBT> {
-	
+
 	private static ItemStack potionPlaceholder = createPlaceholder(Material.GLASS_BOTTLE, "§6Effects", "§bPotion here to apply the effects.");
-	
+
 	public InventoryForMobs(BookOfSouls bos, Player owner) {
 		super(bos, owner);
 		ItemStack potion = _entityNbt.getEffectsAsPotion();

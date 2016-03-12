@@ -28,7 +28,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
 
 public class MinecartSpawnerNBT extends MinecartNBT {
-	
+
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("MinecartSpawner");
 		variables.add("Count", new ShortVariable("SpawnCount", (short) 0));
@@ -40,11 +40,11 @@ public class MinecartSpawnerNBT extends MinecartNBT {
 		variables.add("PlayerRange", new ShortVariable("RequiredPlayerRange", (short) 0));
 		registerVariables(EntityType.MINECART_MOB_SPAWNER, variables);
 	}
-	
+
 	public void MinecartNBT() {
 		_data.setString("EntityId", "Pig");
 	}
-	
+
 	public void copyFromSpawner(Block block) {
 		NBTTagCompound data = NBTUtils.getTileEntityNBTData(block);
 		data.remove("id");
@@ -56,7 +56,7 @@ public class MinecartSpawnerNBT extends MinecartNBT {
 		_data.remove("SpawnPotentials");
 		_data.merge(data);
 	}
-	
+
 	public void copyToSpawner(Block block) {
 		NBTTagCompound data = NBTUtils.getTileEntityNBTData(block);
 		data.setString("EntityId", "Pig");
@@ -65,5 +65,5 @@ public class MinecartSpawnerNBT extends MinecartNBT {
 		data.merge(_data);
 		NBTUtils.setTileEntityNBTData(block, data);
 	}
-	
+
 }

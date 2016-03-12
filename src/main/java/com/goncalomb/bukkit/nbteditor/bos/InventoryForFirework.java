@@ -27,13 +27,13 @@ import org.bukkit.inventory.ItemStack;
 import com.goncalomb.bukkit.nbteditor.nbt.FireworkNBT;
 
 public final class InventoryForFirework extends InventoryForSingleItem<FireworkNBT> {
-	
+
 	private static ItemStack placeholder = createPlaceholder(Material.PAPER, "§6The firework rocket goes here.");
-	
+
 	public InventoryForFirework(BookOfSouls bos, Player owner) {
 		super(bos, owner, "Define the firework here...", placeholder);
 	}
-	
+
 	@Override
 	protected boolean isValidItem(Player player, ItemStack item) {
 		if (item.getType() != Material.FIREWORK) {
@@ -42,7 +42,7 @@ public final class InventoryForFirework extends InventoryForSingleItem<FireworkN
 		}
 		return true;
 	}
-	
+
 	@Override
 	protected void inventoryClose(InventoryCloseEvent event) {
 		super.inventoryClose(event);

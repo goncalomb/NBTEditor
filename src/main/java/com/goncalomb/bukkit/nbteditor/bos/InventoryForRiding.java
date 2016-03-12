@@ -31,9 +31,9 @@ import org.bukkit.inventory.ItemStack;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 
 public final class InventoryForRiding extends InventoryForBos<EntityNBT> {
-	
+
 	private static ItemStack placeholder = createPlaceholder(Material.PAPER, "§6Put Books of Souls here, to add entities.", "§bRemember, the book that you're holding is the top entity.");
-	
+
 	public InventoryForRiding(BookOfSouls bos, Player owner) {
 		super(bos, owner, 54, "Define the entities here...", true);
 		setPlaceholder(53, placeholder);
@@ -45,7 +45,7 @@ public final class InventoryForRiding extends InventoryForBos<EntityNBT> {
 			setItem(i++, (new BookOfSouls(riding)).getBook());
 		}
 	}
-	
+
 	@Override
 	protected void inventoryClick(InventoryClickEvent event) {
 		super.inventoryClick(event);
@@ -83,5 +83,5 @@ public final class InventoryForRiding extends InventoryForBos<EntityNBT> {
 		_bos.saveBook();
 		((Player)event.getPlayer()).sendMessage("§aRiding entities set.");
 	}
-	
+
 }

@@ -24,19 +24,19 @@ import org.bukkit.entity.Player;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public final class ShortVariable extends NumericVariable {
-	
+
 	public ShortVariable(String nbtKey) {
 		this(nbtKey, Short.MIN_VALUE);
 	}
-	
+
 	public ShortVariable(String nbtKey, short min) {
 		this(nbtKey, min, Short.MAX_VALUE);
 	}
-	
+
 	public ShortVariable(String nbtKey, short min, short max) {
 		super(nbtKey, min, max);
 	}
-	
+
 	boolean set(NBTTagCompound data, String value, Player player) {
 		try {
 			short v = Short.parseShort(value);
@@ -47,12 +47,12 @@ public final class ShortVariable extends NumericVariable {
 			return false;
 		}
 	}
-	
+
 	String get(NBTTagCompound data) {
 		if (data.hasKey(_nbtKey)) {
 			return String.valueOf(data.getShort(_nbtKey));
 		}
 		return null;
 	}
-	
+
 }

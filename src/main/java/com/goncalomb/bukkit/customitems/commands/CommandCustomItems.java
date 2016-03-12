@@ -36,7 +36,7 @@ import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 
 public final class CommandCustomItems extends MyCommand {
-	
+
 	public CommandCustomItems() {
 		super("customitem", "citem");
 	}
@@ -52,7 +52,7 @@ public final class CommandCustomItems extends MyCommand {
 		Collections.sort(names, String.CASE_INSENSITIVE_ORDER);
 		return names;
 	}
-	
+
 	private void giveCustomItem(Player player, String slug, String amount) throws MyCommandException {
 		int intAmount = (amount == null ? 1 : CommandUtils.parseInt(amount));
 		CustomItem customItem = CustomItemManager.getCustomItem(slug);
@@ -69,25 +69,25 @@ public final class CommandCustomItems extends MyCommand {
 			}
 		}
 	}
-	
+
 	@Command(args = "get", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = 2, usage = "<item> [amount]")
 	public boolean customitem_get(CommandSender sender, String[] args) throws MyCommandException {
 		giveCustomItem((Player) sender, args[0], (args.length == 2 ? args[1] : null));
 		return true;
 	}
-	
+
 	@TabComplete(args = "get")
 	public List<String> customitem_get_Tab(CommandSender sender, String[] args) {
 		return (args.length == 1 ? getCustomItemNamesList(args[0]) : null);
 	}
-	
+
 	@Command(args = "give", type = CommandType.DEFAULT, minargs = 2, maxargs = 3, usage = "<player> <item> [amount]")
 	public boolean customitem_give(CommandSender sender, String[] args) throws MyCommandException {
 		Player player = CommandUtils.findPlayer(args[0]);
 		giveCustomItem(player, args[1], (args.length == 3 ? args[2] : null));
 		return true;
 	}
-	
+
 	@TabComplete(args = "give")
 	public List<String> customitem_give_Tab(CommandSender sender, String[] args) {
 		if (args.length == 1) {
@@ -97,7 +97,7 @@ public final class CommandCustomItems extends MyCommand {
 		}
 		return null;
 	}
-	
+
 	@Command(args = "list", type = CommandType.DEFAULT)
 	public boolean customitem_list(CommandSender sender, String[] args) {
 		World world = (sender instanceof Player ? ((Player) sender).getWorld() : null);
@@ -118,5 +118,5 @@ public final class CommandCustomItems extends MyCommand {
 		}
 		return true;
 	}
-	
+
 }

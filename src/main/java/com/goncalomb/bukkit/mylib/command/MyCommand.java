@@ -43,9 +43,9 @@ import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 
 public abstract class MyCommand extends MySubCommand {
-	
+
 	public static final class CommandUtils {
-		
+
 		public static List<String> playerTabComplete(CommandSender sender, String prefix) {
 			Player senderPlayer = null;
 			if (sender instanceof Player) {
@@ -61,7 +61,7 @@ public abstract class MyCommand extends MySubCommand {
 	        Collections.sort(players, String.CASE_INSENSITIVE_ORDER);
 			return players;
 		}
-		
+
 		public static Player findPlayer(String name) throws MyCommandException {
 			Player player = Bukkit.getPlayer(name);
 			if (player == null) {
@@ -69,7 +69,7 @@ public abstract class MyCommand extends MySubCommand {
 			}
 			return player;
 		}
-		
+
 		public static PlayerInventory checkFullInventory(Player player) throws MyCommandException {
 			PlayerInventory inv = player.getInventory();
 			if (inv.firstEmpty() == -1) {
@@ -77,13 +77,13 @@ public abstract class MyCommand extends MySubCommand {
 			}
 			return inv;
 		}
-		
+
 		public static void giveItem(Player player, ItemStack item) throws MyCommandException {
 			if (player.getInventory().addItem(item).size() > 0) {
 				throw new MyCommandException("§cInventory full!");
 			}
 		}
-		
+
 		public static int parseInt(String str) throws MyCommandException {
 			int i = Utils.parseInt(str, -1);
 			if (i == -1) {
@@ -91,7 +91,7 @@ public abstract class MyCommand extends MySubCommand {
 			}
 			return i;
 		}
-		
+
 		public static int parseInt(String str, int max, int min) throws MyCommandException {
 			int i = Utils.parseInt(str, max, min, -1);
 			if (i == -1) {
@@ -99,7 +99,7 @@ public abstract class MyCommand extends MySubCommand {
 			}
 			return i;
 		}
-		
+
 		public static int parseTimeDuration(String str) throws MyCommandException {
 			int i = Utils.parseTimeDuration(str);
 			if (i == -1) {
@@ -107,7 +107,7 @@ public abstract class MyCommand extends MySubCommand {
 			}
 			return i;
 		}
-		
+
 		public static int parseTickDuration(String str) throws MyCommandException {
 			int i = UtilsMc.parseTickDuration(str);
 			if (i == -1) {
@@ -115,23 +115,23 @@ public abstract class MyCommand extends MySubCommand {
 			}
 			return i;
 		}
-		
+
 		private CommandUtils() { }
 	}
-	
+
 	public enum CommandType {
 		DEFAULT(""), // All
 		PLAYER_ONLY("§cThis command can only be used by players."), // Player
 		NO_PLAYER("§cThis command cannot be used by players."), // Console, Remote, Block
 		CONSOLE_ONLY("§cThis command can only be used on the console."), // Console, Remote
 		BLOCK_ONLY("§cThis command can only be used on a command block."); // Block
-		
+
 		public final String INVALID_MESSAGE;
-		
+
 		private CommandType(String invalidMessage) {
 			INVALID_MESSAGE = invalidMessage;
 		}
-		
+
 		public boolean isValidSender(CommandSender sender) {
 			switch (this) {
 			case PLAYER_ONLY:
@@ -148,7 +148,7 @@ public abstract class MyCommand extends MySubCommand {
 			return false;
 		}
 	}
-	
+
 	@Retention(RetentionPolicy.RUNTIME)
 	public @interface Command {
 		String args();
@@ -157,20 +157,20 @@ public abstract class MyCommand extends MySubCommand {
 		int minargs() default 0;
 		int maxargs() default 0;
 	}
-	
+
 	@Retention(RetentionPolicy.RUNTIME)
 	public @interface TabComplete {
 		String args();
 	}
-	
+
 	private InternalCommand _internalCommand;
 	private Plugin _owner;
-	
+
 	public MyCommand(String name, String ...aliases) {
 		_internalCommand = new InternalCommand(this, name);
 		_internalCommand.setAliases(Arrays.asList(aliases));
 	}
-	
+
 	void setup(SimpleCommandMap commandMap, Plugin owner) {
 		// Set the owner and permissions.
 		_owner = owner;
@@ -179,13 +179,13 @@ public abstract class MyCommand extends MySubCommand {
 		// Register the command with Bukkit.
 		commandMap.register(owner.getName(), _internalCommand);
 	}
-	
+
 	public final String getName() {
 		return _internalCommand.getName();
 	}
-	
+
 	public final Plugin getOwner() {
 		return _owner;
 	}
-	
+
 }

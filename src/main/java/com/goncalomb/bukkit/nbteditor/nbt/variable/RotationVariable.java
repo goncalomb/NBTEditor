@@ -24,7 +24,7 @@ import org.bukkit.entity.Player;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public class RotationVariable extends NBTGenericVariable {
-	
+
 	private int _count;
 	private String _parentNbtKey;
 
@@ -37,7 +37,7 @@ public class RotationVariable extends NBTGenericVariable {
 	public RotationVariable(String nbtKey) {
 		this(nbtKey, false, null);
 	}
-	
+
 	boolean set(NBTTagCompound data, String value, Player player) {
 		String[] pieces = value.replace(',', '.').split("\\s+", _count);
 		if (pieces.length == _count) {
@@ -62,7 +62,7 @@ public class RotationVariable extends NBTGenericVariable {
 		}
 		return false;
 	}
-	
+
 	String get(NBTTagCompound data) {
 		if (_parentNbtKey != null) {
 			data = data.getCompound(_parentNbtKey);
@@ -80,7 +80,7 @@ public class RotationVariable extends NBTGenericVariable {
 		}
 		return null;
 	}
-	
+
 	void clear(NBTTagCompound data) {
 		if (_parentNbtKey == null) {
 			super.clear(data);
@@ -94,7 +94,7 @@ public class RotationVariable extends NBTGenericVariable {
 			}
 		}
 	}
-	
+
 	String getFormat() {
 		if (_count == 3) {
 			return "Set of 3 decimal numbers: x , y and z angles, e.g. '25.6 -90 23'.";

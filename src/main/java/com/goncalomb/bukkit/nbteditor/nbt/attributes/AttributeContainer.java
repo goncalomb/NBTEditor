@@ -27,9 +27,9 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 
 public final class AttributeContainer {
-	
+
 	private LinkedHashMap<AttributeType, Attribute> _attributes = new LinkedHashMap<AttributeType, Attribute>();
-	
+
 	public static AttributeContainer fromNBT(NBTTagList data) {
 		AttributeContainer container = new AttributeContainer();
 		for (Object attr : data.getAsArray()) {
@@ -37,31 +37,31 @@ public final class AttributeContainer {
 		}
 		return container;
 	}
-	
+
 	public Attribute getAttribute(AttributeType type) {
 		return _attributes.get(type);
 	}
-	
+
 	public void setAttribute(Attribute attribute) {
 		_attributes.put(attribute.getType(), attribute);
 	}
-	
+
 	public Attribute removeAttribute(AttributeType type) {
 		return _attributes.remove(type);
 	}
-	
+
 	public int size() {
 		return _attributes.size();
 	}
-	
+
 	public Collection<Attribute> values() {
 		return Collections.unmodifiableCollection(_attributes.values());
 	}
-	
+
 	public Collection<AttributeType> types() {
 		return Collections.unmodifiableCollection(_attributes.keySet());
 	}
-	
+
 	public NBTTagList toNBT() {
 		NBTTagList data = new NBTTagList();
 		for (Attribute attribute : _attributes.values()) {
@@ -69,5 +69,5 @@ public final class AttributeContainer {
 		}
 		return data;
 	}
-	
+
 }

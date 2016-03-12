@@ -30,17 +30,17 @@ import com.goncalomb.bukkit.customitems.api.CustomBow;
 import com.goncalomb.bukkit.customitems.api.DelayedPlayerDetails;
 
 public final class TorchBow extends CustomBow {
-	
+
 	public TorchBow() {
 		super("torch-bow", ChatColor.YELLOW + "Torch Bow");
 		setLore("§bLight the way with arrows.");
 	}
-	
+
 	@Override
 	public void onShootBow(EntityShootBowEvent event, DelayedPlayerDetails details) {
 		event.getProjectile().setFireTicks(Integer.MAX_VALUE);
 	}
-	
+
 	@Override
 	public void onProjectileHit(ProjectileHitEvent event, DelayedPlayerDetails details) {
 		event.getEntity().remove();
@@ -49,7 +49,7 @@ public final class TorchBow extends CustomBow {
 			b.setType(Material.TORCH);
 		}
 	}
-	
+
 	@Override
 	public void onProjectileDamageEntity(EntityDamageByEntityEvent event, DelayedPlayerDetails details) {
 		event.setCancelled(true);

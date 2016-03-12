@@ -29,11 +29,11 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public final class PotionEffectsMap {
-	
+
 	private final static NamingMap<PotionEffectType> _potionEffects = new NamingMap<PotionEffectType>();
 	private final static List<String> _potionEffectNames;
 	private final static String _potionEffectNamesAsString;
-	
+
 	static {
 		_potionEffects.put("Speed", PotionEffectType.SPEED);
 		_potionEffects.put("Slowness", PotionEffectType.SLOW);
@@ -62,28 +62,28 @@ public final class PotionEffectsMap {
 		_potionEffects.put("Levitation", PotionEffectType.LEVITATION);
 		_potionEffects.put("Luck", PotionEffectType.LUCK);
 		_potionEffects.put("BadLuck", PotionEffectType.UNLUCK);
-		
+
 		List<String> potionEffectNames = new ArrayList<String>(_potionEffects.names());
 		Collections.sort(potionEffectNames, String.CASE_INSENSITIVE_ORDER);
 		_potionEffectNames = Collections.unmodifiableList(potionEffectNames);
-		
+
 		_potionEffectNamesAsString = StringUtils.join(_potionEffectNames, ", ");
 	}
-	
+
 	private PotionEffectsMap() { }
-	
+
 	public static PotionEffectType getByName(String name) {
 		return _potionEffects.getByName(name);
 	}
-	
+
 	public static String getName(PotionEffectType effect) {
 		return _potionEffects.getName(effect);
 	}
-	
+
 	public static List<String> getNames() {
 		return _potionEffectNames;
 	}
-	
+
 	public static List<String> getNames(Collection<PotionEffectType> effects) {
 		ArrayList<String> names = new ArrayList<String>(effects.size());
 		for (PotionEffectType effect : effects) {
@@ -91,7 +91,7 @@ public final class PotionEffectsMap {
 		}
 		return names;
 	}
-	
+
 	public static List<String> getNamez(Collection<PotionEffect> effects) {
 		ArrayList<String> names = new ArrayList<String>(effects.size());
 		for (PotionEffect effect : effects) {
@@ -99,9 +99,9 @@ public final class PotionEffectsMap {
 		}
 		return names;
 	}
-	
+
 	public static String getNamesAsString() {
 		return _potionEffectNamesAsString;
 	}
-	
+
 }

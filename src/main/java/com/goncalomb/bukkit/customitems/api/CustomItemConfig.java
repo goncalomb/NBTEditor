@@ -29,19 +29,19 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 final class CustomItemConfig {
-	
+
 	private FileConfiguration _defaultConfig;
 	private ConfigurationSection _defaultItemSection;
 	private File _configFile;
 	private FileConfiguration _config;
 	private ConfigurationSection _itemsSection;
-	
+
 	public CustomItemConfig(String group) {
 		_defaultConfig = new YamlConfiguration();
 		_defaultItemSection = _defaultConfig.createSection("custom-items");
-		
+
 		_configFile = new File(CustomItemManager._plugin.getDataFolder(), "CustomItems" + File.separator + group + ".yml");
-		
+
 		if (!_configFile.exists()) {
 			_config = new YamlConfiguration();
 			_config.options().header(
@@ -53,15 +53,15 @@ final class CustomItemConfig {
 		} else {
 			_config = YamlConfiguration.loadConfiguration(_configFile);
 		}
-		
+
 		_itemsSection = _config.getConfigurationSection("custom-items");
 		if (_itemsSection == null) {
 			_itemsSection = _config.createSection("custom-items");
 		}
-		
+
 		_config.setDefaults(_defaultConfig);
 	}
-	
+
 	public void configureItem(CustomItem item) {
 		if (!_itemsSection.isSet(item.getSlug())) {
 			_itemsSection.createSection(item.getSlug(), item._defaultConfig);
@@ -70,12 +70,12 @@ final class CustomItemConfig {
 		}
 		item.applyConfig(_itemsSection.getConfigurationSection(item.getSlug()));
 	}
-	
+
 	public void removeItem(CustomItem item) {
 		_itemsSection.set(item.getSlug(), null);
 		_defaultItemSection.set(item.getSlug(), null);
 	}
-	
+
 	public void saveToFile() {
 		try {
 			_config.save(_configFile);
@@ -83,5 +83,5 @@ final class CustomItemConfig {
 			Bukkit.getLogger().log(Level.SEVERE, "Cannot save file " + _configFile, e);
 		}
 	}
-	
+
 }

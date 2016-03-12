@@ -26,9 +26,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
 final class InternalCommand extends Command {
-	
+
 	private MyCommand _command;
-	
+
 	public InternalCommand(MyCommand command, String name) {
 		super(name);
 		_command = command;
@@ -46,7 +46,7 @@ final class InternalCommand extends Command {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
 		if (getOwner().isEnabled()) {
@@ -54,13 +54,13 @@ final class InternalCommand extends Command {
 		}
 		return null;
 	}
-	
+
 	Plugin getOwner() {
 		return _command.getOwner();
 	}
-	
+
 	MyCommand getCommand() {
 		return _command;
 	}
-	
+
 }
