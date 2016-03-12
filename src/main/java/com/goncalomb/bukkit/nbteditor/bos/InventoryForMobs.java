@@ -39,6 +39,9 @@ public final class InventoryForMobs extends InventoryForEquippable<MobNBT> {
 		} else {
 			setPlaceholder(8, potionPlaceholder);
 		}
+		// XXX: remove this alert, implement default potion fallback on NBTUtils
+		owner.sendMessage("§eWhen setting effects for Mobs you must use a custom potion. §nNormal potions don't work.");
+		owner.sendMessage("§eGrab any potion and use '/nbtpotion' to edit.");
 	}
 
 	@Override
@@ -53,7 +56,8 @@ public final class InventoryForMobs extends InventoryForEquippable<MobNBT> {
 			itemToCheck = event.getCursor();
 		}
 		if (itemToCheck != null) {
-			if (itemToCheck.getType() != Material.POTION) {
+			Material type = itemToCheck.getType();
+			if (type != Material.POTION && type != Material.SPLASH_POTION && type != Material.LINGERING_POTION) {
 				((Player)event.getWhoClicked()).sendMessage("§cThat must be a potion!");
 				event.setCancelled(true);
 			}

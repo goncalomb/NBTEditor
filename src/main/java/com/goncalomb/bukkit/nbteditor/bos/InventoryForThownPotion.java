@@ -20,6 +20,7 @@
 package com.goncalomb.bukkit.nbteditor.bos;
 
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
@@ -32,11 +33,17 @@ public final class InventoryForThownPotion extends InventoryForSingleItem<Thrown
 
 	public InventoryForThownPotion(BookOfSouls bos, Player owner) {
 		super(bos, owner, "Define the potion here...", placeholder);
+		if (bos.getEntityNBT().getEntityType() == EntityType.AREA_EFFECT_CLOUD) {
+			// XXX: remove this alert, implement default potion fallback on NBTUtils
+			owner.sendMessage("§eWhen setting effects for AreaEffectCloud you must use a custom potion. §nNormal potions don't work.");
+			owner.sendMessage("§eGrab any potion and use '/nbtpotion' to edit.");
+		}
 	}
 
 	@Override
 	protected boolean isValidItem(Player player, ItemStack item) {
-		if (item.getType() != Material.POTION) {
+		Material type = item.getType();
+		if (type != Material.POTION && type != Material.SPLASH_POTION && type != Material.LINGERING_POTION) {
 			player.sendMessage("§cThat must be a must be a potion!");
 			return false;
 		}

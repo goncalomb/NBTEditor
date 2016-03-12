@@ -29,6 +29,8 @@ import org.bukkit.potion.PotionEffectType;
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.namemaps.PotionEffectsMap;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 
 public class CommandNBTPotion extends MyCommand {
@@ -53,6 +55,14 @@ public class CommandNBTPotion extends MyCommand {
 				if (args.length == 3) {
 					duration = CommandUtils.parseTickDuration(args[2]);
 				}
+				// Remove default effect
+				// XXX: change this to meta.setType("minecraft:empty") when available upstream
+				NBTTagCompound tag = NBTUtils.getItemStackTag(item.item);
+				tag.setString("Potion", "minecraft:empty");
+				NBTUtils.setItemStackTag(item.item, tag);
+				// Refresh meta :(
+				item = new HandItemWrapper.Potion((Player) sender);
+				// ---------------------
 				if(level == 0) {
 					// .removeCustomEffect(...); This is bugged, it should use .equals(...) to compare effects.
 					// So we remove all effects and add them again.
@@ -81,4 +91,5 @@ public class CommandNBTPotion extends MyCommand {
 	public List<String> tab(CommandSender sender, String[] args) {
 		return (args.length == 1 ? Utils.getElementsWithPrefix(PotionEffectsMap.getNames(), args[0]) : null);
 	}
+
 }

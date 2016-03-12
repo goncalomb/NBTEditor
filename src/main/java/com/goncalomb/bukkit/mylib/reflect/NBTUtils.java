@@ -157,25 +157,23 @@ public final class NBTUtils {
 			return tag.getList("CustomPotionEffects").clone();
 		}
 		// Fallback to default potion effect.
-		Collection<PotionEffect> effects = Potion.fromItemStack(potion).getEffects();
-		NBTTagList effectList = new NBTTagList();
-		for (PotionEffect effect : effects) {
-			NBTTagCompound effectTag = new NBTTagCompound();
-			effectTag.setByte("Id", (byte)effect.getType().getId());
-			effectTag.setByte("Amplifier", (byte)effect.getAmplifier());
-			effectTag.setInt("Duration", effect.getDuration());
-			effectList.add(effectTag);
-		}
-		return effectList;
+
+		// XXX: implement fallback
+
+		// Finding the default potion effect is not trivial on 1.9.
+		// Wait until org.bukkit.craftbukkit.potion.CraftPotionUtil is available upstream.
+		// For now, display some alert messages on InventoryForMobs and InventoryForThrownPotion.
+		return new NBTTagList();
 	}
 
 	public static ItemStack potionFromNBTEffectsList(NBTTagList effects) {
 		NBTTagCompound tag = new NBTTagCompound();
 		tag.setList("CustomPotionEffects", effects.clone());
+		tag.setString("Potion", "minecraft:empty");
 		NBTTagCompound data = new NBTTagCompound();
-		data.setShort("id", (short) Material.POTION.getId());
+		data.setString("id", "minecraft:potion");
 		data.setByte("Count", (byte) 1);
-		data.setShort("Damage", (short) (new Potion(PotionType.SPEED, 1)).toDamageValue());
+		data.setShort("Damage", (short) 0);
 		data.setCompound("tag", tag);
 		return itemStackFromNBTData(data);
 	}
