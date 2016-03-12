@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -103,7 +104,8 @@ public class BookOfSouls {
 					}
 					return EntityNBT.unserialize(data);
 				}
-			} catch (Throwable e) {
+			} catch (Exception e) {
+				_plugin.getLogger().log(Level.WARNING, "Corrupt Book of Souls.", e);
 				return null;
 			}
 		}
