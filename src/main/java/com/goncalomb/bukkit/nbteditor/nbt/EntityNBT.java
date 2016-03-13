@@ -118,6 +118,7 @@ public class EntityNBT extends EntityNBTBase {
 		variables.add("Air", new ShortVariable("Air", (short) 0, (short) 200));
 		variables.add("Invulnerable", new BooleanVariable("Invulnerable"));
 		variables.add("Silent", new BooleanVariable("Silent"));
+		variables.add("Glowing", new BooleanVariable("Glowing"));
 		registerVariables(EntityNBT.class, variables);
 
 		variables = new NBTGenericVariableContainer("Pig");
@@ -198,6 +199,7 @@ public class EntityNBT extends EntityNBTBase {
 		variables = new NBTGenericVariableContainer("Arrow");
 		variables.add("Pickup", new ByteVariable("pickup", (byte) 0, (byte) 2));
 		variables.add("Player", new BooleanVariable("player"));
+		variables.add("Life", new ShortVariable("life"));
 		variables.add("Damage", new DoubleVariable("damage"));
 		registerVariables(EntityType.ARROW, variables);
 
@@ -208,6 +210,10 @@ public class EntityNBT extends EntityNBTBase {
 		variables = new NBTGenericVariableContainer("LargeFireball");
 		variables.add("ExplosionPower", new IntegerVariable("ExplosionPower", 0, 25)); // Limited to 25
 		registerVariables(EntityType.FIREBALL, variables);
+
+		variables = new NBTGenericVariableContainer("Boat");
+		variables.add("Type", new StringVariable("Type"));
+		registerVariables(EntityType.BOAT, variables);
 
 		variables = new NBTGenericVariableContainer("ArmorStand");
 		variables.add("Marker", new BooleanVariable("Marker"));

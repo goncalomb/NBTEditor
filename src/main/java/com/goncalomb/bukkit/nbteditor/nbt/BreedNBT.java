@@ -19,6 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
+import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 
@@ -28,6 +29,8 @@ public class BreedNBT extends MobNBT {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Breed");
 		variables.add("InLove", new IntegerVariable("InLove", 0));
 		variables.add("Age", new IntegerVariable("Age"));
+		variables.add("ForcedAge", new IntegerVariable("ForcedAge")); // XXX: not working?
+		variables.add("AgeLocked", new BooleanVariable("AgeLocked"));
 		registerVariables(BreedNBT.class, variables);
 	}
 

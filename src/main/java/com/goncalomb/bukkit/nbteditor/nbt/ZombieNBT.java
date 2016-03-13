@@ -31,6 +31,7 @@ public class ZombieNBT extends MobNBT {
 		variables.add("IsBaby", new BooleanVariable("IsBaby"));
 		variables.add("ConversionTime", new IntegerVariable("ConversionTime", -1));
 		variables.add("CanBreakDoors", new BooleanVariable("CanBreakDoors"));
+		variables.add("VillagerProfession", new IntegerVariable("VillagerProfession", 0, 4));
 		registerVariables(ZombieNBT.class, variables);
 	}
 
