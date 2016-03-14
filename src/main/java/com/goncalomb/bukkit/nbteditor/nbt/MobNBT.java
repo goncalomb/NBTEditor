@@ -37,7 +37,7 @@ public class MobNBT extends EquippableNBT {
 
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Mob");
-		variables.add("Health", new FloatVariable("HealF", 0.0f));
+		variables.add("Health", new FloatVariable("Health", 0.0f));
 		variables.add("AttackTime", new ShortVariable("AttackTime"));
 		variables.add("HurtTime", new ShortVariable("HurtTime"));
 		variables.add("DeathTime", new ShortVariable("DeathTime"));
@@ -103,6 +103,10 @@ public class MobNBT extends EquippableNBT {
 	void onUnserialize() {
 		super.onUnserialize();
 		// Backward compatibility with pre-1.9.
+		if (_data.hasKey("HealF")) {
+			_data.setFloat("Health", _data.getFloat("HealF"));
+			_data.remove("HealF");
+		}
 		if (_data.hasKey("DropChances")) {
 			Object[] drop = _data.getListAsArray("DropChances");
 			_data.setList("HandDropChances", new NBTTagList(drop[0], Float.valueOf(0f)));
