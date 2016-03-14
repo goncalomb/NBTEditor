@@ -206,7 +206,7 @@ public class CommandBOS extends MyCommand {
 		Player player = (Player) sender;
 		BookOfSouls bos = getBos(player);
 		if (!bos.openInventory(player)) {
-			player.sendMessage("§cThat must be a Mob, ArmorStand, Item, ThrownPotion, AreaEffectCloud, FireworkRocket, MinecartChest or MinecartHopper entity!");
+			player.sendMessage("§cThat must be a Mob, ArmorStand, Item, ThrownPotion, AreaEffectCloud, TippedArrow, FireworkRocket, MinecartChest or MinecartHopper entity!");
 		}
 		return true;
 	}

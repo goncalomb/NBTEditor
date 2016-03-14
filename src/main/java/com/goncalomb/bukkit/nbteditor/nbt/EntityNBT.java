@@ -26,7 +26,6 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BlockVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ByteVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.DoubleVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.FloatVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
@@ -83,7 +82,9 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.ENDER_CRYSTAL, EntityNBT.class);
 		registerEntity(EntityType.FIREWORK, FireworkNBT.class);
 
-		registerEntity(EntityType.ARROW, EntityNBT.class);
+		registerEntity(EntityType.ARROW, ArrowNBT.class);
+		registerEntity(EntityType.SPECTRAL_ARROW, ArrowNBT.class);
+		registerEntity(EntityType.TIPPED_ARROW, TippedArrowNBT.class);
 		registerEntity(EntityType.ENDER_PEARL, EntityNBT.class);
 		registerEntity(EntityType.THROWN_EXP_BOTTLE, EntityNBT.class);
 		registerEntity(EntityType.SNOWBALL, EntityNBT.class);
@@ -196,12 +197,9 @@ public class EntityNBT extends EntityNBTBase {
 		registerVariables(EntityType.PRIMED_TNT, variables);
 
 
-		variables = new NBTGenericVariableContainer("Arrow");
-		variables.add("Pickup", new ByteVariable("pickup", (byte) 0, (byte) 2));
-		variables.add("Player", new BooleanVariable("player"));
-		variables.add("Life", new ShortVariable("life"));
-		variables.add("Damage", new DoubleVariable("damage"));
-		registerVariables(EntityType.ARROW, variables);
+		variables = new NBTGenericVariableContainer("SpectralArrow");
+		variables.add("Duration", new IntegerVariable("Duration", 0));
+		registerVariables(EntityType.SPECTRAL_ARROW, variables);
 
 		variables = new NBTGenericVariableContainer("Enderpearl");
 		variables.add("Owner", new StringVariable("ownerName"));
