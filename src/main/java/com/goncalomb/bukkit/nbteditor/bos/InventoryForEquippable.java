@@ -35,20 +35,28 @@ public class InventoryForEquippable<T extends EquippableNBT> extends InventoryFo
 		createPlaceholder(Material.PAPER, "§6Chest Equipment"),
 		createPlaceholder(Material.PAPER, "§6Legs Equipment"),
 		createPlaceholder(Material.PAPER, "§6Feet Equipment"),
-		createPlaceholder(Material.PAPER, "§6Hand Item")
+		createPlaceholder(Material.PAPER, "§6Main Hand Item"),
+		createPlaceholder(Material.PAPER, "§6Off Hand Item")
 	};
 
 	public InventoryForEquippable(BookOfSouls bos, Player owner) {
 		super(bos, owner, 9, "Inventory" + " - " + ChatColor.BLACK + EntityTypeMap.getName(bos.getEntityNBT().getEntityType()));
-		ItemStack[] equip = _entityNbt.getEquipment();
-		for (int i = 0; i < 5; ++i) {
-			if (equip[i] != null && equip[i].getType() != Material.AIR) {
-				setItem(4 - i, equip[i]);
+		ItemStack[] armorItems = _entityNbt.getArmorItems();
+		for (int i = 0; i < 4; ++i) {
+			if (armorItems[3 - i] != null && armorItems[3 - i].getType() != Material.AIR) {
+				setItem(i, armorItems[3 - i]);
 			} else {
-				setPlaceholder(4 - i, placeholders[4 - i]);
+				setPlaceholder(i, placeholders[i]);
 			}
 		}
-		setItem(5, ITEM_FILLER);
+		ItemStack[] handItems = _entityNbt.getHandItems();
+		for (int i = 0; i < 2; ++i) {
+			if (handItems[i] != null && handItems[i].getType() != Material.AIR) {
+				setItem(4 + i, handItems[i]);
+			} else {
+				setPlaceholder(4 + i, placeholders[4 + i]);
+			}
+		}
 		setItem(6, ITEM_FILLER);
 		setItem(7, ITEM_FILLER);
 		setItem(8, ITEM_FILLER);
@@ -56,9 +64,10 @@ public class InventoryForEquippable<T extends EquippableNBT> extends InventoryFo
 
 	@Override
 	protected void inventoryClose(InventoryCloseEvent event) {
-		_entityNbt.setEquipment(getItem(4), getItem(3), getItem(2), getItem(1), getItem(0));
+		_entityNbt.setArmorItems(getItem(3), getItem(2), getItem(1), getItem(0));
+		_entityNbt.setHandItems(getItem(4), getItem(5));
 		_bos.saveBook();
-		((Player) event.getPlayer()).sendMessage("§aItems set.");
+		((Player) event.getPlayer()).sendMessage("§aEquipment set.");
 	}
 
 }

@@ -65,7 +65,7 @@ public class BookOfSouls {
 	private static CustomItem _bosCustomItem;
 
 	private static Plugin _plugin = null;
-	private static final String[] _mobEquipSlotName = new String[] { "Head Equipment", "Chest Equipment", "Legs Equipment", "Feet Equipment", "Hand Item" };
+	private static final String[] _mobEquipSlotName = new String[] { "Head Equipment", "Chest Equipment", "Legs Equipment", "Feet Equipment", "Main Hand Item", "Off Hand Item" };
 
 	private ItemStack _book;
 	private EntityNBT _entityNbt;
@@ -258,12 +258,24 @@ public class BookOfSouls {
 
 		if (_entityNbt instanceof EquippableNBT) {
 			sb = new StringBuilder();
-			sb.append("" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Equipment:\n");
-			ItemStack[] items = ((EquippableNBT) _entityNbt).getEquipment();
-			for (int i = 0; i < 5; ++i) {
+			sb.append("" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Armor Items:\n");
+			ItemStack[] items = ((EquippableNBT) _entityNbt).getArmorItems();
+			for (int i = 0; i < 4; ++i) {
 				sb.append(ChatColor.DARK_BLUE + _mobEquipSlotName[i] + ":\n");
-				if (items[4 - i] != null) {
-					sb.append("  " + ChatColor.BLACK + items[4 - i].getType().name() + ":" + items[4 - i].getDurability() + "(" + items[4 - i].getAmount() + ")" + "\n");
+				if (items[3 - i] != null) {
+					sb.append("  " + ChatColor.BLACK + items[3 - i].getType().name() + ":" + items[3 - i].getDurability() + "(" + items[3 - i].getAmount() + ")" + "\n");
+				} else {
+					sb.append("  " + ChatColor.BLACK + ChatColor.ITALIC +"none\n");
+				}
+			}
+			meta.addPage(sb.toString());
+			sb = new StringBuilder();
+			sb.append("" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Hand Items:\n");
+			items = ((EquippableNBT) _entityNbt).getHandItems();
+			for (int i = 0; i < 2; ++i) {
+				sb.append(ChatColor.DARK_BLUE + _mobEquipSlotName[4 + i] + ":\n");
+				if (items[i] != null) {
+					sb.append("  " + ChatColor.BLACK + items[i].getType().name() + ":" + items[i].getDurability() + "(" + items[i].getAmount() + ")" + "\n");
 				} else {
 					sb.append("  " + ChatColor.BLACK + ChatColor.ITALIC +"none\n");
 				}

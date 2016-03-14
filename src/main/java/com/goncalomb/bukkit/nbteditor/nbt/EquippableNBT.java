@@ -19,48 +19,77 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
+import java.util.Arrays;
+
 import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
 public class EquippableNBT extends EntityNBT {
 
-	private ItemStack[] _equipment;
-
-	public void setEquipment(ItemStack hand, ItemStack feet, ItemStack legs, ItemStack chest, ItemStack head) {
-		if (hand == null && feet == null && legs == null && chest == null && head == null) {
-			clearEquipment();
+	private void setItems(String key, ItemStack... items) {
+		if (items == null) {
+			_data.remove(key);
 			return;
 		}
-		_equipment = new ItemStack[] { hand, feet, legs, chest, head };
-		Object[] equipmentData = new Object[5];
-		for (int i = 0; i < 5; ++i) {
-			if (_equipment[i] != null) {
-				equipmentData[i] = NBTUtils.itemStackToNBTData(_equipment[i]);
+		Object[] data = new Object[items.length];
+		boolean allNull = true;
+		for (int i = 0; i < items.length; i++) {
+			if (items[i] == null) {
+				data[i] = new NBTTagCompound();
 			} else {
-				equipmentData[i] = new NBTTagCompound();
+				data[i] = NBTUtils.itemStackToNBTData(items[i]);
+				allNull = false;
 			}
 		}
-		_data.setList("Equipment", equipmentData);
+		if (allNull) {
+			_data.remove(key);
+		} else {
+			_data.setList(key, data);
+		}
 	}
 
-	public ItemStack[] getEquipment() {
-		if (_equipment == null) {
-			_equipment = new ItemStack[5];
-			if (_data.hasKey("Equipment")) {
-				Object[] equipmentData = _data.getListAsArray("Equipment");
-				for (int i = 0; i < 5; ++i) {
-					_equipment[i] = NBTUtils.itemStackFromNBTData((NBTTagCompound) equipmentData[i]);
+	private ItemStack[] getItems(String key, int size) {
+		ItemStack[] items = new ItemStack[size];
+		Object[] data = _data.getListAsArray(key);
+		if (data != null) {
+			for (int i = 0; i < data.length; i++) {
+				if (data[i] != null && data[i] instanceof NBTTagCompound) {
+					items[i] = NBTUtils.itemStackFromNBTData((NBTTagCompound) data[i]);
 				}
 			}
 		}
-		return _equipment;
+		return items;
 	}
 
-	public void clearEquipment() {
-		_data.remove("Equipment");
-		_equipment = null;
+	public void setArmorItems(ItemStack feet, ItemStack legs, ItemStack chest, ItemStack head) {
+		setItems("ArmorItems", feet, legs, chest, head);
+	}
+
+	public ItemStack[] getArmorItems() {
+		return getItems("ArmorItems", 4);
+	}
+
+	public void setHandItems(ItemStack main, ItemStack off) {
+		setItems("HandItems", main, off);
+	}
+
+	public ItemStack[] getHandItems() {
+		return getItems("HandItems", 2);
+	}
+
+	@Override
+	void onUnserialize() {
+		super.onUnserialize();
+		// Backward compatibility with pre-1.9.
+		if (_data.hasKey("Equipment")) {
+			Object[] equip = _data.getListAsArray("Equipment");
+			_data.setList("HandItems", new NBTTagList(equip[0], new NBTTagCompound()));
+			_data.setList("ArmorItems", new NBTTagList(Arrays.copyOfRange(equip, 1, 5)));
+			_data.remove("Equipment");
+		}
 	}
 
 }

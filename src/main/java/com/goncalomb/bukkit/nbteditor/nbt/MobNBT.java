@@ -46,6 +46,7 @@ public class MobNBT extends EquippableNBT {
 		variables.add("Persistent", new BooleanVariable("PersistenceRequired"));
 		variables.add("Name", new StringVariable("CustomName"));
 		variables.add("NameVisible", new BooleanVariable("CustomNameVisible"));
+		variables.add("LeftHanded", new BooleanVariable("LeftHanded"));
 		registerVariables(MobNBT.class, variables);
 	}
 
@@ -95,6 +96,18 @@ public class MobNBT extends EquippableNBT {
 			_data.remove("Attributes");
 		} else {
 			_data.setList("Attributes", container.toNBT());
+		}
+	}
+
+	@Override
+	void onUnserialize() {
+		super.onUnserialize();
+		// Backward compatibility with pre-1.9.
+		if (_data.hasKey("DropChances")) {
+			Object[] drop = _data.getListAsArray("DropChances");
+			_data.setList("HandDropChances", new NBTTagList(drop[0], Float.valueOf(0f)));
+			_data.setList("ArmorDropChances", new NBTTagList(Arrays.copyOfRange(drop, 1, 5)));
+			_data.remove("DropChances");
 		}
 	}
 

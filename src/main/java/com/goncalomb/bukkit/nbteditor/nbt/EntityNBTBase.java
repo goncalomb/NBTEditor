@@ -119,7 +119,9 @@ abstract class EntityNBTBase {
 	public static EntityNBT unserialize(String serializedData) {
 		try {
 			NBTTagCompound data = NBTTagCompound.unserialize(Base64.decode(serializedData));
-			return fromEntityType(EntityTypeMap.getByName(data.getString("id")), data);
+			EntityNBT entityNBT = fromEntityType(EntityTypeMap.getByName(data.getString("id")), data);
+			entityNBT.onUnserialize();
+			return entityNBT;
 		} catch (Throwable e) {
 			throw new RuntimeException("Error unserializing EntityNBT.", e);
 		}
@@ -187,6 +189,8 @@ abstract class EntityNBTBase {
 			throw new RuntimeException("Error serializing EntityNBT.", e);
 		}
 	}
+
+	void onUnserialize() { }
 
 	public EntityNBT clone() {
 		return fromEntityType(_entityType, _data.clone());
