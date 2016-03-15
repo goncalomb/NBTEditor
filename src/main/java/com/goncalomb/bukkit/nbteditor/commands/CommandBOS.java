@@ -397,4 +397,12 @@ public class CommandBOS extends MyCommand {
 		return true;
 	}
 
+	@Command(args = "refresh", type = CommandType.PLAYER_ONLY)
+	public boolean refreshCommand(CommandSender sender, String[] args) throws MyCommandException {
+		BookOfSouls bos = getBos((Player) sender);
+		bos.saveBook(true);
+		sender.sendMessage("§aBook of Souls refreshed.");
+		return true;
+	}
+
 }
