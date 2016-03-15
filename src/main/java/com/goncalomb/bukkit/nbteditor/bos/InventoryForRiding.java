@@ -39,9 +39,9 @@ public final class InventoryForRiding extends InventoryForBos<EntityNBT> {
 		setPlaceholder(53, placeholder);
 		int i = 0;
 		EntityNBT entityNBT = _entityNbt;
-		while ((entityNBT = entityNBT.getRiding()) != null) {
+		while ((entityNBT = entityNBT.getFirstPassenger()) != null) {
 			EntityNBT riding = entityNBT.clone();
-			riding.setRiding((EntityNBT[]) null);
+			riding.setRiders((EntityNBT[]) null);
 			setItem(i++, (new BookOfSouls(riding)).getBook());
 		}
 	}
@@ -62,7 +62,7 @@ public final class InventoryForRiding extends InventoryForBos<EntityNBT> {
 				if (entityNbt == null) {
 					player.sendMessage("§cThat Book of Souls is corrupted!");
 					event.setCancelled(true);
-				} else if (entityNbt.getRiding() != null) {
+				} else if (entityNbt.getFirstPassenger() != null) {
 					player.sendMessage("§cThat book already has riding entities.");
 					event.setCancelled(true);
 				}
@@ -79,7 +79,7 @@ public final class InventoryForRiding extends InventoryForBos<EntityNBT> {
 				rides.add(BookOfSouls.bookToEntityNBT(item));
 			}
 		}
-		_entityNbt.setRiding(rides.toArray(new EntityNBT[rides.size()]));
+		_entityNbt.setRiders(rides.toArray(new EntityNBT[rides.size()]));
 		_bos.saveBook();
 		((Player)event.getPlayer()).sendMessage("§aRiding entities set.");
 	}

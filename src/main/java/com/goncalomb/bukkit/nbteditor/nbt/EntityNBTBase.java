@@ -29,6 +29,7 @@ import org.bukkit.entity.EntityType;
 
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
@@ -119,6 +120,17 @@ abstract class EntityNBTBase {
 	public static EntityNBT unserialize(String serializedData) {
 		try {
 			NBTTagCompound data = NBTTagCompound.unserialize(Base64.decode(serializedData));
+			
+			// Backward compatibility with pre-1.9.
+			// On 1.9 the entities are stacked for bottom to top.
+			// This conversion needs to happen before instantiating any class, we cannot use onUnserialize.
+			while (data.hasKey("Riding")) {
+				NBTTagCompound riding = data.getCompound("Riding");
+				data.remove("Riding");
+				riding.setList("Passengers", new NBTTagList(data));
+				data = riding;
+			}
+			
 			EntityNBT entityNBT = fromEntityType(EntityTypeMap.getByName(data.getString("id")), data);
 			entityNBT.onUnserialize();
 			return entityNBT;

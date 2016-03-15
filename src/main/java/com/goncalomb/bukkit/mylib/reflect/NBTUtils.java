@@ -41,11 +41,7 @@ public final class NBTUtils {
 
 	// Minecraft's Entity Class;
 	private static Method _Entity_e; // Save data to NBTTagCompound.
-	private static Method _Entity_startRiding;
 	private static Method _Entity_getBukkitEntity;
-	private static Method _Entity_setPositionRotation;
-	private static Field _Entity_pitch;
-	private static Field _Entity_yaw;
 
 	// CraftEntity Class
 	private static Method _CraftEntity_getHandle;
@@ -58,11 +54,8 @@ public final class NBTUtils {
 	private static Method _CraftWorld_getHandle;
 	private static Method _CraftWorld_getTileEntityAt;
 
-	// Minecraft's World Class
-	private static Method _World_addEntity;
-
-	// Minecraft's EntityTypes Class
-	private static Method _EntityTypes_a; // Creates an entity from a NBTCompound.
+	// Minecraft's ChunkRegionLoader Class
+	private static Method _ChunkRegionLoader_a; // Spawn an entity from a NBTCompound.
 
 	static void prepareReflection() throws SecurityException, NoSuchMethodException, NoSuchFieldException {
 		Class<?> nbtTagCompoundClass = BukkitReflect.getMinecraftClass("NBTTagCompound");
@@ -80,10 +73,6 @@ public final class NBTUtils {
 
 		Class<?> minecraftEntityClass = BukkitReflect.getMinecraftClass("Entity");
 		_Entity_e = minecraftEntityClass.getMethod("e", nbtTagCompoundClass);
-		_Entity_setPositionRotation = minecraftEntityClass.getMethod("setPositionRotation", double.class, double.class, double.class, float.class, float.class);
-		_Entity_yaw = minecraftEntityClass.getField("yaw");
-		_Entity_pitch = minecraftEntityClass.getField("pitch");
-		_Entity_startRiding = minecraftEntityClass.getMethod("startRiding", minecraftEntityClass);
 		_Entity_getBukkitEntity = minecraftEntityClass.getMethod("getBukkitEntity");
 
 		Class<?> craftEntityClass = BukkitReflect.getCraftBukkitClass("entity.CraftEntity");
@@ -98,16 +87,15 @@ public final class NBTUtils {
 		_CraftWorld_getTileEntityAt = craftWorldClass.getMethod("getTileEntityAt", int.class, int.class, int.class);
 
 		Class<?> minecraftWorldClass = BukkitReflect.getMinecraftClass("World");
-		_World_addEntity = minecraftWorldClass.getMethod("addEntity", minecraftEntityClass);
-
-		Class<?> minecraftEntityTypesClass = BukkitReflect.getMinecraftClass("EntityTypes");
-		_EntityTypes_a = minecraftEntityTypesClass.getMethod("a", nbtTagCompoundClass, minecraftWorldClass);
+		Class<?> minecraftChunkRegionLoaderClass = BukkitReflect.getMinecraftClass("ChunkRegionLoader");
+		_ChunkRegionLoader_a = minecraftChunkRegionLoaderClass.getMethod("a", nbtTagCompoundClass, minecraftWorldClass, double.class, double.class, double.class, boolean.class);
 
 		// This is a fix to spawn TippedArrows. It registers the TippedArrow entity on the Minecraft code.
 		// It also fixes spawning TippedArrows with command blocks.
 		// 23 is the "Network Id" for TippedArrow (checked with the client).
 		// XXX: remove this when fixed by Mojang
 		try {
+			Class<?> minecraftEntityTypesClass = BukkitReflect.getMinecraftClass("EntityTypes");
 			Method _EntityTypes_a_AKA_registerEntity = minecraftEntityTypesClass.getDeclaredMethod("a", Class.class, String.class, int.class);
 			_EntityTypes_a_AKA_registerEntity.setAccessible(true);
 			_EntityTypes_a_AKA_registerEntity.invoke(null, BukkitReflect.getMinecraftClass("EntityTippedArrow"), "TippedArrow", 23);
@@ -129,24 +117,11 @@ public final class NBTUtils {
 
 	public static Entity spawnEntity(NBTTagCompound data, Location location) {
 		Object worldHandle = BukkitReflect.invokeMethod(location.getWorld(), _CraftWorld_getHandle);
-		Object prevEntityHandle = null;
-		do {
-			Object entityHandle = BukkitReflect.invokeMethod(null, _EntityTypes_a, data._handle, worldHandle);
-			if (entityHandle != null) {
-				float yaw = (Float) BukkitReflect.getFieldValue(entityHandle, _Entity_yaw);
-				float pitch = (Float) BukkitReflect.getFieldValue(entityHandle, _Entity_pitch);
-				BukkitReflect.invokeMethod(entityHandle, _Entity_setPositionRotation, location.getX(), location.getY(), location.getZ(), yaw, pitch);
-				BukkitReflect.invokeMethod(worldHandle, _World_addEntity, entityHandle);
-				if (prevEntityHandle != null) {
-					BukkitReflect.invokeMethod(prevEntityHandle, _Entity_startRiding, entityHandle);
-				}
-				prevEntityHandle = entityHandle;
-			} else {
-				break;
-			}
-			data = data.getCompound("Riding");
-		} while (data != null);
-		return (Entity) BukkitReflect.invokeMethod(prevEntityHandle, _Entity_getBukkitEntity);
+		Object entityHandle = BukkitReflect.invokeMethod(null, _ChunkRegionLoader_a, data._handle, worldHandle, location.getX(), location.getY(), location.getZ(), true);
+		if (entityHandle == null) {
+			return null;
+		}
+		return (Entity) BukkitReflect.invokeMethod(entityHandle, _Entity_getBukkitEntity);
 	}
 
 	public static NBTTagCompound getEntityNBTData(Entity entity) {

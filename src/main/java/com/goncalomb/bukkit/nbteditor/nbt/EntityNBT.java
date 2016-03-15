@@ -23,6 +23,7 @@ import org.bukkit.entity.EntityType;
 
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BlockVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ByteVariable;
@@ -254,24 +255,27 @@ public class EntityNBT extends EntityNBTBase {
 		_data.remove("Motion");
 	}
 
-	public EntityNBT getRiding() {
-		NBTTagCompound ridingData = _data.getCompound("Riding");
-		if (ridingData != null) {
-			return fromEntityType(EntityTypeMap.getByName(ridingData.getString("id")), ridingData);
+	public EntityNBT getFirstPassenger() {
+		NBTTagList passengers = _data.getList("Passengers");
+		if (passengers != null && passengers.size() > 0) {
+			NBTTagCompound passenger = (NBTTagCompound) passengers.get(0);
+			return fromEntityType(EntityTypeMap.getByName(passenger.getString("id")), passenger);
 		}
 		return null;
 	}
+	
+	// TODO: implement a way to set multiple passengers per entity
 
-	public void setRiding(EntityNBT... riding) {
-		if (riding == null || riding.length == 0) {
-			_data.remove("Riding");
+	public void setRiders(EntityNBT... riders) {
+		if (riders == null || riders.length == 0) {
+			_data.remove("Passengers");
 			return;
 		}
-		NBTTagCompound rider = _data;
-		for (EntityNBT ride : riding) {
-			NBTTagCompound rideData = ride._data.clone();
-			rider.setCompound("Riding", rideData);
-			rider = rideData;
+		NBTTagCompound now = _data;
+		for (EntityNBT rider : riders) {
+			NBTTagCompound next = rider._data.clone();
+			now.setList("Passengers", new NBTTagList(next));
+			now = next;
 		}
 	}
 
