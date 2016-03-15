@@ -32,7 +32,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 
 public final class InventoryForRiding extends InventoryForBos<EntityNBT> {
 
-	private static ItemStack placeholder = createPlaceholder(Material.PAPER, "§6Put Books of Souls here, to add entities.", "§bRemember, the book that you're holding is the top entity.");
+	private static ItemStack placeholder = createPlaceholder(Material.PAPER, "§6Put Books of Souls here to add entities.", "§bRemember, the book that you're holding is the §nbottom§b entity.");
 
 	public InventoryForRiding(BookOfSouls bos, Player owner) {
 		super(bos, owner, 54, "Define the entities here...", true);
