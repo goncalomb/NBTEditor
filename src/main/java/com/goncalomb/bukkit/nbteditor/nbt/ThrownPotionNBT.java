@@ -19,6 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
@@ -31,7 +32,10 @@ public class ThrownPotionNBT extends EntityNBT implements SingleItemBasedNBT {
 			_data.remove("Potion");
 		} else {
 			NBTTagCompound data = NBTUtils.itemStackToNBTData(potion);
-			data.setString("id", "minecraft:splash_potion");
+			Material type = potion.getType();
+			if (type != Material.SPLASH_POTION && type != Material.LINGERING_POTION) {
+				data.setString("id", "minecraft:splash_potion");
+			}
 			_data.setCompound("Potion", data);
 		}
 	}
