@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
 
-Copyright (C) 2013-2015 Gonçalo Baltazar <me@goncalomb.com>
+Copyright (C) 2013-2016 Gonçalo Baltazar <me@goncalomb.com>
 
 NBTEditor ${project.version}
 
@@ -21,8 +21,18 @@ along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
 
 ----- BUILD INFORMATION --------------------------------------------------------
 
+NBTEditor ${project.version}
+
 Build Date: ${project.build.timestamp}
-For Bukkit ${bukkit.version}
+Bukkit API Version: ${bukkit.version}
+
+os.name = ${os.name}
+os.version = ${os.version}
+os.arch = ${os.arch}
+java.version = ${java.version}
+java.vendor = ${java.vendor}
+maven.version = ${maven.version}
+maven.build.version = ${maven.build.version}
 
 ----- SOFTWARE INFORMATION -----------------------------------------------------
 
