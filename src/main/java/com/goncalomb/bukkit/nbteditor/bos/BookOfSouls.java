@@ -179,14 +179,6 @@ public class BookOfSouls {
 		(new InventoryForRiding(this, player)).openInventory(player, _plugin);
 	}
 
-	public boolean setMobDropChance(float head, float chest, float legs, float feet, float hand) {
-		if (_entityNbt instanceof MobNBT) {
-			((MobNBT) _entityNbt).setDropChances(hand, feet, legs, chest, head);
-			return true;
-		}
-		return false;
-	}
-
 	public boolean clearMobDropChance() {
 		if (_entityNbt instanceof MobNBT) {
 			((MobNBT) _entityNbt).clearDropChances();
@@ -285,20 +277,6 @@ public class BookOfSouls {
 
 		if (_entityNbt instanceof MobNBT) {
 			MobNBT mob = (MobNBT) _entityNbt;
-
-			sb = new StringBuilder();
-			sb.append("" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Drop chance:\n");
-			float[] chances = mob.getDropChances();
-			if (chances != null) {
-				for (int i = 0; i < 5; ++i) {
-					sb.append(ChatColor.DARK_BLUE + _mobEquipSlotName[i] + ":\n");
-					sb.append("  " + ChatColor.BLACK + chances[4 - i] + "\n");
-				}
-			} else {
-				sb.append("" + ChatColor.BLACK + ChatColor.ITALIC + "not defined,\ndefault 0.085");
-			}
-			meta.addPage(sb.toString());
-
 			sb = new StringBuilder();
 			sb.append("" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Attributes:\n");
 			Collection<Attribute> attributes = mob.getAttributes().values();

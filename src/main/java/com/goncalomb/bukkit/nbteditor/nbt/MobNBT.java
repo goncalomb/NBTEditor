@@ -21,13 +21,13 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 
 import java.util.Arrays;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.FloatArrayVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.FloatVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
@@ -41,6 +41,8 @@ public class MobNBT extends EquippableNBT {
 		variables.add("AttackTime", new ShortVariable("AttackTime"));
 		variables.add("HurtTime", new ShortVariable("HurtTime"));
 		variables.add("DeathTime", new ShortVariable("DeathTime"));
+		variables.add("HandDropChances", new FloatArrayVariable("HandDropChances", 2, 0f, 2f));
+		variables.add("ArmorDropChances", new FloatArrayVariable("ArmorDropChances", 4, 0f, 2f));
 		variables.add("PickLoot", new BooleanVariable("CanPickUpLoot"));
 		variables.add("NoAI", new BooleanVariable("NoAI"));
 		variables.add("Persistent", new BooleanVariable("PersistenceRequired"));
@@ -48,17 +50,6 @@ public class MobNBT extends EquippableNBT {
 		variables.add("NameVisible", new BooleanVariable("CustomNameVisible"));
 		variables.add("LeftHanded", new BooleanVariable("LeftHanded"));
 		registerVariables(MobNBT.class, variables);
-	}
-
-	public void setDropChances(float hand, float feet, float legs, float chest, float head) {
-		_data.setList("DropChances", hand, feet, legs, chest, head);
-	}
-
-	public float[] getDropChances() {
-		if (_data.hasKey("DropChances")) {
-			return ArrayUtils.toPrimitive(Arrays.copyOfRange(_data.getListAsArray("DropChances"), 0, 5, Float[].class));
-		}
-		return null;
 	}
 
 	public void clearDropChances() {

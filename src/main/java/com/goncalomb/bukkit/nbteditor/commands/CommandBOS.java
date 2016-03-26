@@ -226,52 +226,6 @@ public class CommandBOS extends MyCommand {
 		return true;
 	}
 
-	private static float parseDropchanceFloat(String value) {
-		float f = Float.parseFloat(value);
-		if ((f < 0 || f > 1) && f != 2) {
-			throw new NumberFormatException("Invalid dropchance.");
-		}
-		return f;
-	}
-
-	@Command(args = "dropchance", type = CommandType.PLAYER_ONLY, maxargs = 5, usage = "[<head> <chest> <legs> <feet> <hand>]")
-	public boolean dropchanceCommand(CommandSender sender, String[] args) throws MyCommandException {
-		Player player = (Player) sender;
-		if (args.length == 0) {
-			BookOfSouls bos = getBos(player);
-			if (!bos.clearMobDropChance()) {
-				player.sendMessage("§cThat must be a Mob entity!");
-			} else {
-				bos.saveBook();
-				player.sendMessage("§aDrop chance cleared.");
-			}
-			return true;
-		} else if (args.length == 5) {
-
-			float head, chest, legs, feet, hand;
-			try {
-				head = parseDropchanceFloat(args[0]);
-				chest = parseDropchanceFloat(args[1]);
-				legs = parseDropchanceFloat(args[2]);
-				feet = parseDropchanceFloat(args[3]);
-				hand = parseDropchanceFloat(args[4]);
-			} catch (NumberFormatException e) {
-				player.sendMessage("§cThe values must be between 0 and 1 inclusive or 2.");
-				return true;
-			}
-
-			BookOfSouls bos = getBos(player);
-			if (!bos.setMobDropChance(head, chest, legs, feet, hand)) {
-				player.sendMessage("§cThat must be a Mob entity!");
-			} else {
-				bos.saveBook();
-				player.sendMessage("§aDrop chance set.");
-			}
-			return true;
-		}
-		return false;
-	}
-
 	@Command(args = "attr add", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<attribute> <base>")
 	public boolean attr_addCommand(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length == 2) {

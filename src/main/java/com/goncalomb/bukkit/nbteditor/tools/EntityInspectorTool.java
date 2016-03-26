@@ -31,7 +31,6 @@ import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
-import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBTOffer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
@@ -61,15 +60,6 @@ public final class EntityInspectorTool extends CustomItem {
 			player.sendMessage(ChatColor.YELLOW + "Extra information:");
 
 			boolean extra = false;
-			if (entityNBT instanceof MobNBT) {
-				float[] chances = ((MobNBT) entityNBT).getDropChances();
-				String[] names = { "head", "chest", "legs", "feet", "hand" };
-				player.sendMessage("" + ChatColor.LIGHT_PURPLE + ChatColor.ITALIC + "Drop chance:");
-				for (int i = 0; i < 5; ++i) {
-					player.sendMessage("  " + ChatColor.AQUA + names[i] + ": " + ChatColor.WHITE + chances[4 - i]);
-				}
-				extra = true;
-			}
 			if (entityNBT instanceof VillagerNBT) {
 				VillagerNBT villagerNBT = (VillagerNBT) entityNBT;
 				player.sendMessage("" + ChatColor.LIGHT_PURPLE + ChatColor.ITALIC + "Trades done:");
