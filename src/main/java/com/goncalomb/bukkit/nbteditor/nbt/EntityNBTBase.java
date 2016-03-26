@@ -120,7 +120,7 @@ abstract class EntityNBTBase {
 	public static EntityNBT unserialize(String serializedData) {
 		try {
 			NBTTagCompound data = NBTTagCompound.unserialize(Base64.decode(serializedData));
-			
+
 			// Backward compatibility with pre-1.9.
 			// On 1.9 the entities are stacked for bottom to top.
 			// This conversion needs to happen before instantiating any class, we cannot use onUnserialize.
@@ -130,7 +130,7 @@ abstract class EntityNBTBase {
 				riding.setList("Passengers", new NBTTagList(data));
 				data = riding;
 			}
-			
+
 			EntityNBT entityNBT = fromEntityType(EntityTypeMap.getByName(data.getString("id")), data);
 			entityNBT.onUnserialize();
 			return entityNBT;

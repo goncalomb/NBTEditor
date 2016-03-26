@@ -24,18 +24,18 @@ import org.bukkit.entity.Player;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public class FloatArrayVariable extends NBTGenericVariable {
-	
+
 	private int _count;
 	private float _min;
 	private float _max;
-	
+
 	public FloatArrayVariable(String nbtKey, int count, float min, float max) {
 		super(nbtKey);
 		_count = Math.max(0, Math.min(10, count));
 		_min = min;
 		_max = max;
 	}
-	
+
 	public FloatArrayVariable(String nbtKey, int count) {
 		this(nbtKey, count, -Float.MAX_VALUE, Float.MIN_VALUE);
 	}
@@ -80,5 +80,5 @@ public class FloatArrayVariable extends NBTGenericVariable {
 	String getFormat() {
 		return String.format("Set of %s decimal numbers between %s and %s.", _count, _min, _max);
 	}
-	
+
 }

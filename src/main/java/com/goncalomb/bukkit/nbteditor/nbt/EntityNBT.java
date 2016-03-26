@@ -263,7 +263,7 @@ public class EntityNBT extends EntityNBTBase {
 		}
 		return null;
 	}
-	
+
 	// TODO: implement a way to set multiple passengers per entity
 
 	public void setRiders(EntityNBT... riders) {
