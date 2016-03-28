@@ -43,6 +43,8 @@ import com.goncalomb.bukkit.nbteditor.nbt.attributes.ItemModifier;
 
 public class CommandNBTItem extends MyCommand {
 
+	private static List<String> _modifierSlots = Arrays.asList(new String[] { "any", "mainhand", "offhand", "feet", "legs", "chest", "head" });
+
 	public CommandNBTItem() {
 		super("nbtitem", "nbti");
 	}
@@ -104,7 +106,7 @@ public class CommandNBTItem extends MyCommand {
 		return true;
 	}
 
-	@Command(args = "mod add", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "<attribute> <operation> <amount> [name ...]")
+	@Command(args = "mod add", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "<attribute> <operation> <amount> [slot] [name ...]")
 	public boolean mod_add(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length >= 3) {
 			HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
@@ -124,12 +126,20 @@ public class CommandNBTItem extends MyCommand {
 						sender.sendMessage("§cAmount must be a number!");
 						return true;
 					}
+					String slot = null;
+					if (args.length > 3 && !args[3].equals("any")) {
+						slot = args[3];
+						if (!_modifierSlots.contains(slot)) {
+							sender.sendMessage("§cInvalid modifier slot!");
+							return true;
+						}
+					}
 					String name = "Modifier";
-					if (args.length > 3) {
-						name = StringUtils.join(args, " ", 3, args.length);
+					if (args.length > 4) {
+						name = StringUtils.join(args, " ", 4, args.length);
 					}
 					List<ItemModifier> modifiers = ItemModifier.getItemStackModifiers(item.item);
-					modifiers.add(new ItemModifier(attributeType, name, amount, operation));
+					modifiers.add(new ItemModifier(attributeType, name, amount, operation, slot));
 					ItemModifier.setItemStackModifiers(item.item, modifiers);
 					sender.sendMessage("§aItem modifier added.");
 					return true;
@@ -146,6 +156,8 @@ public class CommandNBTItem extends MyCommand {
 			return Utils.getElementsWithPrefixGeneric(Arrays.asList(AttributeType.values()), args[0], true);
 		} else if (args.length == 2) {
 			return Utils.getElementsWithPrefix(Arrays.asList(new String[] { "0", "1", "2" }), args[1]);
+		} else if (args.length == 4) {
+			return Utils.getElementsWithPrefix(_modifierSlots, args[3]);
 		}
 		return null;
 	}

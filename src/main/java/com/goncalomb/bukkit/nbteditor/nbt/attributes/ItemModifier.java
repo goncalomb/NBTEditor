@@ -32,9 +32,16 @@ import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 public final class ItemModifier extends Modifier {
 
 	private AttributeType _attributeType;
+	private String _slot;
 
 	public static ItemModifier fromNBT(NBTTagCompound data) {
-		return new ItemModifier(AttributeType.getByInternalName(data.getString("AttributeName")), data.getString("Name"), data.getDouble("Amount"), data.getInt("Operation"), new UUID(data.getLong("UUIDMost"), data.getLong("UUIDLeast")));
+		return new ItemModifier(
+				AttributeType.getByInternalName(data.getString("AttributeName")),
+				data.getString("Name"),
+				data.getDouble("Amount"),
+				data.getInt("Operation"),
+				(data.hasKey("Slot") ? data.getString("Slot") : null),
+				new UUID(data.getLong("UUIDMost"), data.getLong("UUIDLeast")));
 	}
 
 	public static List<ItemModifier> getItemStackModifiers(ItemStack item) {
@@ -60,14 +67,16 @@ public final class ItemModifier extends Modifier {
 		NBTUtils.setItemStackTag(item, tag);
 	}
 
-	public ItemModifier(AttributeType attributeType, String name, double amount, int operation) {
+	public ItemModifier(AttributeType attributeType, String name, double amount, int operation, String slot) {
 		super(name, amount, operation);
 		_attributeType = attributeType;
+		_slot = slot;
 	}
 
-	public ItemModifier(AttributeType attributeType, String name, double amount, int operation, UUID uuid) {
+	public ItemModifier(AttributeType attributeType, String name, double amount, int operation, String slot, UUID uuid) {
 		super(name, amount, operation, uuid);
 		_attributeType = attributeType;
+		_slot = slot;
 	}
 
 	public AttributeType getAttributeType() {
@@ -78,6 +87,9 @@ public final class ItemModifier extends Modifier {
 	public NBTTagCompound toNBT() {
 		NBTTagCompound data = super.toNBT();
 		data.setString("AttributeName", _attributeType._internalName);
+		if (_slot != null) {
+			data.setString("Slot", _slot);
+		}
 		return data;
 	}
 
