@@ -30,7 +30,7 @@ public class PlayerDetails extends ItemDetails implements IConsumableDetails {
 	protected Player _player;
 
 	PlayerDetails(BlockBreakEvent event) {
-		super(event.getPlayer().getItemInHand());
+		super(event.getPlayer().getInventory().getItemInMainHand());
 		_player = event.getPlayer();
 	}
 
@@ -54,7 +54,7 @@ public class PlayerDetails extends ItemDetails implements IConsumableDetails {
 		if (_item.getAmount() > 1) {
 			_item.setAmount(_item.getAmount() - 1);
 		} else {
-			_player.setItemInHand(null);
+			_player.getInventory().setItemInMainHand(null);;
 		}
 	}
 

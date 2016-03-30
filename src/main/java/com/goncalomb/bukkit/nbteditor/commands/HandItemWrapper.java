@@ -86,7 +86,7 @@ public abstract class HandItemWrapper<T extends ItemMeta> {
 
 	@SuppressWarnings("unchecked")
 	private HandItemWrapper(Class<T> clazz, Player player) {
-		item = player.getItemInHand();
+		item = player.getInventory().getItemInMainHand();
 		if (item.getType() != Material.AIR) {
 			ItemMeta m = item.getItemMeta();
 			if (clazz.isInstance(m)) {

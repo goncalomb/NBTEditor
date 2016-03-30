@@ -53,7 +53,7 @@ public class CommandItemStorage extends MyCommand {
 
 	@Command(args = "store", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<name>")
 	public boolean command_store(CommandSender sender, String[] args) throws MyCommandException {
-		ItemStack item = ((Player) sender).getItemInHand();
+		ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
 		if (item == null || item.getType() == Material.AIR) {
 			sender.sendMessage("§cYou must be holding an item.");
 		} else {
@@ -108,7 +108,7 @@ public class CommandItemStorage extends MyCommand {
 
 	@Command(args = "update", type = CommandType.DEFAULT, minargs = 1, usage = "<name>")
 	public boolean command_update(CommandSender sender, String[] args) throws MyCommandException {
-		ItemStack item = ((Player) sender).getItemInHand();
+		ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
 		if (item == null || item.getType() == Material.AIR) {
 			sender.sendMessage("§cYou must be holding an item.");
 		} else {

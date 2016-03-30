@@ -152,7 +152,7 @@ public class CommandNBTSpawner extends MyCommand {
 	@Command(args = "additem", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "[weight]")
 	public boolean additemCommand(CommandSender sender, String[] args) throws MyCommandException {
 		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
-		ItemStack item = ((Player) sender).getItemInHand();
+		ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
 		if (item.getType() == Material.MONSTER_EGG) {
 			int weight = parseWeight(args, 0);
 			EntityType entityType = EntityType.fromId(item.getDurability());

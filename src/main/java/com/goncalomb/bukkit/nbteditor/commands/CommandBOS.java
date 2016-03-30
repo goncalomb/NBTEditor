@@ -64,7 +64,7 @@ public class CommandBOS extends MyCommand {
 	}
 
 	static BookOfSouls getBos(Player player, boolean nullIfMissing) throws MyCommandException {
-		ItemStack item = player.getItemInHand();
+		ItemStack item = player.getInventory().getItemInMainHand();
 		if (BookOfSouls.isValidBook(item)) {
 			BookOfSouls bos = BookOfSouls.getFromBook(item);
 			if (bos != null) {
@@ -78,7 +78,7 @@ public class CommandBOS extends MyCommand {
 	}
 
 	static List<String> findBosVars(Player player, String prefix) {
-		ItemStack item = player.getItemInHand();
+		ItemStack item = player.getInventory().getItemInMainHand();
 		if (BookOfSouls.isValidBook(item)) {
 			BookOfSouls bos = BookOfSouls.getFromBook(item);
 			if (bos != null) {
@@ -296,7 +296,7 @@ public class CommandBOS extends MyCommand {
 	@TabComplete(args = "attr del")
 	public List<String> tab_del_add(CommandSender sender, String[] args) {
 		if (args.length == 1) {
-			ItemStack item = ((Player) sender).getItemInHand();
+			ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
 			if (BookOfSouls.isValidBook(item)) {
 				BookOfSouls bos = BookOfSouls.getFromBook(item);
 				if (bos != null) {

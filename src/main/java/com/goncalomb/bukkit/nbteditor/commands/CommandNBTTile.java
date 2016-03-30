@@ -110,7 +110,7 @@ public class CommandNBTTile extends MyCommand {
 	@Command(args = "record", type = CommandType.PLAYER_ONLY)
 	public boolean setRecordCommand(CommandSender sender, String[] args) throws MyCommandException {
 		JukeboxNBTWrapper jukebox = getJukebox((Player) sender);
-		ItemStack item = ((Player) sender).getItemInHand();
+		ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
 		jukebox.setRecord(item);
 		jukebox.save();
 		if (item == null || item.getType() == Material.AIR) {

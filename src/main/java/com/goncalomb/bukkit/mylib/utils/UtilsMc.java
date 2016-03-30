@@ -41,13 +41,13 @@ import org.bukkit.util.Vector;
 
 public final class UtilsMc {
 
-	private static HashSet<Byte> NON_SOLID_BLOCK_IDS = new HashSet<Byte>();
+	private static HashSet<Material> NON_SOLID_BLOCKS = new HashSet<Material>();
 
 	static {
-		NON_SOLID_BLOCK_IDS.add((byte) 0);
+		NON_SOLID_BLOCKS.add(Material.AIR);
 		for (Material mat : Material.values()) {
 			if (mat.isBlock() && !mat.isSolid()) {
-				NON_SOLID_BLOCK_IDS.add((byte) mat.getId());
+				NON_SOLID_BLOCKS.add(mat);
 			}
 		}
 	}
@@ -77,7 +77,7 @@ public final class UtilsMc {
 		int y = loc.getBlockY();
 		int z = loc.getBlockZ();
 		int maxY = world.getMaxHeight();
-		while (y < maxY && !NON_SOLID_BLOCK_IDS.contains((byte) world.getBlockAt(x, y, z).getTypeId())) {
+		while (y < maxY && !NON_SOLID_BLOCKS.contains(world.getBlockAt(x, y, z).getType())) {
 			y++;
 		}
 		return new Location(world, x + 0.5, y + 0.2, z + 0.5);
@@ -88,7 +88,7 @@ public final class UtilsMc {
 	}
 
 	public static Block getTargetBlock(Player player, int distance) {
-		List<Block> blocks = player.getLastTwoTargetBlocks(NON_SOLID_BLOCK_IDS, distance);
+		List<Block> blocks = player.getLastTwoTargetBlocks(NON_SOLID_BLOCKS, distance);
 		return blocks.get(blocks.size() - 1);
 	}
 

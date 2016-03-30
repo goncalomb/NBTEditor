@@ -94,7 +94,7 @@ final class CustomItemListener implements Listener {
 
 	@EventHandler
 	private void playerInteract(BlockBreakEvent event) {
-		ItemStack item = event.getPlayer().getItemInHand();
+		ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
 		CustomItem customItem = CustomItemManager.getCustomItem(item);
 		if (customItem != null) {
 			if (verifyCustomItem(customItem, event.getPlayer(), false)) {
@@ -108,7 +108,7 @@ final class CustomItemListener implements Listener {
 	@EventHandler
 	private void playerInteractEntity(PlayerInteractEntityEvent event) {
 		Player player = event.getPlayer();
-		ItemStack item = player.getItemInHand();
+		ItemStack item = player.getInventory().getItemInMainHand();
 		CustomItem customItem = CustomItemManager.getCustomItem(item);
 
 		if (customItem != null) {
@@ -122,7 +122,7 @@ final class CustomItemListener implements Listener {
 	@EventHandler
 	private void playerInteractAtEntity(PlayerInteractAtEntityEvent event) {
 		Player player = event.getPlayer();
-		ItemStack item = player.getItemInHand();
+		ItemStack item = player.getInventory().getItemInMainHand();
 		CustomItem customItem = CustomItemManager.getCustomItem(item);
 
 		if (customItem != null) {
@@ -138,7 +138,7 @@ final class CustomItemListener implements Listener {
 		Entity damager = event.getDamager();
 		if (damager instanceof Player) {
 			Player player = (Player) damager;
-			ItemStack item = player.getItemInHand();
+			ItemStack item = player.getInventory().getItemInMainHand();
 			CustomItem customItem = CustomItemManager.getCustomItem(item);
 
 			if (customItem != null) {
