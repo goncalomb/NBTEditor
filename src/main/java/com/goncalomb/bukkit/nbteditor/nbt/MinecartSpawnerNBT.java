@@ -42,7 +42,9 @@ public class MinecartSpawnerNBT extends MinecartNBT {
 	}
 
 	public void MinecartNBT() {
-		_data.setString("EntityId", "Pig");
+		NBTTagCompound simplePig = new NBTTagCompound();
+		simplePig.setString("id", "Pig");
+		_data.setCompound("SpawnData", simplePig);
 	}
 
 	public void copyFromSpawner(Block block) {
@@ -51,7 +53,6 @@ public class MinecartSpawnerNBT extends MinecartNBT {
 		data.remove("x");
 		data.remove("y");
 		data.remove("z");
-		_data.setString("EntityId", "Pig");
 		_data.remove("SpawnData");
 		_data.remove("SpawnPotentials");
 		_data.merge(data);
@@ -59,7 +60,6 @@ public class MinecartSpawnerNBT extends MinecartNBT {
 
 	public void copyToSpawner(Block block) {
 		NBTTagCompound data = NBTUtils.getTileEntityNBTData(block);
-		data.setString("EntityId", "Pig");
 		data.remove("SpawnData");
 		data.remove("SpawnPotentials");
 		data.merge(_data);

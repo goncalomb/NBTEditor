@@ -21,7 +21,6 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 
 import org.bukkit.entity.EntityType;
 
-import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public class SpawnerEntityNBT {
@@ -70,8 +69,7 @@ public class SpawnerEntityNBT {
 	NBTTagCompound buildTagCompound() {
 		NBTTagCompound data = new  NBTTagCompound();
 		data.setInt("Weight", _weight);
-		data.setString("Type", EntityTypeMap.getName(_entityNbt.getEntityType()));
-		data.setCompound("Properties", _entityNbt._data);
+		data.setCompound("Entity", _entityNbt._data);
 		return data;
 	}
 

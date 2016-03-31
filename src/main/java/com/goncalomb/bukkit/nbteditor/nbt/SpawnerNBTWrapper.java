@@ -71,14 +71,10 @@ public final class SpawnerNBTWrapper {
 			_entities = new ArrayList<SpawnerEntityNBT>(l);
 			for (int i = 0; i < l; ++i) {
 				NBTTagCompound potential = (NBTTagCompound) spawnPotentials.get(i);
-				EntityType entityType = EntityTypeMap.getByName(potential.getString("Type"));
+				NBTTagCompound entityData = potential.getCompound("Entity");
+				EntityType entityType = EntityTypeMap.getByName(entityData.getString("id"));
 				if (entityType != null) {
-					EntityNBT entityNbt;
-					if (potential.hasKey("Properties")) {
-						entityNbt = EntityNBT.fromEntityType(entityType, potential.getCompound("Properties"));
-					} else {
-						entityNbt = EntityNBT.fromEntityType(entityType);
-					}
+					EntityNBT entityNbt = EntityNBT.fromEntityType(entityType, entityData);
 					_entities.add(new SpawnerEntityNBT(entityNbt, potential.getInt("Weight")));
 				}
 			}
@@ -89,7 +85,6 @@ public final class SpawnerNBTWrapper {
 	}
 
 	public void addEntity(SpawnerEntityNBT spawnerEntityNbt) {
-		_data.setString("EntityId", EntityTypeMap.getName(spawnerEntityNbt.getEntityType()));
 		_data.setCompound("SpawnData", spawnerEntityNbt.getEntityNBT()._data.clone());
 		_entities.add(spawnerEntityNbt);
 	}
@@ -120,7 +115,11 @@ public final class SpawnerNBTWrapper {
 	}
 
 	public EntityType getCurrentEntity() {
-		return EntityTypeMap.getByName(_data.getString("EntityId"));
+		NBTTagCompound spawnData = _data.getCompound("SpawnData");
+		if (spawnData != null) {
+			return EntityTypeMap.getByName(spawnData.getString("id"));
+		}
+		return null;
 	}
 
 	public Location getLocation() {
@@ -143,8 +142,9 @@ public final class SpawnerNBTWrapper {
 			}
 			_data.setList("SpawnPotentials", spawnPotentials);
 		} else {
-			_data.setString("EntityId", "Pig");
-			_data.remove("SpawnData");
+			NBTTagCompound simplePig = new NBTTagCompound();
+			simplePig.setString("id", "Pig");
+			_data.setCompound("SpawnData", simplePig);
 			_data.remove("SpawnPotentials");
 		}
 		NBTUtils.setTileEntityNBTData(_spawnerBlock, _data);
