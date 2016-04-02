@@ -29,6 +29,7 @@ public enum AttributeType {
 	MOVEMENT_SPEED("MovementSpeed", "generic.movementSpeed", 0.0, Double.MAX_VALUE),
 	ATTACK_DAMAGE("AttackDamage", "generic.attackDamage", 0.0, Double.MAX_VALUE),
 	ARMOR("Armor", "generic.armor", 0.0, 30.0),
+	ARMOR_TOUGHNESS("ArmorToughness", "generic.armorToughness", 0.0, 20.0),
 	// Player
 	ATTACK_SPEED("AttackSpeed", "generic.attackSpeed", 0.0, 1024.0),
 	LUCK("Luck", "generic.luck", -1024.0, 1024.0),
