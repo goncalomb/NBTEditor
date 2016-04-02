@@ -36,6 +36,8 @@ import org.bukkit.metadata.FixedMetadataValue;
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
@@ -155,9 +157,9 @@ public class CommandNBTSpawner extends MyCommand {
 		ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
 		if (item.getType() == Material.MONSTER_EGG) {
 			int weight = parseWeight(args, 0);
-			EntityType entityType = EntityType.fromId(item.getDurability());
-			if (EntityNBT.isValidType(entityType)) {
-				spawner.addEntity(new SpawnerEntityNBT(EntityNBT.fromEntityType(entityType), weight));
+			NBTTagCompound data = NBTUtils.getItemStackTag(item).getCompound("EntityTag");
+			if (data != null) {
+				spawner.addEntity(new SpawnerEntityNBT(EntityNBT.fromEntityData(data), weight));
 				spawner.save();
 				sender.sendMessage("§aEntity added to the spawner.");
 			} else {
