@@ -78,12 +78,16 @@ abstract class EntityNBTBase {
 	private static EntityNBT newInstance(EntityType entityType, NBTTagCompound data) {
 		Class<? extends EntityNBT> entityClass = _entityClasses.get(entityType);
 		EntityNBTBase instance;
-		try {
-			instance = entityClass.newInstance();
-		} catch (Exception e) {
-			throw new RuntimeException("Error when instantiating " + entityClass.getName() + ".", e);
+		if (entityClass != null) {
+			try {
+				instance = entityClass.newInstance();
+			} catch (Exception e) {
+				throw new RuntimeException("Error when instantiating " + entityClass.getName() + ".", e);
+			}
+			instance._entityType = entityType;
+		} else {
+			instance = new EntityNBT(entityType);
 		}
-		instance._entityType = entityType;
 		if (data != null) {
 			instance._data = data;
 		}
@@ -98,19 +102,16 @@ abstract class EntityNBTBase {
 		return null;
 	}
 
-	static EntityNBT fromEntityType(EntityType entityType, NBTTagCompound data) {
-		if (_entityClasses.containsKey(entityType)) {
-			EntityNBT entityNbt = newInstance(entityType, data);
-			return entityNbt;
-		} else {
-			EntityNBT entityNbt = new EntityNBT(entityType);
-			entityNbt._data = data;
-			return entityNbt;
+	public static EntityNBT fromEntityData(NBTTagCompound data) {
+		EntityType entityType = EntityTypeMap.getByName(data.getString("id"));
+		if (entityType != null) {
+			return newInstance(entityType, data);
 		}
+		return null;
 	}
 
 	public static EntityNBT fromEntity(Entity entity) {
-		EntityNBT entityNbt = fromEntityType(entity.getType(), NBTUtils.getEntityNBTData(entity));
+		EntityNBT entityNbt = newInstance(entity.getType(), NBTUtils.getEntityNBTData(entity));
 		// When cloning, remove the UUID to force all entities to have a unique one.
 		entityNbt._data.remove("UUIDMost");
 		entityNbt._data.remove("UUIDLeast");
@@ -131,7 +132,7 @@ abstract class EntityNBTBase {
 				data = riding;
 			}
 
-			EntityNBT entityNBT = fromEntityType(EntityTypeMap.getByName(data.getString("id")), data);
+			EntityNBT entityNBT = fromEntityData(data);
 			entityNBT.onUnserialize();
 			return entityNBT;
 		} catch (Throwable e) {
@@ -205,7 +206,7 @@ abstract class EntityNBTBase {
 	void onUnserialize() { }
 
 	public EntityNBT clone() {
-		return fromEntityType(_entityType, _data.clone());
+		return fromEntityData(_data.clone());
 	}
 
 	public String getMetadataString() {

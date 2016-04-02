@@ -71,10 +71,8 @@ public final class SpawnerNBTWrapper {
 			_entities = new ArrayList<SpawnerEntityNBT>(l);
 			for (int i = 0; i < l; ++i) {
 				NBTTagCompound potential = (NBTTagCompound) spawnPotentials.get(i);
-				NBTTagCompound entityData = potential.getCompound("Entity");
-				EntityType entityType = EntityTypeMap.getByName(entityData.getString("id"));
-				if (entityType != null) {
-					EntityNBT entityNbt = EntityNBT.fromEntityType(entityType, entityData);
+				EntityNBT entityNbt = EntityNBT.fromEntityData(potential.getCompound("Entity"));
+				if (entityNbt != null) {
 					_entities.add(new SpawnerEntityNBT(entityNbt, potential.getInt("Weight")));
 				}
 			}

@@ -21,7 +21,6 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 
 import org.bukkit.entity.EntityType;
 
-import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BlockVariable;
@@ -232,7 +231,7 @@ public class EntityNBT extends EntityNBTBase {
 	}
 
 	protected EntityNBT() {
-		this(null);
+		super(null);
 	}
 
 	protected EntityNBT(EntityType entityType) {
@@ -259,7 +258,7 @@ public class EntityNBT extends EntityNBTBase {
 		NBTTagList passengers = _data.getList("Passengers");
 		if (passengers != null && passengers.size() > 0) {
 			NBTTagCompound passenger = (NBTTagCompound) passengers.get(0);
-			return fromEntityType(EntityTypeMap.getByName(passenger.getString("id")), passenger);
+			return fromEntityData(passenger);
 		}
 		return null;
 	}
