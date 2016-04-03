@@ -52,10 +52,6 @@ public class MobNBT extends EquippableNBT {
 		registerVariables(MobNBT.class, variables);
 	}
 
-	public void clearDropChances() {
-		_data.remove("DropChances");
-	}
-
 	public void setEffectsFromPotion(ItemStack potion) {
 		if (potion != null) {
 			NBTTagList effects = NBTUtils.potionToNBTEffectsList(potion);

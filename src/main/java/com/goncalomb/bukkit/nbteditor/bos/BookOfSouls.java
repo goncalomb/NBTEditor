@@ -179,14 +179,6 @@ public class BookOfSouls {
 		(new InventoryForRiding(this, player)).openInventory(player, _plugin);
 	}
 
-	public boolean clearMobDropChance() {
-		if (_entityNbt instanceof MobNBT) {
-			((MobNBT) _entityNbt).clearDropChances();
-			return true;
-		}
-		return false;
-	}
-
 	public EntityNBT getEntityNBT() {
 		return _entityNbt;
 	}
