@@ -30,9 +30,12 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
 public final class BatBomb extends GenericBomb {
 
@@ -45,6 +48,17 @@ public final class BatBomb extends GenericBomb {
 				"§bThe bats will explode after a few seconds.");
 		setDefaultConfig("fuse", 50);
 		setDefaultConfig("power", 3.8d);
+	}
+
+	@Override
+	protected ItemStack customizeItem(ItemStack item) {
+		item = NBTUtils.itemStackToCraftItemStack(item);
+		NBTTagCompound tag = NBTUtils.getItemStackTag(item);
+		NBTTagCompound entityTag = new NBTTagCompound();
+		entityTag.setString("id", "Bat");
+		tag.setCompound("EntityTag", entityTag);
+		NBTUtils.setItemStackTag(item, tag);
+		return item;
 	}
 
 	@Override

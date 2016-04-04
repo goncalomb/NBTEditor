@@ -65,6 +65,9 @@ public abstract class CustomItem {
 		_name = name;
 		_material = material;
 		_item = new ItemStack(material, 1);
+		_item = customizeItem(_item);
+		_item.setType(material);
+		_item.setAmount(1);
 		setDefaultConfig("enabled", true);
 		setDefaultConfig("name", _name);
 		setDefaultConfig("lore", new ArrayList<String>());
@@ -140,6 +143,8 @@ public abstract class CustomItem {
 			_allowedWorlds = new HashSet<String>(allowedWorlds);
 		}
 	};
+
+	protected ItemStack customizeItem(ItemStack item) { return item; }
 
 	public void onLeftClick(PlayerInteractEvent event, PlayerDetails details) { };
 

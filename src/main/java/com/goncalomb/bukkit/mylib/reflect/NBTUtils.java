@@ -37,6 +37,7 @@ public final class NBTUtils {
 
 	// CraftItemStack Class;
 	private static Method _CraftItemStack_asCraftMirror;
+	private static Method _CraftItemStack_asCraftCopy;
 	private static Field _CraftItemStack_handle;
 
 	// Minecraft's Entity Class;
@@ -68,6 +69,7 @@ public final class NBTUtils {
 
 		Class<?> craftItemStackClass = BukkitReflect.getCraftBukkitClass("inventory.CraftItemStack");
 		_CraftItemStack_asCraftMirror = craftItemStackClass.getMethod("asCraftMirror", minecraftItemStackClass);
+		_CraftItemStack_asCraftCopy = craftItemStackClass.getMethod("asCraftCopy", ItemStack.class);
 		_CraftItemStack_handle = craftItemStackClass.getDeclaredField("handle");
 		_CraftItemStack_handle.setAccessible(true);
 
@@ -191,4 +193,12 @@ public final class NBTUtils {
 		Object handle = BukkitReflect.getFieldValue(item, _CraftItemStack_handle);
 		BukkitReflect.invokeMethod(handle, _ItemStack_setTag, tag._handle);
 	}
+
+	public static ItemStack itemStackToCraftItemStack(ItemStack item) {
+		if (!_CraftItemStack_asCraftCopy.getClass().isInstance(item)) {
+			return (ItemStack) BukkitReflect.invokeMethod(null, _CraftItemStack_asCraftCopy, item);
+		}
+		return item;
+	}
+
 }
