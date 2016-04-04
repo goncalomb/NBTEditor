@@ -21,13 +21,13 @@ package com.goncalomb.bukkit.customitems.items;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.material.MaterialData;
 import org.bukkit.util.Vector;
 
 import com.goncalomb.bukkit.customitems.api.CustomItem;
@@ -39,7 +39,7 @@ public abstract class GenericBomb extends CustomItem {
 	private int _fuse;
 	private boolean _triggerOnDrop;
 
-	protected GenericBomb(String slug, String name, MaterialData material) {
+	protected GenericBomb(String slug, String name, Material material) {
 		super(slug, name, material);
 		setDefaultConfig("fuse", 40);
 		setDefaultConfig("trigger-on-drop", false);

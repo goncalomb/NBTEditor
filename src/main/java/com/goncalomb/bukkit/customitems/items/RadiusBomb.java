@@ -20,18 +20,18 @@
 package com.goncalomb.bukkit.customitems.items;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.material.MaterialData;
 import org.bukkit.util.Vector;
 
 public abstract class RadiusBomb extends GenericBomb {
 
 	private int _radius;
 
-	protected RadiusBomb(String slug, String name, MaterialData material) {
+	protected RadiusBomb(String slug, String name, Material material) {
 		super(slug, name, material);
 	}
 

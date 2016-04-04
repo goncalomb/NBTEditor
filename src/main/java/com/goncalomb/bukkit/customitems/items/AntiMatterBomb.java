@@ -32,7 +32,6 @@ import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Item;
-import org.bukkit.material.MaterialData;
 import org.bukkit.util.Vector;
 
 public final class AntiMatterBomb extends GenericBomb {
@@ -40,7 +39,7 @@ public final class AntiMatterBomb extends GenericBomb {
 	private boolean _cleanup;
 
 	public AntiMatterBomb() {
-		super("anti-matter-bomb", ChatColor.GREEN + "Anti-Matter Bomb", new MaterialData(Material.ENDER_PEARL));
+		super("anti-matter-bomb", ChatColor.GREEN + "Anti-Matter Bomb", Material.ENDER_PEARL);
 		setLore("§c§k-----§r §c§lCaution! §r§c§k-----");
 		setDefaultConfig("enabled", false);
 		setDefaultConfig("fuse", 60);

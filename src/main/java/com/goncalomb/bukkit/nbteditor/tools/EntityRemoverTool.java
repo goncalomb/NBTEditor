@@ -26,7 +26,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.material.MaterialData;
 
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
@@ -34,7 +33,7 @@ import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 public final class EntityRemoverTool extends CustomItem {
 
 	public EntityRemoverTool() {
-		super("entity-remover", ChatColor.AQUA + "Entity Remover", new MaterialData(Material.BLAZE_ROD));
+		super("entity-remover", ChatColor.AQUA + "Entity Remover", Material.BLAZE_ROD);
 		setLore(ChatColor.YELLOW + "Right-click an entity to remove it.");
 	}
 

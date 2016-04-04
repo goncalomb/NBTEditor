@@ -27,7 +27,6 @@ import java.util.Set;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.material.MaterialData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -37,7 +36,7 @@ import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 public abstract class GenericSuperAxe extends CustomItem {
 
 	protected GenericSuperAxe(String slug, String name) {
-		super(slug, name, new MaterialData(Material.DIAMOND_AXE));
+		super(slug, name, Material.DIAMOND_AXE);
 	}
 
 	protected boolean isLog(Material mat) {

@@ -23,7 +23,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.material.MaterialData;
 
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
@@ -32,7 +31,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 final class BookOfSoulsEmptyCI extends CustomItem {
 
 	public BookOfSoulsEmptyCI() {
-		super("bos-empty", ChatColor.GREEN + "Book of Souls" + ChatColor.RESET + " - " + ChatColor.RED + "Empty", new MaterialData(Material.BOOK));
+		super("bos-empty", ChatColor.GREEN + "Book of Souls" + ChatColor.RESET + " - " + ChatColor.RED + "Empty", Material.BOOK);
 		setLore("§bThis is a empty Book of Souls.",
 				"§bRight-click an entity to capture the soul.");
 	}

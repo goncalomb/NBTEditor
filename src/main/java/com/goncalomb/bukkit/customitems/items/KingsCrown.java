@@ -32,7 +32,6 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.material.MaterialData;
 
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
@@ -43,7 +42,7 @@ public class KingsCrown extends CustomItem {
 	private boolean _shouldBroadcastMessage = true;
 
 	public KingsCrown() {
-		super("kings-crown", ChatColor.GOLD + "King's Crown", new MaterialData(Material.GOLD_HELMET));
+		super("kings-crown", ChatColor.GOLD + "King's Crown", Material.GOLD_HELMET);
 		addEnchantment(Enchantment.PROTECTION_FALL, 4);
 	}
 

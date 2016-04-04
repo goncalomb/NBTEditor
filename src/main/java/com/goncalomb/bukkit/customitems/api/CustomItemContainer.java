@@ -25,13 +25,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.Plugin;
 
 final class CustomItemContainer {
 
-	private HashMap<MaterialData, HashMap<String, CustomItem>> _customItems = new HashMap<MaterialData, HashMap<String, CustomItem>>();
+	private HashMap<Material, HashMap<String, CustomItem>> _customItems = new HashMap<Material, HashMap<String, CustomItem>>();
 	private HashMap<Plugin, ArrayList<CustomItem>> _customItemsByPlugin = new HashMap<Plugin, ArrayList<CustomItem>>();
 	private HashMap<String, ArrayList<CustomItem>> _customItemsByGroup = new HashMap<String, ArrayList<CustomItem>>();
 	private HashMap<String, CustomItem> _customItemsBySlug = new HashMap<String, CustomItem>();
@@ -73,11 +73,7 @@ final class CustomItemContainer {
 	public CustomItem get(ItemStack item) {
 		String name = CustomItem.getItemName(item);
 		if (name != null) {
-			MaterialData data = item.getData();
-			if (data.getItemType().getMaxDurability() > 0) {
-				data.setData((byte) 0);
-			}
-			HashMap<String, CustomItem> itemMap = _customItems.get(data);
+			HashMap<String, CustomItem> itemMap = _customItems.get(item.getType());
 			if (itemMap != null) {
 				CustomItem customItem = itemMap.get(name);
 				if (customItem != null) {

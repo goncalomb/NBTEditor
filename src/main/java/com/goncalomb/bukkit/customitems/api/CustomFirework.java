@@ -28,7 +28,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.material.MaterialData;
 import org.bukkit.scheduler.BukkitTask;
 
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
@@ -36,7 +35,7 @@ import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 public abstract class CustomFirework extends CustomItem {
 
 	protected CustomFirework(String slug, String name) {
-		super(slug, name, new MaterialData(Material.FIREWORK));
+		super(slug, name, Material.FIREWORK);
 	}
 
 	@Override

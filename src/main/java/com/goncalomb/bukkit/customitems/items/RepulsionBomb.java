@@ -28,7 +28,6 @@ import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.material.MaterialData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -38,7 +37,7 @@ public final class RepulsionBomb extends RadiusBomb {
 	private double _force;
 
 	public RepulsionBomb() {
-		super("repulsion-bomb", ChatColor.YELLOW + "Repulsion Bomb", new MaterialData(Material.COAL));
+		super("repulsion-bomb", ChatColor.YELLOW + "Repulsion Bomb", Material.COAL);
 		setLore("§bLeft-click to throw the bomb.",
 				"§bIt will explode after a few seconds.");
 		setDefaultConfig("fuse", 45);

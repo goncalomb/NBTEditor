@@ -32,7 +32,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.material.MaterialData;
 import org.bukkit.util.Vector;
 
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
@@ -40,7 +39,7 @@ import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 public final class FireBomb extends RadiusBomb {
 
 	public FireBomb() {
-		super("fire-bomb", ChatColor.RED + "Fire Bomb", new MaterialData(Material.FIREBALL));
+		super("fire-bomb", ChatColor.RED + "Fire Bomb", Material.FIREBALL);
 		setLore("§bLeft-click to throw the bomb.",
 				"§bIt will explode after a few seconds.");
 		setDefaultConfig("fuse", 40);

@@ -28,7 +28,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
 
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.DispenserDetails;
@@ -40,7 +39,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.MinecartSpawnerNBT;
 final class BookOfSoulsCI extends CustomItem {
 
 	public BookOfSoulsCI() {
-		super("bos", ChatColor.AQUA + "Book of Souls", new MaterialData(Material.WRITTEN_BOOK));
+		super("bos", ChatColor.AQUA + "Book of Souls", Material.WRITTEN_BOOK);
 	}
 
 	@Override

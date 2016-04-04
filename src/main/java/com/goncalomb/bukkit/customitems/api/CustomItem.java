@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
@@ -42,7 +43,6 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.Plugin;
 
 public abstract class CustomItem {
@@ -51,7 +51,7 @@ public abstract class CustomItem {
 	String _group;
 	private String _slug;
 	private String _name;
-	private MaterialData _material;
+	private Material _material;
 	private ItemStack _item;
 
 	LinkedHashMap<String, Object> _defaultConfig = new LinkedHashMap<String, Object>();
@@ -60,14 +60,11 @@ public abstract class CustomItem {
 	private HashSet<String> _allowedWorlds = new HashSet<String>();
 	private HashSet<String> _blockedWorlds = new HashSet<String>();
 
-	protected CustomItem(String slug, String name, MaterialData material) {
+	protected CustomItem(String slug, String name, Material material) {
 		_slug = slug;
 		_name = name;
 		_material = material;
-		_item = _material.toItemStack(1);
-		if (_material.getItemType().getMaxDurability() > 0) {
-			_material.setData((byte) 0);
-		}
+		_item = new ItemStack(material, 1);
 		setDefaultConfig("enabled", true);
 		setDefaultConfig("name", _name);
 		setDefaultConfig("lore", new ArrayList<String>());
@@ -113,7 +110,7 @@ public abstract class CustomItem {
 		return _name;
 	}
 
-	public final MaterialData getMaterial() {
+	public final Material getMaterial() {
 		return _material;
 	}
 

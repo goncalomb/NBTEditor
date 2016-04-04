@@ -25,7 +25,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.material.MaterialData;
 
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
@@ -39,7 +38,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
 public final class EntityInspectorTool extends CustomItem {
 
 	public EntityInspectorTool() {
-		super("entity-inspector", ChatColor.AQUA + "Entity Inspector", new MaterialData(Material.STICK));
+		super("entity-inspector", ChatColor.AQUA + "Entity Inspector", Material.STICK);
 		setLore(ChatColor.YELLOW + "Right-click an entity to get their information.");
 	}
 

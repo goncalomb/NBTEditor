@@ -30,7 +30,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
@@ -40,7 +39,7 @@ public final class BatBomb extends GenericBomb {
 	private float _power;
 
 	public BatBomb() {
-		super("bat-bomb", ChatColor.RED + "Bat Bomb", new MaterialData(Material.MONSTER_EGG, (byte)65));
+		super("bat-bomb", ChatColor.RED + "Bat Bomb", Material.MONSTER_EGG);
 		setLore("§bLeft-click to throw the bomb.",
 				"§bRight-click to spawn the bats at your location.",
 				"§bThe bats will explode after a few seconds.");
