@@ -41,12 +41,6 @@ public class MinecartSpawnerNBT extends MinecartNBT {
 		registerVariables(EntityType.MINECART_MOB_SPAWNER, variables);
 	}
 
-	public void MinecartNBT() {
-		NBTTagCompound simplePig = new NBTTagCompound();
-		simplePig.setString("id", "Pig");
-		_data.setCompound("SpawnData", simplePig);
-	}
-
 	public void copyFromSpawner(Block block) {
 		NBTTagCompound data = NBTUtils.getTileEntityNBTData(block);
 		data.remove("id");
