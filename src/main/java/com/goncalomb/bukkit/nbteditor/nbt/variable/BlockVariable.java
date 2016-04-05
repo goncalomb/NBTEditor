@@ -19,37 +19,15 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
+import com.goncalomb.bukkit.mylib.namemaps.MaterialMap;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public final class BlockVariable extends NBTGenericVariable2X {
-
-	private static final List<String> POSSIBLE_VALUES;
-	private static final List<String> POSSIBLE_VALUES_SHORT;
-
-	static {
-		Material[] allMats = Material.values();
-		List<String> possibleValues = new ArrayList<String>(allMats.length);
-		List<String> possibleValuesShort = new ArrayList<String>(allMats.length);
-		for (Material mat : allMats) {
-			if (mat.isBlock()) {
-				possibleValues.add(mat.toString() + ":0");
-				if (mat.getId() <= 127) {
-					possibleValuesShort.add(mat.toString() + ":0");
-				}
-			}
-		}
-		Collections.sort(possibleValues, String.CASE_INSENSITIVE_ORDER);
-		Collections.sort(possibleValuesShort, String.CASE_INSENSITIVE_ORDER);
-		POSSIBLE_VALUES = Collections.unmodifiableList(possibleValues);
-		POSSIBLE_VALUES_SHORT = Collections.unmodifiableList(possibleValuesShort);
-	}
 
 	private boolean _asShort;
 	private boolean _dataAsInt;
@@ -69,12 +47,14 @@ public final class BlockVariable extends NBTGenericVariable2X {
 	}
 
 	boolean set(NBTTagCompound data, String value, Player player) {
-		String[] pieces = value.split(":", 2);
-		Material material = Material.getMaterial(pieces[0]);
+		String[] pieces = value.split(" ", 2);
+		Material material = MaterialMap.getByName(pieces[0]);
+		if (material == null) {
+			material = MaterialMap.getByName("minecraft:" + pieces[0]);
+		}
 		if (material == null) {
 			try {
 				int blockId = Integer.parseInt(pieces[0]);
-				if (blockId < 0 || blockId > 0xFF) return false;
 				material = Material.getMaterial(blockId);
 			} catch (NumberFormatException e) {
 				return false;
@@ -91,12 +71,8 @@ public final class BlockVariable extends NBTGenericVariable2X {
 				}
 			}
 			if (_asShort) {
-				// The enderman is the only entity that uses short.
-				if (material.getId() > 127) {
-					return false; // Enderman crashes the game with id > 127.
-				}
-				data.setShort(_nbtKey, (short) (material.getId() & 0xFF));
-				data.setShort(_nbtKey2, (short) (blockData & 0xFF));
+				data.setShort(_nbtKey, (short) material.getId());
+				data.setShort(_nbtKey2, (short) blockData);
 			} else {
 				data.setInt(_nbtKey, material.getId());
 				if (_dataAsInt) {
@@ -124,17 +100,17 @@ public final class BlockVariable extends NBTGenericVariable2X {
 					materialData = data.getByte(_nbtKey2) & 0xFF;
 				}
 			}
-			return Material.getMaterial(materialId).name() + ":" + materialData;
+			return MaterialMap.getName(Material.getMaterial(materialId)) + " " + materialData;
 		}
 		return null;
 	}
 
 	String getFormat() {
-		return "Valid block id and data, 'id:data'.";
+		return "Valid block name/id and data, '<name/id> [data]'.";
 	}
 
 	public List<String> getPossibleValues() {
-		return (_asShort ? POSSIBLE_VALUES_SHORT : POSSIBLE_VALUES);
+		return MaterialMap.getBlockNames();
 	}
 
 }

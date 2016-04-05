@@ -106,9 +106,6 @@ public class CommandBOS extends MyCommand {
 				BookOfSouls bos = new BookOfSouls(EntityNBT.fromEntityType(entityType));
 				inv.addItem(bos.getBook());
 				sender.sendMessage("§aEnjoy your Book of Souls.");
-				if (entityType == EntityType.ENDERMAN) {
-					sender.sendMessage(ChatColor.YELLOW + "(Enderman's carring block id is limited to 127 due to a minecraft bug)");
-				}
 				return true;
 			}
 			sender.sendMessage("§cInvalid entity!");
