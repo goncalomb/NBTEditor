@@ -20,12 +20,10 @@
 package com.goncalomb.bukkit.mylib.namemaps;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public final class PotionEffectsMap {
@@ -70,8 +68,6 @@ public final class PotionEffectsMap {
 		_potionEffectNamesAsString = StringUtils.join(_potionEffectNames, ", ");
 	}
 
-	private PotionEffectsMap() { }
-
 	public static PotionEffectType getByName(String name) {
 		return _potionEffects.getByName(name);
 	}
@@ -84,24 +80,10 @@ public final class PotionEffectsMap {
 		return _potionEffectNames;
 	}
 
-	public static List<String> getNames(Collection<PotionEffectType> effects) {
-		ArrayList<String> names = new ArrayList<String>(effects.size());
-		for (PotionEffectType effect : effects) {
-			names.add(getName(effect));
-		}
-		return names;
-	}
-
-	public static List<String> getNamez(Collection<PotionEffect> effects) {
-		ArrayList<String> names = new ArrayList<String>(effects.size());
-		for (PotionEffect effect : effects) {
-			names.add(getName(effect.getType()));
-		}
-		return names;
-	}
-
 	public static String getNamesAsString() {
 		return _potionEffectNamesAsString;
 	}
+
+	private PotionEffectsMap() { }
 
 }

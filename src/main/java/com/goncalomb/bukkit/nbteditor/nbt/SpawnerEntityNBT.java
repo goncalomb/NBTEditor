@@ -28,10 +28,6 @@ public class SpawnerEntityNBT {
 	private int _weight;
 	private EntityNBT _entityNbt;
 
-	public static boolean isValidCreature(String name) {
-		return EntityType.fromName(name).isAlive();
-	}
-
 	public SpawnerEntityNBT(EntityType entityType)  {
 		this(entityType, 1);
 	}

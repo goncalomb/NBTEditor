@@ -20,7 +20,6 @@
 package com.goncalomb.bukkit.mylib.namemaps;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -69,8 +68,6 @@ public final class EnchantmentsMap {
 		_enchantmentNamesAsString = StringUtils.join(_enchantmentNames, ", ");
 	}
 
-	private EnchantmentsMap() { }
-
 	public static Enchantment getByName(String name) {
 		return _enchantments.getByName(name);
 	}
@@ -83,16 +80,10 @@ public final class EnchantmentsMap {
 		return _enchantmentNames;
 	}
 
-	public static List<String> getNames(Collection<Enchantment> enchantments) {
-		ArrayList<String> names = new ArrayList<String>(enchantments.size());
-		for (Enchantment enchantment : enchantments) {
-			names.add(getName(enchantment));
-		}
-		return names;
-	}
-
 	public static String getNamesAsString() {
 		return _enchantmentNamesAsString;
 	}
+
+	private EnchantmentsMap() { }
 
 }
