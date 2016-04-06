@@ -34,11 +34,11 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 
 import com.goncalomb.bukkit.mylib.namemaps.EnchantmentsMap;
 import com.goncalomb.bukkit.mylib.namemaps.PotionEffectsMap;
+import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.ItemModifier;
 
 public class ItemUtils {
@@ -46,7 +46,8 @@ public class ItemUtils {
 	public static void sendItemStackInformation(ItemStack stack, CommandSender sender) {
 		ItemMeta meta = stack.getItemMeta();
 		sender.sendMessage("§eItem information:");
-		sender.sendMessage("  §2Type: §a" + stack.getType() + ":" + stack.getDurability() + " (" + stack.getTypeId() + ":" + stack.getDurability() + ")");
+		sender.sendMessage("  §2Type: §a" + BukkitReflect.getMaterialName(stack.getType()));
+		sender.sendMessage("  §2Data: §a" + stack.getDurability());
 		sender.sendMessage("  §2Amount: §a" + stack.getAmount());
 		String name = meta.getDisplayName();
 		if (name != null) {
@@ -66,9 +67,6 @@ public class ItemUtils {
 			sender.sendMessage("  §2Page #: §r" + ((BookMeta) meta).getPageCount());
 		} else if (meta instanceof PotionMeta) {
 			Collection<PotionEffect> effects = ((PotionMeta) meta).getCustomEffects();
-			if (effects.isEmpty()) {
-				effects = Potion.fromItemStack(stack).getEffects();
-			}
 			sender.sendMessage("§ePotion effects:");
 			for (PotionEffect effect : effects) {
 				sender.sendMessage("  §a" + PotionEffectsMap.getName(effect.getType()) + " " + (effect.getAmplifier() + 1) + " (" + (effect.getDuration()/20f) + "s)");
