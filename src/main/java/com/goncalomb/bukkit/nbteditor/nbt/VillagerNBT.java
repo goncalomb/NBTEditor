@@ -27,6 +27,7 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.VillagerCareerVariable;
 
 public class VillagerNBT extends BreedNBT {
 
@@ -34,9 +35,8 @@ public class VillagerNBT extends BreedNBT {
 
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Villager");
-		variables.add("Profession", new IntegerVariable("Profession", 0, 4));
-		variables.add("Career", new IntegerVariable("Career", 0, 4)); // XXX: not working?
-		variables.add("CareerLevel", new IntegerVariable("CareerLevel", 0, 2));
+		variables.add("Career", new VillagerCareerVariable());
+		variables.add("CareerLevel", new IntegerVariable("CareerLevel", 0));
 		variables.add("Willing", new BooleanVariable("Willing")); // XXX: not effect?
 		// TODO: add villager inventory
 		registerVariables(VillagerNBT.class, variables);
