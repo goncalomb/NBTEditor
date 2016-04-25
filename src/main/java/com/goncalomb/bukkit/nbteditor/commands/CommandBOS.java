@@ -223,6 +223,15 @@ public class CommandBOS extends MyCommand {
 		return true;
 	}
 
+	@Command(args = "dropchance", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE)
+	public boolean dropchanceCommand(CommandSender sender, String[] args) throws MyCommandException {
+		sender.sendMessage("§eThis command was removed on NBTEditor 2.0.");
+		sender.sendMessage("§bPlease use the new HandDropChances and ArmorDropChances variables for Mobs:");
+		sender.sendMessage("§b    /bos var HandDropChances <main> <off>");
+		sender.sendMessage("§b    /bos var ArmorDropChances <feet> <legs> <chest> <head>");
+		return true;
+	}
+
 	@Command(args = "attr add", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<attribute> <base>")
 	public boolean attr_addCommand(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length == 2) {
