@@ -209,6 +209,10 @@ abstract class EntityNBTBase {
 		return fromEntityData(_data.clone());
 	}
 
+	public NBTTagCompound getData() {
+		return _data.clone();
+	}
+
 	public String getMetadataString() {
 		NBTTagCompound data = _data.clone();
 		data.remove("id");

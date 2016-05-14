@@ -41,6 +41,8 @@ import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.command.MyCommandManager;
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
@@ -354,6 +356,25 @@ public class CommandBOS extends MyCommand {
 			return true;
 		}
 		sender.sendMessage("§cNo Command Block in sight!");
+		return true;
+	}
+
+	@Command(args = "toegg", type = CommandType.PLAYER_ONLY)
+	public boolean toeggCommand(CommandSender sender, String[] args) throws MyCommandException {
+		BookOfSouls bos = getBos((Player) sender);
+		sender.sendMessage("§eOnly some living entities can be spawned from eggs.");
+		NBTTagCompound entityData = bos.getEntityNBT().getData();
+		entityData.remove("Pos");
+		if (entityData.hasKey("Passengers")) {
+			entityData.remove("Passengers");
+			sender.sendMessage("§eEntities spawned from eggs don't have riding entities.");
+		}
+		ItemStack item = NBTUtils.itemStackToCraftItemStack(new ItemStack(Material.MONSTER_EGG));
+		NBTTagCompound itemData = new NBTTagCompound();
+		itemData.setCompound("EntityTag", entityData);
+		NBTUtils.setItemStackTag(item, itemData);
+		CommandUtils.giveItem((Player) sender, item);
+		sender.sendMessage("§aEgg created.");
 		return true;
 	}
 
