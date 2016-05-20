@@ -27,6 +27,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.CommandBlock;
 import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
@@ -138,12 +139,12 @@ public class CommandNBTTile extends MyCommand {
 	@Command(args = "command-colors", type = CommandType.PLAYER_ONLY)
 	public boolean colorsCommand(CommandSender sender, String[] args) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
-		if (block.getType() != Material.COMMAND) {
+		BlockState state = block.getState();
+		if (!(state instanceof CommandBlock)) {
 			throw new MyCommandException("§cNo Command Block in sight!");
 		}
-		CommandBlock commandBlock = (CommandBlock) block.getState();
-		commandBlock.setCommand(UtilsMc.parseColors(commandBlock.getCommand()));
-		commandBlock.update();
+		((CommandBlock) state).setCommand(UtilsMc.parseColors(((CommandBlock) state).getCommand()));
+		state.update();
 		sender.sendMessage("§aColor codes have been replaced.");
 		return true;
 	}

@@ -25,8 +25,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.CommandBlock;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -191,7 +191,8 @@ public class CommandNBTItem extends MyCommand {
 	public boolean tocommandCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
 		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
-		if (block.getType() == Material.COMMAND) {
+		BlockState state = block.getState();
+		if (state instanceof CommandBlock) {
 			String command = "give";
 			if (!MyCommandManager.isVanillaCommand(command)) {
 				sender.sendMessage(MessageFormat.format("§7Non-vanilla /{0} command detected, using /minecraft:{0}.", command));
@@ -203,9 +204,8 @@ public class CommandNBTItem extends MyCommand {
 				sender.sendMessage("§cItem too complex!");
 				return true;
 			}
-			CommandBlock commandBlock = (CommandBlock) block.getState();
-			commandBlock.setCommand(command);
-			commandBlock.update();
+			((CommandBlock) state).setCommand(command);
+			state.update();
 			sender.sendMessage("§aCommand set.");
 			return true;
 		}

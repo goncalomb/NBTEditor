@@ -29,6 +29,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.CommandBlock;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
@@ -336,7 +337,8 @@ public class CommandBOS extends MyCommand {
 	public boolean tocommandCommand(CommandSender sender, String[] args) throws MyCommandException {
 		BookOfSouls bos = getBos((Player) sender);
 		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
-		if (block.getType() == Material.COMMAND) {
+		BlockState state = block.getState();
+		if (state instanceof CommandBlock) {
 			EntityNBT entityNbt = bos.getEntityNBT();
 			String command = "summon";
 			if (!MyCommandManager.isVanillaCommand(command)) {
@@ -349,9 +351,8 @@ public class CommandBOS extends MyCommand {
 				sender.sendMessage("§cEntity too complex!");
 				return true;
 			}
-			CommandBlock commandBlock = (CommandBlock) block.getState();
-			commandBlock.setCommand(command);
-			commandBlock.update();
+			((CommandBlock) state).setCommand(command);
+			state.update();
 			sender.sendMessage("§aCommand set.");
 			return true;
 		}
