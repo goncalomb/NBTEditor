@@ -187,6 +187,10 @@ public class EntityNBT extends EntityNBTBase {
 		registerVariables(EntityType.RABBIT, variables);
 
 
+		variables = new NBTGenericVariableContainer("EnderDragon");
+		variables.add("DragonPhase", new IntegerVariable("DragonPhase", 0, 10));
+		registerVariables(EntityType.ENDER_DRAGON, variables);
+
 		variables = new NBTGenericVariableContainer("Wither");
 		variables.add("InvulnerableTime", new IntegerVariable("Invul", 0));
 		registerVariables(EntityType.WITHER, variables);
