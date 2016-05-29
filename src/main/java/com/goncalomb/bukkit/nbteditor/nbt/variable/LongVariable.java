@@ -19,19 +19,40 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt.variable;
 
-public abstract class NumericVariable extends NBTGenericVariable {
+import org.bukkit.entity.Player;
 
-	protected long _min;
-	protected long _max;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
-	public NumericVariable(String nbtKey, long min, long max) {
-		super(nbtKey);
-		_min = min;
-		_max = max;
+public final class LongVariable extends NumericVariable {
+
+	public LongVariable(String nbtKey) {
+		this(nbtKey, Long.MIN_VALUE);
 	}
 
-	String getFormat() {
-		return String.format("Integer between %s and %s.", _min, _max);
+	public LongVariable(String nbtKey, long min) {
+		this(nbtKey, min, Long.MAX_VALUE);
+	}
+
+	public LongVariable(String nbtKey, long min, long max) {
+		super(nbtKey, min, max);
+	}
+
+	boolean set(NBTTagCompound data, String value, Player player) {
+		try {
+			long v = Long.parseLong(value);
+			if (v < _min || v > _max) return false;
+			data.setLong(_nbtKey, v);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	String get(NBTTagCompound data) {
+		if (data.hasKey(_nbtKey)) {
+			return String.valueOf(data.getLong(_nbtKey));
+		}
+		return null;
 	}
 
 }

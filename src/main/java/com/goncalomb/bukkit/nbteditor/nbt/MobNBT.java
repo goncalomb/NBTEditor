@@ -29,6 +29,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.FloatArrayVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.FloatVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.LongVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
@@ -43,6 +44,8 @@ public class MobNBT extends EquippableNBT {
 		variables.add("DeathTime", new ShortVariable("DeathTime"));
 		variables.add("HandDropChances", new FloatArrayVariable("HandDropChances", 2, 0f, 2f));
 		variables.add("ArmorDropChances", new FloatArrayVariable("ArmorDropChances", 4, 0f, 2f));
+		variables.add("DeathLootTable", new StringVariable("DeathLootTable"));
+		variables.add("DeathLootTableSeed", new LongVariable("DeathLootTableSeed"));
 		variables.add("PickLoot", new BooleanVariable("CanPickUpLoot"));
 		variables.add("NoAI", new BooleanVariable("NoAI"));
 		variables.add("Persistent", new BooleanVariable("PersistenceRequired"));
