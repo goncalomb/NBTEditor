@@ -200,6 +200,10 @@ public class EntityNBT extends EntityNBTBase {
 		variables.add("Fuse", new ByteVariable("Fuse", (byte) 0));
 		registerVariables(EntityType.PRIMED_TNT, variables);
 
+		variables = new NBTGenericVariableContainer("EnderCrystal");
+		variables.add("ShowBottom", new BooleanVariable("ShowBottom"));
+		registerVariables(EntityType.ENDER_CRYSTAL, variables);
+
 
 		variables = new NBTGenericVariableContainer("SpectralArrow");
 		variables.add("Duration", new IntegerVariable("Duration", 0));
