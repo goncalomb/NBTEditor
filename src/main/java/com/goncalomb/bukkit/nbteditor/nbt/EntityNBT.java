@@ -118,6 +118,7 @@ public class EntityNBT extends EntityNBTBase {
 		variables.add("FallDistance", new FloatVariable("FallDistance", 0.0f));
 		variables.add("Fire", new ShortVariable("Fire"));
 		variables.add("Air", new ShortVariable("Air", (short) 0, (short) 200));
+		variables.add("NoGravity", new BooleanVariable("NoGravity"));
 		variables.add("Invulnerable", new BooleanVariable("Invulnerable"));
 		variables.add("Silent", new BooleanVariable("Silent"));
 		variables.add("Glowing", new BooleanVariable("Glowing"));
@@ -160,7 +161,7 @@ public class EntityNBT extends EntityNBTBase {
 		registerVariables(EntityType.GHAST, variables);
 
 		variables = new NBTGenericVariableContainer("Skeleton");
-		variables.add("IsWither", new BooleanVariable("SkeletonType"));
+		variables.add("Type", new ByteVariable("SkeletonType", (byte) 0, (byte) 2));
 		registerVariables(EntityType.SKELETON, variables);
 
 		variables = new NBTGenericVariableContainer("Creeper");
@@ -226,7 +227,6 @@ public class EntityNBT extends EntityNBTBase {
 		variables.add("Marker", new BooleanVariable("Marker"));
 		variables.add("Invisible", new BooleanVariable("Invisible"));
 		variables.add("NoBasePlate", new BooleanVariable("NoBasePlate"));
-		variables.add("NoGravity", new BooleanVariable("NoGravity"));
 		variables.add("ShowArms", new BooleanVariable("ShowArms"));
 		variables.add("Small", new BooleanVariable("Small"));
 		variables.add("PoseBody", new RotationVariable("Body", true, "Pose"));

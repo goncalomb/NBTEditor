@@ -26,8 +26,16 @@ import org.bukkit.inventory.ItemStack;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 
 public class EquippableNBT extends EntityNBT {
+
+	static {
+		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Equippable");
+		variables.add("FallFlying", new BooleanVariable("FallFlying"));
+		registerVariables(EquippableNBT.class, variables);
+	}
 
 	private void setItems(String key, ItemStack... items) {
 		if (items == null) {
