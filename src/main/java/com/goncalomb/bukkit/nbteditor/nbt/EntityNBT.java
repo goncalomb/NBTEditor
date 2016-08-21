@@ -42,6 +42,7 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.COW, BreedNBT.class);
 		registerEntity(EntityType.CHICKEN, BreedNBT.class);
 		registerEntity(EntityType.MUSHROOM_COW, BreedNBT.class);
+		registerEntity(EntityType.POLAR_BEAR, BreedNBT.class);
 		registerEntity(EntityType.SQUID, MobNBT.class);
 
 		registerEntity(EntityType.WOLF, TamedNBT.class);
