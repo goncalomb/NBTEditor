@@ -58,7 +58,10 @@ public class ParticleVariable extends NBTGenericVariable {
 
 	@Override
 	String get(NBTTagCompound data) {
-		return data.getString(_nbtKey);
+		if (data.hasKey(_nbtKey)) {
+			return data.getString(_nbtKey);
+		}
+		return null;
 	}
 
 	@Override

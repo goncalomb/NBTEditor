@@ -43,6 +43,8 @@ public class AreaEffectCloudNBT extends ThrownPotionNBT {
 		variables.add("RadiusOnUse", new FloatVariable("RadiusOnUse"));
 		variables.add("RadiusPerTick", new FloatVariable("RadiusPerTick"));
 		variables.add("Particle", new ParticleVariable("Particle"));
+		variables.add("ParticleParam1", new IntegerVariable("ParticleParam1"));
+		variables.add("ParticleParam2", new IntegerVariable("ParticleParam2"));
 		variables.add("Potion", new StringVariable("Potion"));
 		registerVariables(AreaEffectCloudNBT.class, variables);
 	}
