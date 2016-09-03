@@ -23,14 +23,14 @@ import java.util.List;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.namemaps.PotionEffectsMap;
-import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 
 public class CommandNBTPotion extends MyCommand {
@@ -55,24 +55,9 @@ public class CommandNBTPotion extends MyCommand {
 				if (args.length == 3) {
 					duration = CommandUtils.parseTickDuration(args[2]);
 				}
-				// Remove default effect
-				// XXX: change this to meta.setType("minecraft:empty") when available upstream
-				NBTTagCompound tag = NBTUtils.getItemStackTag(item.item);
-				tag.setString("Potion", "minecraft:empty");
-				NBTUtils.setItemStackTag(item.item, tag);
-				// Refresh meta :(
-				item = new HandItemWrapper.Potion((Player) sender);
-				// ---------------------
+				item.meta.setBasePotionData(new PotionData(PotionType.UNCRAFTABLE));
 				if(level == 0) {
-					// .removeCustomEffect(...); This is bugged, it should use .equals(...) to compare effects.
-					// So we remove all effects and add them again.
-					List<PotionEffect> effects = item.meta.getCustomEffects();
-					item.meta.clearCustomEffects();
-					for (PotionEffect eff : effects) {
-						if (!eff.getType().equals(effect)) {
-							item.meta.addCustomEffect(eff, true);
-						}
-					}
+					item.meta.removeCustomEffect(effect);
 					sender.sendMessage("§aPotion effect removed.");
 				} else {
 					item.meta.addCustomEffect(new PotionEffect(effect, duration, level - 1), true);
