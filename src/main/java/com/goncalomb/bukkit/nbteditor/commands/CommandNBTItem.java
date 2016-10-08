@@ -79,6 +79,27 @@ public class CommandNBTItem extends MyCommand {
 		return true;
 	}
 
+	@Command(args = "lore set", type = CommandType.PLAYER_ONLY, minargs = 2, maxargs = Integer.MAX_VALUE, usage = "<index> <lore ...>")
+	public boolean lore_setCommand(CommandSender sender, String[] args) throws MyCommandException{
+		HandItemWrapper.Item item = new HandItemWrapper.Item((Player)sender);
+		List<String> loreList = item.meta.getLore();
+		if(loreList == null){
+			loreList = new ArrayList<String>();
+		}
+		Integer length = loreList.size();
+		Integer index = Utils.parseInt(args[0], -1);
+
+		if(length >= index){
+			loreList.set(index, UtilsMc.parseColors(StringUtils.join(args, " ", 1, args.length)));
+			item.meta.setLore(loreList);
+			item.save();
+			sender.sendMessage("§aItem lore set.");
+		}else{
+			sender.sendMessage(MessageFormat.format("§cLore line with index {0} doesn''t exist!", index));
+		}
+		return true;
+	}
+
 	@Command(args = "lore del", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<index>")
 	public boolean lore_delCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
