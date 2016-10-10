@@ -89,8 +89,8 @@ public class CommandNBTItem extends MyCommand {
 		Integer length = loreList.size();
 		Integer index = Utils.parseInt(args[0], -1);
 
-		if(length >= index){
-			loreList.set(index, UtilsMc.parseColors(StringUtils.join(args, " ", 1, args.length)));
+		if(index > 0 && length >= index){
+			loreList.set(index - 1, UtilsMc.parseColors(StringUtils.join(args, " ", 1, args.length)));
 			item.meta.setLore(loreList);
 			item.save();
 			sender.sendMessage("§aItem lore set.");
