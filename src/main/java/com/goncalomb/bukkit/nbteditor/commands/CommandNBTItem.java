@@ -89,7 +89,9 @@ public class CommandNBTItem extends MyCommand {
 		Integer length = loreList.size();
 		Integer index = Utils.parseInt(args[0], -1);
 
-		if(index > 0 && length >= index){
+		if(index < 1){
+			sender.sendMessage("§cInvalid index. The index is an integer greater than 0.");
+		}else if(length >= index){
 			loreList.set(index - 1, UtilsMc.parseColors(StringUtils.join(args, " ", 1, args.length)));
 			item.meta.setLore(loreList);
 			item.save();
