@@ -53,7 +53,6 @@ public final class EntityTypeMap {
 		_legacyNames.put("PrimedTnt".toLowerCase(), EntityType.PRIMED_TNT);
 		_legacyNames.put("FallingSand".toLowerCase(), EntityType.FALLING_BLOCK);
 		_legacyNames.put("FireworksRocketEntity".toLowerCase(), EntityType.FIREWORK);
-		_legacyNames.put("TippedArrow".toLowerCase(), EntityType.TIPPED_ARROW);
 		_legacyNames.put("SpectralArrow".toLowerCase(), EntityType.SPECTRAL_ARROW);
 		_legacyNames.put("ShulkerBullet".toLowerCase(), EntityType.SHULKER_BULLET);
 		_legacyNames.put("DragonFireball".toLowerCase(), EntityType.DRAGON_FIREBALL);
@@ -105,6 +104,8 @@ public final class EntityTypeMap {
 		_legacyNames.put("ThrownEgg".toLowerCase(), EntityType.EGG);
 		_legacyNames.put("MinecartSpawner".toLowerCase(), EntityType.MINECART_MOB_SPAWNER);
 		_legacyNames.put("AreaEffectCloud".toLowerCase(), EntityType.AREA_EFFECT_CLOUD);
+
+		_legacyNames.put("TippedArrow".toLowerCase(), EntityType.ARROW);
 
 		List<String> entityNames = new ArrayList<String>();
 		List<String> livingEntityNames = new ArrayList<String>();

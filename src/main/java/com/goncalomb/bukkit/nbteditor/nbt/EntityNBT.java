@@ -83,9 +83,8 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.ENDER_CRYSTAL, EntityNBT.class);
 		registerEntity(EntityType.FIREWORK, FireworkNBT.class);
 
-		registerEntity(EntityType.ARROW, ArrowNBT.class);
+		registerEntity(EntityType.ARROW, TippedArrowNBT.class);
 		registerEntity(EntityType.SPECTRAL_ARROW, ArrowNBT.class);
-		registerEntity(EntityType.TIPPED_ARROW, TippedArrowNBT.class);
 		registerEntity(EntityType.ENDER_PEARL, EntityNBT.class);
 		registerEntity(EntityType.THROWN_EXP_BOTTLE, EntityNBT.class);
 		registerEntity(EntityType.SNOWBALL, EntityNBT.class);

@@ -92,17 +92,6 @@ public final class NBTUtils {
 		Class<?> minecraftWorldClass = BukkitReflect.getMinecraftClass("World");
 		Class<?> minecraftChunkRegionLoaderClass = BukkitReflect.getMinecraftClass("ChunkRegionLoader");
 		_ChunkRegionLoader_a = minecraftChunkRegionLoaderClass.getMethod("a", nbtTagCompoundClass, minecraftWorldClass, double.class, double.class, double.class, boolean.class);
-
-		// This is a fix to spawn TippedArrows. It registers the TippedArrow entity on the Minecraft code.
-		// It also fixes spawning TippedArrows with command blocks.
-		// 23 is the "Network Id" for TippedArrow (checked with the client).
-		// XXX: remove this when fixed by Mojang
-		try {
-			Class<?> minecraftEntityTypesClass = BukkitReflect.getMinecraftClass("EntityTypes");
-			Method _EntityTypes_a_AKA_registerEntity = minecraftEntityTypesClass.getDeclaredMethod("a", Class.class, String.class, int.class);
-			_EntityTypes_a_AKA_registerEntity.setAccessible(true);
-			_EntityTypes_a_AKA_registerEntity.invoke(null, BukkitReflect.getMinecraftClass("EntityTippedArrow"), "TippedArrow", 23);
-		} catch (Exception e) { }
 	}
 
 	private NBTUtils() { }
