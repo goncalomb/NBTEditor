@@ -382,6 +382,15 @@ public class CommandBOS extends MyCommand {
 	@Command(args = "refresh", type = CommandType.PLAYER_ONLY)
 	public boolean refreshCommand(CommandSender sender, String[] args) throws MyCommandException {
 		BookOfSouls bos = getBos((Player) sender);
+		// Refresh passengers
+		EntityNBT entityNBT = bos.getEntityNBT();
+		List<EntityNBT> riders = new ArrayList<EntityNBT>();
+		while ((entityNBT = entityNBT.getFirstPassenger()) != null) {
+			EntityNBT riding = entityNBT.clone();
+			riding.setRiders((EntityNBT[]) null);
+			riders.add(riding);
+		}
+		bos.getEntityNBT().setRiders(riders.toArray(new EntityNBT[riders.size()]));
 		bos.saveBook(true);
 		sender.sendMessage("§aBook of Souls refreshed.");
 		return true;
