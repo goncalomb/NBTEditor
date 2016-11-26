@@ -104,6 +104,30 @@ abstract class EntityNBTBase {
 
 	public static EntityNBT fromEntityData(NBTTagCompound data) {
 		EntityType entityType = EntityTypeMap.getByName(data.getString("id"));
+
+		EntityType entityTypeNew = entityType;
+		// Backward compatibility with pre-1.11.
+		if (entityType == EntityType.GUARDIAN) {
+			if (data.hasKey("Elder")) {
+				if (data.getByte("Elder") != 0) {
+					entityTypeNew = EntityType.ELDER_GUARDIAN;
+				}
+				data.remove("Elder");
+			}
+		} else if (entityType == EntityType.SKELETON) {
+			if (data.hasKey("SkeletonType")) {
+				switch (data.getByte("SkeletonType")) {
+				case 1: entityTypeNew = EntityType.WITHER_SKELETON; break;
+				case 2: entityTypeNew = EntityType.STRAY; break;
+				}
+				data.remove("SkeletonType");
+			}
+		}
+		if (entityType != entityTypeNew) {
+			data.setString("id", EntityTypeMap.getName(entityTypeNew));
+			entityType = entityTypeNew;
+		}
+
 		if (entityType != null) {
 			return newInstance(entityType, data);
 		}

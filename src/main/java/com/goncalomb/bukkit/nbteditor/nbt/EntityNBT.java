@@ -59,6 +59,8 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.MAGMA_CUBE, SlimeNBT.class);
 		registerEntity(EntityType.GHAST, MobNBT.class);
 		registerEntity(EntityType.SKELETON, MobNBT.class);
+		registerEntity(EntityType.WITHER_SKELETON, MobNBT.class);
+		registerEntity(EntityType.STRAY, MobNBT.class);
 		registerEntity(EntityType.CREEPER, MobNBT.class);
 		registerEntity(EntityType.BAT, MobNBT.class);
 		registerEntity(EntityType.BLAZE, MobNBT.class);
@@ -69,6 +71,7 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.SILVERFISH, MobNBT.class);
 		registerEntity(EntityType.WITCH, MobNBT.class);
 		registerEntity(EntityType.GUARDIAN, MobNBT.class);
+		registerEntity(EntityType.ELDER_GUARDIAN, MobNBT.class);
 		registerEntity(EntityType.ENDERMITE, MobNBT.class);
 		registerEntity(EntityType.RABBIT, MobNBT.class);
 		registerEntity(EntityType.SHULKER, MobNBT.class);
@@ -159,10 +162,6 @@ public class EntityNBT extends EntityNBTBase {
 		variables.add("ExplosionPower", new IntegerVariable("ExplosionPower", 0, 25)); // Limited to 25
 		registerVariables(EntityType.GHAST, variables);
 
-		variables = new NBTGenericVariableContainer("Skeleton");
-		variables.add("Type", new ByteVariable("SkeletonType", (byte) 0, (byte) 2));
-		registerVariables(EntityType.SKELETON, variables);
-
 		variables = new NBTGenericVariableContainer("Creeper");
 		variables.add("Powered", new BooleanVariable("powered"));
 		variables.add("ExplosionRadius", new ByteVariable("ExplosionRadius", (byte) 0, (byte) 25)); // Limited to 25
@@ -173,10 +172,6 @@ public class EntityNBT extends EntityNBTBase {
 		variables = new NBTGenericVariableContainer("Enderman");
 		variables.add("Block", new BlockVariable("carried", "carriedData", true));
 		registerVariables(EntityType.ENDERMAN, variables);
-
-		variables = new NBTGenericVariableContainer("Guardian");
-		variables.add("Elder", new BooleanVariable("Elder"));
-		registerVariables(EntityType.GUARDIAN, variables);
 
 		variables = new NBTGenericVariableContainer("Endermite");
 		variables.add("Lifetime", new IntegerVariable("Lifetime"));
