@@ -19,6 +19,7 @@
 
 package com.goncalomb.bukkit.mylib.reflect;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -30,7 +31,7 @@ import org.bukkit.inventory.ItemStack;
 public final class NBTUtils {
 
 	// Minecraft's ItemStack Class;
-	private static Method _ItemStack_createStack;
+	private static Constructor<?> _ItemStack_nbtConstructor;
 	private static Method _ItemStack_save;
 	private static Method _ItemStack_getTag;
 	private static Method _ItemStack_setTag;
@@ -62,7 +63,7 @@ public final class NBTUtils {
 		Class<?> nbtTagCompoundClass = BukkitReflect.getMinecraftClass("NBTTagCompound");
 
 		Class<?> minecraftItemStackClass = BukkitReflect.getMinecraftClass("ItemStack");
-		_ItemStack_createStack = minecraftItemStackClass.getMethod("createStack", nbtTagCompoundClass);
+		_ItemStack_nbtConstructor = minecraftItemStackClass.getConstructor(nbtTagCompoundClass);
 		_ItemStack_save = minecraftItemStackClass.getMethod("save", nbtTagCompoundClass);
 		_ItemStack_getTag = minecraftItemStackClass.getMethod("getTag");
 		_ItemStack_setTag = minecraftItemStackClass.getMethod("setTag", nbtTagCompoundClass);
@@ -107,7 +108,7 @@ public final class NBTUtils {
 	private NBTUtils() { }
 
 	public static ItemStack itemStackFromNBTData(NBTTagCompound data) {
-		return (ItemStack) BukkitReflect.invokeMethod(null, _CraftItemStack_asCraftMirror, BukkitReflect.invokeMethod(null, _ItemStack_createStack, data._handle));
+		return (ItemStack) BukkitReflect.invokeMethod(null, _CraftItemStack_asCraftMirror, BukkitReflect.invokeConstuctor(_ItemStack_nbtConstructor, data._handle));
 	}
 
 	public static NBTTagCompound itemStackToNBTData(ItemStack stack) {

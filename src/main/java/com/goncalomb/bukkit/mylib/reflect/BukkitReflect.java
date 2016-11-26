@@ -119,6 +119,14 @@ public final class BukkitReflect {
 
 	// Other helper methods...
 
+	static Object invokeConstuctor(Constructor<?> constuctor, Object... args) {
+		try {
+			return constuctor.newInstance(args);
+		} catch (Exception e) {
+			throw new RuntimeException("Error while invoking " + constuctor.getName() + ".", e);
+		}
+	}
+
 	static Object invokeMethod(Object object, Method method, Object... args) {
 		try {
 			return method.invoke(object, args);
