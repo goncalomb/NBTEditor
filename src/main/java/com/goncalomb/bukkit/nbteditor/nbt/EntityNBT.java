@@ -54,6 +54,8 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.SNOWMAN, MobNBT.class);
 
 		registerEntity(EntityType.ZOMBIE, ZombieNBT.class);
+		registerEntity(EntityType.ZOMBIE_VILLAGER, ZombieNBT.class);
+		registerEntity(EntityType.HUSK, ZombieNBT.class);
 		registerEntity(EntityType.PIG_ZOMBIE, ZombieNBT.class);
 		registerEntity(EntityType.SLIME, SlimeNBT.class);
 		registerEntity(EntityType.MAGMA_CUBE, SlimeNBT.class);
@@ -181,6 +183,11 @@ public class EntityNBT extends EntityNBTBase {
 		variables = new NBTGenericVariableContainer("Rabbit");
 		variables.add("Type", new IntegerVariable("RabbitType", 0, 99));
 		registerVariables(EntityType.RABBIT, variables);
+
+		variables = new NBTGenericVariableContainer("ZombieVillager");
+		variables.add("Profession", new IntegerVariable("Profession", 0, 5));
+		variables.add("ConversionTime", new IntegerVariable("ConversionTime", -1));
+		registerVariables(EntityType.ZOMBIE_VILLAGER, variables);
 
 
 		variables = new NBTGenericVariableContainer("EnderDragon");

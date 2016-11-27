@@ -122,6 +122,31 @@ abstract class EntityNBTBase {
 				}
 				data.remove("SkeletonType");
 			}
+		} else if (entityType == EntityType.ZOMBIE) {
+			// pre-1.10
+			if (data.hasKey("IsVillager")) {
+				if (data.getByte("IsVillager") != 0) {
+					entityTypeNew = EntityType.ZOMBIE_VILLAGER;
+					if (data.hasKey("VillagerProfession")) {
+						data.setInt("Profession", data.getInt("VillagerProfession"));
+						data.remove("VillagerProfession");
+					}
+				}
+				data.remove("IsVillager");
+			}
+			// pre-1.11
+			if (data.hasKey("ZombieType")) {
+				int zombieType = data.getInt("ZombieType");
+				if (zombieType == 0) {
+					entityTypeNew = EntityType.ZOMBIE;
+				} else if (zombieType >= 1 && zombieType <= 5) {
+					entityTypeNew = EntityType.ZOMBIE_VILLAGER;
+					data.setInt("Profession", zombieType - 1);
+				} else if (zombieType == 6) {
+					entityTypeNew = EntityType.HUSK;
+				}
+				data.remove("ZombieType");
+			}
 		}
 		if (entityType != entityTypeNew) {
 			data.setString("id", EntityTypeMap.getName(entityTypeNew));
