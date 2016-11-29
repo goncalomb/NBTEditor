@@ -48,6 +48,10 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.WOLF, TamedNBT.class);
 		registerEntity(EntityType.OCELOT, TamedNBT.class);
 		registerEntity(EntityType.HORSE, HorseNBT.class);
+		registerEntity(EntityType.DONKEY, ChestedHorseNBT.class);
+		registerEntity(EntityType.MULE, ChestedHorseNBT.class);
+		registerEntity(EntityType.ZOMBIE_HORSE, HorseNBT.class);
+		registerEntity(EntityType.SKELETON_HORSE, HorseNBT.class);
 
 		registerEntity(EntityType.VILLAGER, VillagerNBT.class);
 		registerEntity(EntityType.IRON_GOLEM, MobNBT.class);
@@ -154,6 +158,11 @@ public class EntityNBT extends EntityNBTBase {
 		variables = new NBTGenericVariableContainer("IronGolem");
 		variables.add("PlayerCreated", new BooleanVariable("PlayerCreated"));
 		registerVariables(EntityType.IRON_GOLEM, variables);
+
+		variables = new NBTGenericVariableContainer("SkeletonHorse");
+		variables.add("Trap", new BooleanVariable("SkeletonTrap"));
+		variables.add("TrapTime", new IntegerVariable("SkeletonTrapTime", 0));
+		registerVariables(EntityType.SKELETON_HORSE, variables);
 
 
 		variables = new NBTGenericVariableContainer("PigZombie");

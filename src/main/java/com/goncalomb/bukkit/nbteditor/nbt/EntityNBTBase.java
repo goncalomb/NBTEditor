@@ -147,6 +147,19 @@ abstract class EntityNBTBase {
 				}
 				data.remove("ZombieType");
 			}
+		} else if (entityType == EntityType.HORSE) {
+			if (data.hasKey("Type")) {
+				switch (data.getInt("Type")) {
+				case 1: entityTypeNew = EntityType.DONKEY; break;
+				case 2: entityTypeNew = EntityType.MULE; break;
+				case 3: entityTypeNew = EntityType.ZOMBIE_HORSE; break;
+				case 4: entityTypeNew = EntityType.SKELETON_HORSE; break;
+				}
+				data.remove("Type");
+			}
+			if (entityTypeNew != EntityType.DONKEY && entityTypeNew != EntityType.MULE) {
+				data.remove("ChestedHorse");
+			}
 		}
 		if (entityType != entityTypeNew) {
 			data.setString("id", EntityTypeMap.getName(entityTypeNew));
