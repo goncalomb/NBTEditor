@@ -26,7 +26,7 @@ import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
 
-public class TippedArrowNBT extends ThrownPotionNBT {
+public class TippedArrowNBT extends ArrowNBT implements SingleItemBasedNBT {
 
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("TippedArrow");

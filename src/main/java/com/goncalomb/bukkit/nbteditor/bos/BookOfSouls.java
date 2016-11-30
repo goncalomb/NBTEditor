@@ -48,6 +48,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.MinecartContainerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MinecartSpawnerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.ThrownPotionNBT;
+import com.goncalomb.bukkit.nbteditor.nbt.TippedArrowNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.Attribute;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.Modifier;
@@ -155,7 +156,10 @@ public class BookOfSouls {
 			(new InventoryForDroppedItems(this, player)).openInventory(player, _plugin);
 			return true;
 		} else if (_entityNbt instanceof ThrownPotionNBT) {
-			(new InventoryForThownPotion(this, player)).openInventory(player, _plugin);
+			(new InventoryForThownPotion<ThrownPotionNBT>(this, player)).openInventory(player, _plugin);
+			return true;
+		} else if (_entityNbt instanceof TippedArrowNBT) {
+			(new InventoryForThownPotion<TippedArrowNBT>(this, player)).openInventory(player, _plugin);
 			return true;
 		} else if (_entityNbt instanceof FireworkNBT) {
 			(new InventoryForFirework(this, player)).openInventory(player, _plugin);
