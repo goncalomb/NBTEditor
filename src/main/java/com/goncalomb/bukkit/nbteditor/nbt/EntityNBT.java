@@ -26,6 +26,7 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BlockVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ByteVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variable.ColorVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.FloatVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
@@ -159,6 +160,10 @@ public class EntityNBT extends EntityNBTBase {
 		variables.add("PlayerCreated", new BooleanVariable("PlayerCreated"));
 		registerVariables(EntityType.IRON_GOLEM, variables);
 
+		variables = new NBTGenericVariableContainer("Snowman");
+		variables.add("Pumpkin", new BooleanVariable("Pumpkin"));
+		registerVariables(EntityType.SNOWMAN, variables);
+
 		variables = new NBTGenericVariableContainer("SkeletonHorse");
 		variables.add("Trap", new BooleanVariable("SkeletonTrap"));
 		variables.add("TrapTime", new IntegerVariable("SkeletonTrapTime", 0));
@@ -192,6 +197,10 @@ public class EntityNBT extends EntityNBTBase {
 		variables = new NBTGenericVariableContainer("Rabbit");
 		variables.add("Type", new IntegerVariable("RabbitType", 0, 99));
 		registerVariables(EntityType.RABBIT, variables);
+
+		variables = new NBTGenericVariableContainer("Shulker");
+		variables.add("Color", new ByteVariable("Color", (byte) 0, (byte) 15));
+		registerVariables(EntityType.SHULKER, variables);
 
 		variables = new NBTGenericVariableContainer("ZombieVillager");
 		variables.add("Profession", new IntegerVariable("Profession", 0, 5));

@@ -33,6 +33,7 @@ public class ArrowNBT extends EntityNBT {
 		variables.add("Player", new BooleanVariable("player"));
 		variables.add("Life", new ShortVariable("life"));
 		variables.add("Damage", new DoubleVariable("damage"));
+		variables.add("Critical", new BooleanVariable("crit"));
 		registerVariables(ArrowNBT.class, variables);
 	}
 
