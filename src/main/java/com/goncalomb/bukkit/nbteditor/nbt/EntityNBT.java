@@ -83,6 +83,11 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.RABBIT, MobNBT.class);
 		registerEntity(EntityType.SHULKER, MobNBT.class);
 
+		registerEntity(EntityType.EVOKER, MobNBT.class);
+		registerEntity(EntityType.EVOKER_FANGS, EntityNBT.class);
+		registerEntity(EntityType.VEX, MobNBT.class);
+		registerEntity(EntityType.VINDICATOR, MobNBT.class);
+
 		registerEntity(EntityType.ENDER_DRAGON, MobNBT.class);
 		registerEntity(EntityType.WITHER, MobNBT.class);
 
@@ -206,6 +211,23 @@ public class EntityNBT extends EntityNBTBase {
 		variables.add("Profession", new IntegerVariable("Profession", 0, 5));
 		variables.add("ConversionTime", new IntegerVariable("ConversionTime", -1));
 		registerVariables(EntityType.ZOMBIE_VILLAGER, variables);
+
+
+		variables = new NBTGenericVariableContainer("EvocationIllager");
+		variables.add("SpellTicks", new IntegerVariable("SpellTicks"));
+		registerVariables(EntityType.EVOKER, variables);
+
+		variables = new NBTGenericVariableContainer("EvocationFangs");
+		variables.add("Warmup", new IntegerVariable("Warmup"));
+		registerVariables(EntityType.EVOKER_FANGS, variables);
+
+		variables = new NBTGenericVariableContainer("Vex");
+		variables.add("LifeTicks", new IntegerVariable("LifeTicks"));
+		registerVariables(EntityType.VEX, variables);
+
+		variables = new NBTGenericVariableContainer("VindicationIllager");
+		variables.add("Johnny", new BooleanVariable("Johnny"));
+		registerVariables(EntityType.VINDICATOR, variables);
 
 
 		variables = new NBTGenericVariableContainer("EnderDragon");
