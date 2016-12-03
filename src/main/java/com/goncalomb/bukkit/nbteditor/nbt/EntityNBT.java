@@ -87,6 +87,8 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.EVOKER_FANGS, EntityNBT.class);
 		registerEntity(EntityType.VEX, MobNBT.class);
 		registerEntity(EntityType.VINDICATOR, MobNBT.class);
+		registerEntity(EntityType.LLAMA, BreedNBT.class);
+		registerEntity(EntityType.LLAMA_SPIT, EntityNBT.class);
 
 		registerEntity(EntityType.ENDER_DRAGON, MobNBT.class);
 		registerEntity(EntityType.WITHER, MobNBT.class);
@@ -228,6 +230,14 @@ public class EntityNBT extends EntityNBTBase {
 		variables = new NBTGenericVariableContainer("VindicationIllager");
 		variables.add("Johnny", new BooleanVariable("Johnny"));
 		registerVariables(EntityType.VINDICATOR, variables);
+
+		variables = new NBTGenericVariableContainer("Llama");
+		variables.add("Chested", new BooleanVariable("ChestedHorse"));
+		variables.add("Tamed", new BooleanVariable("Tame"));
+		variables.add("Eating", new BooleanVariable("EatingHaystack"));
+		variables.add("Variant", new IntegerVariable("Variant", 0, 3));
+		variables.add("Strength", new IntegerVariable("Strength", 0, 5));
+		registerVariables(EntityType.LLAMA, variables);
 
 
 		variables = new NBTGenericVariableContainer("EnderDragon");
