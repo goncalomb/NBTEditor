@@ -64,6 +64,15 @@ public final class SpawnerNBTWrapper {
 		_spawnerBlock = block;
 		_data = NBTUtils.getTileEntityNBTData(block);
 
+		if (!_data.hasKey("SpawnData")) {
+			// on 1.11 we cannot fetch all the data from a spawner without SpawnData
+			// this creates a simple pig (by calling save and loading again)
+			// XXX: remove this workaround if not needed
+			_entities = new ArrayList<SpawnerEntityNBT>();
+			save();
+			_data = NBTUtils.getTileEntityNBTData(block);
+		}
+
 		if (_data.hasKey("SpawnPotentials")) {
 			NBTTagList spawnPotentials = _data.getList("SpawnPotentials");
 			int l = spawnPotentials.size();
@@ -141,7 +150,7 @@ public final class SpawnerNBTWrapper {
 			_data.setList("SpawnPotentials", spawnPotentials);
 		} else {
 			NBTTagCompound simplePig = new NBTTagCompound();
-			simplePig.setString("id", "Pig");
+			simplePig.setString("id", "minecraft:pig");
 			_data.setCompound("SpawnData", simplePig);
 			_data.remove("SpawnPotentials");
 		}
