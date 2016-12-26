@@ -201,7 +201,7 @@ public class BookOfSouls {
 
 	public void saveBook(boolean resetName) {
 		BookMeta meta = (BookMeta) _book.getItemMeta();
-		String entityName = EntityTypeMap.getName(_entityNbt.getEntityType());
+		String entityName = EntityTypeMap.getSimpleName(_entityNbt.getEntityType());
 
 		if (resetName) {
 			meta.setDisplayName(_bosCustomItem.getName() + ChatColor.RESET + " - " + ChatColor.RED + entityName);

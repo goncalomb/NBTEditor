@@ -110,7 +110,7 @@ public final class EntityTypeMap {
 		List<String> entityNames = new ArrayList<String>();
 		List<String> livingEntityNames = new ArrayList<String>();
 		for (EntityType type : EntityType.values()) {
-			String name = getName(type);
+			String name = getSimpleName(type);
 			if (name != null && type != EntityType.PLAYER) {
 				entityNames.add(name);
 				if (type.isAlive()) {
@@ -127,14 +127,22 @@ public final class EntityTypeMap {
 	private EntityTypeMap() { }
 
 	public static EntityType getByName(String name) {
-		EntityType e = _legacyNames.get(name.toLowerCase());
+		name = name.toLowerCase();
+		EntityType e = _legacyNames.get(name);
 		if (e != null) {
 			return e;
+		}
+		if (name.startsWith("minecraft:")) {
+			name = name.substring(10);
 		}
 		return EntityType.fromName(name);
 	}
 
 	public static String getName(EntityType type) {
+		return "minecraft:" + type.getName();
+	}
+
+	public static String getSimpleName(EntityType type) {
 		return type.getName();
 	}
 
@@ -145,7 +153,7 @@ public final class EntityTypeMap {
 	public static List<String> getNames(Collection<EntityType> types) {
 		ArrayList<String> names = new ArrayList<String>(types.size());
 		for (EntityType type : types) {
-			names.add(getName(type));
+			names.add(getSimpleName(type));
 		}
 		return names;
 	}

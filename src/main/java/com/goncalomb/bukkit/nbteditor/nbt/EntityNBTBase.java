@@ -161,10 +161,9 @@ abstract class EntityNBTBase {
 				data.remove("ChestedHorse");
 			}
 		}
-		if (entityType != entityTypeNew) {
-			data.setString("id", EntityTypeMap.getName(entityTypeNew));
-			entityType = entityTypeNew;
-		}
+
+		data.setString("id", EntityTypeMap.getName(entityTypeNew));
+		entityType = entityTypeNew;
 
 		if (entityType != null) {
 			return newInstance(entityType, data);
