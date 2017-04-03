@@ -28,10 +28,6 @@
       <id>spigot-repo</id>
       <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
     </repository>
-    <repository>
-      <id>plugin-metrics-repo</id>
-      <url>http://repo.mcstats.org/content/repositories/public/</url>
-    </repository>
   </repositories>
 
   <dependencies>
@@ -40,18 +36,6 @@
       <artifactId>bukkit</artifactId>
       <version>${bukkit.version}</version>
       <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mcstats.bukkit</groupId>
-      <artifactId>metrics</artifactId>
-      <version>R8-SNAPSHOT</version>
-      <scope>compile</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.bukkit</groupId>
-          <artifactId>bukkit</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
   </dependencies>
 
