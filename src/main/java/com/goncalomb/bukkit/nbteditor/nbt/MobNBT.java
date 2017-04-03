@@ -49,8 +49,6 @@ public class MobNBT extends EquippableNBT {
 		variables.add("PickLoot", new BooleanVariable("CanPickUpLoot"));
 		variables.add("NoAI", new BooleanVariable("NoAI"));
 		variables.add("Persistent", new BooleanVariable("PersistenceRequired"));
-		variables.add("Name", new StringVariable("CustomName"));
-		variables.add("NameVisible", new BooleanVariable("CustomNameVisible"));
 		variables.add("LeftHanded", new BooleanVariable("LeftHanded"));
 		registerVariables(MobNBT.class, variables);
 	}

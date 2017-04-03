@@ -137,6 +137,8 @@ public class EntityNBT extends EntityNBTBase {
 		variables.add("NoGravity", new BooleanVariable("NoGravity"));
 		variables.add("Invulnerable", new BooleanVariable("Invulnerable"));
 		variables.add("Silent", new BooleanVariable("Silent"));
+		variables.add("Name", new StringVariable("CustomName"));
+		variables.add("NameVisible", new BooleanVariable("CustomNameVisible"));
 		variables.add("Glowing", new BooleanVariable("Glowing"));
 		registerVariables(EntityNBT.class, variables);
 
