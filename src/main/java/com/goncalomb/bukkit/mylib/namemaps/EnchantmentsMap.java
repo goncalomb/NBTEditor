@@ -62,6 +62,7 @@ public final class EnchantmentsMap {
 		_enchantments.put("Lure", Enchantment.LURE);
 		_enchantments.put("Mending", Enchantment.MENDING);
 		_enchantments.put("CurseOfVanishing", Enchantment.VANISHING_CURSE);
+		_enchantments.put("SweepingEdge", Enchantment.SWEEPING_EDGE);
 
 		List<String> enchantmentNames = new ArrayList<String>(_enchantments.names());
 		Collections.sort(enchantmentNames, String.CASE_INSENSITIVE_ORDER);
