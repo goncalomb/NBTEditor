@@ -42,7 +42,7 @@ public final class NBTUtils {
 	private static Field _CraftItemStack_handle;
 
 	// Minecraft's Entity Class;
-	private static Method _Entity_e; // Save data to NBTTagCompound.
+	private static Method _Entity_save;
 	private static Method _Entity_getBukkitEntity;
 
 	// CraftEntity Class
@@ -75,7 +75,7 @@ public final class NBTUtils {
 		_CraftItemStack_handle.setAccessible(true);
 
 		Class<?> minecraftEntityClass = BukkitReflect.getMinecraftClass("Entity");
-		_Entity_e = minecraftEntityClass.getMethod("e", nbtTagCompoundClass);
+		_Entity_save = minecraftEntityClass.getMethod("save", nbtTagCompoundClass);
 		_Entity_getBukkitEntity = minecraftEntityClass.getMethod("getBukkitEntity");
 
 		Class<?> craftEntityClass = BukkitReflect.getCraftBukkitClass("entity.CraftEntity");
@@ -119,7 +119,7 @@ public final class NBTUtils {
 	public static NBTTagCompound getEntityNBTData(Entity entity) {
 		Object entityHandle = BukkitReflect.invokeMethod(entity, _CraftEntity_getHandle);
 		NBTTagCompound data = new NBTTagCompound();
-		BukkitReflect.invokeMethod(entityHandle, _Entity_e, data._handle);
+		BukkitReflect.invokeMethod(entityHandle, _Entity_save, data._handle);
 		return data;
 	}
 
