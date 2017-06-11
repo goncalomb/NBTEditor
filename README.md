@@ -22,9 +22,9 @@ Need help? Read the [FAQ][NBTEditor-FAQ] and ask questions on the [BukkitDev][NB
 Contributing
 ------------
 
-For now, I'm not accepting Pull Requests.
+Contributions to the main branch are welcome. Keep the same code style and use tabs for indentation.
 
-Feel free to send me suggestions and bug reports through [BukkitDev][NBTEditor] or [email][contacts].
+Feel free to send me suggestions and bug reports through Issues, [BukkitDev][NBTEditor] or [email][contacts].
 
 
 
