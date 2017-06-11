@@ -86,17 +86,15 @@ public class CommandNBTItem extends MyCommand {
 		if(loreList == null){
 			loreList = new ArrayList<String>();
 		}
-		Integer length = loreList.size();
 		Integer index = Utils.parseInt(args[0], -1);
-
-		if(index < 1){
+		if (index < 1) {
 			sender.sendMessage("§cInvalid index. The index is an integer greater than 0.");
-		}else if(length >= index){
+		} else if (loreList.size() >= index) {
 			loreList.set(index - 1, UtilsMc.parseColors(StringUtils.join(args, " ", 1, args.length)));
 			item.meta.setLore(loreList);
 			item.save();
 			sender.sendMessage("§aItem lore set.");
-		}else{
+		} else {
 			sender.sendMessage(MessageFormat.format("§cLore line with index {0} doesn''t exist!", index));
 		}
 		return true;

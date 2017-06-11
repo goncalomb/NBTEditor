@@ -26,7 +26,6 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BlockVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ByteVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.ColorVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.FloatVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
@@ -207,7 +206,7 @@ public class EntityNBT extends EntityNBTBase {
 		variables = new NBTGenericVariableContainer("Rabbit");
 		variables.add("Type", new IntegerVariable("RabbitType", 0, 99));
 		registerVariables(EntityType.RABBIT, variables);
-		
+
 		variables = new NBTGenericVariableContainer("Parrot");
 		variables.add("Variant", new IntegerVariable("Variant", 0, 4));
 		registerVariables(EntityType.PARROT, variables);
