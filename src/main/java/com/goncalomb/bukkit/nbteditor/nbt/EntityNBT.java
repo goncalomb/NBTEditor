@@ -81,6 +81,7 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.ELDER_GUARDIAN, MobNBT.class);
 		registerEntity(EntityType.ENDERMITE, MobNBT.class);
 		registerEntity(EntityType.RABBIT, MobNBT.class);
+		registerEntity(EntityType.PARROT, MobNBT.class);
 		registerEntity(EntityType.SHULKER, MobNBT.class);
 
 		registerEntity(EntityType.EVOKER, MobNBT.class);
@@ -206,6 +207,10 @@ public class EntityNBT extends EntityNBTBase {
 		variables = new NBTGenericVariableContainer("Rabbit");
 		variables.add("Type", new IntegerVariable("RabbitType", 0, 99));
 		registerVariables(EntityType.RABBIT, variables);
+		
+		variables = new NBTGenericVariableContainer("Parrot");
+		variables.add("Variant", new IntegerVariable("Variant", 0, 4));
+		registerVariables(EntityType.PARROT, variables);
 
 		variables = new NBTGenericVariableContainer("Shulker");
 		variables.add("Color", new ByteVariable("Color", (byte) 0, (byte) 15));
