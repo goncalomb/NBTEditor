@@ -1,11 +1,11 @@
 NBTEditor
 =========
 
-An in-game NBT editor for [Bukkit].
-
-The NBTEditor is built and tested for CraftBukkit and Spigot ([SipgotMC BuildTools][BuildTools]).
+An in-game NBT editor for [Bukkit]. Built and tested for CraftBukkit and Spigot ([SipgotMC BuildTools][BuildTools]).
 
 More information on the [NBTEditor BukkitDev page][NBTEditor].
+
+Last build status (Jenkins): [![Build Status](https://jenkins.androkai.net/buildStatus/icon?job=NBTEditor)](https://jenkins.androkai.net/job/NBTEditor/)
 
 License
 -------
@@ -28,9 +28,9 @@ Feel free to send me suggestions and bug reports through Issues, [BukkitDev][NBT
 
 
 
-[Bukkit]: http://bukkit.org/
+[Bukkit]: https://bukkit.org/
 [BuildTools]: https://www.spigotmc.org/wiki/buildtools/
-[NBTEditor]: http://dev.bukkit.org/bukkit-plugins/nbteditor/
-[NBTEditor-Documentation]: http://dev.bukkit.org/bukkit-plugins/nbteditor/pages/documentation/
-[NBTEditor-FAQ]: http://dev.bukkit.org/bukkit-plugins/nbteditor/pages/documentation/faq/
-[contacts]: http://goncalomb.com/contacts
+[NBTEditor]: https://dev.bukkit.org/projects/nbteditor/
+[NBTEditor-Documentation]: https://dev.bukkit.org/projects/nbteditor/pages/documentation/
+[NBTEditor-FAQ]: https://dev.bukkit.org/projects/nbteditor/pages/documentation/faq/
+[contacts]: https://goncalomb.com/contacts
