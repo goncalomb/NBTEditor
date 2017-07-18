@@ -22,9 +22,9 @@ package com.goncalomb.bukkit.nbteditor;
 import java.io.File;
 import java.util.logging.Level;
 
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.mcstats.Metrics;
 
 import com.goncalomb.bukkit.customitems.api.CustomItemManager;
 import com.goncalomb.bukkit.customitems.commands.CommandCustomItems;
@@ -77,10 +77,9 @@ public final class NBTEditor extends JavaPlugin {
 		}
 
 		try {
-			Metrics metrics = new Metrics(this);
-			metrics.start();
+			new Metrics(this);
 		} catch (Exception e) {
-			Bukkit.getLogger().log(Level.INFO, "[Metrics] " + e.getMessage());
+			Bukkit.getLogger().log(Level.INFO, "[bStats] " + e.getMessage());
 		}
 
 		MyCommandManager.register(new CommandBOS(), this);

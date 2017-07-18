@@ -29,8 +29,8 @@
       <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
     </repository>
     <repository>
-      <id>plugin-metrics-repo</id>
-      <url>http://repo.mcstats.org/content/repositories/public/</url>
+      <id>bstats-repo</id>
+      <url>http://repo.bstats.org/content/repositories/releases/</url>
     </repository>
   </repositories>
 
@@ -42,16 +42,9 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.mcstats.bukkit</groupId>
-      <artifactId>metrics</artifactId>
-      <version>R8-SNAPSHOT</version>
-      <scope>compile</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.bukkit</groupId>
-          <artifactId>bukkit</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>org.bstats</groupId>
+      <artifactId>bstats-bukkit</artifactId>
+      <version>1.2</version>
     </dependency>
   </dependencies>
 
@@ -145,13 +138,13 @@
         <configuration>
           <artifactSet>
             <includes>
-              <include>org.mcstats.*:*</include>
+              <include>org.bstats:*</include>
             </includes>
           </artifactSet>
           <relocations>
             <relocation>
-              <pattern>org.mcstats</pattern>
-              <shadedPattern>com.goncalomb.bukkit.mcstats</shadedPattern>
+              <pattern>org.bstats.bukkit</pattern>
+              <shadedPattern>com.goncalomb.bukkit.bstats</shadedPattern>
             </relocation>
           </relocations>
         </configuration>
