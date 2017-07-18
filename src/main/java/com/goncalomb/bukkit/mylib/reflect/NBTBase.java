@@ -20,7 +20,6 @@
 package com.goncalomb.bukkit.mylib.reflect;
 
 import java.lang.reflect.Method;
-import java.util.Map.Entry;
 
 public class NBTBase {
 
@@ -92,64 +91,9 @@ public class NBTBase {
 		return wrap(invokeMethod(_clone));
 	}
 
-	private String toStringAny(Object object) {
-		// Some "dirty" code to fix the internal Mojanson encoder.
-		StringBuilder buffer = new StringBuilder();
-		if (_nbtTagCompoundClass.isInstance(object)) {
-			// We need this to force using this method on all compound values.
-			buffer.append("{");
-			int i = 0;
-			for (Entry<String, Object> entry : (new NBTTagCompound(object))._map.entrySet()) {
-				if (i++ != 0) buffer.append(",");
-				buffer.append(entry.getKey());
-				buffer.append(":");
-				buffer.append(toStringAny(entry.getValue()));
-			}
-			buffer.append("}");
-		} else if (_nbtTagListClass.isInstance(object)) {
-			// We need this to force using this method on all list values.
-			// Mojang, WHY do lists need to be numbered!?!?.
-			// Strings with ':' on unnumbered lists break the parser.
-			// The numbers don't even determine the position on the list.
-			// Le sigh.
-			buffer.append("[");
-			int i = 0;
-			for (Object obj : (new NBTTagList(object))._list) {
-				if (i != 0) buffer.append(",");
-				buffer.append(i++);
-				buffer.append(":");
-				buffer.append(toStringAny(obj));
-			}
-			buffer.append("]");
-		} else if (_nbtTagStringClass.isInstance(object)) {
-			// This is the actual fix.
-			// The " character on Strings needs to be escaped.
-			String str = (String) NBTTypes.fromInternal(object);
-			buffer.append('"');
-			int j = 0, l = str.length();
-			for (int i = 0; i < l; ++i) {
-				char c = str.charAt(i);
-				// There is a problem with the internal decoder, it does not recognize \\ as an escaped \.
-				// It's not possible to encode strings that end with \. Mojang, fix it.
-				if (/*c == '\' || */c == '"') {
-					buffer.append(str.substring(j, i));
-					buffer.append("\\" +  c);
-					j = i + 1;
-				}
-			}
-			if (j != l) {
-				buffer.append(str.substring(j, l));
-			}
-			buffer.append('"');
-		} else {
-			return object.toString();
-		}
-		return buffer.toString();
-	}
-
 	@Override
 	public String toString() {
-		return toStringAny(_handle);
+		return _handle.toString();
 	}
 
 }
