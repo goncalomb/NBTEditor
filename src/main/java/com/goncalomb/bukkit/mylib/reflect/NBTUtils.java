@@ -49,7 +49,7 @@ public final class NBTUtils {
 	private static Method _CraftEntity_getHandle;
 
 	// Minecraft's TileEntity
-	private static Method _TileEntity_a; // Load data from NBTTagCompound.
+	private static Method _TileEntity_load; // Load data from NBTTagCompound.
 	private static Method _TileEntity_save; // Save data to NBTTagCompound.
 
 	// CraftWorld
@@ -83,7 +83,7 @@ public final class NBTUtils {
 
 		Class<?> minecraftTileEntityClass = BukkitReflect.getMinecraftClass("TileEntity");
 		_TileEntity_save = minecraftTileEntityClass.getMethod("save", nbtTagCompoundClass);
-		_TileEntity_a = minecraftTileEntityClass.getMethod("a", nbtTagCompoundClass);
+		_TileEntity_load = minecraftTileEntityClass.getMethod("load", nbtTagCompoundClass);
 
 		Class<?> craftWorldClass = BukkitReflect.getCraftBukkitClass("CraftWorld");
 		_CraftWorld_getHandle = craftWorldClass.getMethod("getHandle");
@@ -169,7 +169,7 @@ public final class NBTUtils {
 		NBTBase.prepareReflection();
 		Object tileEntity = getTileEntity(block);
 		if (tileEntity != null) {
-			BukkitReflect.invokeMethod(tileEntity, _TileEntity_a, data._handle);
+			BukkitReflect.invokeMethod(tileEntity, _TileEntity_load, data._handle);
 		}
 	}
 
