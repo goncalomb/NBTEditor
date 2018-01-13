@@ -36,8 +36,8 @@ public abstract class NBTVariable implements Cloneable {
 
 	public abstract String get();
 
-	public void clear(NBTTagCompound data) {
-		data.remove(_key);
+	public void clear() {
+		_data.remove(_key);
 	}
 
 	public abstract String getFormat();

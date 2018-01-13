@@ -20,6 +20,9 @@
 package com.goncalomb.bukkit.nbteditor.commands;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
@@ -27,10 +30,17 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
+import com.goncalomb.bukkit.mylib.command.MyCommand.Command;
+import com.goncalomb.bukkit.mylib.command.MyCommand.CommandType;
+import com.goncalomb.bukkit.mylib.command.MyCommand.TabComplete;
+import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
+import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
+import com.goncalomb.bukkit.nbteditor.nbt.BaseNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.TileNBTWrapper;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTVariableContainer;
@@ -51,6 +61,30 @@ public class CommandNBTTile extends MyCommand {
 		} catch (RuntimeException e) {
 			throw new MyCommandException("§cCannot edit that tile!");
 		}
+	}
+
+	private static TileNBTWrapper getTileNBTWrapperSilent(Player player) {
+		try {
+			return getTileNBTWrapper(player);
+		} catch (MyCommandException e) {
+			return null;
+		}
+	}
+
+	private static List<String> getVariableNames(BaseNBT nbtBase, String prefix) {
+		if (nbtBase == null) {
+			return null;
+		}
+		List<String> names = new ArrayList<String>();
+		for (NBTVariableContainer container : nbtBase.getAllVariables()) {
+			for (String name : container.getVariableNames()) {
+				if (StringUtil.startsWithIgnoreCase(name, prefix)) {
+					names.add(name);
+				}
+			}
+		}
+		Collections.sort(names, String.CASE_INSENSITIVE_ORDER);
+		return names;
 	}
 
 	/*
@@ -239,5 +273,42 @@ public class CommandNBTTile extends MyCommand {
 		return true;
 	}
 
+	@TabComplete(args = "var")
+	public List<String> var_tab(CommandSender sender, String[] args) throws MyCommandException /* Never throws */ {
+		if (args.length == 1) {
+			return getVariableNames(getTileNBTWrapperSilent((Player) sender), args[0]);
+		} else if (args.length == 2) {
+			TileNBTWrapper wrapper = getTileNBTWrapperSilent((Player) sender);
+			if (wrapper != null) {
+				NBTVariable variable = wrapper.getVariable(args[0]);
+				if (variable != null) {
+					List<String> possibleValues = variable.getPossibleValues();
+					if (possibleValues != null) {
+						return Utils.getElementsWithPrefix(possibleValues, args[1]);
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	@Command(args = "clearvar", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<variable>")
+	public boolean clearvarCommand(CommandSender sender, String[] args) throws MyCommandException {
+		TileNBTWrapper wrapper = getTileNBTWrapper((Player) sender);
+		NBTVariable variable = wrapper.getVariable(args[0]);
+		if (variable != null) {
+			variable.clear();
+			wrapper.save();
+			sender.sendMessage("§aVariable cleared.");
+		} else {
+			sender.sendMessage(MessageFormat.format("§cInvalid format for variable {0}!", args[0]));
+		}
+		return true;
+	}
+
+	@TabComplete(args = "clearvar")
+	public List<String> clearvar_tab(CommandSender sender, String[] args) {
+		return getVariableNames(getTileNBTWrapperSilent((Player) sender), args[0]);
+	}
 
 }
