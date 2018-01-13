@@ -3,7 +3,6 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 import java.util.ArrayList;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTVariableContainer;
@@ -48,6 +47,10 @@ public abstract class BaseNBT {
 			container = container.getParent();
 		}
 		return null;
+	}
+
+	public void save() {
+		throw new UnsupportedOperationException();
 	}
 
 }

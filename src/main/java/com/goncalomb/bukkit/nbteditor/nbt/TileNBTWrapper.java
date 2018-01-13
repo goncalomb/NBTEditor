@@ -18,6 +18,7 @@ public class TileNBTWrapper extends TileNBT {
 		return _block.getLocation();
 	}
 
+	@Override
 	public void save() {
 		NBTUtils.setTileEntityNBTData(_block, _data);
 	}

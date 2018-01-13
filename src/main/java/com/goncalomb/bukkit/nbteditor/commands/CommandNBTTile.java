@@ -20,38 +20,31 @@
 package com.goncalomb.bukkit.nbteditor.commands;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.CommandBlock;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.util.StringUtil;
 
-import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
-import com.goncalomb.bukkit.mylib.command.MyCommand.Command;
-import com.goncalomb.bukkit.mylib.command.MyCommand.CommandType;
-import com.goncalomb.bukkit.mylib.command.MyCommand.TabComplete;
-import com.goncalomb.bukkit.mylib.utils.Utils;
+import com.goncalomb.bukkit.mylib.command.MyCommandManager;
+import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
-import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
-import com.goncalomb.bukkit.nbteditor.nbt.BaseNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.TileNBTWrapper;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTVariableContainer;
 
-public class CommandNBTTile extends MyCommand {
+public class CommandNBTTile extends AbstractNBTCommand<TileNBTWrapper> {
 
 	public CommandNBTTile() {
 		super("nbttile", "nbtt");
 	}
 
-	private static TileNBTWrapper getTileNBTWrapper(Player player) throws MyCommandException {
+	@Override
+	protected TileNBTWrapper getWrapper(Player player) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock(player, 5);
 		if (block.getType() == Material.AIR) {
 			throw new MyCommandException("§cNo tile in sight!");
@@ -63,139 +56,35 @@ public class CommandNBTTile extends MyCommand {
 		}
 	}
 
-	private static TileNBTWrapper getTileNBTWrapperSilent(Player player) {
-		try {
-			return getTileNBTWrapper(player);
-		} catch (MyCommandException e) {
-			return null;
-		}
+	@Override
+	@Command(args = "info", type = CommandType.PLAYER_ONLY)
+	public boolean info_Command(CommandSender sender, String[] args) throws MyCommandException {
+		return super.info_Command(sender, args);
 	}
 
-	private static List<String> getVariableNames(BaseNBT nbtBase, String prefix) {
-		if (nbtBase == null) {
-			return null;
-		}
-		List<String> names = new ArrayList<String>();
-		for (NBTVariableContainer container : nbtBase.getAllVariables()) {
-			for (String name : container.getVariableNames()) {
-				if (StringUtil.startsWithIgnoreCase(name, prefix)) {
-					names.add(name);
-				}
-			}
-		}
-		Collections.sort(names, String.CASE_INSENSITIVE_ORDER);
-		return names;
+	@Override
+	@Command(args = "var", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<variable> ...")
+	public boolean var_Command(CommandSender sender, String[] args) throws MyCommandException {
+		return super.var_Command(sender, args);
 	}
 
-	/*
 
-	private static BeaconNBTWrapper getBeacon(Player player) throws MyCommandException {
-		Block block = UtilsMc.getTargetBlock(player, 5);
-		if (block.getType() != Material.BEACON) {
-			throw new MyCommandException("§cNo beacon in sight!");
-		}
-		return new BeaconNBTWrapper(block);
+	@Override
+	@TabComplete(args = "var")
+	public List<String> var_TabComplete(CommandSender sender, String[] args) {
+		return super.var_TabComplete(sender, args);
 	}
 
-	private static JukeboxNBTWrapper getJukebox(Player player) throws MyCommandException {
-		Block block = UtilsMc.getTargetBlock(player, 5);
-		if (block.getType() != Material.JUKEBOX) {
-			throw new MyCommandException("§cNo jukebox in sight!");
-		}
-		return new JukeboxNBTWrapper(block);
+	@Override
+	@Command(args = "clearvar", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<variable>")
+	public boolean clearvar_Command(CommandSender sender, String[] args) throws MyCommandException {
+		return super.clearvar_Command(sender, args);
 	}
 
-	@Command(args = "beacon", type = CommandType.PLAYER_ONLY, minargs = 0, maxargs = 2, usage = "primary/secondary <effect>")
-	public boolean beaconEffectCommand(CommandSender sender, String[] args) throws MyCommandException {
-		if (args.length == 2 && (args[0].equalsIgnoreCase("primary") || args[0].equalsIgnoreCase("secondary"))) {
-			BeaconNBTWrapper beacon = getBeacon((Player) sender);
-			PotionEffectType effect = null;
-			boolean clear = args[1].equalsIgnoreCase("clear");
-			if (!clear) {
-				effect = PotionEffectsMap.getByName(args[1]);
-				if (effect == null) {
-					sender.sendMessage("§cInvalid effect!");
-				}
-			}
-			if (clear || effect != null) {
-				if (args[0].equalsIgnoreCase("primary")) {
-					beacon.setPrimary(effect);
-				} else {
-					beacon.setSecondary(effect);
-				}
-				beacon.save();
-				sender.sendMessage(MessageFormat.format((clear ? "§aEffect cleared ({0})." : "§aEffect set ({0})."), args[0].toLowerCase()));
-				return true;
-			}
-		}
-		sender.sendMessage("§7Effects: " + PotionEffectsMap.getNamesAsString());
-		sender.sendMessage("§eUse 'clear' as affect clear the effect.");
-		return false;
-	}
-
-	@TabComplete(args = "beacon")
-	public List<String> tab_beacon(CommandSender sender, String[] args) {
-		if (args.length == 1) {
-			return Utils.getElementsWithPrefix(Arrays.asList(new String[] { "primary", "secondary" }), args[0]);
-		} else if (args.length == 2) {
-			return Utils.getElementsWithPrefix(PotionEffectsMap.getNames(), args[1]);
-		}
-		return null;
-	}
-
-	@Command(args = "record", type = CommandType.PLAYER_ONLY)
-	public boolean setRecordCommand(CommandSender sender, String[] args) throws MyCommandException {
-		JukeboxNBTWrapper jukebox = getJukebox((Player) sender);
-		ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
-		jukebox.setRecord(item);
-		jukebox.save();
-		if (item == null || item.getType() == Material.AIR) {
-			sender.sendMessage("§aRecord cleared.");
-		} else {
-			sender.sendMessage("§aRecord set.");
-		}
-		return true;
-	}
-
-	@Command(args = "name", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "[name ...]")
-	public boolean nameCommand(CommandSender sender, String[] args) throws MyCommandException {
-		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
-		if (TileNBTWrapper.allowsCustomName(block.getType())) {
-			TileNBTWrapper tile = new TileNBTWrapper(block);
-			tile.setCustomName(args.length == 0 ? null : UtilsMc.parseColors(StringUtils.join(args, " ")));
-			tile.save();
-			sender.sendMessage(args.length == 0 ? "§aName cleared." : "§aName set.");
-		} else {
-			sender.sendMessage("§cYou must be looking at a Chest, Furnace, Dispenser, Dropper, Hopper, Brewing Stand, Enchantment Table or Commmand Block!");
-		}
-		return true;
-	}
-
-	@Command(args = "command-colors", type = CommandType.PLAYER_ONLY)
-	public boolean colorsCommand(CommandSender sender, String[] args) throws MyCommandException {
-		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
-		BlockState state = block.getState();
-		if (!(state instanceof CommandBlock)) {
-			throw new MyCommandException("§cNo Command Block in sight!");
-		}
-		((CommandBlock) state).setCommand(UtilsMc.parseColors(((CommandBlock) state).getCommand()));
-		state.update();
-		sender.sendMessage("§aColor codes have been replaced.");
-		return true;
-	}
-
-	@Command(args = "sign", type = CommandType.PLAYER_ONLY, minargs = 2, maxargs = Integer.MAX_VALUE, usage = "<line> [content ...]")
-	public boolean signCommand(CommandSender sender, String[] args) throws MyCommandException {
-		Block block = UtilsMc.getTargetBlock((Player) sender, 5);
-		if (block.getType() != Material.SIGN_POST) {
-			throw new MyCommandException("§cNo Sign in sight!");
-		}
-		int line = CommandUtils.parseInt(args[0], 4, 1);
-		Sign sign = (Sign) block.getState();
-		sign.setLine(line - 1, UtilsMc.parseColors(StringUtils.join(args, " ", 1, args.length)));
-		sign.update();
-		sender.sendMessage("§aLine set.");
-		return true;
+	@Override
+	@TabComplete(args = "clearvar")
+	public List<String> clearvar_TabComplete(CommandSender sender, String[] args) {
+		return super.clearvar_TabComplete(sender, args);
 	}
 
 	@Command(args = "tocommand", type = CommandType.PLAYER_ONLY)
@@ -231,84 +120,6 @@ public class CommandNBTTile extends MyCommand {
 		commandBlock.update();
 		sender.sendMessage("§aCommand block created below the tile.");
 		return true;
-	}
-
-	*/
-
-	@Command(args = "info", type = CommandType.PLAYER_ONLY)
-	public boolean infoCommand(CommandSender sender, String[] args) throws MyCommandException {
-		TileNBTWrapper wrapper = getTileNBTWrapper((Player) sender);
-		for (NBTVariableContainer container : wrapper.getAllVariables()) {
-			sender.sendMessage("§a" + container.getName());
-			for (String name : container.getVariableNames()) {
-				String value = container.getVariable(name).get();
-				if (value == null) {
-					value = "§onull";
-				}
-				sender.sendMessage("  " + name + ": §b" + value);
-			}
-		}
-		return true;
-	}
-
-	@Command(args = "var", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<variable> ...")
-	public boolean varCommand(CommandSender sender, String[] args) throws MyCommandException {
-		TileNBTWrapper wrapper = getTileNBTWrapper((Player) sender);
-		NBTVariable variable = wrapper.getVariable(args[0]);
-		if (variable != null) {
-			if(args.length >= 2) {
-				String value = StringUtils.join(args, " ", 1, args.length);
-				if (variable.set(value, (Player) sender)) {
-					wrapper.save();
-					sender.sendMessage("§aVariable updated.");
-					return true;
-				} else {
-					sender.sendMessage(MessageFormat.format("§cInvalid format for variable {0}!", args[0]));
-				}
-			}
-			sender.sendMessage(ChatColor.YELLOW + variable.getFormat());
-		} else {
-			sender.sendMessage(MessageFormat.format("§cThat Tile doesn''t have the variable {0}!", args[0]));
-		}
-		return true;
-	}
-
-	@TabComplete(args = "var")
-	public List<String> var_tab(CommandSender sender, String[] args) throws MyCommandException /* Never throws */ {
-		if (args.length == 1) {
-			return getVariableNames(getTileNBTWrapperSilent((Player) sender), args[0]);
-		} else if (args.length == 2) {
-			TileNBTWrapper wrapper = getTileNBTWrapperSilent((Player) sender);
-			if (wrapper != null) {
-				NBTVariable variable = wrapper.getVariable(args[0]);
-				if (variable != null) {
-					List<String> possibleValues = variable.getPossibleValues();
-					if (possibleValues != null) {
-						return Utils.getElementsWithPrefix(possibleValues, args[1]);
-					}
-				}
-			}
-		}
-		return null;
-	}
-
-	@Command(args = "clearvar", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<variable>")
-	public boolean clearvarCommand(CommandSender sender, String[] args) throws MyCommandException {
-		TileNBTWrapper wrapper = getTileNBTWrapper((Player) sender);
-		NBTVariable variable = wrapper.getVariable(args[0]);
-		if (variable != null) {
-			variable.clear();
-			wrapper.save();
-			sender.sendMessage("§aVariable cleared.");
-		} else {
-			sender.sendMessage(MessageFormat.format("§cInvalid format for variable {0}!", args[0]));
-		}
-		return true;
-	}
-
-	@TabComplete(args = "clearvar")
-	public List<String> clearvar_tab(CommandSender sender, String[] args) {
-		return getVariableNames(getTileNBTWrapperSilent((Player) sender), args[0]);
 	}
 
 }
