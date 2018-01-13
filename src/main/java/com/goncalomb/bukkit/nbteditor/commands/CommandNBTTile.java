@@ -205,12 +205,12 @@ public class CommandNBTTile extends MyCommand {
 	public boolean infoCommand(CommandSender sender, String[] args) throws MyCommandException {
 		TileNBTWrapper wrapper = getTileNBTWrapper((Player) sender);
 		for (NBTVariableContainer container : wrapper.getAllVariables()) {
+			sender.sendMessage("§a" + container.getName());
 			for (String name : container.getVariableNames()) {
 				String value = container.getVariable(name).get();
 				if (value == null) {
 					value = "§onull";
 				}
-				sender.sendMessage("§a" + container.getName());
 				sender.sendMessage("  " + name + ": §b" + value);
 			}
 		}
