@@ -20,39 +20,40 @@
 package com.goncalomb.bukkit.nbteditor.commands;
 
 import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.CommandBlock;
-import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffectType;
 
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
-import com.goncalomb.bukkit.mylib.command.MyCommandManager;
-import com.goncalomb.bukkit.mylib.namemaps.PotionEffectsMap;
-import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
-import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
-import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
-import com.goncalomb.bukkit.nbteditor.nbt.BeaconNBTWrapper;
-import com.goncalomb.bukkit.nbteditor.nbt.JukeboxNBTWrapper;
 import com.goncalomb.bukkit.nbteditor.nbt.TileNBTWrapper;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTVariableContainer;
 
 public class CommandNBTTile extends MyCommand {
 
 	public CommandNBTTile() {
 		super("nbttile", "nbtt");
 	}
+
+	private static TileNBTWrapper getTileNBTWrapper(Player player) throws MyCommandException {
+		Block block = UtilsMc.getTargetBlock(player, 5);
+		if (block.getType() == Material.AIR) {
+			throw new MyCommandException("§cNo tile in sight!");
+		}
+		try {
+			return new TileNBTWrapper(block);
+		} catch (RuntimeException e) {
+			throw new MyCommandException("§cCannot edit that tile!");
+		}
+	}
+
+	/*
 
 	private static BeaconNBTWrapper getBeacon(Player player) throws MyCommandException {
 		Block block = UtilsMc.getTargetBlock(player, 5);
@@ -197,5 +198,46 @@ public class CommandNBTTile extends MyCommand {
 		sender.sendMessage("§aCommand block created below the tile.");
 		return true;
 	}
+
+	*/
+
+	@Command(args = "info", type = CommandType.PLAYER_ONLY)
+	public boolean infoCommand(CommandSender sender, String[] args) throws MyCommandException {
+		TileNBTWrapper wrapper = getTileNBTWrapper((Player) sender);
+		for (NBTVariableContainer container : wrapper.getAllVariables()) {
+			for (String name : container.getVariableNames()) {
+				String value = container.getVariable(name).get();
+				if (value == null) {
+					value = "§onull";
+				}
+				sender.sendMessage("§a" + container.getName());
+				sender.sendMessage("  " + name + ": §b" + value);
+			}
+		}
+		return true;
+	}
+
+	@Command(args = "var", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<variable> ...")
+	public boolean varCommand(CommandSender sender, String[] args) throws MyCommandException {
+		TileNBTWrapper wrapper = getTileNBTWrapper((Player) sender);
+		NBTVariable variable = wrapper.getVariable(args[0]);
+		if (variable != null) {
+			if(args.length >= 2) {
+				String value = StringUtils.join(args, " ", 1, args.length);
+				if (variable.set(value, (Player) sender)) {
+					wrapper.save();
+					sender.sendMessage("§aVariable updated.");
+					return true;
+				} else {
+					sender.sendMessage(MessageFormat.format("§cInvalid format for variable {0}!", args[0]));
+				}
+			}
+			sender.sendMessage(ChatColor.YELLOW + variable.getFormat());
+		} else {
+			sender.sendMessage(MessageFormat.format("§cThat Tile doesn''t have the variable {0}!", args[0]));
+		}
+		return true;
+	}
+
 
 }
