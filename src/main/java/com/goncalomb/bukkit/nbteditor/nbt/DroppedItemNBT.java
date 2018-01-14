@@ -25,7 +25,7 @@ import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
 
-public class DroppedItemNBT extends ItemNBT implements SingleItemBasedNBT {
+public class DroppedItemNBT extends ItemEntityNBT implements SingleItemBasedNBT {
 
 	static {
 		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("DroppedItem");
