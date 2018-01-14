@@ -14,8 +14,12 @@ public abstract class BaseNBT {
 	protected NBTUnboundVariableContainer _container;
 
 	public BaseNBT(NBTTagCompound data) {
+		this(data, data.getString("id"));
+	}
+
+	public BaseNBT(NBTTagCompound data, String id) {
 		_data = data;
-		_id = _data.getString("id");
+		_id = id;
 		if (_id == null) {
 			throw new RuntimeException("Invalid data id.");
 		}

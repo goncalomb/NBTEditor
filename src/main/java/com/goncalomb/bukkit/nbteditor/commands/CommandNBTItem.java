@@ -31,17 +31,17 @@ import org.bukkit.block.CommandBlock;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.command.MyCommandManager;
 import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
+import com.goncalomb.bukkit.nbteditor.ItemStackNBTWrapper;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeType;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.ItemModifier;
 
-public class CommandNBTItem extends MyCommand {
+public class CommandNBTItem  extends AbstractNBTCommand<ItemStackNBTWrapper> {
 
 	private static List<String> _modifierSlots = Arrays.asList(new String[] { "any", "mainhand", "offhand", "feet", "legs", "chest", "head" });
 
@@ -49,6 +49,42 @@ public class CommandNBTItem extends MyCommand {
 		super("nbtitem", "nbti");
 	}
 
+	@Override
+	protected ItemStackNBTWrapper getWrapper(Player player) throws MyCommandException {
+		return new ItemStackNBTWrapper(player.getInventory().getItemInMainHand());
+	}
+
+	@Override
+	@Command(args = "info", type = CommandType.PLAYER_ONLY)
+	public boolean info_Command(CommandSender sender, String[] args) throws MyCommandException {
+		return super.info_Command(sender, args);
+	}
+
+	@Override
+	@Command(args = "var", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<variable> ...")
+	public boolean var_Command(CommandSender sender, String[] args) throws MyCommandException {
+		return super.var_Command(sender, args);
+	}
+
+	@Override
+	@TabComplete(args = "var")
+	public List<String> var_TabComplete(CommandSender sender, String[] args) {
+		return super.var_TabComplete(sender, args);
+	}
+
+	@Override
+	@Command(args = "clearvar", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<variable>")
+	public boolean clearvar_Command(CommandSender sender, String[] args) throws MyCommandException {
+		return super.clearvar_Command(sender, args);
+	}
+
+	@Override
+	@TabComplete(args = "clearvar")
+	public List<String> clearvar_TabComplete(CommandSender sender, String[] args) {
+		return super.clearvar_TabComplete(sender, args);
+	}
+
+/*
 	@Command(args = "info", type = CommandType.PLAYER_ONLY)
 	public boolean infoCommand(CommandSender sender, String[] args) throws MyCommandException {
 		HandItemWrapper.Item item = new HandItemWrapper.Item((Player) sender);
@@ -126,7 +162,7 @@ public class CommandNBTItem extends MyCommand {
 		sender.sendMessage("§aItem lore cleared.");
 		return true;
 	}
-
+*/
 	@Command(args = "mod add", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE, usage = "<attribute> <operation> <amount> [slot] [name ...]")
 	public boolean mod_add(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length >= 3) {
