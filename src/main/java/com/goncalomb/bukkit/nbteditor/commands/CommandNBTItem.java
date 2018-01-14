@@ -60,36 +60,6 @@ public class CommandNBTItem  extends AbstractNBTCommand<ItemStackNBTWrapper> {
 		return new ItemStackNBTWrapper(item);
 	}
 
-	@Override
-	@Command(args = "info", type = CommandType.PLAYER_ONLY)
-	public boolean info_Command(CommandSender sender, String[] args) throws MyCommandException {
-		return super.info_Command(sender, args);
-	}
-
-	@Override
-	@Command(args = "var", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<variable> ...")
-	public boolean var_Command(CommandSender sender, String[] args) throws MyCommandException {
-		return super.var_Command(sender, args);
-	}
-
-	@Override
-	@TabComplete(args = "var")
-	public List<String> var_TabComplete(CommandSender sender, String[] args) {
-		return super.var_TabComplete(sender, args);
-	}
-
-	@Override
-	@Command(args = "clearvar", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<variable>")
-	public boolean clearvar_Command(CommandSender sender, String[] args) throws MyCommandException {
-		return super.clearvar_Command(sender, args);
-	}
-
-	@Override
-	@TabComplete(args = "clearvar")
-	public List<String> clearvar_TabComplete(CommandSender sender, String[] args) {
-		return super.clearvar_TabComplete(sender, args);
-	}
-
 /*
 	@Command(args = "info", type = CommandType.PLAYER_ONLY)
 	public boolean infoCommand(CommandSender sender, String[] args) throws MyCommandException {

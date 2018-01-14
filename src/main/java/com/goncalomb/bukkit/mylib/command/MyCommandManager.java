@@ -37,7 +37,7 @@ public final class MyCommandManager {
 		}
 		// Process methods.
 		HashMap<String, Method> tabMethods = new HashMap<String, Method>();
-		Method[] methods = command.getClass().getDeclaredMethods();
+		Method[] methods = command.getClass().getMethods();
 		// Find all tab completion methods.
 		for (Method method : methods) {
 			MyCommand.TabComplete config = method.getAnnotation(MyCommand.TabComplete.class);
@@ -47,7 +47,7 @@ public final class MyCommandManager {
 				if (params.length == 2 && method.getReturnType() == List.class && params[0] == CommandSender.class && params[1] == String[].class) {
 					tabMethods.put(config.args().trim().toLowerCase(), method);
 				} else {
-					throw new RuntimeException("Invalid command tab completion method " + method.getName() + " on class " + command.getClass().getName() + ".");
+					throw new RuntimeException("Invalid command tab completion method " + method.getName() + " on class " + method.getDeclaringClass().getName() + ".");
 				}
 			}
 		}
@@ -67,7 +67,7 @@ public final class MyCommandManager {
 					}
 					continue;
 				}
-				throw new RuntimeException("Invalid command execution method " + method.getName() + " on class " + command.getClass().getName() + ".");
+				throw new RuntimeException("Invalid command execution method " + method.getName() + " on class " + method.getDeclaringClass().getName() + ".");
 			}
 		}
 		if (tabMethods.size() > 0) {

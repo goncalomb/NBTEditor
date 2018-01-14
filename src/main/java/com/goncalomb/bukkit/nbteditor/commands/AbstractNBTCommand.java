@@ -13,6 +13,9 @@ import org.bukkit.util.StringUtil;
 
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
+import com.goncalomb.bukkit.mylib.command.MyCommand.Command;
+import com.goncalomb.bukkit.mylib.command.MyCommand.CommandType;
+import com.goncalomb.bukkit.mylib.command.MyCommand.TabComplete;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.nbteditor.nbt.BaseNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ListVariable;
@@ -48,6 +51,7 @@ public abstract class AbstractNBTCommand<T extends BaseNBT> extends MyCommand {
 		}
 	}
 
+	@Command(args = "info", type = CommandType.PLAYER_ONLY)
 	public boolean info_Command(CommandSender sender, String[] args) throws MyCommandException {
 		T wrapper = getWrapper((Player) sender);
 		for (NBTVariableContainer container : wrapper.getAllVariables()) {
@@ -63,6 +67,7 @@ public abstract class AbstractNBTCommand<T extends BaseNBT> extends MyCommand {
 		return true;
 	}
 
+	@Command(args = "var", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<variable> ...")
 	public boolean var_Command(CommandSender sender, String[] args) throws MyCommandException {
 		T wrapper = getWrapper((Player) sender);
 		NBTVariable variable = wrapper.getVariable(args[0]);
@@ -110,6 +115,7 @@ public abstract class AbstractNBTCommand<T extends BaseNBT> extends MyCommand {
 		return true;
 	}
 
+	@TabComplete(args = "var")
 	public List<String> var_TabComplete(CommandSender sender, String[] args) {
 		T wrapper = getWrapperSilent((Player) sender);
 		if (wrapper != null) {
@@ -128,6 +134,7 @@ public abstract class AbstractNBTCommand<T extends BaseNBT> extends MyCommand {
 		return null;
 	}
 
+	@Command(args = "clearvar", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<variable>")
 	public boolean clearvar_Command(CommandSender sender, String[] args) throws MyCommandException {
 		T wrapper = getWrapper((Player) sender);
 		NBTVariable variable = wrapper.getVariable(args[0]);
@@ -141,6 +148,7 @@ public abstract class AbstractNBTCommand<T extends BaseNBT> extends MyCommand {
 		return true;
 	}
 
+	@TabComplete(args = "clearvar")
 	public List<String> clearvar_TabComplete(CommandSender sender, String[] args) {
 		return getVariableNames(getWrapperSilent((Player) sender), args[0]);
 	}
