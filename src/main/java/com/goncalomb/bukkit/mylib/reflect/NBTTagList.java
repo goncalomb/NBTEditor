@@ -62,6 +62,10 @@ public final class NBTTagList extends NBTBase {
 		_list.add(handle);
 	}
 
+	public Object remove(int index) {
+		return NBTTypes.fromInternal(_list.remove(index));
+	}
+
 	public int size() {
 		return _list.size();
 	}
