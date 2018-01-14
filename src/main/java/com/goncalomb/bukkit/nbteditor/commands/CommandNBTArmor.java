@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013-2016 Gonçalo Baltazar <me@goncalomb.com>
+ * Copyright (C) 2013-2018 Gonçalo Baltazar <me@goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -19,40 +19,23 @@
 
 package com.goncalomb.bukkit.nbteditor.commands;
 
-import java.awt.Color;
-
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 
+@Deprecated
 public class CommandNBTArmor extends MyCommand {
 
 	public CommandNBTArmor() {
 		super("nbtarmor", "nbta");
 	}
 
-	@Command(args = "", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "<color>")
-	public boolean potionCommand(CommandSender sender, String[] args) throws MyCommandException {
-		if (args.length > 0) {
-			HandItemWrapper.LeatherArmor item = new HandItemWrapper.LeatherArmor((Player) sender);
-			if (!args[0].startsWith("#")) {
-				args[0] = "#" + args[0];
-			}
-			if (args[0].length() == 7) {
-				try {
-					Color color = Color.decode(args[0]);
-					item.meta.setColor(org.bukkit.Color.fromRGB(color.getRed(), color.getGreen(), color.getBlue()));
-					item.save();
-					sender.sendMessage("§aColor set.");
-					return true;
-				} catch (NumberFormatException e) {
-				}
-			}
-			sender.sendMessage("§cInvalid color format.");
-		}
-		sender.sendMessage("§eThe color as the RGB format, #FFFFFF (e.g. #FF0000 for red).");
-		return false;
+	@Command(args = "", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE)
+	public boolean _Command(CommandSender sender, String[] args) throws MyCommandException {
+		sender.sendMessage("§eCOMMAND REMOVED in NBTEditor 3.0.");
+		sender.sendMessage("§7  Use '§b/nbtitem var Color <color>§7' instead.");
+		return true;
 	}
+
 }

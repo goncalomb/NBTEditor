@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013-2016 Gonçalo Baltazar <me@goncalomb.com>
+ * Copyright (C) 2013-2018 Gonçalo Baltazar <me@goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -19,65 +19,23 @@
 
 package com.goncalomb.bukkit.nbteditor.commands;
 
-import org.apache.commons.lang.StringUtils;
-import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
-import com.goncalomb.bukkit.mylib.utils.UtilsMc;
-import com.goncalomb.bukkit.nbteditor.commands.HandItemWrapper.Book.BookType;
 
+@Deprecated
 public class CommandNBTBook extends MyCommand {
 
 	public CommandNBTBook() {
 		super("nbtbook", "nbtb");
 	}
 
-	@Command(args = "colors", type = CommandType.PLAYER_ONLY)
-	public boolean colorsCommand(CommandSender sender, String[] args) throws MyCommandException {
-		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.BOTH);
-		if (item.meta.hasTitle()) {
-			item.meta.setTitle(UtilsMc.parseColors(item.meta.getTitle()));
-		}
-		if (item.meta.hasAuthor()) {
-			item.meta.setAuthor(UtilsMc.parseColors(item.meta.getAuthor()));
-		}
-		for (int i = 1, l = item.meta.getPageCount(); i <= l; ++i) {
-			item.meta.setPage(i, UtilsMc.parseColors(item.meta.getPage(i)));
-		}
-		item.save();
-		sender.sendMessage("§aColor codes have been replaced.");
-		return true;
-	}
-
-	@Command(args = "title", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<title ...>")
-	public boolean titleCommand(CommandSender sender, String[] args) throws MyCommandException {
-		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
-		item.meta.setTitle(UtilsMc.parseColors(UtilsMc.parseColors(StringUtils.join(args, " "))));
-		item.save();
-		sender.sendMessage("§aBook title set.");
-		return true;
-	}
-
-	@Command(args = "author", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<author ...>")
-	public boolean authorCommand(CommandSender sender, String[] args) throws MyCommandException {
-		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
-		item.meta.setAuthor(UtilsMc.parseColors(UtilsMc.parseColors(StringUtils.join(args, " "))));
-		item.save();
-		sender.sendMessage("§aBook author set.");
-		return true;
-	}
-
-	@Command(args = "unsign", type = CommandType.PLAYER_ONLY)
-	public boolean unsignCommand(CommandSender sender, String[] args) throws MyCommandException {
-		HandItemWrapper.Book item = new HandItemWrapper.Book((Player) sender, BookType.WRITTEN);
-		item.meta.setTitle(null);
-		item.meta.setAuthor(null);
-		item.item.setType(Material.BOOK_AND_QUILL);
-		item.save();
-		sender.sendMessage("§aBook unsigned.");
+	@Command(args = "", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE)
+	public boolean _Command(CommandSender sender, String[] args) throws MyCommandException {
+		sender.sendMessage("§eCOMMAND REMOVED in NBTEditor 3.0.");
+		sender.sendMessage("§7Use '§b/nbtitem var Title <title>§7' to set the book title.");
+		sender.sendMessage("§7Use '§b/nbtitem var Author <author>§7' to set the book author.");
 		return true;
 	}
 

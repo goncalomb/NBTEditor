@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013-2016 Gonçalo Baltazar <me@goncalomb.com>
+ * Copyright (C) 2013-2018 Gonçalo Baltazar <me@goncalomb.com>
  *
  * This file is part of NBTEditor.
  *
@@ -19,48 +19,26 @@
 
 package com.goncalomb.bukkit.nbteditor.commands;
 
-import java.util.List;
-
-import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 
+@Deprecated
 public class CommandNBTHead extends MyCommand {
 
 	public CommandNBTHead() {
 		super("nbthead", "nbth");
 	}
 
-	@Command(args = "", type = CommandType.DEFAULT, minargs = 1, maxargs = 2, usage = "<skull-player-name> [player-name]")
-	public boolean headCommand(CommandSender sender, String[] args) throws MyCommandException {
-		Player other;
-		if (args.length == 2) {
-			other = CommandUtils.findPlayer(args[1]);
-		} else if (sender instanceof Player) {
-			other = (Player) sender;
-		} else {
-			sender.sendMessage("§cParameter 'player-name' missing!");
-			return false;
-		}
-		ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-		SkullMeta meta = (SkullMeta) head.getItemMeta();
-		if (meta.setOwner(args[0])) {
-			head.setItemMeta(meta);
-			CommandUtils.giveItem(other, head);
-			sender.sendMessage("§aEnjoy your new head.");
-		} else {
-			sender.sendMessage("§cPlayer name too long!");
-		}
+	@Command(args = "", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE)
+	public boolean _Command(CommandSender sender, String[] args) throws MyCommandException {
+		sender.sendMessage("§eCOMMAND REMOVED in NBTEditor 3.0.");
+		sender.sendMessage("§7Use '§b/give <your-name> minecraft:skull 1 3§7'");
+		sender.sendMessage("§7  to spawn a player head.");
+		sender.sendMessage("§7Then '§b/nbtitem var Owner <player-name>§7'");
+		sender.sendMessage("§7  to set the head owner/skin.");
 		return true;
 	}
 
-	@TabComplete(args = "")
-	public List<String> tab(CommandSender sender, String[] args) {
-		return CommandUtils.playerTabComplete(sender, args[args.length - 1]);
-	}
 }
