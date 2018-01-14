@@ -25,11 +25,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.CommandBlock;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.command.MyCommandManager;
@@ -51,7 +53,11 @@ public class CommandNBTItem  extends AbstractNBTCommand<ItemStackNBTWrapper> {
 
 	@Override
 	protected ItemStackNBTWrapper getWrapper(Player player) throws MyCommandException {
-		return new ItemStackNBTWrapper(player.getInventory().getItemInMainHand());
+		ItemStack item = player.getInventory().getItemInMainHand();
+		if (item == null || item.getType() == Material.AIR) {
+			throw new MyCommandException("§cYou must be holding an Item.");
+		}
+		return new ItemStackNBTWrapper(item);
 	}
 
 	@Override
