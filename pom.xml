@@ -48,17 +48,6 @@
     </dependency>
   </dependencies>
 
-  <distributionManagement>
-    <repository>
-      <id>goncalomb-repo-releases</id>
-      <url>http://repo.goncalomb.com/maven/releases/</url>
-    </repository>
-    <snapshotRepository>
-      <id>goncalomb-repo-snapshots</id>
-      <url>http://repo.goncalomb.com/maven/snapshots/</url>
-    </snapshotRepository>
-  </distributionManagement>
-
   <build>
     <defaultGoal>clean package</defaultGoal>
 
