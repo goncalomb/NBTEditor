@@ -13,9 +13,6 @@ import org.bukkit.util.StringUtil;
 
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
-import com.goncalomb.bukkit.mylib.command.MyCommand.Command;
-import com.goncalomb.bukkit.mylib.command.MyCommand.CommandType;
-import com.goncalomb.bukkit.mylib.command.MyCommand.TabComplete;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.nbteditor.nbt.BaseNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ListVariable;
@@ -54,6 +51,7 @@ public abstract class AbstractNBTCommand<T extends BaseNBT> extends MyCommand {
 	@Command(args = "info", type = CommandType.PLAYER_ONLY)
 	public boolean info_Command(CommandSender sender, String[] args) throws MyCommandException {
 		T wrapper = getWrapper((Player) sender);
+		sender.sendMessage("§e" + wrapper.getId());
 		for (NBTVariableContainer container : wrapper.getAllVariables()) {
 			sender.sendMessage("§a" + container.getName());
 			for (String name : container.getVariableNames()) {
@@ -61,7 +59,7 @@ public abstract class AbstractNBTCommand<T extends BaseNBT> extends MyCommand {
 				if (value == null) {
 					value = "§onull";
 				}
-				sender.sendMessage("  " + name + ": §b" + value);
+				sender.sendMessage("§b  " + name + ": §r" + value);
 			}
 		}
 		return true;

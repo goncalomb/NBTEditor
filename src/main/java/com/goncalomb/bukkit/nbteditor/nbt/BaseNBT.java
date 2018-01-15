@@ -29,6 +29,10 @@ public abstract class BaseNBT {
 		}
 	}
 
+	public String getId() {
+		return _id;
+	}
+
 	protected abstract NBTUnboundVariableContainer getVariableContainer(String id);
 
 	public NBTVariableContainer[] getAllVariables() {
