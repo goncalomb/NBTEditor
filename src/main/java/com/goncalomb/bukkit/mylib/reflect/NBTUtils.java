@@ -83,7 +83,14 @@ public final class NBTUtils {
 
 		Class<?> minecraftTileEntityClass = BukkitReflect.getMinecraftClass("TileEntity");
 		_TileEntity_save = minecraftTileEntityClass.getMethod("save", nbtTagCompoundClass);
-		_TileEntity_load = minecraftTileEntityClass.getMethod("load", nbtTagCompoundClass);
+		try {
+			// Bukkit 1.12.1+
+			_TileEntity_load = minecraftTileEntityClass.getMethod("load", nbtTagCompoundClass);
+		} catch (NoSuchMethodException e) {
+			// Bukkit 1.12
+			// XXX: remove fallback on next version
+			_TileEntity_load = minecraftTileEntityClass.getMethod("a", nbtTagCompoundClass);
+		}
 
 		Class<?> craftWorldClass = BukkitReflect.getCraftBukkitClass("CraftWorld");
 		_CraftWorld_getHandle = craftWorldClass.getMethod("getHandle");
