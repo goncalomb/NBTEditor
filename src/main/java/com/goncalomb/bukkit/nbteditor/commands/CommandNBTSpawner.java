@@ -240,26 +240,19 @@ public class CommandNBTSpawner extends MyCommand {
 		return true;
 	}
 
+	@Deprecated
 	@Command(args = "copy", type = CommandType.PLAYER_ONLY)
 	public boolean copyCommand(CommandSender sender, String[] args) throws MyCommandException {
-		Player player = (Player) sender;
-		SpawnerNBTWrapper clipboard = getSpawner(player);
-		player.setMetadata("NBTEditor-spawner", new FixedMetadataValue(getOwner(), clipboard));
-		sender.sendMessage("§aSpawner copied.");
+		sender.sendMessage("§eCOMMAND REMOVED in NBTEditor 3.0.");
+		sender.sendMessage("§7  Use '§b/nbttile copy§7' instead, it also works on other tiles.");
 		return true;
 	}
 
+	@Deprecated
 	@Command(args = "paste", type = CommandType.PLAYER_ONLY)
 	public boolean pasteCommand(CommandSender sender, String[] args) throws MyCommandException {
-		Player player = (Player) sender;
-		if (player.hasMetadata("NBTEditor-spawner")) {
-			SpawnerNBTWrapper spawner = getSpawner(player);
-			spawner.cloneFrom((SpawnerNBTWrapper) player.getMetadata("NBTEditor-spawner").get(0).value());
-			spawner.save();
-			sender.sendMessage("§aSpawner pasted.");
-		} else {
-			sender.sendMessage("§cYou must copy a spawner first!");
-		}
+		sender.sendMessage("§eCOMMAND REMOVED in NBTEditor 3.0.");
+		sender.sendMessage("§7  Use '§b/nbttile paste§7' instead, it also works on other tiles.");
 		return true;
 	}
 

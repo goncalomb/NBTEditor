@@ -62,7 +62,7 @@ public class TileNBT extends BaseNBT {
 		TILE_VARIABLES.put("minecraft:furnace", cLockable);
 		TILE_VARIABLES.put("minecraft:hopper", cLootable);
 		// TILE_VARIABLES.put("minecraft:jukebox", null);
-		// TILE_VARIABLES.put("minecraft:mob_spawner", null);
+		TILE_VARIABLES.put("minecraft:mob_spawner", new NBTUnboundVariableContainer("Spawner"));
 		// TILE_VARIABLES.put("minecraft:noteblock", null);
 		// TILE_VARIABLES.put("minecraft:piston", null);
 		// TILE_VARIABLES.put("minecraft:sign", null);

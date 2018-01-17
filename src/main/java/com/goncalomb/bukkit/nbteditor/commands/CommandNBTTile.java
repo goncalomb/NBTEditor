@@ -27,6 +27,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.CommandBlock;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.command.MyCommandManager;
@@ -53,6 +54,32 @@ public class CommandNBTTile extends AbstractNBTCommand<TileNBTWrapper> {
 		} catch (RuntimeException e) {
 			throw new MyCommandException("§cCannot edit that tile!");
 		}
+	}
+
+	@Command(args = "copy", type = CommandType.PLAYER_ONLY)
+	public boolean copy_Command(CommandSender sender, String[] args) throws MyCommandException {
+		Player player = (Player) sender;
+		TileNBTWrapper tile = getWrapper(player);
+		player.setMetadata("NBTEditor-TileCopyPaste", new FixedMetadataValue(getOwner(), tile));
+		sender.sendMessage("§aTile copied.");
+		return true;
+	}
+
+	@Command(args = "paste", type = CommandType.PLAYER_ONLY)
+	public boolean paste_Command(CommandSender sender, String[] args) throws MyCommandException {
+		Player player = (Player) sender;
+		if (player.hasMetadata("NBTEditor-TileCopyPaste")) {
+			TileNBTWrapper tile = getWrapper(player);
+			if (tile.cloneFrom((TileNBTWrapper) player.getMetadata("NBTEditor-TileCopyPaste").get(0).value())) {
+				sender.sendMessage("§aTile pasted.");
+				tile.save();
+			} else {
+				sender.sendMessage("§cTile must be of the same type!");
+			}
+		} else {
+			sender.sendMessage("§cYou must copy a tile first!");
+		}
+		return true;
 	}
 
 	@Command(args = "tocommand", type = CommandType.PLAYER_ONLY)
