@@ -9,6 +9,7 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ColorVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.IntegerVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.MaterialListVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.StringListVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
@@ -23,8 +24,8 @@ public class ItemNBT extends BaseNBT {
 		cItem.add("LocalizedName", new StringVariable("display/LocName"));
 		cItem.add("Lore", new StringListVariable("display/Lore"));
 		cItem.add("Unbreakable", new BooleanVariable("Unbreakable"));
-		cItem.add("CanDestroy", new StringListVariable("CanDestroy"));
-		cItem.add("CanPlaceOn", new StringListVariable("CanPlaceOn"));
+		cItem.add("CanDestroy", new MaterialListVariable("CanDestroy"));
+		cItem.add("CanPlaceOn", new MaterialListVariable("CanPlaceOn"));
 		cItem.add("HideFlags", new IntegerVariable("HideFlags"));
 
 		NBTUnboundVariableContainer cLeatherArmor = new NBTUnboundVariableContainer("LeatherArmor", cItem);

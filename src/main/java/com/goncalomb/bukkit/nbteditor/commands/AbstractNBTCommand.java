@@ -2,6 +2,7 @@ package com.goncalomb.bukkit.nbteditor.commands;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,6 +22,8 @@ import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTVariableContainer;
 
 public abstract class AbstractNBTCommand<T extends BaseNBT> extends MyCommand {
 
+	private static List<String> _listOperations = Arrays.asList(new String[] { "add", "del" });
+
 	private static List<String> getVariableNames(BaseNBT base, String prefix) {
 		List<String> names = new ArrayList<String>();
 		for (NBTVariableContainer container : base.getAllVariables()) {
@@ -32,6 +35,14 @@ public abstract class AbstractNBTCommand<T extends BaseNBT> extends MyCommand {
 		}
 		Collections.sort(names, String.CASE_INSENSITIVE_ORDER);
 		return names;
+	}
+
+	private static List<String> getVariablePossibleValues(NBTVariable variable, String prefix) {
+		List<String> possibleValues = variable.getPossibleValues();
+		if (possibleValues != null) {
+			return Utils.getElementsWithPrefix(possibleValues, prefix);
+		}
+		return null;
 	}
 
 	public AbstractNBTCommand(String name, String... aliases) {
@@ -119,12 +130,17 @@ public abstract class AbstractNBTCommand<T extends BaseNBT> extends MyCommand {
 		if (wrapper != null) {
 			if (args.length == 1) {
 				return getVariableNames(getWrapperSilent((Player) sender), args[0]);
-			} else if (args.length == 2) {
+			} else if (args.length == 2 || args.length == 3) {
 				NBTVariable variable = wrapper.getVariable(args[0]);
 				if (variable != null) {
-					List<String> possibleValues = variable.getPossibleValues();
-					if (possibleValues != null) {
-						return Utils.getElementsWithPrefix(possibleValues, args[1]);
+					if (variable instanceof ListVariable) {
+						if (args.length == 2) {
+							return Utils.getElementsWithPrefix(_listOperations, args[1]);
+						} else if (args[1].equalsIgnoreCase("add")) {
+							return getVariablePossibleValues(variable, args[2]);
+						}
+					} else {
+						return getVariablePossibleValues(variable, args[1]);
 					}
 				}
 			}

@@ -40,7 +40,14 @@ public abstract class ListVariable extends NBTVariable {
 
 	public boolean remove(int index) {
 		NBTTagList list = data().getList(_key);
-		return (list != null && list.remove(index) != null);
+		if (list != null && index < list.size()) {
+			list.remove(index);
+			if (list.size() == 0) {
+				clear();
+			}
+			return true;
+		}
+		return false;
 	}
 
 }
