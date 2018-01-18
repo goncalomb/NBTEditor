@@ -22,7 +22,6 @@ package com.goncalomb.bukkit.nbteditor.commands;
 import java.text.MessageFormat;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -31,7 +30,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
 
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
@@ -45,7 +43,6 @@ import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.FireworkNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.SpawnerEntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.SpawnerNBTWrapper;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
 
 public class CommandNBTSpawner extends MyCommand {
 
@@ -88,44 +85,8 @@ public class CommandNBTSpawner extends MyCommand {
 		Location loc = spawner.getLocation();
 		sender.sendMessage(ChatColor.GREEN + "Spawner Information (" + loc.getX() + ", " + loc.getY() + ", " + loc.getZ() + ")");
 		sender.sendMessage("Current Entity: " + ChatColor.AQUA + EntityTypeMap.getName(spawner.getCurrentEntity()));
-		for (SpawnerEntityNBT spawnerEntityNbt : spawner.getEntities()) {
-			sender.sendMessage("   " + ChatColor.AQUA + EntityTypeMap.getName(spawnerEntityNbt.getEntityType()) + ", weight: " + spawnerEntityNbt.getWeight());
-		}
-		sender.sendMessage(ChatColor.GREEN + "Variables:");
-		for (NBTVariable variable : spawner.getVariables()) {
-			sender.sendMessage("   " + variable.getName() + ": " + ChatColor.AQUA + variable.getValue());
-		}
+		sender.sendMessage("§7Use '§b/nbttile info§7' for variable information.");
 		return true;
-	}
-
-	@Command(args = "var", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<variable> [value]")
-	public boolean varCommand(CommandSender sender, String[] args) throws MyCommandException {
-		SpawnerNBTWrapper spawner = getSpawner((Player) sender);
-		if(args.length > 0) {
-			NBTVariable variable = spawner.getVariable(args[0]);
-			if (variable != null) {
-				if(args.length == 2) {
-					if (variable.setValue(args[1], (Player) sender)) {
-						spawner.save();
-						sender.sendMessage("§aVariable updated.");
-						return true;
-					} else {
-						sender.sendMessage(MessageFormat.format("§cInvalid format for variable {0}!", args[0]));
-					}
-				}
-				sender.sendMessage(ChatColor.YELLOW + variable.getFormat());
-				return true;
-			} else if(args.length <= 3) {
-				sender.sendMessage(MessageFormat.format("§cSpawners don''t have the variable {0}!", args[0]));
-			}
-		}
-		sender.sendMessage("§7Variables: " + StringUtils.join(spawner.getVariables().getVarNames(), ", "));
-		return false;
-	}
-
-	@TabComplete(args = "var")
-	public List<String> var_tab(CommandSender sender, String[] args) {
-		return (args.length == 1 ? Utils.getElementsWithPrefix(SpawnerNBTWrapper.variableNames(), args[0], true) : null);
 	}
 
 	@Command(args = "add", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<entity> [weight]")

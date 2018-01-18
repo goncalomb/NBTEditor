@@ -20,8 +20,6 @@
 package com.goncalomb.bukkit.nbteditor.nbt;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.Location;
@@ -32,33 +30,12 @@ import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
 
 public final class SpawnerNBTWrapper {
-
-	private static NBTGenericVariableContainer _variables;
-
-	static {
-		_variables = new NBTGenericVariableContainer("Spawner");
-		_variables.add("Count", new ShortVariable("SpawnCount", (short) 0));
-		_variables.add("Range", new ShortVariable("SpawnRange", (short) 0));
-		_variables.add("Delay", new ShortVariable("Delay", (short) 0));
-		_variables.add("MinDelay", new ShortVariable("MinSpawnDelay", (short) 0));
-		_variables.add("MaxDelay", new ShortVariable("MaxSpawnDelay", (short) 0));
-		_variables.add("MaxEntities", new ShortVariable("MaxNearbyEntities", (short) 0));
-		_variables.add("PlayerRange", new ShortVariable("RequiredPlayerRange", (short) 0));
-	}
 
 	private Block _spawnerBlock;
 	private NBTTagCompound _data;
 	private List<SpawnerEntityNBT> _entities;
-
-	public static Collection<String> variableNames() {
-		return Collections.unmodifiableCollection(_variables.getVarNames());
-	}
 
 	public SpawnerNBTWrapper(Block block) {
 		_spawnerBlock = block;
@@ -131,14 +108,6 @@ public final class SpawnerNBTWrapper {
 
 	public Location getLocation() {
 		return _spawnerBlock.getLocation();
-	}
-
-	public NBTVariableContainer getVariables() {
-		return _variables.boundToData(_data);
-	}
-
-	public NBTVariable getVariable(String name) {
-		return _variables.getVariable(name, _data);
 	}
 
 	public void save() {

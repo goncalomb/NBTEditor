@@ -3,9 +3,10 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 import java.util.HashMap;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.LongVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.IntegerVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.LongVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.ShortVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
 
 public class TileNBT extends BaseNBT {
@@ -41,6 +42,15 @@ public class TileNBT extends BaseNBT {
 		NBTUnboundVariableContainer cCommandBlock = new NBTUnboundVariableContainer("CommandBlock", cNameable);
 		cCommandBlock.add("Command", new StringVariable("Command"));
 
+		NBTUnboundVariableContainer cSpawner = new NBTUnboundVariableContainer("Spawner");
+		cSpawner.add("Count", new ShortVariable("SpawnCount", (short) 0));
+		cSpawner.add("Range", new ShortVariable("SpawnRange", (short) 0));
+		cSpawner.add("Delay", new ShortVariable("Delay", (short) 0));
+		cSpawner.add("MinDelay", new ShortVariable("MinSpawnDelay", (short) 0));
+		cSpawner.add("MaxDelay", new ShortVariable("MaxSpawnDelay", (short) 0));
+		cSpawner.add("MaxEntities", new ShortVariable("MaxNearbyEntities", (short) 0));
+		cSpawner.add("PlayerRange", new ShortVariable("RequiredPlayerRange", (short) 0));
+
 		//
 
 		TILE_VARIABLES.put("minecraft:banner", cBanner);
@@ -62,7 +72,7 @@ public class TileNBT extends BaseNBT {
 		TILE_VARIABLES.put("minecraft:furnace", cLockable);
 		TILE_VARIABLES.put("minecraft:hopper", cLootable);
 		// TILE_VARIABLES.put("minecraft:jukebox", null);
-		TILE_VARIABLES.put("minecraft:mob_spawner", new NBTUnboundVariableContainer("Spawner"));
+		TILE_VARIABLES.put("minecraft:mob_spawner", cSpawner);
 		// TILE_VARIABLES.put("minecraft:noteblock", null);
 		// TILE_VARIABLES.put("minecraft:piston", null);
 		// TILE_VARIABLES.put("minecraft:sign", null);
