@@ -19,14 +19,14 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.IntegerVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
 
 public class BreedNBT extends MobNBT {
 
 	static {
-		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Breed");
+		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("Breed");
 		variables.add("InLove", new IntegerVariable("InLove", 0));
 		variables.add("Age", new IntegerVariable("Age"));
 		variables.add("ForcedAge", new IntegerVariable("ForcedAge")); // XXX: not working?

@@ -17,7 +17,7 @@
  * along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.goncalomb.bukkit.nbteditor.nbt.variable;
+package com.goncalomb.bukkit.nbteditor.nbt.variables;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +29,7 @@ import org.bukkit.entity.Player;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
-public final class VillagerCareerVariable extends NBTGenericVariable2X {
+public final class VillagerCareerVariable extends NBTVariableDouble {
 
 	private static final class CareerData {
 		public final int professionId;
@@ -70,11 +70,12 @@ public final class VillagerCareerVariable extends NBTGenericVariable2X {
 	}
 
 	@Override
-	boolean set(NBTTagCompound data, String value, Player player) {
+	public boolean set(String value, Player player) {
+		NBTTagCompound data = data();
 		CareerData career = _careers.get(value);
 		if (career != null) {
-			data.setInt(_nbtKey, career.professionId);
-			data.setInt(_nbtKey2, career.careerId);
+			data.setInt(_key, career.professionId);
+			data.setInt(_key2, career.careerId);
 			if (!data.hasKey("CareerLevel")) {
 				data.setInt("CareerLevel", 1);
 			}
@@ -84,15 +85,16 @@ public final class VillagerCareerVariable extends NBTGenericVariable2X {
 	}
 
 	@Override
-	String get(NBTTagCompound data) {
-		if (!data.hasKey(_nbtKey)) {
-			if (data.hasKey(_nbtKey2)) {
+	public String get() {
+		NBTTagCompound data = data();
+		if (!data.hasKey(_key)) {
+			if (data.hasKey(_key2)) {
 				return "Invalid";
 			}
 			return null;
 		}
-		int pId = data.getInt(_nbtKey);
-		int cId = data.getInt(_nbtKey2);
+		int pId = data.getInt(_key);
+		int cId = data.getInt(_key2);
 		for (Entry<String, CareerData> entry: _careers.entrySet()) {
 			CareerData career = entry.getValue();
 			if (career.professionId == pId && career.careerId == cId) {
@@ -103,7 +105,7 @@ public final class VillagerCareerVariable extends NBTGenericVariable2X {
 	}
 
 	@Override
-	String getFormat() {
+	public String getFormat() {
 		return "A villager's profession/career. Use tab completion to view possible values.";
 	}
 

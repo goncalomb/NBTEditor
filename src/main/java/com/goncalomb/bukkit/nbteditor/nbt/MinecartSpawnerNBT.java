@@ -24,13 +24,13 @@ import org.bukkit.entity.EntityType;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.ShortVariable;
 
 public class MinecartSpawnerNBT extends MinecartNBT {
 
 	static {
-		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("MinecartSpawner");
+		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("MinecartSpawner");
 		variables.add("Count", new ShortVariable("SpawnCount", (short) 0));
 		variables.add("Range", new ShortVariable("SpawnRange", (short) 0));
 		variables.add("Delay", new ShortVariable("Delay", (short) 0));

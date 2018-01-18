@@ -23,17 +23,17 @@ import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.ColorVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.FloatVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.ParticleVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.ParticleVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.ColorVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.FloatVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.IntegerVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
 
 public class AreaEffectCloudNBT extends ThrownPotionNBT {
 
 	static {
-		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("AreaEffectCloud");
+		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("AreaEffectCloud");
 		variables.add("Age", new IntegerVariable("Age", 0));
 		variables.add("Color", new ColorVariable("Color"));
 		variables.add("Duration", new IntegerVariable("Duration", 0));

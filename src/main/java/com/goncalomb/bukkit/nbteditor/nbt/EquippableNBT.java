@@ -26,13 +26,13 @@ import org.bukkit.inventory.ItemStack;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
 
 public class EquippableNBT extends EntityNBT {
 
 	static {
-		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Equippable");
+		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("Equippable");
 		variables.add("FallFlying", new BooleanVariable("FallFlying"));
 		registerVariables(EquippableNBT.class, variables);
 	}

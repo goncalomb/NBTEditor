@@ -23,13 +23,13 @@ import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
 
 public class TippedArrowNBT extends ArrowNBT implements SingleItemBasedNBT {
 
 	static {
-		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("TippedArrow");
+		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("TippedArrow");
 		variables.add("Potion", new StringVariable("Potion"));
 		registerVariables(TippedArrowNBT.class, variables);
 	}

@@ -17,20 +17,20 @@
  * along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.goncalomb.bukkit.nbteditor.nbt.variable;
+package com.goncalomb.bukkit.nbteditor.nbt.variables;
 
 import org.bukkit.entity.Player;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
-public class FloatArrayVariable extends NBTGenericVariable {
+public class FloatArrayVariable extends NBTVariable {
 
 	private int _count;
 	private float _min;
 	private float _max;
 
-	public FloatArrayVariable(String nbtKey, int count, float min, float max) {
-		super(nbtKey);
+	public FloatArrayVariable(String key, int count, float min, float max) {
+		super(key);
 		_count = Math.max(0, Math.min(10, count));
 		_min = min;
 		_max = max;
@@ -41,7 +41,8 @@ public class FloatArrayVariable extends NBTGenericVariable {
 	}
 
 	@Override
-	boolean set(NBTTagCompound data, String value, Player player) {
+	public boolean set(String value, Player player) {
+		NBTTagCompound data = data();
 		String[] pieces = value.replace(',', '.').split("\\s+", _count);
 		if (pieces.length == _count) {
 			Object[] values = new Object[_count];
@@ -54,16 +55,17 @@ public class FloatArrayVariable extends NBTGenericVariable {
 			} catch (NumberFormatException e) {
 				return false;
 			}
-			data.setList(_nbtKey, values);
+			data.setList(_key, values);
 			return true;
 		}
 		return false;
 	}
 
 	@Override
-	String get(NBTTagCompound data) {
-		if (data.hasKey(_nbtKey)) {
-			Object[] vector = data.getListAsArray(_nbtKey);
+	public String get() {
+		NBTTagCompound data = data();
+		if (data.hasKey(_key)) {
+			Object[] vector = data.getListAsArray(_key);
 			StringBuilder sb = new StringBuilder();
 			for (Object v : vector) {
 				if (sb.length() != 0) {
@@ -77,7 +79,7 @@ public class FloatArrayVariable extends NBTGenericVariable {
 	}
 
 	@Override
-	String getFormat() {
+	public String getFormat() {
 		return String.format("Set of %s decimal numbers between %s and %s.", _count, _min, _max);
 	}
 

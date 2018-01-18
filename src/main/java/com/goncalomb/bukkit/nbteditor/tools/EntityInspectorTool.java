@@ -32,8 +32,7 @@ import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBTOffer;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTVariableContainer;
 
 public final class EntityInspectorTool extends CustomItem {
 
@@ -49,11 +48,11 @@ public final class EntityInspectorTool extends CustomItem {
 		if (EntityNBT.isValidType(entity.getType())) {
 			EntityNBT entityNBT = EntityNBT.fromEntity(entity);
 			player.sendMessage(ChatColor.YELLOW + "Information about " + EntityTypeMap.getName(entity.getType()) + "");
-			for (NBTVariableContainer vc : entityNBT.getAllVariables()) {
-				player.sendMessage("" + ChatColor.LIGHT_PURPLE + ChatColor.ITALIC + vc.getName() + ":");
-				for (NBTVariable var : vc) {
-					String value = var.getValue();
-					player.sendMessage("  " + ChatColor.AQUA + var.getName() + ": " + ChatColor.WHITE + (value != null ? value : ChatColor.ITALIC + "none"));
+			for (NBTVariableContainer container : entityNBT.getAllVariables()) {
+				player.sendMessage("" + ChatColor.LIGHT_PURPLE + ChatColor.ITALIC + container.getName() + ":");
+				for (String name : container.getVariableNames()) {
+					String value = container.getVariable(name).get();
+					player.sendMessage("  " + ChatColor.AQUA + name + ": " + ChatColor.WHITE + (value != null ? value : ChatColor.ITALIC + "none"));
 				}
 			}
 			player.sendMessage(ChatColor.YELLOW + "Extra information:");

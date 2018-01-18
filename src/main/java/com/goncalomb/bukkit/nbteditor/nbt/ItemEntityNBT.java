@@ -19,13 +19,13 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.ShortVariable;
 
 public class ItemEntityNBT extends EntityNBT {
 
 	static {
-		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Item");
+		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("Item");
 		variables.add("Age", new ShortVariable("Age"));
 		registerVariables(ItemEntityNBT.class, variables);
 	}

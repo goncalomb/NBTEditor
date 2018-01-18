@@ -23,17 +23,17 @@ import org.bukkit.block.Block;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.BlockVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.ByteVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.FloatVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.BlockVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.ByteVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.FloatVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.IntegerVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
 
 public class FallingBlockNBT extends EntityNBT {
 
 	static {
-		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("FallingBlock");
+		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("FallingBlock");
 		variables.add("Block", new BlockVariable("TileID", "Data"));
 		variables.add("Time", new ByteVariable("Time", (byte)0));
 		variables.add("DropItem", new BooleanVariable("DropItem"));

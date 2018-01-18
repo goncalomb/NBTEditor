@@ -19,14 +19,14 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
 
 public class TamedNBT extends BreedNBT {
 
 	static {
-		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Tameable");
+		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("Tameable");
 		variables.add("Owner", new StringVariable("Owner"));
 		variables.add("Sitting", new BooleanVariable("Sitting"));
 		registerVariables(TamedNBT.class, variables);

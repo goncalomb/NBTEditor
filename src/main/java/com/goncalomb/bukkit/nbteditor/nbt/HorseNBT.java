@@ -19,15 +19,15 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.HorseVariantVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.HorseVariantVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
 
 public class HorseNBT extends BreedNBT {
 
 	static {
-		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Horse");
+		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("Horse");
 		variables.add("Tamed", new BooleanVariable("Tame"));
 		variables.add("Eating", new BooleanVariable("EatingHaystack"));
 		variables.add("Owner", new StringVariable("OwnerName"));

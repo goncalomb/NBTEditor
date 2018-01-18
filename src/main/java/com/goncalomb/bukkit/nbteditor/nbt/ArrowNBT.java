@@ -19,16 +19,16 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.ByteVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.DoubleVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.ShortVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.ByteVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.DoubleVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.ShortVariable;
 
 public class ArrowNBT extends EntityNBT {
 
 	static {
-		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Arrow");
+		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("Arrow");
 		variables.add("Pickup", new ByteVariable("pickup", (byte) 0, (byte) 2));
 		variables.add("Player", new BooleanVariable("player"));
 		variables.add("Life", new ShortVariable("life"));

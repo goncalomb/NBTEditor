@@ -22,11 +22,9 @@ package com.goncalomb.bukkit.nbteditor.commands;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -36,9 +34,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.util.StringUtil;
 
-import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.command.MyCommandManager;
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
@@ -48,15 +44,12 @@ import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
-import com.goncalomb.bukkit.nbteditor.nbt.FallingBlockNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.Attribute;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeType;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
 
-public class CommandBOS extends MyCommand {
+public class CommandBOS extends AbstractNBTCommand<EntityNBT> {
 
 	public CommandBOS() {
 		super("bookofsouls", "bos");
@@ -80,24 +73,11 @@ public class CommandBOS extends MyCommand {
 		return null;
 	}
 
-	static List<String> findBosVars(Player player, String prefix) {
-		ItemStack item = player.getInventory().getItemInMainHand();
-		if (BookOfSouls.isValidBook(item)) {
-			BookOfSouls bos = BookOfSouls.getFromBook(item);
-			if (bos != null) {
-				List<String> names = new ArrayList<String>();
-				for (NBTVariableContainer container : bos.getEntityNBT().getAllVariables()) {
-					for (String name : container.getVarNames()) {
-						if (StringUtil.startsWithIgnoreCase(name, prefix)) {
-							names.add(name);
-						}
-					}
-				}
-				Collections.sort(names, String.CASE_INSENSITIVE_ORDER);
-				return names;
-			}
-		}
-		return null;
+	@Override
+	protected EntityNBT getWrapper(Player player) throws MyCommandException {
+		BookOfSouls bos = getBos(player);
+		bos.getEntityNBT()._bos = bos;
+		return bos.getEntityNBT();
 	}
 
 	@Command(args = "get", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "<entity>")
@@ -127,70 +107,6 @@ public class CommandBOS extends MyCommand {
 		CommandUtils.checkFullInventory((Player) sender).addItem(BookOfSouls.getEmpty());
 		sender.sendMessage("§aEnjoy your Book of Souls.");
 		return true;
-	}
-
-	@Command(args = "var", type = CommandType.PLAYER_ONLY, minargs = 1, maxargs = Integer.MAX_VALUE, usage = "<variable> [value]")
-	public boolean varCommand(CommandSender sender, String[] args) throws MyCommandException {
-		BookOfSouls bos = getBos((Player) sender);
-		NBTVariable variable = bos.getEntityNBT().getVariable(args[0]);
-		if (variable != null) {
-			if(args.length >= 2) {
-				if (bos.getEntityNBT() instanceof FallingBlockNBT && ((FallingBlockNBT) bos.getEntityNBT()).hasTileEntityData() && variable.getName().equals("block")) {
-					sender.sendMessage("§eThis BoS has special block data associated, you cannot change the 'block' variable.");
-					return true;
-				}
-				String value = UtilsMc.parseColors(StringUtils.join(args, " ", 1, args.length));
-				if (variable.setValue(value, (Player) sender)) {
-					bos.saveBook();
-					sender.sendMessage("§aVariable updated.");
-					return true;
-				} else {
-					sender.sendMessage(MessageFormat.format("§cInvalid format for variable {0}!", args[0]));
-				}
-			}
-			sender.sendMessage(ChatColor.YELLOW + variable.getFormat());
-		} else {
-			sender.sendMessage(MessageFormat.format("§cThat Entity doesn''t have the variable {0}!", args[0]));
-		}
-		return true;
-	}
-
-	@TabComplete(args = "var")
-	public List<String> var_tab(CommandSender sender, String[] args) throws MyCommandException /* Never throws */ {
-		if (args.length == 1) {
-			return findBosVars((Player) sender, args[0]);
-		} else if (args.length == 2) {
-			BookOfSouls bos = getBos((Player) sender, true);
-			if (bos != null) {
-				NBTVariable variable = bos.getEntityNBT().getVariable(args[0]);
-				if (variable != null) {
-					List<String> possibleValues = variable.getPossibleValues();
-					if (possibleValues != null) {
-						return Utils.getElementsWithPrefix(possibleValues, args[1]);
-					}
-				}
-			}
-		}
-		return null;
-	}
-
-	@Command(args = "clearvar", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<variable>")
-	public boolean clearvarCommand(CommandSender sender, String[] args) throws MyCommandException {
-		BookOfSouls bos = getBos((Player) sender);
-		NBTVariable variable = bos.getEntityNBT().getVariable(args[0]);
-		if (variable != null) {
-			variable.clear();
-			bos.saveBook();
-			sender.sendMessage("§aVariable cleared.");
-		} else {
-			sender.sendMessage(MessageFormat.format("§cInvalid format for variable {0}!", args[0]));
-		}
-		return true;
-	}
-
-	@TabComplete(args = "clearvar")
-	public List<String> clearvar_tab(CommandSender sender, String[] args) {
-		return findBosVars((Player) sender, args[0]);
 	}
 
 	@Command(args = "riding", type = CommandType.PLAYER_ONLY)

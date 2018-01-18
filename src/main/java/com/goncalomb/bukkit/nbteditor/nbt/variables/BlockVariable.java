@@ -17,7 +17,7 @@
  * along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.goncalomb.bukkit.nbteditor.nbt.variable;
+package com.goncalomb.bukkit.nbteditor.nbt.variables;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ import org.bukkit.entity.Player;
 import com.goncalomb.bukkit.mylib.namemaps.MaterialMap;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
-public final class BlockVariable extends NBTGenericVariable2X {
+public final class BlockVariable extends NBTVariableDouble {
 
 	private boolean _asShort;
 	private boolean _dataAsInt;
@@ -46,7 +46,9 @@ public final class BlockVariable extends NBTGenericVariable2X {
 		_dataAsInt = dataAsInt;
 	}
 
-	boolean set(NBTTagCompound data, String value, Player player) {
+	@Override
+	public boolean set(String value, Player player) {
+		NBTTagCompound data = data();
 		String[] pieces = value.split(" ", 2);
 		Material material = MaterialMap.getByName(pieces[0]);
 		if (material == null) {
@@ -71,14 +73,14 @@ public final class BlockVariable extends NBTGenericVariable2X {
 				}
 			}
 			if (_asShort) {
-				data.setShort(_nbtKey, (short) material.getId());
-				data.setShort(_nbtKey2, (short) blockData);
+				data.setShort(_key, (short) material.getId());
+				data.setShort(_key2, (short) blockData);
 			} else {
-				data.setInt(_nbtKey, material.getId());
+				data.setInt(_key, material.getId());
 				if (_dataAsInt) {
-					data.setInt(_nbtKey2, (byte) (blockData & 0xFF));
+					data.setInt(_key2, (byte) (blockData & 0xFF));
 				} else {
-					data.setByte(_nbtKey2, (byte) (blockData & 0xFF));
+					data.setByte(_key2, (byte) (blockData & 0xFF));
 				}
 			}
 			return true;
@@ -86,18 +88,20 @@ public final class BlockVariable extends NBTGenericVariable2X {
 		return false;
 	}
 
-	String get(NBTTagCompound data) {
-		if (data.hasKey(_nbtKey) && data.hasKey(_nbtKey2)) {
+	@Override
+	public String get() {
+		NBTTagCompound data = data();
+		if (data.hasKey(_key) && data.hasKey(_key2)) {
 			int materialId, materialData;
 			if (_asShort) {
-				materialId = data.getShort(_nbtKey) & 0xFF;
-				materialData = data.getShort(_nbtKey2) & 0xFF;
+				materialId = data.getShort(_key) & 0xFF;
+				materialData = data.getShort(_key2) & 0xFF;
 			} else {
-				materialId = data.getInt(_nbtKey);
+				materialId = data.getInt(_key);
 				if (_dataAsInt) {
-					materialData = data.getInt(_nbtKey2) & 0xFF;
+					materialData = data.getInt(_key2) & 0xFF;
 				} else {
-					materialData = data.getByte(_nbtKey2) & 0xFF;
+					materialData = data.getByte(_key2) & 0xFF;
 				}
 			}
 			return MaterialMap.getName(Material.getMaterial(materialId)) + " " + materialData;
@@ -105,10 +109,12 @@ public final class BlockVariable extends NBTGenericVariable2X {
 		return null;
 	}
 
-	String getFormat() {
+	@Override
+	public String getFormat() {
 		return "Valid block name/id and data, '<name/id> [data]'.";
 	}
 
+	@Override
 	public List<String> getPossibleValues() {
 		return MaterialMap.getBlockNames();
 	}

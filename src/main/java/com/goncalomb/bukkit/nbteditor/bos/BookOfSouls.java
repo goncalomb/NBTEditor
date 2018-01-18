@@ -52,8 +52,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.TippedArrowNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.Attribute;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.Modifier;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTVariableContainer;
 
 import net.iharder.Base64;
 
@@ -225,21 +224,21 @@ public class BookOfSouls {
 			x = 5;
 		}
 
-		for (NBTVariableContainer vc : _entityNbt.getAllVariables()) {
+		for (NBTVariableContainer container : _entityNbt.getAllVariables()) {
 			if (x == 1) {
 				meta.addPage(sb.toString());
 				sb = new StringBuilder();
 				x = 11;
 			}
-			sb.append("" + ChatColor.DARK_PURPLE + ChatColor.ITALIC + vc.getName() + ":\n");
-			for (NBTVariable var : vc) {
+			sb.append("" + ChatColor.DARK_PURPLE + ChatColor.ITALIC + container.getName() + ":\n");
+			for (String name : container.getVariableNames()) {
 				if (--x == 0) {
 					meta.addPage(sb.toString());
 					sb = new StringBuilder();
 					x = 10;
 				}
-				String value = var.getValue();
-				sb.append("  " + ChatColor.DARK_BLUE + var.getName() + ": " + ChatColor.BLACK + (value != null ? value : ChatColor.ITALIC + "-") + "\n");
+				String value = container.getVariable(name).get();
+				sb.append("  " + ChatColor.DARK_BLUE + name + ": " + ChatColor.BLACK + (value != null ? value : ChatColor.ITALIC + "-") + "\n");
 			}
 		}
 		meta.addPage(sb.toString());

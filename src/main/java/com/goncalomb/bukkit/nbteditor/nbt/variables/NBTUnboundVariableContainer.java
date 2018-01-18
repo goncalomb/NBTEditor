@@ -9,7 +9,8 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 public final class NBTUnboundVariableContainer {
 
 	private String _name;
-	private NBTUnboundVariableContainer _parent;
+	// XXX: move this to private after finishing moving entities to the new variable system
+	public NBTUnboundVariableContainer _parent;
 	private HashMap<String, String> _variableNames;
 	LinkedHashMap<String, NBTVariable> _variables;
 

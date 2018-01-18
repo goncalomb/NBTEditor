@@ -19,7 +19,6 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -31,22 +30,24 @@ import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
 
 import net.iharder.Base64;
 
-abstract class EntityNBTBase {
+abstract class EntityNBTBase extends BaseNBT {
 
 	private static HashMap<EntityType, Class<? extends EntityNBT>> _entityClasses;
-	private static HashMap<Class<? extends EntityNBT>, NBTGenericVariableContainer> _entityVariables;
-	private static HashMap<EntityType, NBTGenericVariableContainer> _entityVariablesByType;
+	private static HashMap<Class<? extends EntityNBT>, NBTUnboundVariableContainer> _entityVariables;
+	private static HashMap<EntityType, NBTUnboundVariableContainer> _entityVariablesByType;
+	// XXX: remove this ugly hack
+	private static EntityType _initializerEntityTypeIfNull = null;
+
+	// private static final HashMap<String, NBTUnboundVariableContainer> ENTITY_VARIABLES = new HashMap<String, NBTUnboundVariableContainer>();
 
 	static {
 		_entityClasses = new HashMap<EntityType, Class<? extends EntityNBT>>();
-		_entityVariables = new HashMap<Class<? extends EntityNBT>, NBTGenericVariableContainer>();
-		_entityVariablesByType = new HashMap<EntityType, NBTGenericVariableContainer>();
+		_entityVariables = new HashMap<Class<? extends EntityNBT>, NBTUnboundVariableContainer>();
+		_entityVariablesByType = new HashMap<EntityType, NBTUnboundVariableContainer>();
 		// Force static initialization of the EntityNBT class.
 		try {
 			Class.forName(EntityNBT.class.getName());
@@ -55,11 +56,11 @@ abstract class EntityNBTBase {
 		}
 	}
 
-	static void registerVariables(Class<? extends EntityNBT> entityClass, NBTGenericVariableContainer variables) {
+	static void registerVariables(Class<? extends EntityNBT> entityClass, NBTUnboundVariableContainer variables) {
 		_entityVariables.put(entityClass, variables);
 	}
 
-	static void registerVariables(EntityType entityType, NBTGenericVariableContainer variables) {
+	static void registerVariables(EntityType entityType, NBTUnboundVariableContainer variables) {
 		_entityVariablesByType.put(entityType, variables);
 	}
 
@@ -79,11 +80,13 @@ abstract class EntityNBTBase {
 		Class<? extends EntityNBT> entityClass = _entityClasses.get(entityType);
 		EntityNBTBase instance;
 		if (entityClass != null) {
+			_initializerEntityTypeIfNull = entityType;
 			try {
 				instance = entityClass.newInstance();
 			} catch (Exception e) {
 				throw new RuntimeException("Error when instantiating " + entityClass.getName() + ".", e);
 			}
+			_initializerEntityTypeIfNull = null;
 			instance._entityType = entityType;
 		} else {
 			instance = new EntityNBT(entityType);
@@ -202,54 +205,45 @@ abstract class EntityNBTBase {
 	}
 
 	private EntityType _entityType;
-	protected NBTTagCompound _data;
 
 	protected EntityNBTBase(EntityType entityType) {
+		super(new NBTTagCompound(), EntityTypeMap.getName(entityType == null ? _initializerEntityTypeIfNull : entityType));
 		_entityType = entityType;
-		_data = new NBTTagCompound();
-		if (entityType != null) {
-			_data.setString("id", EntityTypeMap.getName(entityType));
+	}
+
+	@Override
+	protected NBTUnboundVariableContainer getVariableContainer(String id) {
+		EntityType type = EntityTypeMap.getByName(id);
+		if (type != null) {
+			Class<?> clazz = _entityClasses.get(type);
+			if (clazz != null) {
+				NBTUnboundVariableContainer classContainer = _entityVariables.get(clazz);
+				NBTUnboundVariableContainer container = _entityVariablesByType.get(type);
+				if (container == null) {
+					container = classContainer;
+				} else {
+					container._parent = classContainer;
+				}
+				while (clazz != Object.class) {
+					if (classContainer._parent != null) {
+						break;
+					}
+					clazz = clazz.getSuperclass();
+					classContainer._parent = _entityVariables.get(clazz);
+					if (classContainer._parent == null) {
+						break;
+					}
+					classContainer = classContainer._parent;
+				}
+				return container;
+			}
 		}
+
+		return null;
 	}
 
 	public EntityType getEntityType() {
 		return _entityType;
-	}
-
-	public NBTVariableContainer[] getAllVariables() {
-		NBTGenericVariableContainer aux;
-		ArrayList<NBTVariableContainer> list = new ArrayList<NBTVariableContainer>(3);
-
-		if ((aux = _entityVariablesByType.get(_entityType)) != null) {
-			list.add(aux.boundToData(_data));
-		}
-
-		for (Class<?> clazz = this.getClass(); clazz != Object.class; clazz = clazz.getSuperclass()) {
-			if ((aux = _entityVariables.get(clazz)) != null) {
-				list.add(aux.boundToData(_data));
-			}
-		}
-		return list.toArray(new NBTVariableContainer[0]);
-	}
-
-	public NBTVariable getVariable(String name) {
-		NBTGenericVariableContainer aux;
-		name = name.toLowerCase();
-
-		if ((aux = _entityVariablesByType.get(_entityType)) != null) {
-			if (aux.hasVariable(name)) {
-				return aux.getVariable(name, _data);
-			}
-		}
-
-		for (Class<?> clazz = this.getClass(); clazz != Object.class; clazz = clazz.getSuperclass()) {
-			if ((aux = _entityVariables.get(clazz)) != null) {
-				if (aux.hasVariable(name)) {
-					return aux.getVariable(name, _data);
-				}
-			}
-		}
-		return null;
 	}
 
 	public Entity spawn(Location location) {

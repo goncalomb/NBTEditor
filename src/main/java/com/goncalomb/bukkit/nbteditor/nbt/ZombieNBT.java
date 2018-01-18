@@ -19,13 +19,13 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
 
 public class ZombieNBT extends MobNBT {
 
 	static {
-		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Zombie");
+		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("Zombie");
 		variables.add("IsBaby", new BooleanVariable("IsBaby"));
 		variables.add("CanBreakDoors", new BooleanVariable("CanBreakDoors"));
 		registerVariables(ZombieNBT.class, variables);

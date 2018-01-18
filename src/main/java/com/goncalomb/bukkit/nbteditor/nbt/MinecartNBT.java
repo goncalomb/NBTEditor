@@ -19,16 +19,16 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import com.goncalomb.bukkit.nbteditor.nbt.variable.BlockVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.BooleanVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.IntegerVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.BlockVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.IntegerVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
 
 public class MinecartNBT extends EntityNBT {
 
 	static {
-		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("Minecart");
+		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("Minecart");
 		variables.add("DisplayTile", new BooleanVariable("CustomDisplayTile"));
 		variables.add("Tile", new BlockVariable("DisplayTile", "DisplayData", false, true));
 		variables.add("TileOffset", new IntegerVariable("DisplayOffset"));

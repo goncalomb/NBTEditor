@@ -21,13 +21,13 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 
 import org.bukkit.entity.EntityType;
 
-import com.goncalomb.bukkit.nbteditor.nbt.variable.NBTGenericVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variable.StringVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
 
 public class MinecartCommandNBT extends MinecartNBT {
 
 	static {
-		NBTGenericVariableContainer variables = new NBTGenericVariableContainer("MinecartCommandBlock");
+		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("MinecartCommandBlock");
 		variables.add("Command", new StringVariable("Command"));
 		registerVariables(EntityType.MINECART_COMMAND, variables);
 	}

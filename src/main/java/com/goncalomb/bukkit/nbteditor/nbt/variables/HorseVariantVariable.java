@@ -17,19 +17,21 @@
  * along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.goncalomb.bukkit.nbteditor.nbt.variable;
+package com.goncalomb.bukkit.nbteditor.nbt.variables;
 
 import org.bukkit.entity.Player;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
-public final class HorseVariantVariable extends NBTGenericVariable{
+public final class HorseVariantVariable extends NBTVariable {
 
 	public HorseVariantVariable() {
 		super("Variant");
 	}
 
-	boolean set(NBTTagCompound data, String value, Player player) {
+	@Override
+	public boolean set(String value, Player player) {
+		NBTTagCompound data = data();
 		String[] pieces = value.split("\\s+", 2);
 		if (pieces.length == 2) {
 			int markings, color;
@@ -40,22 +42,25 @@ public final class HorseVariantVariable extends NBTGenericVariable{
 				return false;
 			}
 			if (markings >= 0 && markings <= 4 && color >= 0 && color <= 6) {
-				data.setInt(_nbtKey, color | markings << 8);
+				data.setInt(_key, color | markings << 8);
 				return true;
 			}
 		}
 		return false;
 	}
 
-	String get(NBTTagCompound data) {
-		if (data.hasKey(_nbtKey)) {
-			int variant = data.getInt(_nbtKey);
+	@Override
+	public String get() {
+		NBTTagCompound data = data();
+		if (data.hasKey(_key)) {
+			int variant = data.getInt(_key);
 			return ((variant >> 8) & 0xFF) + " " + (variant & 0xFF);
 		}
 		return null;
 	}
 
-	String getFormat() {
+	@Override
+	public String getFormat() {
 		return "Two integers, the fist one controls the horse markings (0 to 4), the second one controls the color (0 to 6), e.g. '4 1'.";
 	}
 

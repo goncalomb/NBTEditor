@@ -17,18 +17,15 @@
  * along with NBTEditor.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.goncalomb.bukkit.nbteditor.nbt.variable;
+package com.goncalomb.bukkit.nbteditor.nbt.variables;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Effect;
-import org.bukkit.entity.Player;
 
-import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
-
-public class ParticleVariable extends NBTGenericVariable {
+public class ParticleVariable extends StringVariable {
 
 	private static List<String> _particles = new ArrayList<String>();
 
@@ -46,26 +43,12 @@ public class ParticleVariable extends NBTGenericVariable {
 		} catch (Exception e) { }
 	}
 
-	public ParticleVariable(String nbtKey) {
-		super(nbtKey);
+	public ParticleVariable(String key) {
+		super(key);
 	}
 
 	@Override
-	boolean set(NBTTagCompound data, String value, Player player) {
-		data.setString(_nbtKey, value);
-		return true; // accepts any string, even unknown particle names
-	}
-
-	@Override
-	String get(NBTTagCompound data) {
-		if (data.hasKey(_nbtKey)) {
-			return data.getString(_nbtKey);
-		}
-		return null;
-	}
-
-	@Override
-	String getFormat() {
+	public String getFormat() {
 		return "A particle name (not all particles work, why: ?).";
 	}
 
