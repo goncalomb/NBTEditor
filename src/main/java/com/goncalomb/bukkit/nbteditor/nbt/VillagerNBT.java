@@ -24,23 +24,10 @@ import java.util.List;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.IntegerVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.VillagerCareerVariable;
 
 public class VillagerNBT extends BreedNBT {
 
 	private ArrayList<VillagerNBTOffer> _offers;
-
-	static {
-		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("Villager");
-		variables.add("Career", new VillagerCareerVariable());
-		variables.add("CareerLevel", new IntegerVariable("CareerLevel", 0));
-		variables.add("Willing", new BooleanVariable("Willing")); // XXX: not effect?
-		// TODO: add villager inventory
-		registerVariables(VillagerNBT.class, variables);
-	}
 
 	public void clearOffers() {
 		_data.remove("Offers");

@@ -19,17 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.VectorVariable;
-
 public class FireballNBT extends EntityNBT {
-
-	static {
-		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("Fireball");
-		variables.add("Direction", new VectorVariable("direction"));
-		variables.add("Power", new VectorVariable("power"));
-		registerVariables(FireballNBT.class, variables);
-	}
 
 	public FireballNBT() {
 		_data.setList("direction", 0.0d, 0.0d, 0.0d);

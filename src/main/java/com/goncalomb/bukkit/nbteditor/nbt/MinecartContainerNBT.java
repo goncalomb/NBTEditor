@@ -26,18 +26,9 @@ import org.bukkit.inventory.ItemStack;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.LongVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
 
 public class MinecartContainerNBT extends MinecartNBT {
 
-	static {
-		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("MinecartContainer");
-		variables.add("LootTable", new StringVariable("LootTable"));
-		variables.add("LootTableSeed", new LongVariable("LootTableSeed"));
-		registerVariables(MinecartContainerNBT.class, variables);
-	}
 
 	public void setItemsFromInventory(Inventory inventory) {
 		int l = Math.min(inventory.getSize(), getInventorySize());

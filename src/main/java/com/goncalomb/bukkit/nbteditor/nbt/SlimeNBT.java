@@ -19,15 +19,6 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import com.goncalomb.bukkit.nbteditor.nbt.variables.IntegerVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
-
+@Deprecated
 public class SlimeNBT extends MobNBT {
-
-	static {
-		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("Slime");
-		variables.add("Size", new IntegerVariable("Size", -50, 50)); // Limited to 50
-		registerVariables(SlimeNBT.class, variables);
-	}
-
 }

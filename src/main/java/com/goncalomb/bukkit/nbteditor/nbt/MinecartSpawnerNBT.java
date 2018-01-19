@@ -20,26 +20,11 @@
 package com.goncalomb.bukkit.nbteditor.nbt;
 
 import org.bukkit.block.Block;
-import org.bukkit.entity.EntityType;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.ShortVariable;
 
 public class MinecartSpawnerNBT extends MinecartNBT {
-
-	static {
-		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("MinecartSpawner");
-		variables.add("Count", new ShortVariable("SpawnCount", (short) 0));
-		variables.add("Range", new ShortVariable("SpawnRange", (short) 0));
-		variables.add("Delay", new ShortVariable("Delay", (short) 0));
-		variables.add("MinDelay", new ShortVariable("MinSpawnDelay", (short) 0));
-		variables.add("MaxDelay", new ShortVariable("MaxSpawnDelay", (short) 0));
-		variables.add("MaxEntities", new ShortVariable("MaxNearbyEntities", (short) 0));
-		variables.add("PlayerRange", new ShortVariable("RequiredPlayerRange", (short) 0));
-		registerVariables(EntityType.MINECART_MOB_SPAWNER, variables);
-	}
 
 	public void copyFromSpawner(Block block) {
 		NBTTagCompound data = NBTUtils.getTileEntityNBTData(block);

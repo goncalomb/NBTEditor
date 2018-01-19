@@ -25,17 +25,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.IntegerVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
 
 public final class FireworkNBT extends EntityNBT implements SingleItemBasedNBT {
-
-	static {
-		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("Firework");
-		variables.add("Life", new IntegerVariable("Life", 0, 200)); // Limited to 200
-		variables.add("Lifetime", new IntegerVariable("LifeTime", 0, 200)); // Limited to 200
-		registerVariables(FireworkNBT.class, variables);
-	}
 
 	public FireworkNBT() {
 		super(EntityType.FIREWORK);

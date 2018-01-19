@@ -19,22 +19,6 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.ByteVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.DoubleVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.ShortVariable;
-
+@Deprecated
 public class ArrowNBT extends EntityNBT {
-
-	static {
-		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("Arrow");
-		variables.add("Pickup", new ByteVariable("pickup", (byte) 0, (byte) 2));
-		variables.add("Player", new BooleanVariable("player"));
-		variables.add("Life", new ShortVariable("life"));
-		variables.add("Damage", new DoubleVariable("damage"));
-		variables.add("Critical", new BooleanVariable("crit"));
-		registerVariables(ArrowNBT.class, variables);
-	}
-
 }

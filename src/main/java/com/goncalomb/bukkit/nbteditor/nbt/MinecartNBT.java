@@ -19,21 +19,6 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import com.goncalomb.bukkit.nbteditor.nbt.variables.BlockVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.IntegerVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
-
+@Deprecated
 public class MinecartNBT extends EntityNBT {
-
-	static {
-		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("Minecart");
-		variables.add("DisplayTile", new BooleanVariable("CustomDisplayTile"));
-		variables.add("Tile", new BlockVariable("DisplayTile", "DisplayData", false, true));
-		variables.add("TileOffset", new IntegerVariable("DisplayOffset"));
-		variables.add("Name", new StringVariable("CustomName"));
-		registerVariables(MinecartNBT.class, variables);
-	}
-
 }

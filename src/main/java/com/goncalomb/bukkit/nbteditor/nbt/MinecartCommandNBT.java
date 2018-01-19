@@ -19,17 +19,6 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import org.bukkit.entity.EntityType;
-
-import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
-
+@Deprecated
 public class MinecartCommandNBT extends MinecartNBT {
-
-	static {
-		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("MinecartCommandBlock");
-		variables.add("Command", new StringVariable("Command"));
-		registerVariables(EntityType.MINECART_COMMAND, variables);
-	}
-
 }

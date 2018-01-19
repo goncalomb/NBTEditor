@@ -23,25 +23,8 @@ import org.bukkit.block.Block;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.BlockVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.ByteVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.FloatVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.IntegerVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
 
 public class FallingBlockNBT extends EntityNBT {
-
-	static {
-		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("FallingBlock");
-		variables.add("Block", new BlockVariable("TileID", "Data"));
-		variables.add("Time", new ByteVariable("Time", (byte)0));
-		variables.add("DropItem", new BooleanVariable("DropItem"));
-		variables.add("HurtEntities", new BooleanVariable("HurtEntities"));
-		variables.add("FallHurtAmount", new FloatVariable("FallHurtAmount", 0));
-		variables.add("FallHurtMax", new IntegerVariable("FallHurtMax", 0));
-		registerVariables(FallingBlockNBT.class, variables);
-	}
 
 	public FallingBlockNBT() {
 		_data.setByte("Time", (byte) 1);

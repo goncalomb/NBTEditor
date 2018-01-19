@@ -19,19 +19,6 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import org.bukkit.entity.EntityType;
-
-import com.goncalomb.bukkit.nbteditor.nbt.variables.ByteVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.ShortVariable;
-
+@Deprecated
 public class XPOrbNBT extends ItemEntityNBT {
-
-	static {
-		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("XPOrb");
-		variables.add("Health", new ByteVariable("Health"));
-		variables.add("Value", new ShortVariable("Value"));
-		registerVariables(EntityType.EXPERIENCE_ORB, variables);
-	}
-
 }

@@ -26,32 +26,8 @@ import org.bukkit.inventory.ItemStack;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.FloatArrayVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.FloatVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.LongVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.ShortVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
 
 public class MobNBT extends EquippableNBT {
-
-	static {
-		NBTUnboundVariableContainer variables = new NBTUnboundVariableContainer("Mob");
-		variables.add("Health", new FloatVariable("Health", 0.0f));
-		variables.add("AttackTime", new ShortVariable("AttackTime"));
-		variables.add("HurtTime", new ShortVariable("HurtTime"));
-		variables.add("DeathTime", new ShortVariable("DeathTime"));
-		variables.add("HandDropChances", new FloatArrayVariable("HandDropChances", 2, 0f, 2f));
-		variables.add("ArmorDropChances", new FloatArrayVariable("ArmorDropChances", 4, 0f, 2f));
-		variables.add("DeathLootTable", new StringVariable("DeathLootTable"));
-		variables.add("DeathLootTableSeed", new LongVariable("DeathLootTableSeed"));
-		variables.add("PickLoot", new BooleanVariable("CanPickUpLoot"));
-		variables.add("NoAI", new BooleanVariable("NoAI"));
-		variables.add("Persistent", new BooleanVariable("PersistenceRequired"));
-		variables.add("LeftHanded", new BooleanVariable("LeftHanded"));
-		registerVariables(MobNBT.class, variables);
-	}
 
 	public void setEffectsFromPotion(ItemStack potion) {
 		if (potion != null) {
