@@ -15,6 +15,7 @@ import org.bukkit.util.StringUtil;
 import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.utils.Utils;
+import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.nbt.BaseNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ListVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTVariable;
@@ -84,7 +85,7 @@ public abstract class AbstractNBTCommand<T extends BaseNBT> extends MyCommand {
 			if(args.length >= 2) {
 				if (variable instanceof ListVariable) {
 					if (args[1].equalsIgnoreCase("add") && args.length >= 3) {
-						String value = StringUtils.join(args, " ", 2, args.length);
+						String value = UtilsMc.parseColors(StringUtils.join(args, " ", 2, args.length));
 						if (((ListVariable) variable).add(value, (Player) sender)) {
 							wrapper.save();
 							sender.sendMessage("§aVariable updated (added to list).");
@@ -107,7 +108,7 @@ public abstract class AbstractNBTCommand<T extends BaseNBT> extends MyCommand {
 						sender.sendMessage("§cVariable is a list use 'add <value>' or 'del <index>'.");
 					}
 				} else {
-					String value = StringUtils.join(args, " ", 1, args.length);
+					String value = UtilsMc.parseColors(StringUtils.join(args, " ", 1, args.length));
 					if (variable.set(value, (Player) sender)) {
 						wrapper.save();
 						sender.sendMessage("§aVariable updated.");
