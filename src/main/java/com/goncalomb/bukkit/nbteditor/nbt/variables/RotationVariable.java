@@ -26,16 +26,14 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 public class RotationVariable extends NBTVariable {
 
 	private int _count;
-	private String _parentKey;
 
-	public RotationVariable(String key, boolean triple, String parentKey) {
+	public RotationVariable(String key, boolean triple) {
 		super(key);
 		_count = (triple ? 3 : 2);
-		_parentKey = parentKey;
 	}
 
 	public RotationVariable(String nbtKey) {
-		this(nbtKey, false, null);
+		this(nbtKey, false);
 	}
 
 	@Override
@@ -51,14 +49,6 @@ public class RotationVariable extends NBTVariable {
 			} catch (NumberFormatException e) {
 				return false;
 			}
-			if (_parentKey != null) {
-				NBTTagCompound subData = data.getCompound(_parentKey);
-				if (subData == null) {
-					subData = new NBTTagCompound();
-					data.setCompound(_parentKey, subData);
-				}
-				data = subData;
-			}
 			data.setList(_key, values);
 			return true;
 		}
@@ -68,12 +58,6 @@ public class RotationVariable extends NBTVariable {
 	@Override
 	public String get() {
 		NBTTagCompound data = data();
-		if (_parentKey != null) {
-			data = data.getCompound(_parentKey);
-			if (data == null) {
-				return null;
-			}
-		}
 		if (data.hasKey(_key)) {
 			Object[] vector = data.getListAsArray(_key);
 			if (vector.length == 2) {
@@ -83,22 +67,6 @@ public class RotationVariable extends NBTVariable {
 			}
 		}
 		return null;
-	}
-
-	@Override
-	public void clear() {
-		NBTTagCompound data = data();
-		if (_parentKey == null) {
-			super.clear();
-		} else {
-			NBTTagCompound subData = data.getCompound(_parentKey);
-			if (subData != null) {
-				subData.remove(_key);
-				if (subData.isEmpty()) {
-					data.remove(_parentKey);
-				}
-			}
-		}
 	}
 
 	@Override

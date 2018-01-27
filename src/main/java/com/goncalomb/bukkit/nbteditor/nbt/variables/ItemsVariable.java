@@ -22,7 +22,16 @@ public class ItemsVariable extends NBTVariable implements SpecialVariable {
 
 	@Override
 	public String get() {
-		return null;
+		Object[] list = data().getListAsArray(_key);
+		int k = 0;
+		if (list != null) {
+			for (int i = 0; i < Math.min(list.length, count()); i++) {
+				if (list[i] != null && list[i] instanceof NBTTagCompound && ((NBTTagCompound) list[i]).hasKey("id")) {
+					k++;
+				}
+			}
+		}
+		return (k == 0 ? null : k + " item(s)");
 	}
 
 	@Override

@@ -386,12 +386,12 @@ public class EntityNBT extends EntityNBTBase {
 		cArmorStand.add("NoBasePlate", new BooleanVariable("NoBasePlate"));
 		cArmorStand.add("ShowArms", new BooleanVariable("ShowArms"));
 		cArmorStand.add("Small", new BooleanVariable("Small"));
-		cArmorStand.add("PoseBody", new RotationVariable("Body", true, "Pose"));
-		cArmorStand.add("PoseLeftArm", new RotationVariable("LeftArm", true, "Pose"));
-		cArmorStand.add("PoseRightArm", new RotationVariable("RightArm", true, "Pose"));
-		cArmorStand.add("PoseLeftLeg", new RotationVariable("LeftLeg", true, "Pose"));
-		cArmorStand.add("PoseRightLeg", new RotationVariable("RightLeg", true, "Pose"));
-		cArmorStand.add("PoseHead", new RotationVariable("Head", true, "Pose"));
+		cArmorStand.add("PoseBody", new RotationVariable("Pose/Body", true));
+		cArmorStand.add("PoseLeftArm", new RotationVariable("Pose/LeftArm", true));
+		cArmorStand.add("PoseRightArm", new RotationVariable("Pose/RightArm", true));
+		cArmorStand.add("PoseLeftLeg", new RotationVariable("Pose/LeftLeg", true));
+		cArmorStand.add("PoseRightLeg", new RotationVariable("Pose/RightLeg", true));
+		cArmorStand.add("PoseHead", new RotationVariable("Pose/Head", true));
 
 		NBTUnboundVariableContainer cEnderCrystal = new NBTUnboundVariableContainer("EnderCrystal", cEntity);
 		cEnderCrystal.add("ShowBottom", new BooleanVariable("ShowBottom"));
