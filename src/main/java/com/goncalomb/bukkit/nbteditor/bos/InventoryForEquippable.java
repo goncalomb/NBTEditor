@@ -28,6 +28,7 @@ import org.bukkit.inventory.ItemStack;
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.nbteditor.nbt.EquippableNBT;
 
+@Deprecated
 public class InventoryForEquippable<T extends EquippableNBT> extends InventoryForBos<T> {
 
 	private static ItemStack[] placeholders = new ItemStack[] {

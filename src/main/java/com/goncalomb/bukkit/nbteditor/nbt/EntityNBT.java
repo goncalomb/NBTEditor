@@ -35,6 +35,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variables.FloatArrayVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.FloatVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.HorseVariantVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.IntegerVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.ItemsVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.LongVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ParticleVariable;
@@ -68,6 +69,8 @@ public class EntityNBT extends EntityNBTBase {
 
 		NBTUnboundVariableContainer cEquippable = new NBTUnboundVariableContainer("Equippable", cEntity);
 		cEquippable.add("FallFlying", new BooleanVariable("FallFlying"));
+		cEquippable.add("ArmorItems", new ItemsVariable("ArmorItems", new String[] { "Feet Equipment", "Legs Equipment", "Chest Equipment", "Head Equipment" }));
+		cEquippable.add("HandItems", new ItemsVariable("HandItems", new String[] { "Main Hand Item", "Off Hand Item" }));
 
 		NBTUnboundVariableContainer cMob = new NBTUnboundVariableContainer("Mob", cEquippable);
 		cMob.add("Health", new FloatVariable("Health", 0.0f));

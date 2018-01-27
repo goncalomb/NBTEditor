@@ -16,10 +16,12 @@ import com.goncalomb.bukkit.mylib.command.MyCommand;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
+import com.goncalomb.bukkit.nbteditor.commands.inventories.InventoryForSpecialVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.BaseNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ListVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.SpecialVariable;
 
 public abstract class AbstractNBTCommand<T extends BaseNBT> extends MyCommand {
 
@@ -82,7 +84,9 @@ public abstract class AbstractNBTCommand<T extends BaseNBT> extends MyCommand {
 		T wrapper = getWrapper((Player) sender);
 		NBTVariable variable = wrapper.getVariable(args[0]);
 		if (variable != null) {
-			if(args.length >= 2) {
+			if (args.length == 1 && variable instanceof SpecialVariable) {
+				InventoryForSpecialVariable.openSpecialInventory((Player) sender, wrapper, (SpecialVariable) variable);
+			} else if (args.length >= 2) {
 				if (variable instanceof ListVariable) {
 					if (args[1].equalsIgnoreCase("add") && args.length >= 3) {
 						String value = UtilsMc.parseColors(StringUtils.join(args, " ", 2, args.length));
