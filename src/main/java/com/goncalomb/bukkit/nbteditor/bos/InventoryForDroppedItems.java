@@ -26,6 +26,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.nbteditor.nbt.DroppedItemNBT;
 
+@Deprecated
 public final class InventoryForDroppedItems extends InventoryForSingleItem<DroppedItemNBT> {
 
 	private static ItemStack placeholder = createPlaceholder(Material.PAPER, "§6The item goes here.");

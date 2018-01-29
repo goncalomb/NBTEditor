@@ -16,6 +16,7 @@ import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.nbt.BaseNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ItemsVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.SingleItemVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.SpecialVariable;
 
 public class InventoryForSpecialVariable<T extends SpecialVariable> extends CustomInventory {
@@ -23,6 +24,8 @@ public class InventoryForSpecialVariable<T extends SpecialVariable> extends Cust
 	public static void openSpecialInventory(Player player, BaseNBT wrapper, SpecialVariable variable) {
 		if (variable instanceof ItemsVariable) {
 			new InventoryForItems(player, wrapper, (ItemsVariable) variable).openInventory(player, NBTEditor.getInstance());
+		} else if (variable instanceof SingleItemVariable) {
+			new InventoryForSingleItem(player, wrapper, (SingleItemVariable) variable).openInventory(player, NBTEditor.getInstance());
 		}
 	}
 

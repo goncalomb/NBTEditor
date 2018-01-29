@@ -41,6 +41,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ParticleVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.RotationVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ShortVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.SingleItemVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.VectorVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.VillagerCareerVariable;
@@ -304,6 +305,7 @@ public class EntityNBT extends EntityNBTBase {
 		NBTUnboundVariableContainer cDroppedItem = new NBTUnboundVariableContainer("DroppedItem", cItem);
 		cDroppedItem.add("Health", new ShortVariable("Health"));
 		cDroppedItem.add("PickupDelay", new ShortVariable("PickupDelay"));
+		cDroppedItem.add("Item", new SingleItemVariable("Item"));
 
 		NBTUnboundVariableContainer cXPOrb = new NBTUnboundVariableContainer("XPOrb", cItem);
 		cXPOrb.add("Health", new ByteVariable("Health"));
