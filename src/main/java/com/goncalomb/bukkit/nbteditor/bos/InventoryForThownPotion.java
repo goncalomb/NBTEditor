@@ -29,6 +29,7 @@ import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.SingleItemBasedNBT;
 
+@Deprecated
 public final class InventoryForThownPotion<T extends EntityNBT & SingleItemBasedNBT> extends InventoryForSingleItem<T> {
 
 	private static ItemStack placeholder = createPlaceholder(Material.GLASS_BOTTLE, "§6The potion goes here.");

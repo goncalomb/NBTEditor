@@ -25,6 +25,7 @@ import org.bukkit.inventory.ItemStack;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
+@Deprecated
 public class ThrownPotionNBT extends EntityNBT implements SingleItemBasedNBT {
 
 	public void setItem(ItemStack potion) {

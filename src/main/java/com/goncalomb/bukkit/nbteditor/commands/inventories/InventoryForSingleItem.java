@@ -7,6 +7,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.nbteditor.nbt.BaseNBT;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.EffectsVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.SingleItemVariable;
 
 public class InventoryForSingleItem extends InventoryForSpecialVariable<SingleItemVariable> {
@@ -23,6 +24,11 @@ public class InventoryForSingleItem extends InventoryForSpecialVariable<SingleIt
 			setItem(4, item);
 		} else {
 			setPlaceholder(4, createPlaceholder(Material.PAPER, "§6" + _variable.getFormat()));
+		}
+		if (variable instanceof EffectsVariable) {
+			// XXX: remove this alert, implement default potion fallback on NBTUtils
+			owner.sendMessage("§eWhen setting effects you must use a custom potion. §nNormal potions don't work.");
+			owner.sendMessage("§eGrab any potion and use '/nbtpotion' to edit.");
 		}
 	}
 

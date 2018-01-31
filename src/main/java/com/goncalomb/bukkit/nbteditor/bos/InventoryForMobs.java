@@ -27,6 +27,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;
 
+@Deprecated
 public final class InventoryForMobs extends InventoryForEquippable<MobNBT> {
 
 	private static ItemStack potionPlaceholder = createPlaceholder(Material.GLASS_BOTTLE, "§6Effects", "§bPotion here to apply the effects.");

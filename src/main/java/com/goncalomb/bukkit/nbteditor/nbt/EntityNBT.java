@@ -31,6 +31,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ByteVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ColorVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.DoubleVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.EffectsVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.FloatArrayVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.FloatVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.HorseVariantVariable;
@@ -39,6 +40,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variables.ItemsVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.LongVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ParticleVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.PotionVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.RotationVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ShortVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.SingleItemVariable;
@@ -78,6 +80,7 @@ public class EntityNBT extends EntityNBTBase {
 		cMob.add("AttackTime", new ShortVariable("AttackTime"));
 		cMob.add("HurtTime", new ShortVariable("HurtTime"));
 		cMob.add("DeathTime", new ShortVariable("DeathTime"));
+		cMob.add("ActiveEffects", new EffectsVariable("ActiveEffects"));
 		cMob.add("HandDropChances", new FloatArrayVariable("HandDropChances", 2, 0f, 2f));
 		cMob.add("ArmorDropChances", new FloatArrayVariable("ArmorDropChances", 4, 0f, 2f));
 		cMob.add("DeathLootTable", new StringVariable("DeathLootTable"));
@@ -269,6 +272,7 @@ public class EntityNBT extends EntityNBTBase {
 
 		NBTUnboundVariableContainer cTippedArrow = new NBTUnboundVariableContainer("TippedArrow", cArrow);
 		cTippedArrow.add("Potion", new StringVariable("Potion"));
+		cTippedArrow.add("CustomPotionEffects", new EffectsVariable("CustomPotionEffects"));
 
 		NBTUnboundVariableContainer cSpectralArrow = new NBTUnboundVariableContainer("SpectralArrow", cArrow);
 		cSpectralArrow.add("Duration", new IntegerVariable("Duration", 0));
@@ -283,13 +287,16 @@ public class EntityNBT extends EntityNBTBase {
 		NBTUnboundVariableContainer cEnderPearl = new NBTUnboundVariableContainer("EnderPearl", cEntity);
 		cEnderPearl.add("Owner", new StringVariable("ownerName"));
 
+		NBTUnboundVariableContainer cPotion = new NBTUnboundVariableContainer("Potion", cEntity);
+		cPotion.add("Potion", new PotionVariable("Potion"));
+
 		ENTITY_VARIABLES.put("minecraft:arrow", cTippedArrow);
 		ENTITY_VARIABLES.put("minecraft:dragon_fireball", cFireball);
 		ENTITY_VARIABLES.put("minecraft:egg", cEntity);
 		ENTITY_VARIABLES.put("minecraft:ender_pearl", cEnderPearl);
 		ENTITY_VARIABLES.put("minecraft:fireball", cLargeFireball);
 		ENTITY_VARIABLES.put("minecraft:llama_spit", cEntity);
-		ENTITY_VARIABLES.put("minecraft:potion", cEntity);
+		ENTITY_VARIABLES.put("minecraft:potion", cPotion);
 		ENTITY_VARIABLES.put("minecraft:small_fireball", cFireball);
 		// ENTITY_VARIABLES.put("minecraft:shulker_bullet", cEntity);
 		ENTITY_VARIABLES.put("minecraft:snowball", cEntity);
@@ -381,6 +388,7 @@ public class EntityNBT extends EntityNBTBase {
 		cAreaEffectCloud.add("ParticleParam1", new IntegerVariable("ParticleParam1"));
 		cAreaEffectCloud.add("ParticleParam2", new IntegerVariable("ParticleParam2"));
 		cAreaEffectCloud.add("Potion", new StringVariable("Potion"));
+		cAreaEffectCloud.add("Effects", new EffectsVariable("Effects"));
 
 		NBTUnboundVariableContainer cArmorStand = new NBTUnboundVariableContainer("ArmorStand", cEquippable);
 		cArmorStand.add("Marker", new BooleanVariable("Marker"));

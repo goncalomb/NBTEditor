@@ -24,6 +24,7 @@ import org.bukkit.inventory.ItemStack;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
+@Deprecated
 public class TippedArrowNBT extends ArrowNBT implements SingleItemBasedNBT {
 
 	public void setItem(ItemStack potion) {
