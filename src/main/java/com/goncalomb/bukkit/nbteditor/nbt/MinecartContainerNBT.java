@@ -27,8 +27,8 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
+@Deprecated
 public class MinecartContainerNBT extends MinecartNBT {
-
 
 	public void setItemsFromInventory(Inventory inventory) {
 		int l = Math.min(inventory.getSize(), getInventorySize());

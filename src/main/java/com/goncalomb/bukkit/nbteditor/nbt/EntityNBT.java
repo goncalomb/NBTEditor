@@ -30,6 +30,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variables.BlockVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ByteVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ColorVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.ContainerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.DoubleVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.EffectsVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.FloatArrayVariable;
@@ -333,11 +334,17 @@ public class EntityNBT extends EntityNBTBase {
 		cMinecart.add("Name", new StringVariable("CustomName"));
 
 		NBTUnboundVariableContainer cChestMinecart = new NBTUnboundVariableContainer("ChestMinecart", cMinecart);
+		cChestMinecart.add("Items", new ContainerVariable("Items", 27));
 		cChestMinecart.add("LootTable", new StringVariable("LootTable"));
 		cChestMinecart.add("LootTableSeed", new LongVariable("LootTableSeed"));
 
 		NBTUnboundVariableContainer cCommandBlockMinecart = new NBTUnboundVariableContainer("CommandBlockMinecart", cMinecart);
 		cCommandBlockMinecart.add("Command", new StringVariable("Command"));
+
+		NBTUnboundVariableContainer cHopperMinecart = new NBTUnboundVariableContainer("HopperMinecart", cMinecart);
+		cHopperMinecart.add("Items", new ContainerVariable("Items", 5));
+		cHopperMinecart.add("LootTable", new StringVariable("LootTable"));
+		cHopperMinecart.add("LootTableSeed", new LongVariable("LootTableSeed"));
 
 		NBTUnboundVariableContainer cSpawnerMinecart = new NBTUnboundVariableContainer("SpawnerMinecart", cMinecart);
 		cSpawnerMinecart.add("Count", new ShortVariable("SpawnCount", (short) 0));
@@ -353,7 +360,7 @@ public class EntityNBT extends EntityNBTBase {
 		ENTITY_VARIABLES.put("minecraft:chest_minecart", cChestMinecart);
 		ENTITY_VARIABLES.put("minecraft:commandblock_minecart", cCommandBlockMinecart);
 		ENTITY_VARIABLES.put("minecraft:furnace_minecart", cMinecart);
-		ENTITY_VARIABLES.put("minecraft:hopper_minecart", cChestMinecart);
+		ENTITY_VARIABLES.put("minecraft:hopper_minecart", cHopperMinecart);
 		ENTITY_VARIABLES.put("minecraft:spawner_minecart", cSpawnerMinecart);
 		ENTITY_VARIABLES.put("minecraft:tnt_minecart", cMinecart);
 

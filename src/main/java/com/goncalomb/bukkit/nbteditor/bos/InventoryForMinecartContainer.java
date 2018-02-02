@@ -24,6 +24,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 
 import com.goncalomb.bukkit.nbteditor.nbt.MinecartContainerNBT;
 
+@Deprecated
 public class InventoryForMinecartContainer extends InventoryForBos<MinecartContainerNBT> {
 
 	public InventoryForMinecartContainer(BookOfSouls bos, Player owner) {

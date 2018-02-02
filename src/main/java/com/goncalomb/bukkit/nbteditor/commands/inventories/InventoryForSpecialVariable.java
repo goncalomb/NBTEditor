@@ -15,6 +15,7 @@ import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.NBTEditor;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.nbt.BaseNBT;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.ContainerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ItemsVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.SingleItemVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.SpecialVariable;
@@ -22,7 +23,9 @@ import com.goncalomb.bukkit.nbteditor.nbt.variables.SpecialVariable;
 public class InventoryForSpecialVariable<T extends SpecialVariable> extends CustomInventory {
 
 	public static void openSpecialInventory(Player player, BaseNBT wrapper, SpecialVariable variable) {
-		if (variable instanceof ItemsVariable) {
+		if (variable instanceof ContainerVariable) {
+			new InventoryForContainer(player, wrapper, (ContainerVariable) variable).openInventory(player, NBTEditor.getInstance());
+		} else if (variable instanceof ItemsVariable) {
 			new InventoryForItems(player, wrapper, (ItemsVariable) variable).openInventory(player, NBTEditor.getInstance());
 		} else if (variable instanceof SingleItemVariable) {
 			new InventoryForSingleItem(player, wrapper, (SingleItemVariable) variable).openInventory(player, NBTEditor.getInstance());
@@ -49,6 +52,16 @@ public class InventoryForSpecialVariable<T extends SpecialVariable> extends Cust
 		return UtilsMc.newSingleItemStack(material, name, loreList);
 	}
 
+	public InventoryForSpecialVariable(Player owner, BaseNBT wrapper, T variable, int size) {
+		super(owner, size, wrapper.getId());
+		_wrapper = wrapper;
+		_variable = variable;
+	}
+
+	public InventoryForSpecialVariable(Player owner, BaseNBT wrapper, T variable) {
+		this(owner, wrapper, variable, 9);
+	}
+
 	protected void setItem(int slot, ItemStack item) {
 		_inventory.setItem(slot, item);
 	}
@@ -72,12 +85,6 @@ public class InventoryForSpecialVariable<T extends SpecialVariable> extends Cust
 	protected void setPlaceholder(int slot, ItemStack item) {
 		_placeholders.put(slot, item);
 		_inventory.setItem(slot, item);
-	}
-
-	public InventoryForSpecialVariable(Player owner, BaseNBT wrapper, T variable) {
-		super(owner, 9, wrapper.getId());
-		_wrapper = wrapper;
-		_variable = variable;
 	}
 
 	protected final ItemStack[] getContents() {
