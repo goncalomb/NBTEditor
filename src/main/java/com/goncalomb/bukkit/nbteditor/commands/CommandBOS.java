@@ -117,13 +117,29 @@ public class CommandBOS extends AbstractNBTCommand<EntityNBT> {
 		return true;
 	}
 
+	@Deprecated
 	@Command(args = "items", type = CommandType.PLAYER_ONLY)
 	public boolean itemsCommand(CommandSender sender, String[] args) throws MyCommandException {
-		Player player = (Player) sender;
-		BookOfSouls bos = getBos(player);
-		if (!bos.openInventory(player)) {
-			player.sendMessage("§cThat must be a Mob, ArmorStand, Item, ThrownPotion, AreaEffectCloud, TippedArrow, FireworkRocket, MinecartChest or MinecartHopper entity!");
-		}
+		sender.sendMessage("§eCOMMAND REMOVED in NBTEditor 3.0.");
+		sender.sendMessage("§7From now on, most NBT changes are done using variables!");
+		sender.sendMessage("§7To edit items on mobs and armor stands, use");
+		sender.sendMessage("§7  '§b/bos var ArmorItems§7'");
+		sender.sendMessage("§7  '§b/bos var HandItems§7'");
+		sender.sendMessage("§7To edit effects on mobs, use");
+		sender.sendMessage("§7  '§b/bos var ActiveEffects§7'");
+		sender.sendMessage("§7To edit item entities, use");
+		sender.sendMessage("§7  '§b/bos var Item§7'");
+		sender.sendMessage("§7To edit potion entities, use");
+		sender.sendMessage("§7  '§b/bos var Potion§7'");
+		sender.sendMessage("§7To the effects on area effect clouds, use");
+		sender.sendMessage("§7  '§b/bos var Effects§7'");
+		sender.sendMessage("§7To the effects on (tipped) arrows, use");
+		sender.sendMessage("§7  '§b/bos var CustomPotionEffects§7'");
+		sender.sendMessage("§7To edit firework rocket entities, use");
+		sender.sendMessage("§7  '§b/bos var FireworksItem§7'");
+		sender.sendMessage("§7To edit the items on chest and hopper minecarts, use");
+		sender.sendMessage("§7  '§b/bos var Items§7'");
+		sender.sendMessage("§eCOMMAND REMOVED in NBTEditor 3.0. Read above! ^^^");
 		return true;
 	}
 
@@ -139,15 +155,6 @@ public class CommandBOS extends AbstractNBTCommand<EntityNBT> {
 		} else {
 			player.sendMessage("§eEach column represents one offer.");
 		}
-		return true;
-	}
-
-	@Command(args = "dropchance", type = CommandType.PLAYER_ONLY, maxargs = Integer.MAX_VALUE)
-	public boolean dropchanceCommand(CommandSender sender, String[] args) throws MyCommandException {
-		sender.sendMessage("§eThis command was removed on NBTEditor 2.0.");
-		sender.sendMessage("§bPlease use the new HandDropChances and ArmorDropChances variables for Mobs:");
-		sender.sendMessage("§b    /bos var HandDropChances <main> <off>");
-		sender.sendMessage("§b    /bos var ArmorDropChances <feet> <legs> <chest> <head>");
 		return true;
 	}
 

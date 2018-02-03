@@ -21,32 +21,10 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 
 import java.util.Arrays;
 
-import org.bukkit.inventory.ItemStack;
-
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
-import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeContainer;
 
 public class MobNBT extends EquippableNBT {
-
-	public void setEffectsFromPotion(ItemStack potion) {
-		if (potion != null) {
-			NBTTagList effects = NBTUtils.potionToNBTEffectsList(potion);
-			if (effects != null) {
-				_data.setList("ActiveEffects", effects);
-				return;
-			}
-		} else {
-			_data.remove("ActiveEffects");
-		}
-	}
-
-	public ItemStack getEffectsAsPotion() {
-		if (_data.hasKey("ActiveEffects")) {
-			return NBTUtils.potionFromNBTEffectsList(_data.getList("ActiveEffects"));
-		}
-		return null;
-	}
 
 	public AttributeContainer getAttributes() {
 		if (_data.hasKey("Attributes")) {

@@ -27,7 +27,6 @@ import java.util.logging.Level;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
@@ -39,16 +38,10 @@ import com.goncalomb.bukkit.customitems.api.CustomItemManager;
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.utils.BookSerialize;
-import com.goncalomb.bukkit.nbteditor.nbt.DroppedItemNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
-import com.goncalomb.bukkit.nbteditor.nbt.EquippableNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.FallingBlockNBT;
-import com.goncalomb.bukkit.nbteditor.nbt.FireworkNBT;
-import com.goncalomb.bukkit.nbteditor.nbt.MinecartContainerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MinecartSpawnerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;
-import com.goncalomb.bukkit.nbteditor.nbt.ThrownPotionNBT;
-import com.goncalomb.bukkit.nbteditor.nbt.TippedArrowNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.Attribute;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.Modifier;
@@ -65,7 +58,6 @@ public class BookOfSouls {
 	private static CustomItem _bosCustomItem;
 
 	private static Plugin _plugin = null;
-	private static final String[] _mobEquipSlotName = new String[] { "Head Equipment", "Chest Equipment", "Legs Equipment", "Feet Equipment", "Main Hand Item", "Off Hand Item" };
 
 	private ItemStack _book;
 	private EntityNBT _entityNbt;
@@ -144,32 +136,6 @@ public class BookOfSouls {
 		return false;
 	}
 
-	public boolean openInventory(Player player) {
-		if (_entityNbt instanceof MobNBT) {
-			(new InventoryForMobs(this, player)).openInventory(player, _plugin);
-			return true;
-		} else if (_entityNbt.getEntityType() == EntityType.ARMOR_STAND) {
-			(new InventoryForEquippable<EquippableNBT>(this, player)).openInventory(player, _plugin);
-			return true;
-		} else if (_entityNbt instanceof DroppedItemNBT) {
-			(new InventoryForDroppedItems(this, player)).openInventory(player, _plugin);
-			return true;
-		} else if (_entityNbt instanceof ThrownPotionNBT) {
-			(new InventoryForThownPotion<ThrownPotionNBT>(this, player)).openInventory(player, _plugin);
-			return true;
-		} else if (_entityNbt instanceof TippedArrowNBT) {
-			(new InventoryForThownPotion<TippedArrowNBT>(this, player)).openInventory(player, _plugin);
-			return true;
-		} else if (_entityNbt instanceof FireworkNBT) {
-			(new InventoryForFirework(this, player)).openInventory(player, _plugin);
-			return true;
-		} else if (_entityNbt instanceof MinecartContainerNBT) {
-			(new InventoryForMinecartContainer(this, player)).openInventory(player, _plugin);
-			return true;
-		}
-		return false;
-	}
-
 	public boolean openOffersInventory(Player player, int page) {
 		if (_entityNbt instanceof VillagerNBT) {
 			(new InventoryForVillagers(this, page, player)).openInventory(player, _plugin);
@@ -242,33 +208,6 @@ public class BookOfSouls {
 			}
 		}
 		meta.addPage(sb.toString());
-
-		if (_entityNbt instanceof EquippableNBT) {
-			sb = new StringBuilder();
-			sb.append("" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Armor Items:\n");
-			ItemStack[] items = ((EquippableNBT) _entityNbt).getArmorItems();
-			for (int i = 0; i < 4; ++i) {
-				sb.append(ChatColor.DARK_BLUE + _mobEquipSlotName[i] + ":\n");
-				if (items[3 - i] != null) {
-					sb.append("  " + ChatColor.BLACK + items[3 - i].getType().name() + ":" + items[3 - i].getDurability() + "(" + items[3 - i].getAmount() + ")" + "\n");
-				} else {
-					sb.append("  " + ChatColor.BLACK + ChatColor.ITALIC +"none\n");
-				}
-			}
-			meta.addPage(sb.toString());
-			sb = new StringBuilder();
-			sb.append("" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Hand Items:\n");
-			items = ((EquippableNBT) _entityNbt).getHandItems();
-			for (int i = 0; i < 2; ++i) {
-				sb.append(ChatColor.DARK_BLUE + _mobEquipSlotName[4 + i] + ":\n");
-				if (items[i] != null) {
-					sb.append("  " + ChatColor.BLACK + items[i].getType().name() + ":" + items[i].getDurability() + "(" + items[i].getAmount() + ")" + "\n");
-				} else {
-					sb.append("  " + ChatColor.BLACK + ChatColor.ITALIC +"none\n");
-				}
-			}
-			meta.addPage(sb.toString());
-		}
 
 		if (_entityNbt instanceof MobNBT) {
 			MobNBT mob = (MobNBT) _entityNbt;

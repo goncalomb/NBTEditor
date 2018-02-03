@@ -19,6 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
+@Deprecated
 public class FireballNBT extends EntityNBT {
 
 	public FireballNBT() {

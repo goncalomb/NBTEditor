@@ -19,41 +19,13 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import org.bukkit.inventory.ItemStack;
-
-import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
-import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
-
 @Deprecated
-public class AreaEffectCloudNBT extends ThrownPotionNBT {
+public class AreaEffectCloudNBT extends EntityNBT {
 
 	public AreaEffectCloudNBT() {
 		_data.setInt("Duration", 500);
 		_data.setInt("ReapplicationDelay", 10);
 		_data.setInt("Radius", 3);
-	}
-
-	public void setItem(ItemStack potion) {
-		if (potion == null) {
-			_data.remove("Effects");
-		} else {
-			NBTTagList effects = NBTUtils.potionToNBTEffectsList(potion);
-			if (effects != null) {
-				_data.setList("Effects", effects);
-				return;
-			}
-		}
-	}
-
-	public ItemStack getItem() {
-		if (_data.hasKey("Effects")) {
-			return NBTUtils.potionFromNBTEffectsList(_data.getList("Effects"));
-		}
-		return null;
-	}
-
-	public boolean isSet() {
-		return _data.hasKey("Effects");
 	}
 
 }

@@ -25,7 +25,7 @@ import java.util.List;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 
-public class VillagerNBT extends BreedNBT {
+public class VillagerNBT extends MobNBT {
 
 	private ArrayList<VillagerNBTOffer> _offers;
 

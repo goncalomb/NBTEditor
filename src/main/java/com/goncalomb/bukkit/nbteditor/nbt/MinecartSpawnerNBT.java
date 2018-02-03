@@ -24,7 +24,7 @@ import org.bukkit.block.Block;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
-public class MinecartSpawnerNBT extends MinecartNBT {
+public class MinecartSpawnerNBT extends EntityNBT {
 
 	public void copyFromSpawner(Block block) {
 		NBTTagCompound data = NBTUtils.getTileEntityNBTData(block);

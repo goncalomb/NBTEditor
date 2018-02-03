@@ -434,32 +434,32 @@ public class EntityNBT extends EntityNBTBase {
 
 		// XXX: remove old system
 
-		registerEntity(EntityType.PIG, BreedNBT.class);
-		registerEntity(EntityType.SHEEP, BreedNBT.class);
-		registerEntity(EntityType.COW, BreedNBT.class);
-		registerEntity(EntityType.CHICKEN, BreedNBT.class);
-		registerEntity(EntityType.MUSHROOM_COW, BreedNBT.class);
-		registerEntity(EntityType.POLAR_BEAR, BreedNBT.class);
+		registerEntity(EntityType.PIG, MobNBT.class);
+		registerEntity(EntityType.SHEEP, MobNBT.class);
+		registerEntity(EntityType.COW, MobNBT.class);
+		registerEntity(EntityType.CHICKEN, MobNBT.class);
+		registerEntity(EntityType.MUSHROOM_COW, MobNBT.class);
+		registerEntity(EntityType.POLAR_BEAR, MobNBT.class);
 		registerEntity(EntityType.SQUID, MobNBT.class);
 
-		registerEntity(EntityType.WOLF, TamedNBT.class);
-		registerEntity(EntityType.OCELOT, TamedNBT.class);
-		registerEntity(EntityType.HORSE, HorseNBT.class);
-		registerEntity(EntityType.DONKEY, ChestedHorseNBT.class);
-		registerEntity(EntityType.MULE, ChestedHorseNBT.class);
-		registerEntity(EntityType.ZOMBIE_HORSE, HorseNBT.class);
-		registerEntity(EntityType.SKELETON_HORSE, HorseNBT.class);
+		registerEntity(EntityType.WOLF, MobNBT.class);
+		registerEntity(EntityType.OCELOT, MobNBT.class);
+		registerEntity(EntityType.HORSE, MobNBT.class);
+		registerEntity(EntityType.DONKEY, MobNBT.class);
+		registerEntity(EntityType.MULE, MobNBT.class);
+		registerEntity(EntityType.ZOMBIE_HORSE, MobNBT.class);
+		registerEntity(EntityType.SKELETON_HORSE, MobNBT.class);
 
 		registerEntity(EntityType.VILLAGER, VillagerNBT.class);
 		registerEntity(EntityType.IRON_GOLEM, MobNBT.class);
 		registerEntity(EntityType.SNOWMAN, MobNBT.class);
 
-		registerEntity(EntityType.ZOMBIE, ZombieNBT.class);
-		registerEntity(EntityType.ZOMBIE_VILLAGER, ZombieNBT.class);
-		registerEntity(EntityType.HUSK, ZombieNBT.class);
-		registerEntity(EntityType.PIG_ZOMBIE, ZombieNBT.class);
-		registerEntity(EntityType.SLIME, SlimeNBT.class);
-		registerEntity(EntityType.MAGMA_CUBE, SlimeNBT.class);
+		registerEntity(EntityType.ZOMBIE, MobNBT.class);
+		registerEntity(EntityType.ZOMBIE_VILLAGER, MobNBT.class);
+		registerEntity(EntityType.HUSK, MobNBT.class);
+		registerEntity(EntityType.PIG_ZOMBIE, MobNBT.class);
+		registerEntity(EntityType.SLIME, MobNBT.class);
+		registerEntity(EntityType.MAGMA_CUBE, MobNBT.class);
 		registerEntity(EntityType.GHAST, MobNBT.class);
 		registerEntity(EntityType.SKELETON, MobNBT.class);
 		registerEntity(EntityType.WITHER_SKELETON, MobNBT.class);
@@ -485,7 +485,7 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.EVOKER_FANGS, EntityNBT.class);
 		registerEntity(EntityType.VEX, MobNBT.class);
 		registerEntity(EntityType.VINDICATOR, MobNBT.class);
-		registerEntity(EntityType.LLAMA, BreedNBT.class);
+		registerEntity(EntityType.LLAMA, MobNBT.class);
 		registerEntity(EntityType.LLAMA_SPIT, EntityNBT.class);
 
 		registerEntity(EntityType.ENDER_DRAGON, MobNBT.class);
@@ -493,18 +493,18 @@ public class EntityNBT extends EntityNBTBase {
 
 		registerEntity(EntityType.PRIMED_TNT, EntityNBT.class);
 		registerEntity(EntityType.FALLING_BLOCK, FallingBlockNBT.class);
-		registerEntity(EntityType.DROPPED_ITEM, DroppedItemNBT.class);
-		registerEntity(EntityType.EXPERIENCE_ORB, XPOrbNBT.class);
+		registerEntity(EntityType.DROPPED_ITEM, EntityNBT.class);
+		registerEntity(EntityType.EXPERIENCE_ORB, EntityNBT.class);
 		registerEntity(EntityType.ENDER_CRYSTAL, EntityNBT.class);
 		registerEntity(EntityType.FIREWORK, FireworkNBT.class);
 
-		registerEntity(EntityType.ARROW, TippedArrowNBT.class);
-		registerEntity(EntityType.SPECTRAL_ARROW, ArrowNBT.class);
+		registerEntity(EntityType.ARROW, EntityNBT.class);
+		registerEntity(EntityType.SPECTRAL_ARROW, EntityNBT.class);
 		registerEntity(EntityType.ENDER_PEARL, EntityNBT.class);
 		registerEntity(EntityType.THROWN_EXP_BOTTLE, EntityNBT.class);
 		registerEntity(EntityType.SNOWBALL, EntityNBT.class);
 		registerEntity(EntityType.EGG, EntityNBT.class);
-		registerEntity(EntityType.SPLASH_POTION, ThrownPotionNBT.class);
+		registerEntity(EntityType.SPLASH_POTION, EntityNBT.class);
 		registerEntity(EntityType.FIREBALL, FireballNBT.class);
 		registerEntity(EntityType.SMALL_FIREBALL, FireballNBT.class);
 		registerEntity(EntityType.DRAGON_FIREBALL, FireballNBT.class);
@@ -514,13 +514,13 @@ public class EntityNBT extends EntityNBTBase {
 
 		registerEntity(EntityType.BOAT, EntityNBT.class);
 
-		registerEntity(EntityType.MINECART, MinecartNBT.class);
-		registerEntity(EntityType.MINECART_CHEST, MinecartContainerNBT.class);
-		registerEntity(EntityType.MINECART_FURNACE, MinecartNBT.class);
-		registerEntity(EntityType.MINECART_HOPPER, MinecartContainerNBT.class);
+		registerEntity(EntityType.MINECART, EntityNBT.class);
+		registerEntity(EntityType.MINECART_CHEST, EntityNBT.class);
+		registerEntity(EntityType.MINECART_FURNACE, EntityNBT.class);
+		registerEntity(EntityType.MINECART_HOPPER, EntityNBT.class);
 		registerEntity(EntityType.MINECART_MOB_SPAWNER, MinecartSpawnerNBT.class);
-		registerEntity(EntityType.MINECART_TNT, MinecartNBT.class);
-		registerEntity(EntityType.MINECART_COMMAND, MinecartCommandNBT.class);
+		registerEntity(EntityType.MINECART_TNT, EntityNBT.class);
+		registerEntity(EntityType.MINECART_COMMAND, EntityNBT.class);
 	}
 
 	@Deprecated

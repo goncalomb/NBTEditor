@@ -27,7 +27,7 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
 @Deprecated
-public final class FireworkNBT extends EntityNBT implements SingleItemBasedNBT {
+public final class FireworkNBT extends EntityNBT {
 
 	public FireworkNBT() {
 		super(EntityType.FIREWORK);
@@ -47,26 +47,6 @@ public final class FireworkNBT extends EntityNBT implements SingleItemBasedNBT {
 		} else {
 			_data.setInt("LifeTime", 12 + 12 * ((FireworkMeta) firework.getItemMeta()).getPower());
 		}
-	}
-
-	public void setItem(ItemStack firework) {
-		if (firework == null) {
-			_data.remove("FireworksItem");
-		} else {
-			_data.setCompound("FireworksItem", NBTUtils.itemStackToNBTData(firework));
-		}
-		setLifeTimeFromItem(firework);
-	}
-
-	public ItemStack getItem() {
-		if (_data.hasKey("FireworksItem")) {
-			return NBTUtils.itemStackFromNBTData(_data.getCompound("FireworksItem"));
-		}
-		return null;
-	}
-
-	public boolean isSet() {
-		return _data.hasKey("FireworksItem");
 	}
 
 }
