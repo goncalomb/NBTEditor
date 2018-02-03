@@ -33,6 +33,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variables.ColorVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ContainerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.DoubleVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.EffectsVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.FireworksItemVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.FloatArrayVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.FloatVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.HorseVariantVariable;
@@ -419,6 +420,7 @@ public class EntityNBT extends EntityNBTBase {
 		NBTUnboundVariableContainer cFireworksRocket = new NBTUnboundVariableContainer("FireworksRocket", cEntity);
 		cFireworksRocket.add("Life", new IntegerVariable("Life", 0, 200)); // Limited to 200
 		cFireworksRocket.add("Lifetime", new IntegerVariable("LifeTime", 0, 200)); // Limited to 200
+		cFireworksRocket.add("FireworksItem", new FireworksItemVariable());
 
 		ENTITY_VARIABLES.put("minecraft:area_effect_cloud", cAreaEffectCloud);
 		ENTITY_VARIABLES.put("minecraft:armor_stand", cArmorStand);

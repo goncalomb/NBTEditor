@@ -26,6 +26,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.nbteditor.nbt.FireworkNBT;
 
+@Deprecated
 public final class InventoryForFirework extends InventoryForSingleItem<FireworkNBT> {
 
 	private static ItemStack placeholder = createPlaceholder(Material.PAPER, "§6The firework rocket goes here.");

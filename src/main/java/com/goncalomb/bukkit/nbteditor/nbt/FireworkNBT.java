@@ -26,6 +26,7 @@ import org.bukkit.inventory.meta.FireworkMeta;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
+@Deprecated
 public final class FireworkNBT extends EntityNBT implements SingleItemBasedNBT {
 
 	public FireworkNBT() {
