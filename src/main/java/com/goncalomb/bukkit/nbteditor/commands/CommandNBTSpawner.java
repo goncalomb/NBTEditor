@@ -40,9 +40,9 @@ import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
-import com.goncalomb.bukkit.nbteditor.nbt.FireworkNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.SpawnerEntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.SpawnerNBTWrapper;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.FireworksItemVariable;
 
 public class CommandNBTSpawner extends MyCommand {
 
@@ -128,7 +128,9 @@ public class CommandNBTSpawner extends MyCommand {
 			}
 		} else if (item.getType() == Material.FIREWORK) {
 			int weight = parseWeight(args, 0);
-			spawner.addEntity(new SpawnerEntityNBT(new FireworkNBT(item), weight));
+			EntityNBT entityNBT = EntityNBT.fromEntityType(EntityType.FIREWORK);
+			((FireworksItemVariable) entityNBT.getVariable("FireworksItem")).setItem(item);
+			spawner.addEntity(new SpawnerEntityNBT(entityNBT, weight));
 			spawner.save();
 			sender.sendMessage("§aFirework rocket added to the spawner.");
 		} else {

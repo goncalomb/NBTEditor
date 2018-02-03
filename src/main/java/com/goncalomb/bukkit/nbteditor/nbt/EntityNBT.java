@@ -496,7 +496,7 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.DROPPED_ITEM, EntityNBT.class);
 		registerEntity(EntityType.EXPERIENCE_ORB, EntityNBT.class);
 		registerEntity(EntityType.ENDER_CRYSTAL, EntityNBT.class);
-		registerEntity(EntityType.FIREWORK, FireworkNBT.class);
+		registerEntity(EntityType.FIREWORK, EntityNBT.class);
 
 		registerEntity(EntityType.ARROW, EntityNBT.class);
 		registerEntity(EntityType.SPECTRAL_ARROW, EntityNBT.class);
@@ -505,12 +505,12 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.SNOWBALL, EntityNBT.class);
 		registerEntity(EntityType.EGG, EntityNBT.class);
 		registerEntity(EntityType.SPLASH_POTION, EntityNBT.class);
-		registerEntity(EntityType.FIREBALL, FireballNBT.class);
-		registerEntity(EntityType.SMALL_FIREBALL, FireballNBT.class);
-		registerEntity(EntityType.DRAGON_FIREBALL, FireballNBT.class);
-		registerEntity(EntityType.WITHER_SKULL, FireballNBT.class);
+		registerEntity(EntityType.FIREBALL, EntityNBT.class);
+		registerEntity(EntityType.SMALL_FIREBALL, EntityNBT.class);
+		registerEntity(EntityType.DRAGON_FIREBALL, EntityNBT.class);
+		registerEntity(EntityType.WITHER_SKULL, EntityNBT.class);
 		registerEntity(EntityType.ARMOR_STAND, EquippableNBT.class);
-		registerEntity(EntityType.AREA_EFFECT_CLOUD, AreaEffectCloudNBT.class);
+		registerEntity(EntityType.AREA_EFFECT_CLOUD, EntityNBT.class);
 
 		registerEntity(EntityType.BOAT, EntityNBT.class);
 
@@ -544,6 +544,25 @@ public class EntityNBT extends EntityNBTBase {
 	@Override
 	protected NBTUnboundVariableContainer getVariableContainer(String id) {
 		return ENTITY_VARIABLES.get(id);
+	}
+
+	@Override
+	public void setDefautData() {
+		switch (getId()) {
+		case "minecraft:dragon_fireball":
+		case "minecraft:fireball":
+		case "minecraft:small_fireball":
+		case "minecraft:wither_skull":
+			_data.setList("direction", 0.0d, 0.0d, 0.0d);
+			_data.setList("power", 0.0d, 0.0d, 0.0d);
+		case "minecraft:falling_block":
+			_data.setByte("Time", (byte) 1);
+		case "minecraft:area_effect_cloud":
+			_data.setInt("Duration", 500);
+			_data.setInt("ReapplicationDelay", 10);
+			_data.setInt("Radius", 3);
+			break;
+		}
 	}
 
 	public void setPos(double x, double y, double z) {

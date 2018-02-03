@@ -80,6 +80,8 @@ abstract class EntityNBTBase extends BaseNBT {
 		}
 		if (data != null) {
 			instance._data = data;
+		} else {
+			instance.setDefautData();
 		}
 		instance._data.setString("id", EntityTypeMap.getName(entityType));
 		return (EntityNBT) instance;
@@ -197,6 +199,8 @@ abstract class EntityNBTBase extends BaseNBT {
 		super(new NBTTagCompound(), EntityTypeMap.getName(entityType == null ? _initializerEntityTypeIfNull : entityType));
 		_entityType = entityType;
 	}
+
+	abstract public void setDefautData();
 
 	public EntityType getEntityType() {
 		return _entityType;

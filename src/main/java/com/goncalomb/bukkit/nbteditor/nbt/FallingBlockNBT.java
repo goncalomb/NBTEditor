@@ -26,10 +26,6 @@ import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
 public class FallingBlockNBT extends EntityNBT {
 
-	public FallingBlockNBT() {
-		_data.setByte("Time", (byte) 1);
-	}
-
 	public void copyFromTileEntity(Block block) {
 		_data.setInt("TileID", block.getTypeId());
 		_data.setByte("Data", block.getData());
