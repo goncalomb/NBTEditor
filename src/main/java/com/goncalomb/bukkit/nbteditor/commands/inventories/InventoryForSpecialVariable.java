@@ -19,6 +19,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variables.ContainerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ItemsVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.SingleItemVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.SpecialVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.VillagerOffersVariable;
 
 public class InventoryForSpecialVariable<T extends SpecialVariable> extends CustomInventory {
 
@@ -29,6 +30,8 @@ public class InventoryForSpecialVariable<T extends SpecialVariable> extends Cust
 			new InventoryForItems(player, wrapper, (ItemsVariable) variable).openInventory(player, NBTEditor.getInstance());
 		} else if (variable instanceof SingleItemVariable) {
 			new InventoryForSingleItem(player, wrapper, (SingleItemVariable) variable).openInventory(player, NBTEditor.getInstance());
+		} else if (variable instanceof VillagerOffersVariable) {
+			new InventoryForVillagerOffers(player, wrapper, (VillagerOffersVariable) variable).openInventory(player, NBTEditor.getInstance());
 		}
 	}
 

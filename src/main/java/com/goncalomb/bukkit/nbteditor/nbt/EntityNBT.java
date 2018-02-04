@@ -48,6 +48,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variables.ShortVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.SingleItemVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.VectorVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.VillagerOffersVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.VillagerCareerVariable;
 
 public class EntityNBT extends EntityNBTBase {
@@ -197,6 +198,7 @@ public class EntityNBT extends EntityNBTBase {
 		cVillager.add("Career", new VillagerCareerVariable());
 		cVillager.add("CareerLevel", new IntegerVariable("CareerLevel", 0));
 		cVillager.add("Willing", new BooleanVariable("Willing")); // XXX: not effect?
+		cVillager.add("Offers", new VillagerOffersVariable());
 		// TODO: add villager inventory
 
 		// Tameable SubTypes
