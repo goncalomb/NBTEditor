@@ -39,7 +39,7 @@ import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
-import com.goncalomb.bukkit.nbteditor.ItemStackNBTWrapper;
+import com.goncalomb.bukkit.nbteditor.nbt.ItemStackNBTWrapper;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeType;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.ItemModifier;
 

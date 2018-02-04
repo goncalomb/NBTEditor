@@ -1,9 +1,8 @@
-package com.goncalomb.bukkit.nbteditor;
+package com.goncalomb.bukkit.nbteditor.nbt;
 
 import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
-import com.goncalomb.bukkit.nbteditor.nbt.ItemNBT;
 
 public class ItemStackNBTWrapper extends ItemNBT {
 
