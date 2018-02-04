@@ -22,6 +22,7 @@ package com.goncalomb.bukkit.nbteditor.tools;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -30,9 +31,8 @@ import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
-import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBT;
-import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBTOffer;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.VillagerOffersVariable;
 
 public final class EntityInspectorTool extends CustomItem {
 
@@ -58,12 +58,11 @@ public final class EntityInspectorTool extends CustomItem {
 			player.sendMessage(ChatColor.YELLOW + "Extra information:");
 
 			boolean extra = false;
-			if (entityNBT instanceof VillagerNBT) {
-				VillagerNBT villagerNBT = (VillagerNBT) entityNBT;
+			if (entityNBT.getEntityType() == EntityType.VILLAGER) {
 				player.sendMessage("" + ChatColor.LIGHT_PURPLE + ChatColor.ITALIC + "Trades done:");
 				int i = 1;
-				for (VillagerNBTOffer offer : villagerNBT.getOffers()) {
-					player.sendMessage("  " + ChatColor.AQUA + "trade " + i + ": " + ChatColor.WHITE + offer.getUses());
+				for (VillagerOffersVariable.Offer offer : ((VillagerOffersVariable) entityNBT.getVariable("Offers")).getOffers()) {
+					player.sendMessage("  " + ChatColor.AQUA + "trade " + i + ": " + ChatColor.WHITE + offer.uses);
 					++i;
 				}
 				extra = true;

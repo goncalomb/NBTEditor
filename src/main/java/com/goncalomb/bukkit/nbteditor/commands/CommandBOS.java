@@ -143,18 +143,13 @@ public class CommandBOS extends AbstractNBTCommand<EntityNBT> {
 		return true;
 	}
 
-	@Command(args = "offers", type = CommandType.PLAYER_ONLY, maxargs = 1, usage = "[page]")
+	@Deprecated
+	@Command(args = "offers", type = CommandType.PLAYER_ONLY)
 	public boolean offersCommand(CommandSender sender, String[] args) throws MyCommandException {
-		Player player = (Player) sender;
-		int page = 0;
-		if (args.length == 1) {
-			page = CommandUtils.parseInt(args[0], 9, 0);
-		}
-		if (!getBos(player).openOffersInventory(player, page)) {
-			player.sendMessage("§cThat must be a Villager entity!");
-		} else {
-			player.sendMessage("§eEach column represents one offer.");
-		}
+		sender.sendMessage("§eCOMMAND REMOVED in NBTEditor 3.0.");
+		sender.sendMessage("§7From now on, most NBT changes are done using variables!");
+		sender.sendMessage("§7To edit villager offers, use");
+		sender.sendMessage("§7  '§b/bos var Offers§7'");
 		return true;
 	}
 

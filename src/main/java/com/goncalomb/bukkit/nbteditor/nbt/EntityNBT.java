@@ -48,8 +48,8 @@ import com.goncalomb.bukkit.nbteditor.nbt.variables.ShortVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.SingleItemVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.VectorVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.VillagerOffersVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.VillagerCareerVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.VillagerOffersVariable;
 
 public class EntityNBT extends EntityNBTBase {
 
@@ -452,7 +452,7 @@ public class EntityNBT extends EntityNBTBase {
 		registerEntity(EntityType.ZOMBIE_HORSE, MobNBT.class);
 		registerEntity(EntityType.SKELETON_HORSE, MobNBT.class);
 
-		registerEntity(EntityType.VILLAGER, VillagerNBT.class);
+		registerEntity(EntityType.VILLAGER, MobNBT.class);
 		registerEntity(EntityType.IRON_GOLEM, MobNBT.class);
 		registerEntity(EntityType.SNOWMAN, MobNBT.class);
 

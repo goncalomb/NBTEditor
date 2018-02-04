@@ -42,7 +42,6 @@ import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.FallingBlockNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MinecartSpawnerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;
-import com.goncalomb.bukkit.nbteditor.nbt.VillagerNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.Attribute;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.Modifier;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTVariableContainer;
@@ -132,14 +131,6 @@ public class BookOfSouls {
 			if (meta != null && title != null && title.equals(_bosCustomItem.getName())) {
 				return true;
 			}
-		}
-		return false;
-	}
-
-	public boolean openOffersInventory(Player player, int page) {
-		if (_entityNbt instanceof VillagerNBT) {
-			(new InventoryForVillagers(this, page, player)).openInventory(player, _plugin);
-			return true;
 		}
 		return false;
 	}

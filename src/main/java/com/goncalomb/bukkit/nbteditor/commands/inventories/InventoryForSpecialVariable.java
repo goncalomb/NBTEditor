@@ -50,8 +50,8 @@ public class InventoryForSpecialVariable<T extends SpecialVariable> extends Cust
 		if (lore != null) {
 			loreList.add(lore);
 		}
-		loreList.add("§oThis is a placeholder item");
-		loreList.add("§oit will not be saved!");
+		loreList.add("§oThis is a placeholder item.");
+		loreList.add("§oClick to remove.");
 		return UtilsMc.newSingleItemStack(material, name, loreList);
 	}
 

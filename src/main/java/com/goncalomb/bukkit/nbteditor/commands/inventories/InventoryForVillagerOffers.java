@@ -18,6 +18,10 @@ import com.goncalomb.bukkit.nbteditor.nbt.variables.VillagerOffersVariable;
 
 public class InventoryForVillagerOffers extends InventoryForSpecialVariable<VillagerOffersVariable> {
 
+	private ItemStack _placeHolderA = createPlaceholder(Material.PAPER, "§6Buy item 1");
+	private ItemStack _placeHolderB = createPlaceholder(Material.PAPER, "§6Buy item 2", "§bThis is optional.");
+	private ItemStack _placeHolderS = createPlaceholder(Material.PAPER, "§6Sell item");
+
 	private static void setItemStackName(ItemStack item, String name) {
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(name);
@@ -60,9 +64,15 @@ public class InventoryForVillagerOffers extends InventoryForSpecialVariable<Vill
 					continue;
 				}
 			}
-			setItem(i, null);
-			setItem(9 + i, null);
-			setItem(18 + i, null);
+			if (i == 8) {
+				setPlaceholder(8, _placeHolderA);
+				setPlaceholder(17, _placeHolderB);
+				setPlaceholder(26, _placeHolderS);
+			} else {
+				setItem(i, null);
+				setItem(9 + i, null);
+				setItem(18 + i, null);
+			}
 			_uses[i] = 0;
 			_maxUses[i] = Integer.MAX_VALUE;
 			_rewardExp[i] = false;
