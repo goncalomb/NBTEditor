@@ -19,8 +19,7 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.Arrays;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -35,63 +34,8 @@ import net.iharder.Base64;
 
 abstract class EntityNBTBase extends BaseNBT {
 
-	private static HashMap<EntityType, Class<? extends EntityNBT>> _entityClasses;
-	// XXX: remove this ugly hack
-	private static EntityType _initializerEntityTypeIfNull = null;
-
-	// private static final HashMap<String, NBTUnboundVariableContainer> ENTITY_VARIABLES = new HashMap<String, NBTUnboundVariableContainer>();
-
-	static {
-		_entityClasses = new HashMap<EntityType, Class<? extends EntityNBT>>();
-		// Force static initialization of the EntityNBT class.
-		try {
-			Class.forName(EntityNBT.class.getName());
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	static void registerEntity(EntityType entityType, Class<? extends EntityNBT> entityClass) {
-		_entityClasses.put(entityType, entityClass);
-	}
-
-	public static boolean isValidType(EntityType entityType) {
-		return _entityClasses.containsKey(entityType);
-	}
-
-	public static Collection<EntityType> getValidEntityTypes() {
-		return _entityClasses.keySet();
-	}
-
-	private static EntityNBT newInstance(EntityType entityType, NBTTagCompound data) {
-		Class<? extends EntityNBT> entityClass = _entityClasses.get(entityType);
-		EntityNBTBase instance;
-		if (entityClass != null) {
-			_initializerEntityTypeIfNull = entityType;
-			try {
-				instance = entityClass.newInstance();
-			} catch (Exception e) {
-				throw new RuntimeException("Error when instantiating " + entityClass.getName() + ".", e);
-			}
-			_initializerEntityTypeIfNull = null;
-			instance._entityType = entityType;
-		} else {
-			instance = new EntityNBT(entityType);
-		}
-		if (data != null) {
-			instance._data = data;
-		} else {
-			instance.setDefautData();
-		}
-		instance._data.setString("id", EntityTypeMap.getName(entityType));
-		return (EntityNBT) instance;
-	}
-
-	public static EntityNBT fromEntityType(EntityType entityType) {
-		if (_entityClasses.containsKey(entityType)) {
-			return newInstance(entityType, null);
-		}
-		return null;
+	public static EntityNBT fromEntityType(EntityType type) {
+		return EntityNBT.newInstance(type, null);
 	}
 
 	public static EntityNBT fromEntityData(NBTTagCompound data) {
@@ -158,13 +102,13 @@ abstract class EntityNBTBase extends BaseNBT {
 		entityType = entityTypeNew;
 
 		if (entityType != null) {
-			return newInstance(entityType, data);
+			return EntityNBT.newInstance(entityType, data);
 		}
 		return null;
 	}
 
 	public static EntityNBT fromEntity(Entity entity) {
-		EntityNBT entityNbt = newInstance(entity.getType(), NBTUtils.getEntityNBTData(entity));
+		EntityNBT entityNbt = EntityNBT.newInstance(entity.getType(), NBTUtils.getEntityNBTData(entity));
 		// When cloning, remove the UUID to force all entities to have a unique one.
 		entityNbt._data.remove("UUIDMost");
 		entityNbt._data.remove("UUIDLeast");
@@ -196,7 +140,7 @@ abstract class EntityNBTBase extends BaseNBT {
 	private EntityType _entityType;
 
 	protected EntityNBTBase(EntityType entityType) {
-		super(new NBTTagCompound(), EntityTypeMap.getName(entityType == null ? _initializerEntityTypeIfNull : entityType));
+		super(new NBTTagCompound(), EntityTypeMap.getName(entityType));
 		_entityType = entityType;
 	}
 
@@ -218,7 +162,32 @@ abstract class EntityNBTBase extends BaseNBT {
 		}
 	}
 
-	void onUnserialize() { }
+	void onUnserialize() {
+		// these were moved here from the old classes
+		// XXX: remove all backward compatibility in the future
+
+		// EquippableNBT
+		// Backward compatibility with pre-1.9.
+		if (_data.hasKey("Equipment")) {
+			Object[] equip = _data.getListAsArray("Equipment");
+			_data.setList("HandItems", new NBTTagList(equip[0], new NBTTagCompound()));
+			_data.setList("ArmorItems", new NBTTagList(Arrays.copyOfRange(equip, 1, 5)));
+			_data.remove("Equipment");
+		}
+
+		// MobNBT
+		// Backward compatibility with pre-1.9.
+		if (_data.hasKey("HealF")) {
+			_data.setFloat("Health", _data.getFloat("HealF"));
+			_data.remove("HealF");
+		}
+		if (_data.hasKey("DropChances")) {
+			Object[] drop = _data.getListAsArray("DropChances");
+			_data.setList("HandDropChances", new NBTTagList(drop[0], Float.valueOf(0f)));
+			_data.setList("ArmorDropChances", new NBTTagList(Arrays.copyOfRange(drop, 1, 5)));
+			_data.remove("DropChances");
+		}
+	}
 
 	public EntityNBT clone() {
 		return fromEntityData(_data.clone());

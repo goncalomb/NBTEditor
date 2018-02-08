@@ -19,10 +19,14 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.entity.EntityType;
 
+import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
@@ -434,95 +438,6 @@ public class EntityNBT extends EntityNBTBase {
 		// ENTITY_VARIABLES.put("minecraft:leash_knot", cEntity);
 		// ENTITY_VARIABLES.put("minecraft:painting", cEntity);
 
-		// XXX: remove old system
-
-		registerEntity(EntityType.PIG, MobNBT.class);
-		registerEntity(EntityType.SHEEP, MobNBT.class);
-		registerEntity(EntityType.COW, MobNBT.class);
-		registerEntity(EntityType.CHICKEN, MobNBT.class);
-		registerEntity(EntityType.MUSHROOM_COW, MobNBT.class);
-		registerEntity(EntityType.POLAR_BEAR, MobNBT.class);
-		registerEntity(EntityType.SQUID, MobNBT.class);
-
-		registerEntity(EntityType.WOLF, MobNBT.class);
-		registerEntity(EntityType.OCELOT, MobNBT.class);
-		registerEntity(EntityType.HORSE, MobNBT.class);
-		registerEntity(EntityType.DONKEY, MobNBT.class);
-		registerEntity(EntityType.MULE, MobNBT.class);
-		registerEntity(EntityType.ZOMBIE_HORSE, MobNBT.class);
-		registerEntity(EntityType.SKELETON_HORSE, MobNBT.class);
-
-		registerEntity(EntityType.VILLAGER, MobNBT.class);
-		registerEntity(EntityType.IRON_GOLEM, MobNBT.class);
-		registerEntity(EntityType.SNOWMAN, MobNBT.class);
-
-		registerEntity(EntityType.ZOMBIE, MobNBT.class);
-		registerEntity(EntityType.ZOMBIE_VILLAGER, MobNBT.class);
-		registerEntity(EntityType.HUSK, MobNBT.class);
-		registerEntity(EntityType.PIG_ZOMBIE, MobNBT.class);
-		registerEntity(EntityType.SLIME, MobNBT.class);
-		registerEntity(EntityType.MAGMA_CUBE, MobNBT.class);
-		registerEntity(EntityType.GHAST, MobNBT.class);
-		registerEntity(EntityType.SKELETON, MobNBT.class);
-		registerEntity(EntityType.WITHER_SKELETON, MobNBT.class);
-		registerEntity(EntityType.STRAY, MobNBT.class);
-		registerEntity(EntityType.CREEPER, MobNBT.class);
-		registerEntity(EntityType.BAT, MobNBT.class);
-		registerEntity(EntityType.BLAZE, MobNBT.class);
-		registerEntity(EntityType.SPIDER, MobNBT.class);
-		registerEntity(EntityType.CAVE_SPIDER, MobNBT.class);
-		registerEntity(EntityType.GIANT, MobNBT.class);
-		registerEntity(EntityType.ENDERMAN, MobNBT.class);
-		registerEntity(EntityType.SILVERFISH, MobNBT.class);
-		registerEntity(EntityType.WITCH, MobNBT.class);
-		registerEntity(EntityType.GUARDIAN, MobNBT.class);
-		registerEntity(EntityType.ELDER_GUARDIAN, MobNBT.class);
-		registerEntity(EntityType.ENDERMITE, MobNBT.class);
-		registerEntity(EntityType.RABBIT, MobNBT.class);
-		registerEntity(EntityType.PARROT, MobNBT.class);
-		registerEntity(EntityType.SHULKER, MobNBT.class);
-
-		registerEntity(EntityType.EVOKER, MobNBT.class);
-		registerEntity(EntityType.ILLUSIONER, MobNBT.class);
-		registerEntity(EntityType.EVOKER_FANGS, EntityNBT.class);
-		registerEntity(EntityType.VEX, MobNBT.class);
-		registerEntity(EntityType.VINDICATOR, MobNBT.class);
-		registerEntity(EntityType.LLAMA, MobNBT.class);
-		registerEntity(EntityType.LLAMA_SPIT, EntityNBT.class);
-
-		registerEntity(EntityType.ENDER_DRAGON, MobNBT.class);
-		registerEntity(EntityType.WITHER, MobNBT.class);
-
-		registerEntity(EntityType.PRIMED_TNT, EntityNBT.class);
-		registerEntity(EntityType.FALLING_BLOCK, FallingBlockNBT.class);
-		registerEntity(EntityType.DROPPED_ITEM, EntityNBT.class);
-		registerEntity(EntityType.EXPERIENCE_ORB, EntityNBT.class);
-		registerEntity(EntityType.ENDER_CRYSTAL, EntityNBT.class);
-		registerEntity(EntityType.FIREWORK, EntityNBT.class);
-
-		registerEntity(EntityType.ARROW, EntityNBT.class);
-		registerEntity(EntityType.SPECTRAL_ARROW, EntityNBT.class);
-		registerEntity(EntityType.ENDER_PEARL, EntityNBT.class);
-		registerEntity(EntityType.THROWN_EXP_BOTTLE, EntityNBT.class);
-		registerEntity(EntityType.SNOWBALL, EntityNBT.class);
-		registerEntity(EntityType.EGG, EntityNBT.class);
-		registerEntity(EntityType.SPLASH_POTION, EntityNBT.class);
-		registerEntity(EntityType.FIREBALL, EntityNBT.class);
-		registerEntity(EntityType.SMALL_FIREBALL, EntityNBT.class);
-		registerEntity(EntityType.DRAGON_FIREBALL, EntityNBT.class);
-		registerEntity(EntityType.WITHER_SKULL, EntityNBT.class);
-		registerEntity(EntityType.ARMOR_STAND, EquippableNBT.class);
-		registerEntity(EntityType.AREA_EFFECT_CLOUD, EntityNBT.class);
-
-		registerEntity(EntityType.BOAT, EntityNBT.class);
-
-		registerEntity(EntityType.MINECART, EntityNBT.class);
-		registerEntity(EntityType.MINECART_CHEST, EntityNBT.class);
-		registerEntity(EntityType.MINECART_FURNACE, EntityNBT.class);
-		registerEntity(EntityType.MINECART_HOPPER, EntityNBT.class);
-		registerEntity(EntityType.MINECART_MOB_SPAWNER, MinecartSpawnerNBT.class);
-		registerEntity(EntityType.MINECART_TNT, EntityNBT.class);
-		registerEntity(EntityType.MINECART_COMMAND, EntityNBT.class);
 	}
 
 	@Deprecated
@@ -535,12 +450,57 @@ public class EntityNBT extends EntityNBTBase {
 		}
 	}
 
-	protected EntityNBT() {
-		super(null);
+	static EntityNBT newInstance(EntityType type, NBTTagCompound data) {
+		NBTUnboundVariableContainer c = ENTITY_VARIABLES.get(EntityTypeMap.getName(type));
+		if (c != null) {
+			EntityNBT instance = null;
+			// special case for mobs
+			do {
+				if (c.getName() == "Mob") {
+					instance = new MobNBT(type);
+					break;
+				}
+				c = c.getParent();
+			} while (c != null);
+			if (instance == null) {
+				// special case for some specific entities
+				switch (type) {
+				case FALLING_BLOCK:
+					instance = new FallingBlockNBT();
+					break;
+				case MINECART_MOB_SPAWNER:
+					instance =  new MinecartSpawnerNBT();
+					break;
+				default:
+					instance =  new EntityNBT(type);
+					break;
+				}
+			}
+			if (data != null) {
+				instance._data = data;
+			} else {
+				instance.setDefautData();
+			}
+			instance._data.setString("id", EntityTypeMap.getName(type));
+			return instance;
+		}
+		return null;
 	}
 
-	protected EntityNBT(EntityType entityType) {
-		super(entityType);
+	public static boolean isValidTypeName(String type) {
+		return ENTITY_VARIABLES.containsKey(type);
+	}
+
+	public static boolean isValidType(EntityType type) {
+		return isValidTypeName(EntityTypeMap.getName(type));
+	}
+
+	public static List<String> getValidTypeNames() {
+		return Collections.unmodifiableList(new ArrayList<String>(ENTITY_VARIABLES.keySet()));
+	}
+
+	protected EntityNBT(EntityType type) {
+		super(type);
 	}
 
 	@Override

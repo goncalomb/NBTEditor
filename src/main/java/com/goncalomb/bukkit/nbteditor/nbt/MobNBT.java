@@ -19,12 +19,15 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import java.util.Arrays;
+import org.bukkit.entity.EntityType;
 
-import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeContainer;
 
-public class MobNBT extends EquippableNBT {
+public class MobNBT extends EntityNBT {
+
+	protected MobNBT(EntityType type) {
+		super(type);
+	}
 
 	public AttributeContainer getAttributes() {
 		if (_data.hasKey("Attributes")) {
@@ -38,22 +41,6 @@ public class MobNBT extends EquippableNBT {
 			_data.remove("Attributes");
 		} else {
 			_data.setList("Attributes", container.toNBT());
-		}
-	}
-
-	@Override
-	void onUnserialize() {
-		super.onUnserialize();
-		// Backward compatibility with pre-1.9.
-		if (_data.hasKey("HealF")) {
-			_data.setFloat("Health", _data.getFloat("HealF"));
-			_data.remove("HealF");
-		}
-		if (_data.hasKey("DropChances")) {
-			Object[] drop = _data.getListAsArray("DropChances");
-			_data.setList("HandDropChances", new NBTTagList(drop[0], Float.valueOf(0f)));
-			_data.setList("ArmorDropChances", new NBTTagList(Arrays.copyOfRange(drop, 1, 5)));
-			_data.remove("DropChances");
 		}
 	}
 

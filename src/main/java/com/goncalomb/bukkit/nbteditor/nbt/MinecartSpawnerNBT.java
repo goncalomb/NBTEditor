@@ -20,11 +20,16 @@
 package com.goncalomb.bukkit.nbteditor.nbt;
 
 import org.bukkit.block.Block;
+import org.bukkit.entity.EntityType;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
 public class MinecartSpawnerNBT extends EntityNBT {
+
+	protected MinecartSpawnerNBT() {
+		super(EntityType.MINECART_MOB_SPAWNER);
+	}
 
 	public void copyFromSpawner(Block block) {
 		NBTTagCompound data = NBTUtils.getTileEntityNBTData(block);

@@ -26,6 +26,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.EntityType;
 import org.junit.Test;
 
+import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 
 public class TestBosEntities {
@@ -34,7 +35,9 @@ public class TestBosEntities {
 	public void testBosEntities() {
 		HashSet<EntityType> entityTypes = new HashSet<EntityType>();
 		entityTypes.addAll(Arrays.asList(EntityType.values()));
-		entityTypes.removeAll(EntityNBT.getValidEntityTypes());
+		for (String name : EntityNBT.getValidTypeNames()) {
+			entityTypes.remove(EntityTypeMap.getByName(name));
+		}
 		if (!entityTypes.isEmpty()) {
 			System.out.print("Missing BoS entities: ");
 			System.out.print(StringUtils.join(entityTypes, ", "));
