@@ -31,6 +31,7 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.BlockVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.BlockVariable.DataType;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ByteVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ColorVariable;
@@ -119,7 +120,7 @@ public class EntityNBT extends EntityNBTBase {
 		cEnderDragon.add("DragonPhase", new IntegerVariable("DragonPhase", 0, 10));
 
 		NBTUnboundVariableContainer cEnderman = new NBTUnboundVariableContainer("Enderman", cMob);
-		cEnderman.add("Block", new BlockVariable("carried", "carriedData", true));
+		cEnderman.add("Block", new BlockVariable("carried", "carriedData", DataType.SHORT));
 
 		NBTUnboundVariableContainer cEndermite = new NBTUnboundVariableContainer("Endermite", cMob);
 		cEndermite.add("Lifetime", new IntegerVariable("Lifetime"));
@@ -336,7 +337,7 @@ public class EntityNBT extends EntityNBTBase {
 
 		NBTUnboundVariableContainer cMinecart = new NBTUnboundVariableContainer("Minecart", cEntity);
 		cMinecart.add("DisplayTile", new BooleanVariable("CustomDisplayTile"));
-		cMinecart.add("Tile", new BlockVariable("DisplayTile", "DisplayData", false, true));
+		cMinecart.add("Tile", new BlockVariable("DisplayTile", "DisplayData", DataType.INT));
 		cMinecart.add("TileOffset", new IntegerVariable("DisplayOffset"));
 		cMinecart.add("Name", new StringVariable("CustomName"));
 
@@ -374,7 +375,7 @@ public class EntityNBT extends EntityNBTBase {
 		// Dynamic Entities
 
 		NBTUnboundVariableContainer cFallingBlock = new NBTUnboundVariableContainer("FallingBlock", cEntity);
-		cFallingBlock.add("Block", new BlockVariable("TileID", "Data"));
+		cFallingBlock.add("Block", new BlockVariable("Block", "Data", DataType.BYTE));
 		cFallingBlock.add("Time", new ByteVariable("Time", (byte)0));
 		cFallingBlock.add("DropItem", new BooleanVariable("DropItem"));
 		cFallingBlock.add("HurtEntities", new BooleanVariable("HurtEntities"));
@@ -482,6 +483,7 @@ public class EntityNBT extends EntityNBTBase {
 				instance.setDefautData();
 			}
 			instance._data.setString("id", EntityTypeMap.getName(type));
+			instance.backwardCompatibility();
 			return instance;
 		}
 		return null;

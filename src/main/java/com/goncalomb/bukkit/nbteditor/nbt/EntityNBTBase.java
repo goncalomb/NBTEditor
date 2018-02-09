@@ -22,10 +22,12 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 import java.util.Arrays;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
+import com.goncalomb.bukkit.mylib.namemaps.MaterialMap;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
@@ -129,9 +131,7 @@ abstract class EntityNBTBase extends BaseNBT {
 				data = riding;
 			}
 
-			EntityNBT entityNBT = fromEntityData(data);
-			entityNBT.onUnserialize();
-			return entityNBT;
+			return fromEntityData(data);
 		} catch (Throwable e) {
 			throw new RuntimeException("Error unserializing EntityNBT.", e);
 		}
@@ -162,7 +162,7 @@ abstract class EntityNBTBase extends BaseNBT {
 		}
 	}
 
-	void onUnserialize() {
+	protected void backwardCompatibility() {
 		// these were moved here from the old classes
 		// XXX: remove all backward compatibility in the future
 
@@ -186,6 +186,37 @@ abstract class EntityNBTBase extends BaseNBT {
 			_data.setList("HandDropChances", new NBTTagList(drop[0], Float.valueOf(0f)));
 			_data.setList("ArmorDropChances", new NBTTagList(Arrays.copyOfRange(drop, 1, 5)));
 			_data.remove("DropChances");
+		}
+
+		// block variable backward compatibility
+		switch (_entityType) {
+		case ENDERMAN:
+			// XXX: as of 1.12 the internal enderman code can read material types as string
+			// but still save them as int, this can case problems with the empty book of souls
+			// this conversion needs to be here until the internal code can fully support strings (1.13?)
+			int id0 = _data.getShort("carried");
+			if (id0 != 0) {
+				_data.setString("carried", MaterialMap.getName(Material.getMaterial(id0)));
+			}
+			break;
+		case MINECART:
+		case MINECART_CHEST:
+		case MINECART_FURNACE:
+		case MINECART_COMMAND:
+		case MINECART_MOB_SPAWNER:
+		case MINECART_HOPPER:
+		case MINECART_TNT:
+			int id1 = _data.getInt("DisplayTile");
+			if (id1 != 0) {
+				_data.setString("DisplayTile", MaterialMap.getName(Material.getMaterial(id1)));
+			}
+			break;
+		case FALLING_BLOCK:
+			int id2 = _data.getInt("TileID");
+			if (id2 != 0) {
+				_data.setString("Block", MaterialMap.getName(Material.getMaterial(id2)));
+				_data.remove("TileID");
+			}
 		}
 	}
 

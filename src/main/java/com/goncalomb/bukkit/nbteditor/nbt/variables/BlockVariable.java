@@ -29,21 +29,13 @@ import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 
 public final class BlockVariable extends NBTVariableDouble {
 
-	private boolean _asShort;
-	private boolean _dataAsInt;
+	public static enum DataType { INT, SHORT, BYTE }
 
-	public BlockVariable(String blockNbtKey, String dataNbtKey) {
-		this(blockNbtKey, dataNbtKey, false);
-	}
+	private DataType _dataType;
 
-	public BlockVariable(String blockNbtKey, String dataNbtKey, boolean asShort) {
-		this(blockNbtKey, dataNbtKey, asShort, false);
-	}
-
-	public BlockVariable(String blockNbtKey, String dataNbtKey, boolean asShort, boolean dataAsInt) {
-		super(blockNbtKey, dataNbtKey);
-		_asShort = asShort;
-		_dataAsInt = dataAsInt;
+	public BlockVariable(String blockKey, String dataKey, DataType dataType) {
+		super(blockKey, dataKey);
+		_dataType = dataType;
 	}
 
 	@Override
@@ -72,16 +64,17 @@ public final class BlockVariable extends NBTVariableDouble {
 					return false;
 				}
 			}
-			if (_asShort) {
-				data.setShort(_key, (short) material.getId());
+			data.setString(_key, MaterialMap.getName(material));
+			switch (_dataType) {
+			case INT:
+				data.setInt(_key2, (byte) blockData);
+				break;
+			case SHORT:
 				data.setShort(_key2, (short) blockData);
-			} else {
-				data.setInt(_key, material.getId());
-				if (_dataAsInt) {
-					data.setInt(_key2, (byte) (blockData & 0xFF));
-				} else {
-					data.setByte(_key2, (byte) (blockData & 0xFF));
-				}
+				break;
+			case BYTE:
+				data.setByte(_key2, (byte) blockData);
+				break;
 			}
 			return true;
 		}
@@ -92,19 +85,20 @@ public final class BlockVariable extends NBTVariableDouble {
 	public String get() {
 		NBTTagCompound data = data();
 		if (data.hasKey(_key) && data.hasKey(_key2)) {
-			int materialId, materialData;
-			if (_asShort) {
-				materialId = data.getShort(_key) & 0xFF;
-				materialData = data.getShort(_key2) & 0xFF;
-			} else {
-				materialId = data.getInt(_key);
-				if (_dataAsInt) {
-					materialData = data.getInt(_key2) & 0xFF;
-				} else {
-					materialData = data.getByte(_key2) & 0xFF;
-				}
+			String name = data.getString(_key);
+			int blockData = 0;
+			switch (_dataType) {
+			case INT:
+				blockData = data.getInt(_key2) & 0xFF;
+				break;
+			case SHORT:
+				blockData = data.getShort(_key2) & 0xFF;
+				break;
+			case BYTE:
+				blockData = data.getByte(_key2) & 0xFF;
+				break;
 			}
-			return MaterialMap.getName(Material.getMaterial(materialId)) + " " + materialData;
+			return name + " " + blockData;
 		}
 		return null;
 	}

@@ -22,6 +22,7 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 
+import com.goncalomb.bukkit.mylib.namemaps.MaterialMap;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
@@ -32,7 +33,7 @@ public class FallingBlockNBT extends EntityNBT {
 	}
 
 	public void copyFromTileEntity(Block block) {
-		_data.setInt("TileID", block.getTypeId());
+		_data.setString("Block", MaterialMap.getName(block.getType()));
 		_data.setByte("Data", block.getData());
 		NBTTagCompound tileEntityData = NBTUtils.getTileEntityNBTData(block);
 		if (tileEntityData != null) {
