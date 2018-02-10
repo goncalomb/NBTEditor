@@ -99,7 +99,7 @@ public class CommandBOS extends AbstractNBTCommand<EntityNBT> {
 
 	@TabComplete(args = "get")
 	public List<String> get_tab(CommandSender sender, String[] args) {
-		return (args.length == 1 ? Utils.getElementsWithPrefix(EntityNBT.getValidTypeNames(), args[0], true) : null);
+		return (args.length == 1 ? Utils.getElementsWithPrefix(EntityNBT.getValidTypeNames(), args[0], "minecraft:", true) : null);
 	}
 
 	@Command(args = "getempty", type = CommandType.PLAYER_ONLY)

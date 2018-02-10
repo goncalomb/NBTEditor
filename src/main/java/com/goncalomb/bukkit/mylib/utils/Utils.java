@@ -60,28 +60,29 @@ public final class Utils {
 	}
 
 	public static List<String> getElementsWithPrefix(Collection<String> values, String prefix) {
-		return getElementsWithPrefix(values, prefix, false);
+		return getElementsWithPrefix(values, prefix, null, false);
 	}
 
-	public static List<String> getElementsWithPrefix(Collection<String> values, String prefix, boolean sort) {
+	public static List<String> getElementsWithPrefix(Collection<String> values, String prefix, String ignorePrefix, boolean sort) {
+		List<String> result;
 		if (prefix == null || prefix.isEmpty()) {
-			List<String> result = new ArrayList<String>(values);
-			if (sort) {
-				Collections.sort(result, String.CASE_INSENSITIVE_ORDER);
-			}
-			return Collections.unmodifiableList(result);
+			result = new ArrayList<String>(values);
 		} else {
-			List<String> result = new ArrayList<String>();
+			result = new ArrayList<String>();
 			for (String string : values) {
 				if (StringUtil.startsWithIgnoreCase(string, prefix)) {
 					result.add(string);
+				} else if (ignorePrefix != null && !ignorePrefix.isEmpty() && StringUtil.startsWithIgnoreCase(string, ignorePrefix)) {
+					if (string.regionMatches(ignorePrefix.length(), prefix, 0, prefix.length())) {
+						result.add(string);
+					}
 				}
 			}
-			if (sort) {
-				Collections.sort(result, String.CASE_INSENSITIVE_ORDER);
-			}
-			return Collections.unmodifiableList(result);
 		}
+		if (sort) {
+			Collections.sort(result, String.CASE_INSENSITIVE_ORDER);
+		}
+		return Collections.unmodifiableList(result);
 	}
 
 	public static List<String> getElementsWithPrefixGeneric(Collection<?> values, String prefix) {

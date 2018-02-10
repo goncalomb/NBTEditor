@@ -43,7 +43,7 @@ public abstract class AbstractNBTCommand<T extends BaseNBT> extends MyCommand {
 	private static List<String> getVariablePossibleValues(NBTVariable variable, String prefix) {
 		List<String> possibleValues = variable.getPossibleValues();
 		if (possibleValues != null) {
-			return Utils.getElementsWithPrefix(possibleValues, prefix);
+			return Utils.getElementsWithPrefix(possibleValues, prefix, "minecraft:", false);
 		}
 		return null;
 	}
