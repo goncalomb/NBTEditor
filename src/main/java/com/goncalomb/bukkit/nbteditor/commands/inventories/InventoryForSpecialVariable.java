@@ -17,6 +17,7 @@ import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.nbt.BaseNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ContainerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ItemsVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.PassengersVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.SingleItemVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.SpecialVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.VillagerOffersVariable;
@@ -28,6 +29,8 @@ public class InventoryForSpecialVariable<T extends SpecialVariable> extends Cust
 			new InventoryForContainer(player, wrapper, (ContainerVariable) variable).openInventory(player, NBTEditor.getInstance());
 		} else if (variable instanceof ItemsVariable) {
 			new InventoryForItems(player, wrapper, (ItemsVariable) variable).openInventory(player, NBTEditor.getInstance());
+		} else if (variable instanceof PassengersVariable) {
+			new InventoryForPassengers(player, wrapper, (PassengersVariable) variable).openInventory(player, NBTEditor.getInstance());
 		} else if (variable instanceof SingleItemVariable) {
 			new InventoryForSingleItem(player, wrapper, (SingleItemVariable) variable).openInventory(player, NBTEditor.getInstance());
 		} else if (variable instanceof VillagerOffersVariable) {
@@ -38,8 +41,9 @@ public class InventoryForSpecialVariable<T extends SpecialVariable> extends Cust
 	protected static final ItemStack ITEM_FILLER = UtilsMc.newSingleItemStack(Material.BARRIER, "Nothing here!");
 
 	private HashMap<Integer, ItemStack> _placeholders = new HashMap<Integer, ItemStack>();
-	private BaseNBT _wrapper;
+	protected final BaseNBT _wrapper;
 	protected final T _variable;
+	private boolean _allowBos;
 
 	protected static ItemStack createPlaceholder(Material material, String name) {
 		return createPlaceholder(material, name, null);
@@ -55,10 +59,15 @@ public class InventoryForSpecialVariable<T extends SpecialVariable> extends Cust
 		return UtilsMc.newSingleItemStack(material, name, loreList);
 	}
 
-	public InventoryForSpecialVariable(Player owner, BaseNBT wrapper, T variable, int size) {
-		super(owner, size, wrapper.getId());
+	public InventoryForSpecialVariable(Player owner, BaseNBT wrapper, T variable, int size, String title, boolean allowBos) {
+		super(owner, size, title);
 		_wrapper = wrapper;
 		_variable = variable;
+		_allowBos = allowBos;
+	}
+
+	public InventoryForSpecialVariable(Player owner, BaseNBT wrapper, T variable, int size) {
+		this(owner, wrapper, variable, size, wrapper.getId(), false);
 	}
 
 	public InventoryForSpecialVariable(Player owner, BaseNBT wrapper, T variable) {
@@ -115,7 +124,7 @@ public class InventoryForSpecialVariable<T extends SpecialVariable> extends Cust
 			}
 
 		}
-		if (BookOfSouls.isValidBook(event.getCurrentItem())) {
+		if (!_allowBos && BookOfSouls.isValidBook(event.getCurrentItem())) {
 			event.setCancelled(true);
 		}
 	}

@@ -20,7 +20,6 @@
 package com.goncalomb.bukkit.nbteditor.commands;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,6 +47,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.MobNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.Attribute;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.AttributeType;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.PassengersVariable;
 
 public class CommandBOS extends AbstractNBTCommand<EntityNBT> {
 
@@ -111,9 +111,10 @@ public class CommandBOS extends AbstractNBTCommand<EntityNBT> {
 
 	@Command(args = "riding", type = CommandType.PLAYER_ONLY)
 	public boolean ridingCommand(CommandSender sender, String[] args) throws MyCommandException {
-		Player player = (Player) sender;
-		BookOfSouls bos = getBos(player);
-		bos.openRidingInventory(player);
+		sender.sendMessage("§eCOMMAND REMOVED in NBTEditor 3.0.");
+		sender.sendMessage("§7From now on, most NBT changes are done using variables!");
+		sender.sendMessage("§7To edit entity passengers, use");
+		sender.sendMessage("§7  '§b/bos var Passengers§7'");
 		return true;
 	}
 
@@ -297,18 +298,21 @@ public class CommandBOS extends AbstractNBTCommand<EntityNBT> {
 		return true;
 	}
 
+	private void refreshEntityPassengers(EntityNBT entity) {
+		PassengersVariable variable = (PassengersVariable) entity.getVariable("Passengers");
+		EntityNBT[] passengers = variable.getPassengers();
+		for (EntityNBT passager : passengers) {
+			refreshEntityPassengers(passager);
+		}
+		variable.setPassengers(passengers);
+	}
+
 	@Command(args = "refresh", type = CommandType.PLAYER_ONLY)
 	public boolean refreshCommand(CommandSender sender, String[] args) throws MyCommandException {
+		// loading and saving the BoS refreshes the base entity
 		BookOfSouls bos = getBos((Player) sender);
-		// Refresh passengers
-		EntityNBT entityNBT = bos.getEntityNBT();
-		List<EntityNBT> riders = new ArrayList<EntityNBT>();
-		while ((entityNBT = entityNBT.getFirstPassenger()) != null) {
-			EntityNBT riding = entityNBT.clone();
-			riding.setRiders((EntityNBT[]) null);
-			riders.add(riding);
-		}
-		bos.getEntityNBT().setRiders(riders.toArray(new EntityNBT[riders.size()]));
+		// but we also refresh the passengers (depth first)
+		refreshEntityPassengers(bos.getEntityNBT());
 		bos.saveBook(true);
 		sender.sendMessage("§aBook of Souls refreshed.");
 		return true;

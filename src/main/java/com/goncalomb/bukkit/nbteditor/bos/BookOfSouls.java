@@ -27,7 +27,6 @@ import java.util.logging.Level;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -72,7 +71,7 @@ public class BookOfSouls {
 		CustomItemManager.register(_bosCustomItem, plugin, _plugin.getName());
 	}
 
-	static EntityNBT bookToEntityNBT(ItemStack book) {
+	public static EntityNBT bookToEntityNBT(ItemStack book) {
 		if (isValidBook(book)) {
 			try {
 				String data = BookSerialize.loadData((BookMeta) book.getItemMeta(), _dataTitle);
@@ -133,10 +132,6 @@ public class BookOfSouls {
 			}
 		}
 		return false;
-	}
-
-	public void openRidingInventory(Player player) {
-		(new InventoryForRiding(this, player)).openInventory(player, _plugin);
 	}
 
 	public EntityNBT getEntityNBT() {

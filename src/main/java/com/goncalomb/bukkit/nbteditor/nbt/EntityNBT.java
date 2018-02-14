@@ -28,7 +28,6 @@ import org.bukkit.entity.EntityType;
 
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.BlockVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.BlockVariable.DataType;
@@ -47,6 +46,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variables.ItemsVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.LongVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ParticleVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.PassengersVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.PotionVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.RotationVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ShortVariable;
@@ -76,6 +76,7 @@ public class EntityNBT extends EntityNBTBase {
 		cEntity.add("Silent", new BooleanVariable("Silent"));
 		cEntity.add("Name", new StringVariable("CustomName"));
 		cEntity.add("NameVisible", new BooleanVariable("CustomNameVisible"));
+		cEntity.add("Passengers", new PassengersVariable());
 		cEntity.add("Glowing", new BooleanVariable("Glowing"));
 
 		NBTUnboundVariableContainer cEquippable = new NBTUnboundVariableContainer("Equippable", cEntity);
@@ -543,30 +544,6 @@ public class EntityNBT extends EntityNBTBase {
 
 	public void removeMotion() {
 		_data.remove("Motion");
-	}
-
-	public EntityNBT getFirstPassenger() {
-		NBTTagList passengers = _data.getList("Passengers");
-		if (passengers != null && passengers.size() > 0) {
-			NBTTagCompound passenger = (NBTTagCompound) passengers.get(0);
-			return fromEntityData(passenger);
-		}
-		return null;
-	}
-
-	// TODO: implement a way to set multiple passengers per entity
-
-	public void setRiders(EntityNBT... riders) {
-		if (riders == null || riders.length == 0) {
-			_data.remove("Passengers");
-			return;
-		}
-		NBTTagCompound now = _data;
-		for (EntityNBT rider : riders) {
-			NBTTagCompound next = rider._data.clone();
-			now.setList("Passengers", new NBTTagList(next));
-			now = next;
-		}
 	}
 
 }
