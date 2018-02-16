@@ -28,7 +28,6 @@ import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.mylib.utils.CustomInventory;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
-import com.goncalomb.bukkit.nbteditor.nbt.SpawnerEntityNBT;
 import com.goncalomb.bukkit.nbteditor.nbt.SpawnerNBTWrapper;
 
 final class InventoryForSpawnerEntities extends CustomInventory {
@@ -36,11 +35,11 @@ final class InventoryForSpawnerEntities extends CustomInventory {
 	public InventoryForSpawnerEntities(Player owner, SpawnerNBTWrapper spawner) {
 		super(owner, 54, "Books of Souls (to grab a copy)");
 		int i = 0;
-		for (SpawnerEntityNBT entity : spawner.getEntities()) {
+		for (SpawnerNBTWrapper.SpawnerEntity entity : spawner.getEntities()) {
 			if (i >= 54) {
 				break;
 			}
-			_inventory.addItem((new BookOfSouls(entity.getEntityNBT())).getBook());
+			_inventory.addItem((new BookOfSouls(entity.entityNBT)).getBook());
 		}
 	}
 

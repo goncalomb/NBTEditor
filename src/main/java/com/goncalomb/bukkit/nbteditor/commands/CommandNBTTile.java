@@ -35,9 +35,14 @@ import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
+import com.goncalomb.bukkit.nbteditor.nbt.SpawnerNBTWrapper;
 import com.goncalomb.bukkit.nbteditor.nbt.TileNBTWrapper;
 
 public class CommandNBTTile extends AbstractNBTCommand<TileNBTWrapper> {
+
+	CommandNBTTile(String name, String... aliases) {
+		super(name, aliases);
+	}
 
 	public CommandNBTTile() {
 		super("nbttile", "nbtt");
@@ -50,6 +55,9 @@ public class CommandNBTTile extends AbstractNBTCommand<TileNBTWrapper> {
 			throw new MyCommandException("§cNo tile in sight!");
 		}
 		try {
+			if (block.getType() == Material.MOB_SPAWNER) {
+				return new SpawnerNBTWrapper(block);
+			}
 			return new TileNBTWrapper(block);
 		} catch (RuntimeException e) {
 			throw new MyCommandException("§cCannot edit that tile!");

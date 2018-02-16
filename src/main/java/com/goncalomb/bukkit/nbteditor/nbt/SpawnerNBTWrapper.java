@@ -22,80 +22,84 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
-import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
-public final class SpawnerNBTWrapper {
+public final class SpawnerNBTWrapper extends TileNBTWrapper {
 
-	private Block _spawnerBlock;
-	private NBTTagCompound _data;
-	private List<SpawnerEntityNBT> _entities;
+	public static class SpawnerEntity {
 
-	public SpawnerNBTWrapper(Block block) {
-		_spawnerBlock = block;
-		_data = NBTUtils.getTileEntityNBTData(block);
+		public final EntityNBT entityNBT;
+		public final int weight;
 
-		if (!_data.hasKey("SpawnData")) {
-			// on 1.11 we cannot fetch all the data from a spawner without SpawnData
-			// this creates a simple pig (by calling save and loading again)
-			// XXX: remove this workaround if not needed
-			_entities = new ArrayList<SpawnerEntityNBT>();
-			save();
-			_data = NBTUtils.getTileEntityNBTData(block);
+		public SpawnerEntity(EntityNBT entityNBT, int weight) {
+			this.entityNBT = entityNBT;
+			this.weight = (weight < 1 ? 1 : weight);
 		}
 
+		public SpawnerEntity(EntityType entityType, int weight) {
+			this(EntityNBT.fromEntityType(entityType), weight);
+		}
+
+		NBTTagCompound getCompound() {
+			NBTTagCompound data = new  NBTTagCompound();
+			data.setInt("Weight", weight);
+			data.setCompound("Entity", entityNBT._data);
+			return data;
+		}
+
+	}
+
+	public SpawnerNBTWrapper(Block block) {
+		super(block);
+	}
+
+	public void addEntity(SpawnerEntity entity) {
+		List<SpawnerEntity> entities = getEntities();
+		entities.add(entity);
+		_data.setCompound("SpawnData", entity.entityNBT._data);
+		setEntities(entities);
+	}
+
+	public List<SpawnerEntity> getEntities() {
+		ArrayList<SpawnerEntity> entities = new ArrayList<SpawnerEntity>();
 		if (_data.hasKey("SpawnPotentials")) {
 			NBTTagList spawnPotentials = _data.getList("SpawnPotentials");
 			int l = spawnPotentials.size();
-
-			_entities = new ArrayList<SpawnerEntityNBT>(l);
 			for (int i = 0; i < l; ++i) {
 				NBTTagCompound potential = (NBTTagCompound) spawnPotentials.get(i);
 				EntityNBT entityNbt = EntityNBT.fromEntityData(potential.getCompound("Entity"));
 				if (entityNbt != null) {
-					_entities.add(new SpawnerEntityNBT(entityNbt, potential.getInt("Weight")));
+					entities.add(new SpawnerEntity(entityNbt, potential.getInt("Weight")));
 				}
 			}
 			_data.remove("SpawnPotentials");
-		} else {
-			_entities = new ArrayList<SpawnerEntityNBT>();
 		}
+		return entities;
 	}
 
-	public void addEntity(SpawnerEntityNBT spawnerEntityNbt) {
-		_data.setCompound("SpawnData", spawnerEntityNbt.getEntityNBT()._data.clone());
-		_entities.add(spawnerEntityNbt);
+	public void setEntities(List<SpawnerEntity> entities) {
+		if (entities != null && entities.size() > 0) {
+			NBTTagList spawnPotentials = new NBTTagList();
+			for (SpawnerEntity entity : entities) {
+				spawnPotentials.add(entity.getCompound());
+			}
+			_data.setList("SpawnPotentials", spawnPotentials);
+		} else {
+			NBTTagCompound simplePig = new NBTTagCompound();
+
+			_data.setCompound("SpawnData", simplePig);
+			_data.remove("SpawnPotentials");
+		}
+
 	}
 
 	public void clearEntities() {
-		_entities.clear();
-	}
-
-	public void cloneFrom(SpawnerNBTWrapper other) {
-		NBTTagCompound clone = other._data.clone();
-		clone.remove("id");
-		clone.remove("x");
-		clone.remove("y");
-		clone.remove("z");
-		_data.merge(clone);
-		this._entities = new ArrayList<SpawnerEntityNBT>(other._entities.size());
-		for (SpawnerEntityNBT spawnerEntityNBT : other._entities) {
-			this._entities.add(spawnerEntityNBT.clone());
-		}
-	}
-
-	public List<SpawnerEntityNBT> getEntities() {
-		return _entities;
-	}
-
-	public void removeEntity(int index) {
-		_entities.remove(index);
+		setEntities(null);
 	}
 
 	public EntityType getCurrentEntity() {
@@ -104,26 +108,6 @@ public final class SpawnerNBTWrapper {
 			return EntityTypeMap.getByName(spawnData.getString("id"));
 		}
 		return null;
-	}
-
-	public Location getLocation() {
-		return _spawnerBlock.getLocation();
-	}
-
-	public void save() {
-		if (_entities.size() > 0) {
-			NBTTagList spawnPotentials = new NBTTagList();
-			for (SpawnerEntityNBT spawnerEntityNbt : _entities) {
-				spawnPotentials.add(spawnerEntityNbt.buildTagCompound());
-			}
-			_data.setList("SpawnPotentials", spawnPotentials);
-		} else {
-			NBTTagCompound simplePig = new NBTTagCompound();
-			simplePig.setString("id", "minecraft:pig");
-			_data.setCompound("SpawnData", simplePig);
-			_data.remove("SpawnPotentials");
-		}
-		NBTUtils.setTileEntityNBTData(_spawnerBlock, _data);
 	}
 
 }
