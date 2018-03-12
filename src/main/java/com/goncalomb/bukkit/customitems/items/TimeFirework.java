@@ -63,25 +63,21 @@ public class TimeFirework extends CustomFirework {
 		if (!_changing && loc.getY() > 255) {
 			_changing = true;
 			final World world = loc.getWorld();
-			long time = world.getTime() - _finalTime;
-			time = (time < 0 ? 24000 + time : time);
 			world.setStorm(false);
 			world.playSound(loc, Sound.ENTITY_LIGHTNING_THUNDER, 100, 0);
-
-			final int n = (time > 12000 ? 1 : -1);
 			final BukkitTask[] task = new BukkitTask[1];
 			task[0] = Bukkit.getScheduler().runTaskTimer(getPlugin(), new Runnable() {
 				@Override
 				public void run() {
-					long time = world.getFullTime() + n*500;
+					long time = world.getFullTime() + 250;
 					world.setFullTime(time);
-					if (Math.abs(_finalTime - time%24000) < 500) {
+					if (Math.abs(_finalTime - Math.abs(time%24000)) < 500) {
 						world.playSound(loc, Sound.ENTITY_LIGHTNING_THUNDER, 100, 0);
 						task[0].cancel();
 						_changing = false;
 					}
 				}
-			}, 0, 10);
+			}, 0, 5);
 		}
 	}
 

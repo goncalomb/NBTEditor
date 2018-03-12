@@ -46,7 +46,7 @@ public abstract class GenericSuperAxe extends CustomItem {
 	@Override
 	public void onLeftClick(PlayerInteractEvent event, PlayerDetails details) {
 		if (event.getAction() == org.bukkit.event.block.Action.LEFT_CLICK_BLOCK && isLog(event.getClickedBlock().getType())) {
-			event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 5*20, 3), true);
+			event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 5*20, 1), true);
 		}
 	}
 

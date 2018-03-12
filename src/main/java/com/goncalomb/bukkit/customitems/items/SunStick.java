@@ -24,7 +24,7 @@ import org.bukkit.ChatColor;
 public final class SunStick extends TimeFirework {
 
 	public SunStick() {
-		super("sun-stick", ChatColor.GOLD + "Sun Stick", 6000);
+		super("sun-stick", ChatColor.GOLD + "Sun Stick", 500);
 		setLore("§bA magic flying stick to controls time.",
 				"§bUse outside.");
 	}

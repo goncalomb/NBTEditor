@@ -19,6 +19,8 @@
 
 package com.goncalomb.bukkit.customitems.items;
 
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -63,7 +65,7 @@ public final class EscapePlan extends CustomFirework {
 			}
 			details.setUserObject(details.getPlayer());
 		}
-		details.getFirework().setPassenger((LivingEntity) details.getUserObject());
+		details.getFirework().addPassenger((LivingEntity) details.getUserObject());
 		meta.setPower(2);
 		meta.addEffect(FireworkEffect.builder().withColor(Color.YELLOW).withFade(Color.WHITE).withFlicker().withTrail().build());
 		return true;
@@ -71,13 +73,14 @@ public final class EscapePlan extends CustomFirework {
 
 	@Override
 	public void onExplode(final FireworkPlayerDetails details) {
-		final Vector v = details.getFirework().getVelocity().setY(0).normalize().multiply(7).setY(1);
-		final Entity passenger = details.getFirework().getPassenger();
-		if (passenger != null && passenger == details.getUserObject()) {
+		final LivingEntity passenger = (LivingEntity) details.getUserObject();
+		double d = passenger.getLocation().distance(details.getFirework().getLocation());
+		if (d < 2) {
+			final Vector v = details.getFirework().getVelocity().setY(0).normalize().multiply(7).setY(1);
 			Bukkit.getScheduler().runTaskLater(getPlugin(), new Runnable() {
 				@Override
 				public void run() {
-					((LivingEntity) passenger).addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 8*20, 4), true);
+					passenger.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 8*20, 4), true);
 					passenger.setVelocity(v);
 				}
 			}, 2);

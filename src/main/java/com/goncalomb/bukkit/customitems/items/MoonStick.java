@@ -24,7 +24,7 @@ import org.bukkit.ChatColor;
 public final class MoonStick extends TimeFirework {
 
 	public MoonStick() {
-		super("moon-stick", ChatColor.DARK_AQUA + "Moon Stick", 18000);
+		super("moon-stick", ChatColor.DARK_AQUA + "Moon Stick", 14000);
 		setLore("§bA magic flying stick to controls time.",
 				"§bUse outside.");
 	}
