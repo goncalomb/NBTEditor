@@ -3,7 +3,9 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 import java.util.HashMap;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.ByteVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.IntegerVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.ItemsVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.LongVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ShortVariable;
@@ -39,6 +41,11 @@ public class TileNBT extends BaseNBT {
 		NBTUnboundVariableContainer cBed = new NBTUnboundVariableContainer("Bed");
 		cBed.add("Color", new IntegerVariable("color", 0, 15));
 
+		NBTUnboundVariableContainer cBrewingStand = new NBTUnboundVariableContainer("BrewingStand", cLockable);
+		cBrewingStand.add("Items", new ItemsVariable("Items", new String[] { "Left Item", "Middle Item", "Right Item", "Potion Ingredient", "Fuel" }, true));
+		cBrewingStand.add("BrewTime", new IntegerVariable("BrewTime"));
+		cBrewingStand.add("Fuel", new ByteVariable("Fuel"));
+
 		NBTUnboundVariableContainer cCommandBlock = new NBTUnboundVariableContainer("CommandBlock", cNameable);
 		cCommandBlock.add("Command", new StringVariable("Command"));
 
@@ -56,7 +63,7 @@ public class TileNBT extends BaseNBT {
 		TILE_VARIABLES.put("minecraft:banner", cBanner);
 		TILE_VARIABLES.put("minecraft:beacon", cBeacon);
 		TILE_VARIABLES.put("minecraft:bed", cBed);
-		TILE_VARIABLES.put("minecraft:brewing_stand", cLockable);
+		TILE_VARIABLES.put("minecraft:brewing_stand", cBrewingStand);
 		// TILE_VARIABLES.put("minecraft:cauldron", null);
 		TILE_VARIABLES.put("minecraft:chest", cLootable);
 		// TILE_VARIABLES.put("minecraft:comparator", null);

@@ -4,15 +4,22 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 
 public class ItemsVariable extends NBTVariable implements SpecialVariable {
 
 	private String[] _descriptions;
+	private boolean _useSlot;
 
 	public ItemsVariable(String key, String[] descriptions) {
+		this(key, descriptions, false);
+	}
+
+	public ItemsVariable(String key, String[] descriptions, boolean useSlot) {
 		super(key);
 		_descriptions = descriptions;
+		_useSlot = useSlot;
 	}
 
 	@Override
@@ -54,14 +61,25 @@ public class ItemsVariable extends NBTVariable implements SpecialVariable {
 			return;
 		}
 		int size = Math.min(items.length, count());
-		Object[] list = new Object[size];
+		NBTTagList list = new NBTTagList();
 		boolean allNull = true;
-		for (int i = 0; i < size; i++) {
-			if (items[i] == null) {
-				list[i] = new NBTTagCompound();
-			} else {
-				list[i] = NBTUtils.itemStackToNBTData(items[i]);
-				allNull = false;
+		if (_useSlot) {
+			for (int i = 0; i < size; i++) {
+				if (items[i] != null) {
+					NBTTagCompound itemNBT = NBTUtils.itemStackToNBTData(items[i]);
+					itemNBT.setByte("Slot", (byte) i);
+					list.add(itemNBT);
+					allNull = false;
+				}
+			}
+		} else {
+			for (int i = 0; i < size; i++) {
+				if (items[i] == null) {
+					list.add(new NBTTagCompound());
+				} else {
+					list.add(NBTUtils.itemStackToNBTData(items[i]));
+					allNull = false;
+				}
 			}
 		}
 		if (allNull) {
@@ -76,9 +94,21 @@ public class ItemsVariable extends NBTVariable implements SpecialVariable {
 		Object[] list = data.getListAsArray(_key);
 		ItemStack[] items = new ItemStack[count()];
 		if (list != null) {
-			for (int i = 0; i < Math.min(list.length, count()); i++) {
-				if (list[i] != null && list[i] instanceof NBTTagCompound) {
-					items[i] = NBTUtils.itemStackFromNBTData((NBTTagCompound) list[i]);
+			if (_useSlot) {
+				for (int i = 0; i < list.length; i++) {
+					if (list[i] != null && list[i] instanceof NBTTagCompound) {
+						byte slot = ((NBTTagCompound) list[i]).getByte("Slot");
+						if (slot >= 0 && slot < items.length) {
+							items[slot] = NBTUtils.itemStackFromNBTData((NBTTagCompound) list[i]);
+						}
+					}
+				}
+			} else {
+				int size = Math.min(list.length, items.length);
+				for (int i = 0; i < size; i++) {
+					if (list[i] != null && list[i] instanceof NBTTagCompound) {
+						items[i] = NBTUtils.itemStackFromNBTData((NBTTagCompound) list[i]);
+					}
 				}
 			}
 		}
