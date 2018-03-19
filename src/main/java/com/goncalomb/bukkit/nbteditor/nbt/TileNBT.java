@@ -3,12 +3,14 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 import java.util.HashMap;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ByteVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ItemsVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.LongVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ShortVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.SingleItemVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
 
 public class TileNBT extends BaseNBT {
@@ -49,6 +51,9 @@ public class TileNBT extends BaseNBT {
 		NBTUnboundVariableContainer cCommandBlock = new NBTUnboundVariableContainer("CommandBlock", cNameable);
 		cCommandBlock.add("Command", new StringVariable("Command"));
 
+		NBTUnboundVariableContainer cJukebox = new NBTUnboundVariableContainer("Jukebox");
+		cJukebox.add("RecordItem", new SingleItemVariable("RecordItem"));
+
 		NBTUnboundVariableContainer cSpawner = new NBTUnboundVariableContainer("Spawner");
 		cSpawner.add("Count", new ShortVariable("SpawnCount", (short) 0));
 		cSpawner.add("Range", new ShortVariable("SpawnRange", (short) 0));
@@ -57,6 +62,21 @@ public class TileNBT extends BaseNBT {
 		cSpawner.add("MaxDelay", new ShortVariable("MaxSpawnDelay", (short) 0));
 		cSpawner.add("MaxEntities", new ShortVariable("MaxNearbyEntities", (short) 0));
 		cSpawner.add("PlayerRange", new ShortVariable("RequiredPlayerRange", (short) 0));
+
+		NBTUnboundVariableContainer cNoteBlock = new NBTUnboundVariableContainer("NoteBlock");
+		cNoteBlock.add("Note", new ByteVariable("note", (byte) 0, (byte) 24));
+		cNoteBlock.add("Powered", new BooleanVariable("powered"));
+
+		NBTUnboundVariableContainer cSign = new NBTUnboundVariableContainer("Sign");
+		cSign.add("Text1", new StringVariable("Text1"));
+		cSign.add("Text2", new StringVariable("Text2"));
+		cSign.add("Text3", new StringVariable("Text3"));
+		cSign.add("Text4", new StringVariable("Text4"));
+
+		NBTUnboundVariableContainer cSkull = new NBTUnboundVariableContainer("Skull");
+		cSkull.add("SkullType", new ByteVariable("SkullType"));
+		cSkull.add("Rotation", new ByteVariable("Rot"));
+		// cSkull.add("OwnerName", new StringVariable("Owner/Name")); // changing this causes network error?
 
 		//
 
@@ -78,12 +98,12 @@ public class TileNBT extends BaseNBT {
 		// TILE_VARIABLES.put("minecraft:flower_pot", null);
 		TILE_VARIABLES.put("minecraft:furnace", cLockable);
 		TILE_VARIABLES.put("minecraft:hopper", cLootable);
-		// TILE_VARIABLES.put("minecraft:jukebox", null);
+		TILE_VARIABLES.put("minecraft:jukebox", cJukebox);
 		TILE_VARIABLES.put("minecraft:mob_spawner", cSpawner);
-		// TILE_VARIABLES.put("minecraft:noteblock", null);
+		TILE_VARIABLES.put("minecraft:noteblock", cNoteBlock);
 		// TILE_VARIABLES.put("minecraft:piston", null);
-		// TILE_VARIABLES.put("minecraft:sign", null);
-		// TILE_VARIABLES.put("minecraft:skull", null);
+		TILE_VARIABLES.put("minecraft:sign", cSign);
+		// TILE_VARIABLES.put("minecraft:skull", cSkull); // XXX: needs more testing
 		// TILE_VARIABLES.put("minecraft:structure_block", null);
 	}
 
