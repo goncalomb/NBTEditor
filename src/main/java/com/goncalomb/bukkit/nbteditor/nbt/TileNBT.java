@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ByteVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.ContainerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ItemsVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.LongVariable;
@@ -48,8 +49,14 @@ public class TileNBT extends BaseNBT {
 		cBrewingStand.add("BrewTime", new IntegerVariable("BrewTime"));
 		cBrewingStand.add("Fuel", new ByteVariable("Fuel"));
 
+		NBTUnboundVariableContainer cChest = new NBTUnboundVariableContainer("Chest", cLootable);
+		cChest.add("Items", new ContainerVariable("Items", 27));
+
 		NBTUnboundVariableContainer cCommandBlock = new NBTUnboundVariableContainer("CommandBlock", cNameable);
 		cCommandBlock.add("Command", new StringVariable("Command"));
+
+		NBTUnboundVariableContainer cDispenser = new NBTUnboundVariableContainer("Dispenser", cLootable);
+		cDispenser.add("Items", new ContainerVariable("Items", 9));
 
 		NBTUnboundVariableContainer cJukebox = new NBTUnboundVariableContainer("Jukebox");
 		cJukebox.add("RecordItem", new SingleItemVariable("RecordItem"));
@@ -85,16 +92,16 @@ public class TileNBT extends BaseNBT {
 		TILE_VARIABLES.put("minecraft:bed", cBed);
 		TILE_VARIABLES.put("minecraft:brewing_stand", cBrewingStand);
 		// TILE_VARIABLES.put("minecraft:cauldron", null);
-		TILE_VARIABLES.put("minecraft:chest", cLootable);
+		TILE_VARIABLES.put("minecraft:chest", cChest);
 		// TILE_VARIABLES.put("minecraft:comparator", null);
 		TILE_VARIABLES.put("minecraft:command_block", cCommandBlock);
-		// TILE_VARIABLES.put("minecraft:daylight_detector", null);
-		TILE_VARIABLES.put("minecraft:dispenser", cLootable);
-		TILE_VARIABLES.put("minecraft:dropper", cLootable);
+		// TILE_VARIABLES.put("minecraft:daylight_detector", null); // no extra tags
+		TILE_VARIABLES.put("minecraft:dispenser", cDispenser);
+		TILE_VARIABLES.put("minecraft:dropper", cDispenser);
 		TILE_VARIABLES.put("minecraft:enchanting_table", cNameable);
-		// TILE_VARIABLES.put("minecraft:ender_chest", null);
+		// TILE_VARIABLES.put("minecraft:ender_chest", null); // no extra tags
 		// TILE_VARIABLES.put("minecraft:end_gateway", null);
-		// TILE_VARIABLES.put("minecraft:end_portal", null);
+		// TILE_VARIABLES.put("minecraft:end_portal", null); // no extra tags
 		// TILE_VARIABLES.put("minecraft:flower_pot", null);
 		TILE_VARIABLES.put("minecraft:furnace", cLockable);
 		TILE_VARIABLES.put("minecraft:hopper", cLootable);
