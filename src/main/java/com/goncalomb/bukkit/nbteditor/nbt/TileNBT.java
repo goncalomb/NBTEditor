@@ -7,6 +7,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ByteVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ContainerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.IntegerVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.IntergerPositionVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ItemsVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.LongVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
@@ -58,6 +59,11 @@ public class TileNBT extends BaseNBT {
 		NBTUnboundVariableContainer cDispenser = new NBTUnboundVariableContainer("Dispenser", cLootable);
 		cDispenser.add("Items", new ContainerVariable("Items", 9));
 
+		NBTUnboundVariableContainer cEndGateway = new NBTUnboundVariableContainer("EndGateway");
+		cEndGateway.add("Age", new LongVariable("Age"));
+		cEndGateway.add("ExactTeleport", new BooleanVariable("ExactTeleport"));
+		cEndGateway.add("ExitPortal", new IntergerPositionVariable("ExitPortal"));
+
 		NBTUnboundVariableContainer cJukebox = new NBTUnboundVariableContainer("Jukebox");
 		cJukebox.add("RecordItem", new SingleItemVariable("RecordItem"));
 
@@ -91,7 +97,7 @@ public class TileNBT extends BaseNBT {
 		TILE_VARIABLES.put("minecraft:beacon", cBeacon);
 		TILE_VARIABLES.put("minecraft:bed", cBed);
 		TILE_VARIABLES.put("minecraft:brewing_stand", cBrewingStand);
-		// TILE_VARIABLES.put("minecraft:cauldron", null);
+		// TILE_VARIABLES.put("minecraft:cauldron", null);  // not a tile entity on Java Edition
 		TILE_VARIABLES.put("minecraft:chest", cChest);
 		// TILE_VARIABLES.put("minecraft:comparator", null);
 		TILE_VARIABLES.put("minecraft:command_block", cCommandBlock);
@@ -100,7 +106,7 @@ public class TileNBT extends BaseNBT {
 		TILE_VARIABLES.put("minecraft:dropper", cDispenser);
 		TILE_VARIABLES.put("minecraft:enchanting_table", cNameable);
 		// TILE_VARIABLES.put("minecraft:ender_chest", null); // no extra tags
-		// TILE_VARIABLES.put("minecraft:end_gateway", null);
+		TILE_VARIABLES.put("minecraft:end_gateway", cEndGateway);
 		// TILE_VARIABLES.put("minecraft:end_portal", null); // no extra tags
 		// TILE_VARIABLES.put("minecraft:flower_pot", null);
 		TILE_VARIABLES.put("minecraft:furnace", cLockable);

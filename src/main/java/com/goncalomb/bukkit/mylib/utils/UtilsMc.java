@@ -46,7 +46,7 @@ public final class UtilsMc {
 	static {
 		NON_SOLID_BLOCKS.add(Material.AIR);
 		for (Material mat : Material.values()) {
-			if (mat.isBlock() && !mat.isSolid() && !mat.equals(Material.SKULL)) {
+			if (mat.isBlock() && !mat.isSolid() && !mat.equals(Material.SKULL) && !mat.equals(Material.END_GATEWAY)) {
 				NON_SOLID_BLOCKS.add(mat);
 			}
 		}
