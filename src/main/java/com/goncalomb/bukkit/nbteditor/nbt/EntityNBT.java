@@ -520,8 +520,10 @@ public class EntityNBT extends EntityNBTBase {
 		case "minecraft:wither_skull":
 			_data.setList("direction", 0.0d, 0.0d, 0.0d);
 			_data.setList("power", 0.0d, 0.0d, 0.0d);
+			break;
 		case "minecraft:falling_block":
 			_data.setByte("Time", (byte) 1);
+			break;
 		case "minecraft:area_effect_cloud":
 			_data.setInt("Duration", 500);
 			_data.setInt("ReapplicationDelay", 10);
