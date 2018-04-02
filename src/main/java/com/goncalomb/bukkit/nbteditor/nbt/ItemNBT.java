@@ -40,6 +40,9 @@ public class ItemNBT extends BaseNBT {
 		cBook.add("Resolved", new BooleanVariable("resolved"));
 		cBook.add("Generation", new IntegerVariable("generation"));
 
+		NBTUnboundVariableContainer cPotion = new NBTUnboundVariableContainer("PotionBased", cItem);
+		cPotion.add("CustomPotionColor", new ColorVariable("CustomPotionColor"));
+
 		ITEM_VARIABLES.put("ITEM", cItem);
 		ITEM_VARIABLES.put("minecraft:leather_helmet", cLeatherArmor);
 		ITEM_VARIABLES.put("minecraft:leather_chestplate", cLeatherArmor);
@@ -48,6 +51,10 @@ public class ItemNBT extends BaseNBT {
 		ITEM_VARIABLES.put("minecraft:skull", cSkull);
 		ITEM_VARIABLES.put("minecraft:writable_book", cBook);
 		ITEM_VARIABLES.put("minecraft:written_book", cBook);
+		ITEM_VARIABLES.put("minecraft:potion", cPotion);
+		ITEM_VARIABLES.put("minecraft:lingering_potion", cPotion);
+		ITEM_VARIABLES.put("minecraft:splash_potion", cPotion);
+		ITEM_VARIABLES.put("minecraft:tipped_arrow", cPotion);
 	}
 
 	public ItemNBT(Material type, NBTTagCompound data) {

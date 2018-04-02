@@ -282,6 +282,7 @@ public class EntityNBT extends EntityNBTBase {
 
 		NBTUnboundVariableContainer cTippedArrow = new NBTUnboundVariableContainer("TippedArrow", cArrow);
 		cTippedArrow.add("Potion", new StringVariable("Potion"));
+		cTippedArrow.add("Color", new ColorVariable("Color"));
 		cTippedArrow.add("CustomPotionEffects", new EffectsVariable("CustomPotionEffects"));
 
 		NBTUnboundVariableContainer cSpectralArrow = new NBTUnboundVariableContainer("SpectralArrow", cArrow);
