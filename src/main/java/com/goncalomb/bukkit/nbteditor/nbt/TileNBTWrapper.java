@@ -2,6 +2,7 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
@@ -34,6 +35,10 @@ public class TileNBTWrapper extends TileNBT {
 	@Override
 	public void save() {
 		NBTUtils.setTileEntityNBTData(_block, _data);
+		BlockState bs = _block.getState();
+		if (bs != null) {
+			bs.update();
+		}
 	}
 
 }
