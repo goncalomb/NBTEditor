@@ -3,6 +3,7 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 import java.util.HashMap;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.BlockVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ByteVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ContainerVariable;
@@ -14,6 +15,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ShortVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.SingleItemVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.BlockVariable.DataType;
 
 public class TileNBT extends BaseNBT {
 
@@ -64,6 +66,9 @@ public class TileNBT extends BaseNBT {
 		cEndGateway.add("ExactTeleport", new BooleanVariable("ExactTeleport"));
 		cEndGateway.add("ExitPortal", new IntergerPositionVariable("ExitPortal"));
 
+		NBTUnboundVariableContainer cFlowerPot = new NBTUnboundVariableContainer("FlowerPot");
+		cFlowerPot.add("Item", new BlockVariable("Item", "Data", DataType.INT));
+
 		NBTUnboundVariableContainer cJukebox = new NBTUnboundVariableContainer("Jukebox");
 		cJukebox.add("RecordItem", new SingleItemVariable("RecordItem"));
 
@@ -108,7 +113,7 @@ public class TileNBT extends BaseNBT {
 		// TILE_VARIABLES.put("minecraft:ender_chest", null); // no extra tags
 		TILE_VARIABLES.put("minecraft:end_gateway", cEndGateway);
 		// TILE_VARIABLES.put("minecraft:end_portal", null); // no extra tags
-		// TILE_VARIABLES.put("minecraft:flower_pot", null);
+		TILE_VARIABLES.put("minecraft:flower_pot", cFlowerPot);
 		TILE_VARIABLES.put("minecraft:furnace", cLockable);
 		TILE_VARIABLES.put("minecraft:hopper", cLootable);
 		TILE_VARIABLES.put("minecraft:jukebox", cJukebox);
