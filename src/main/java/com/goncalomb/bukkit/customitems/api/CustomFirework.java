@@ -35,7 +35,7 @@ import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 public abstract class CustomFirework extends CustomItem {
 
 	protected CustomFirework(String slug, String name) {
-		super(slug, name, Material.FIREWORK);
+		super(slug, name, Material.FIREWORK_ROCKET);
 	}
 
 	@Override

@@ -26,7 +26,7 @@ public class FireworksItemVariable extends SingleItemVariable {
 
 	@Override
 	public boolean isValidItem(Player player, ItemStack item) {
-		if (item.getType() != Material.FIREWORK) {
+		if (item.getType() != Material.FIREWORK_ROCKET) {
 			player.sendMessage("§cThat must be a firework rocket!");
 			return false;
 		}

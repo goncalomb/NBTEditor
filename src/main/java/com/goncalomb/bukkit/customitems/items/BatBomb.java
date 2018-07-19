@@ -42,7 +42,7 @@ public final class BatBomb extends GenericBomb {
 	private float _power;
 
 	public BatBomb() {
-		super("bat-bomb", ChatColor.RED + "Bat Bomb", Material.MONSTER_EGG);
+		super("bat-bomb", ChatColor.RED + "Bat Bomb", Material.BAT_SPAWN_EGG);
 		setLore("§bLeft-click to throw the bomb.",
 				"§bRight-click to spawn the bats at your location.",
 				"§bThe bats will explode after a few seconds.");

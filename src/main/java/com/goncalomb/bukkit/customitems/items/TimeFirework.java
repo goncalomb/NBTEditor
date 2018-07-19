@@ -64,7 +64,7 @@ public class TimeFirework extends CustomFirework {
 			_changing = true;
 			final World world = loc.getWorld();
 			world.setStorm(false);
-			world.playSound(loc, Sound.ENTITY_LIGHTNING_THUNDER, 100, 0);
+			world.playSound(loc, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 100, 0);
 			final BukkitTask[] task = new BukkitTask[1];
 			task[0] = Bukkit.getScheduler().runTaskTimer(getPlugin(), new Runnable() {
 				@Override
@@ -72,7 +72,7 @@ public class TimeFirework extends CustomFirework {
 					long time = world.getFullTime() + 250;
 					world.setFullTime(time);
 					if (Math.abs(_finalTime - Math.abs(time%24000)) < 500) {
-						world.playSound(loc, Sound.ENTITY_LIGHTNING_THUNDER, 100, 0);
+						world.playSound(loc, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 100, 0);
 						task[0].cancel();
 						_changing = false;
 					}

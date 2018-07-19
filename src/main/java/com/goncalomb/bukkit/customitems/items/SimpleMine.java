@@ -35,7 +35,7 @@ import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 public final class SimpleMine extends CustomItem {
 
 	public SimpleMine() {
-		super("simple-mine", ChatColor.GREEN + "Mine", Material.FLOWER_POT_ITEM);
+		super("simple-mine", ChatColor.GREEN + "Mine", Material.FLOWER_POT);
 		setLore("§bDrop it and walk away.");
 	}
 

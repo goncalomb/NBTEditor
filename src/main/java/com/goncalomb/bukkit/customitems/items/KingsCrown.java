@@ -42,7 +42,7 @@ public class KingsCrown extends CustomItem {
 	private boolean _shouldBroadcastMessage = true;
 
 	public KingsCrown() {
-		super("kings-crown", ChatColor.GOLD + "King's Crown", Material.GOLD_HELMET);
+		super("kings-crown", ChatColor.GOLD + "King's Crown", Material.GOLDEN_HELMET);
 		addEnchantment(Enchantment.PROTECTION_FALL, 4);
 	}
 

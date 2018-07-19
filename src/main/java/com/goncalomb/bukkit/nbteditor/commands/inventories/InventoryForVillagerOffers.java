@@ -150,9 +150,9 @@ public class InventoryForVillagerOffers extends InventoryForSpecialVariable<Vill
 
 	private void createWoolButtons() {
 		for (int i = 0; i < 9; i++) {
-			ItemStack item = new ItemStack(Material.WOOL);
+			ItemStack item = new ItemStack(Material.WHITE_WOOL);
 			if (i == _selected) {
-				item.setDurability(DyeColor.LIGHT_BLUE.getWoolData());
+				item.setType(Material.LIGHT_BLUE_WOOL);
 			}
 			ItemMeta meta = item.getItemMeta();
 			meta.setDisplayName("Select offer #" + i + ".");
@@ -170,9 +170,9 @@ public class InventoryForVillagerOffers extends InventoryForSpecialVariable<Vill
 	}
 
 	private void changeSelected(int selected) {
-		getItem(27 + _selected).setDurability(DyeColor.WHITE.getWoolData());
+		getItem(27 + _selected).setType(Material.WHITE_WOOL);
 		_selected = selected;
-		getItem(27 + _selected).setDurability(DyeColor.LIGHT_BLUE.getWoolData());
+		getItem(27 + _selected).setType(Material.LIGHT_BLUE_WOOL);
 		updatePaperButtons();
 		updateBottleButton();
 	}
@@ -182,9 +182,9 @@ public class InventoryForVillagerOffers extends InventoryForSpecialVariable<Vill
 			int x = (int) Math.pow(10, i);
 			setItem(firstSlot + i, UtilsMc.newSingleItemStack(Material.PAPER, "+" + x + " " + token));
 		}
-		setItem(firstSlot + 4, UtilsMc.newSingleItemStack(Material.EMPTY_MAP, "x10 " + token));
-		setItem(firstSlot + 5, UtilsMc.newSingleItemStack(Material.EMPTY_MAP, "set 0 " + token));
-		setItem(firstSlot + 6, UtilsMc.newSingleItemStack(Material.EMPTY_MAP, "set \"infinite\" " + token));
+		setItem(firstSlot + 4, UtilsMc.newSingleItemStack(Material.MAP, "x10 " + token));
+		setItem(firstSlot + 5, UtilsMc.newSingleItemStack(Material.MAP, "set 0 " + token));
+		setItem(firstSlot + 6, UtilsMc.newSingleItemStack(Material.MAP, "set \"infinite\" " + token));
 	}
 
 	private void updatePaperButtons() {
@@ -208,7 +208,7 @@ public class InventoryForVillagerOffers extends InventoryForSpecialVariable<Vill
 		ItemStack item = getItem(43);
 		ItemMeta meta = item.getItemMeta();
 		if (_rewardExp[_selected]) {
-			item.setType(Material.EXP_BOTTLE);
+			item.setType(Material.EXPERIENCE_BOTTLE);
 			meta.setDisplayName("XP reward is ON.");
 		} else {
 			item.setType(Material.GLASS_BOTTLE);

@@ -22,9 +22,7 @@ package com.goncalomb.bukkit.nbteditor.commands;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
@@ -48,34 +46,6 @@ public abstract class HandItemWrapper<T extends ItemMeta> {
 			super(PotionMeta.class, player);
 			if (meta == null) {
 				throw new MyCommandException("§cYou must be holding a Potion.");
-			}
-		}
-
-	}
-
-	public static final class Book extends HandItemWrapper<BookMeta> {
-
-		public static enum BookType { BOTH, BOOK_AND_QUILL, WRITTEN }
-
-		public Book(Player player, BookType bookType) throws MyCommandException {
-			super(BookMeta.class, player);
-			if ((meta == null || item.getType() != Material.BOOK_AND_QUILL) && bookType == BookType.BOOK_AND_QUILL) {
-				throw new MyCommandException("§cYou must be holding a Book and Quill.");
-			} else if ((meta == null || item.getType() != Material.WRITTEN_BOOK) && bookType == BookType.WRITTEN) {
-				throw new MyCommandException("§cYou must be holding a Written Book.");
-			} else if (meta == null || (item.getType() != Material.BOOK_AND_QUILL && item.getType() != Material.WRITTEN_BOOK)) {
-				throw new MyCommandException("§cYou must be holding a Book and Quill or a Written Book.");
-			}
-		}
-
-	}
-
-	public static final class LeatherArmor extends HandItemWrapper<LeatherArmorMeta> {
-
-		public LeatherArmor(Player player) throws MyCommandException {
-			super(LeatherArmorMeta.class, player);
-			if (meta == null) {
-				throw new MyCommandException("§cYou must be holding Leather Armor.");
 			}
 		}
 

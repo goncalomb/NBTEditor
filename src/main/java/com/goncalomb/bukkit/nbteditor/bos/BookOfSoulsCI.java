@@ -54,7 +54,7 @@ final class BookOfSoulsCI extends CustomItem {
 		Location location = null;
 		if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
 			Block block = event.getClickedBlock();
-			if (bos.getEntityNBT() instanceof MinecartSpawnerNBT && block.getType() == Material.MOB_SPAWNER) {
+			if (bos.getEntityNBT() instanceof MinecartSpawnerNBT && block.getType() == Material.SPAWNER) {
 				if (event.getPlayer().isSneaking()) {
 					((MinecartSpawnerNBT) bos.getEntityNBT()).copyToSpawner(block);
 					player.sendMessage("§aVariables and entities copied to the spawner.");

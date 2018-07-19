@@ -49,7 +49,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 final class CustomItemListener implements Listener {
 
-	private static final HashSet<Material> _interationMaterials = new HashSet<Material>(Arrays.asList(new Material[] { Material.WORKBENCH, Material.CHEST, Material.ENDER_CHEST, Material.BREWING_STAND, Material.ENCHANTMENT_TABLE }));
+	private static final HashSet<Material> _interationMaterials = new HashSet<Material>(Arrays.asList(new Material[] { Material.CRAFTING_TABLE, Material.CHEST, Material.ENDER_CHEST, Material.BREWING_STAND, Material.ENCHANTING_TABLE }));
 
 	private static boolean verifyCustomItem(CustomItem customItem, World world) {
 		return (customItem != null && customItem.isEnabled() && customItem.isValidWorld(world));

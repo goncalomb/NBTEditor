@@ -118,7 +118,7 @@ public class CommandNBTSpawner extends CommandNBTTile {
 	public boolean additemCommand(CommandSender sender, String[] args) throws MyCommandException {
 		SpawnerNBTWrapper spawner = getWrapper((Player) sender);
 		ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
-		if (item.getType() == Material.MONSTER_EGG) {
+		if (item.getType() == Material.LEGACY_MONSTER_EGG) {
 			int weight = parseWeight(args, 0);
 			NBTTagCompound data = NBTUtils.getItemStackTag(item).getCompound("EntityTag");
 			if (data != null) {
@@ -128,7 +128,7 @@ public class CommandNBTSpawner extends CommandNBTTile {
 			} else {
 				sender.sendMessage("§cInvalid spawn egg!");
 			}
-		} else if (item.getType() == Material.FIREWORK) {
+		} else if (item.getType() == Material.FIREWORK_ROCKET) {
 			int weight = parseWeight(args, 0);
 			EntityNBT entityNBT = EntityNBT.fromEntityType(EntityType.FIREWORK);
 			((FireworksItemVariable) entityNBT.getVariable("FireworksItem")).setItem(item);

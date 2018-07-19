@@ -43,7 +43,7 @@ public final class TreeVaporizer extends GenericSuperAxe {
 			// Find the blocks
 			Set<Block> blocks = getTreeBlocks(root);
 			if (blocks.size() > 0) {
-				root.getWorld().playSound(root.getLocation(), Sound.ENTITY_ZOMBIE_BREAK_DOOR_WOOD, 0.5f, 1);
+				root.getWorld().playSound(root.getLocation(), Sound.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR, 0.5f, 1);
 			}
 			// Destroy them.
 			for (Block block : blocks) {

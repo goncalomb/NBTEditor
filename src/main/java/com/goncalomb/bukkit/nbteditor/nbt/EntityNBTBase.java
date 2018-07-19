@@ -187,37 +187,6 @@ abstract class EntityNBTBase extends BaseNBT {
 			_data.setList("ArmorDropChances", new NBTTagList(Arrays.copyOfRange(drop, 1, 5)));
 			_data.remove("DropChances");
 		}
-
-		// block variable backward compatibility
-		switch (_entityType) {
-		case ENDERMAN:
-			// XXX: as of 1.12 the internal enderman code can read material types as string
-			// but still save them as int, this can case problems with the empty book of souls
-			// this conversion needs to be here until the internal code can fully support strings (1.13?)
-			int id0 = _data.getShort("carried");
-			if (id0 != 0) {
-				_data.setString("carried", MaterialMap.getName(Material.getMaterial(id0)));
-			}
-			break;
-		case MINECART:
-		case MINECART_CHEST:
-		case MINECART_FURNACE:
-		case MINECART_COMMAND:
-		case MINECART_MOB_SPAWNER:
-		case MINECART_HOPPER:
-		case MINECART_TNT:
-			int id1 = _data.getInt("DisplayTile");
-			if (id1 != 0) {
-				_data.setString("DisplayTile", MaterialMap.getName(Material.getMaterial(id1)));
-			}
-			break;
-		case FALLING_BLOCK:
-			int id2 = _data.getInt("TileID");
-			if (id2 != 0) {
-				_data.setString("Block", MaterialMap.getName(Material.getMaterial(id2)));
-				_data.remove("TileID");
-			}
-		}
 	}
 
 	public EntityNBT clone() {

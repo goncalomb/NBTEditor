@@ -55,7 +55,7 @@ public class CommandNBTTile extends AbstractNBTCommand<TileNBTWrapper> {
 			throw new MyCommandException("§cNo tile in sight!");
 		}
 		try {
-			if (block.getType() == Material.MOB_SPAWNER) {
+			if (block.getType() == Material.SPAWNER) {
 				return new SpawnerNBTWrapper(block);
 			}
 			return new TileNBTWrapper(block);
@@ -117,7 +117,7 @@ public class CommandNBTTile extends AbstractNBTCommand<TileNBTWrapper> {
 			}
 		}
 		Block newBlock = block.getRelative(BlockFace.DOWN);
-		newBlock.setType(Material.COMMAND);
+		newBlock.setType(Material.COMMAND_BLOCK);
 		CommandBlock commandBlock = (CommandBlock) newBlock.getState();
 		commandBlock.setCommand(command);
 		commandBlock.update();

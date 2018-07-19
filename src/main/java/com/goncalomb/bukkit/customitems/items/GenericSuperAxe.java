@@ -40,7 +40,7 @@ public abstract class GenericSuperAxe extends CustomItem {
 	}
 
 	protected boolean isLog(Material mat) {
-		return (mat == Material.LOG || mat == Material.LOG_2);
+		return (mat == Material.LEGACY_LOG || mat == Material.LEGACY_LOG_2);
 	}
 
 	@Override
@@ -75,11 +75,11 @@ public abstract class GenericSuperAxe extends CustomItem {
 		}
 
 		private boolean isLog(Material mat) {
-			return (mat == Material.LOG || mat == Material.LOG_2);
+			return (mat == Material.LEGACY_LOG || mat == Material.LEGACY_LOG_2);
 		}
 
 		private boolean isLeaves(Material mat) {
-			return (mat == Material.LEAVES || mat == Material.LEAVES_2);
+			return (mat == Material.LEGACY_LEAVES || mat == Material.LEGACY_LEAVES_2);
 		}
 
 		private boolean isGround(Material mat) {

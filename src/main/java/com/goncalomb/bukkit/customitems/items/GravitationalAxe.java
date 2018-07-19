@@ -54,24 +54,24 @@ public final class GravitationalAxe extends GenericSuperAxe {
 			// Find the blocks
 			Set<Block> blocks = getTreeBlocks(root);
 			if (blocks.size() > 0) {
-				world.playSound(location, Sound.ENTITY_ZOMBIE_BREAK_DOOR_WOOD, 0.5f, 1);
+				world.playSound(location, Sound.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR, 0.5f, 1);
 			}
 			double durability = blocks.size()*0.25;
 			// Bring 'em down.
 			for (Block block : blocks) {
 				Material mat = block.getType();
-				if (mat == Material.LOG && random.nextFloat() < 0.1f) {
-					world.playSound(block.getLocation(), Sound.ENTITY_ZOMBIE_BREAK_DOOR_WOOD, 0.6f, 1);
+				if (mat == Material.LEGACY_LOG && random.nextFloat() < 0.1f) {
+					world.playSound(block.getLocation(), Sound.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR, 0.6f, 1);
 					block.breakNaturally();
 					durability += 1;
-				} else if (mat == Material.LEAVES && random.nextFloat() < 0.4f) {
+				} else if (mat == Material.LEGACY_LEAVES && random.nextFloat() < 0.4f) {
 					world.playSound(block.getLocation(), Sound.BLOCK_GRASS_BREAK, 0.5f, 1);
 					block.breakNaturally();
 					durability += 1;
 				} else {
 					FallingBlock fallingBlock = world.spawnFallingBlock(block.getLocation(), block.getType(), block.getData());
 					fallingBlock.setVelocity(vel.multiply(random.nextFloat()*0.2 + 0.9));
-					if (block.getType() == Material.LEAVES) {
+					if (block.getType() == Material.LEGACY_LEAVES) {
 						fallingBlock.setDropItem(false);
 					}
 					block.setType(Material.AIR);

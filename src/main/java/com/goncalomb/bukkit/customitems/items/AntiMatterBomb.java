@@ -54,6 +54,7 @@ public final class AntiMatterBomb extends GenericBomb {
 
 	@Override
 	public void onExplode(Item item, Location location) {
+		/*
 		World world = location.getWorld();
 		Random rand = new Random();
 		int radiusSquared = 25;
@@ -96,6 +97,7 @@ public final class AntiMatterBomb extends GenericBomb {
 				}, 5*20);
 			}
 		}
+		*/
 	}
 
 }

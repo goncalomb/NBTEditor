@@ -63,7 +63,8 @@ public final class NBTUtils {
 		Class<?> nbtTagCompoundClass = BukkitReflect.getMinecraftClass("NBTTagCompound");
 
 		Class<?> minecraftItemStackClass = BukkitReflect.getMinecraftClass("ItemStack");
-		_ItemStack_nbtConstructor = minecraftItemStackClass.getConstructor(nbtTagCompoundClass);
+		_ItemStack_nbtConstructor = minecraftItemStackClass.getDeclaredConstructor(nbtTagCompoundClass);
+		_ItemStack_nbtConstructor.setAccessible(true);
 		_ItemStack_save = minecraftItemStackClass.getMethod("save", nbtTagCompoundClass);
 		_ItemStack_getTag = minecraftItemStackClass.getMethod("getTag");
 		_ItemStack_setTag = minecraftItemStackClass.getMethod("setTag", nbtTagCompoundClass);

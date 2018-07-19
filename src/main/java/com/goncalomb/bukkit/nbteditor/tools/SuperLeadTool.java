@@ -35,7 +35,7 @@ import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 public final class SuperLeadTool extends CustomItem {
 
 	public SuperLeadTool() {
-		super("super-lead", ChatColor.GOLD + "Super Lead", Material.LEASH);
+		super("super-lead", ChatColor.GOLD + "Super Lead", Material.LEAD);
 		setLore(ChatColor.YELLOW + "Right-click an entity to tie it.",
 				ChatColor.YELLOW + "Then right-click another entity",
 				ChatColor.YELLOW + "while sneaking to tie them together.");

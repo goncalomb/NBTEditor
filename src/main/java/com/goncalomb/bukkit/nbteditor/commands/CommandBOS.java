@@ -289,7 +289,7 @@ public class CommandBOS extends AbstractNBTCommand<EntityNBT> {
 			entityData.remove("Passengers");
 			sender.sendMessage("§eEntities spawned from eggs don't have riding entities.");
 		}
-		ItemStack item = NBTUtils.itemStackToCraftItemStack(new ItemStack(Material.MONSTER_EGG));
+		ItemStack item = NBTUtils.itemStackToCraftItemStack(new ItemStack(Material.LEGACY_MONSTER_EGG));
 		NBTTagCompound itemData = new NBTTagCompound();
 		itemData.setCompound("EntityTag", entityData);
 		NBTUtils.setItemStackTag(item, itemData);

@@ -39,7 +39,7 @@ import com.goncalomb.bukkit.customitems.api.PlayerDetails;
 public final class FireBomb extends RadiusBomb {
 
 	public FireBomb() {
-		super("fire-bomb", ChatColor.RED + "Fire Bomb", Material.FIREBALL);
+		super("fire-bomb", ChatColor.RED + "Fire Bomb", Material.FIRE_CHARGE);
 		setLore("§bLeft-click to throw the bomb.",
 				"§bIt will explode after a few seconds.");
 		setDefaultConfig("fuse", 40);

@@ -46,14 +46,6 @@ public final class BlockVariable extends NBTVariableDouble {
 		if (material == null) {
 			material = MaterialMap.getByName("minecraft:" + pieces[0]);
 		}
-		if (material == null) {
-			try {
-				int blockId = Integer.parseInt(pieces[0]);
-				material = Material.getMaterial(blockId);
-			} catch (NumberFormatException e) {
-				return false;
-			}
-		}
 		if (material != null && material.isBlock()) {
 			int blockData = 0;
 			if (pieces.length == 2) {
