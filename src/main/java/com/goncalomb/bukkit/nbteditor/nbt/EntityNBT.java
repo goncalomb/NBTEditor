@@ -232,13 +232,13 @@ public class EntityNBT extends EntityNBTBase {
 		ENTITY_VARIABLES.put("minecraft:ender_dragon", cEnderDragon);
 		ENTITY_VARIABLES.put("minecraft:enderman", cEnderman);
 		ENTITY_VARIABLES.put("minecraft:endermite", cEndermite);
-		ENTITY_VARIABLES.put("minecraft:evocation_illager", cEvocationIllager);
+		ENTITY_VARIABLES.put("minecraft:evoker", cEvocationIllager);
 		ENTITY_VARIABLES.put("minecraft:ghast", cGhast);
 		ENTITY_VARIABLES.put("minecraft:giant", cMob);
 		ENTITY_VARIABLES.put("minecraft:guardian", cMob);
 		ENTITY_VARIABLES.put("minecraft:horse", cHorse);
 		ENTITY_VARIABLES.put("minecraft:husk", cZombie);
-		ENTITY_VARIABLES.put("minecraft:illusion_illager", cEvocationIllager);
+		ENTITY_VARIABLES.put("minecraft:illusioner", cEvocationIllager);
 		ENTITY_VARIABLES.put("minecraft:llama", cLlama);
 		ENTITY_VARIABLES.put("minecraft:magma_cube", cSlime);
 		ENTITY_VARIABLES.put("minecraft:mooshroom", cBreed);
@@ -254,14 +254,14 @@ public class EntityNBT extends EntityNBTBase {
 		ENTITY_VARIABLES.put("minecraft:skeleton", cMob);
 		ENTITY_VARIABLES.put("minecraft:skeleton_horse", cSkeletonHorse);
 		ENTITY_VARIABLES.put("minecraft:slime", cSlime);
-		ENTITY_VARIABLES.put("minecraft:snowman", cSnowman);
+		ENTITY_VARIABLES.put("minecraft:snow_golem", cSnowman);
 		ENTITY_VARIABLES.put("minecraft:spider", cMob);
 		ENTITY_VARIABLES.put("minecraft:squid", cMob);
 		ENTITY_VARIABLES.put("minecraft:stray", cMob);
 		ENTITY_VARIABLES.put("minecraft:vex", cVex);
 		ENTITY_VARIABLES.put("minecraft:villager", cVillager);
-		ENTITY_VARIABLES.put("minecraft:villager_golem", cVillagerGolem);
-		ENTITY_VARIABLES.put("minecraft:vindication_illager", cVindicationIllager);
+		ENTITY_VARIABLES.put("minecraft:iron_golem", cVillagerGolem);
+		ENTITY_VARIABLES.put("minecraft:vindicator", cVindicationIllager);
 		ENTITY_VARIABLES.put("minecraft:witch", cMob);
 		ENTITY_VARIABLES.put("minecraft:wither", cWither);
 		ENTITY_VARIABLES.put("minecraft:wither_skeleton", cMob);
@@ -313,7 +313,7 @@ public class EntityNBT extends EntityNBTBase {
 		ENTITY_VARIABLES.put("minecraft:snowball", cEntity);
 		ENTITY_VARIABLES.put("minecraft:spectral_arrow", cSpectralArrow);
 		ENTITY_VARIABLES.put("minecraft:wither_skull", cFireball);
-		ENTITY_VARIABLES.put("minecraft:xp_bottle", cEntity);
+		ENTITY_VARIABLES.put("minecraft:experience_bottle", cEntity);
 
 		// Item Entities
 
@@ -330,7 +330,7 @@ public class EntityNBT extends EntityNBTBase {
 		cXPOrb.add("Value", new ShortVariable("Value"));
 
 		ENTITY_VARIABLES.put("minecraft:item", cDroppedItem);
-		ENTITY_VARIABLES.put("minecraft:xp_orb", cXPOrb);
+		ENTITY_VARIABLES.put("minecraft:experience_orb", cXPOrb);
 
 		// Vehicle Entities
 
@@ -368,7 +368,7 @@ public class EntityNBT extends EntityNBTBase {
 		ENTITY_VARIABLES.put("minecraft:boat", cBoat);
 		ENTITY_VARIABLES.put("minecraft:minecart", cMinecart);
 		ENTITY_VARIABLES.put("minecraft:chest_minecart", cChestMinecart);
-		ENTITY_VARIABLES.put("minecraft:commandblock_minecart", cCommandBlockMinecart);
+		ENTITY_VARIABLES.put("minecraft:command_block_minecart", cCommandBlockMinecart);
 		ENTITY_VARIABLES.put("minecraft:furnace_minecart", cMinecart);
 		ENTITY_VARIABLES.put("minecraft:hopper_minecart", cHopperMinecart);
 		ENTITY_VARIABLES.put("minecraft:spawner_minecart", cSpawnerMinecart);
@@ -433,10 +433,10 @@ public class EntityNBT extends EntityNBTBase {
 
 		ENTITY_VARIABLES.put("minecraft:area_effect_cloud", cAreaEffectCloud);
 		ENTITY_VARIABLES.put("minecraft:armor_stand", cArmorStand);
-		ENTITY_VARIABLES.put("minecraft:ender_crystal", cEnderCrystal);
-		ENTITY_VARIABLES.put("minecraft:evocation_fangs", cEvocationFangs);
+		ENTITY_VARIABLES.put("minecraft:end_crystal", cEnderCrystal);
+		ENTITY_VARIABLES.put("minecraft:evoker_fangs", cEvocationFangs);
 		// ENTITY_VARIABLES.put("minecraft:eye_of_ender_signal", cEntity);
-		ENTITY_VARIABLES.put("minecraft:fireworks_rocket", cFireworksRocket);
+		ENTITY_VARIABLES.put("minecraft:firework_rocket", cFireworksRocket);
 		// ENTITY_VARIABLES.put("minecraft:item_frame", cEntity);
 		// ENTITY_VARIABLES.put("minecraft:leash_knot", cEntity);
 		// ENTITY_VARIABLES.put("minecraft:painting", cEntity);
