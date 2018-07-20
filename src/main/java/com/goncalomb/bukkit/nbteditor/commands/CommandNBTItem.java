@@ -35,7 +35,6 @@ import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.command.MyCommandManager;
-import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.mylib.utils.Utils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
@@ -152,7 +151,7 @@ public class CommandNBTItem  extends AbstractNBTCommand<ItemStackNBTWrapper> {
 				sender.sendMessage(MessageFormat.format("§7Non-vanilla /{0} command detected, using /minecraft:{0}.", command));
 				command = "minecraft:" + command;
 			}
-			command = "/" + command + " @p " + BukkitReflect.getMaterialName(item.item.getType()) + " " + item.item.getAmount() + " " + item.item.getDurability() + " " + NBTUtils.getItemStackTag(item.item).toString();
+			command = "/" + command + " @p " + item.item.getType().getKey() + " " + item.item.getAmount() + " " + item.item.getDurability() + " " + NBTUtils.getItemStackTag(item.item).toString();
 			// We spare 50 characters of space so people can change the player.
 			if (command.length() > 32767 - 50) {
 				sender.sendMessage("§cItem too complex!");

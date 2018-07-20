@@ -31,7 +31,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.command.MyCommandManager;
-import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.mylib.utils.UtilsMc;
@@ -102,7 +101,7 @@ public class CommandNBTTile extends AbstractNBTCommand<TileNBTWrapper> {
 			sender.sendMessage(MessageFormat.format("§7Non-vanilla /{0} command detected, using /minecraft:{0}.", command));
 			command = "minecraft:" + command;
 		}
-		command = "/" + command + " " + block.getX() + " " + block.getY() + " " + block.getZ() + " " + BukkitReflect.getMaterialName(block.getType()) + " " + block.getData() + " destroy";
+		command = "/" + command + " " + block.getX() + " " + block.getY() + " " + block.getZ() + " " + block.getType().getKey() + " " + block.getData() + " destroy";
 		NBTTagCompound data = NBTUtils.getTileEntityNBTData(block);
 		if (data != null) {
 			data.remove("id");

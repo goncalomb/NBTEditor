@@ -25,8 +25,6 @@ import java.util.List;
 
 import org.bukkit.Material;
 
-import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
-
 public class MaterialMap {
 
 	private static NamingMap<Material> _materials = new NamingMap<Material>();
@@ -35,7 +33,7 @@ public class MaterialMap {
 
 	static {
 		for (Material material : Material.values()) {
-			String name = BukkitReflect.getMaterialName(material);
+			String name = material.getKey().toString();
 			if (name != null) {
 				_materials.put(name, material);
 				if (material.isBlock()) {

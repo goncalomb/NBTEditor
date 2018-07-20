@@ -38,7 +38,6 @@ import org.bukkit.potion.PotionEffect;
 
 import com.goncalomb.bukkit.mylib.namemaps.EnchantmentsMap;
 import com.goncalomb.bukkit.mylib.namemaps.PotionEffectsMap;
-import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
 import com.goncalomb.bukkit.nbteditor.nbt.attributes.ItemModifier;
 
 public class ItemUtils {
@@ -46,7 +45,7 @@ public class ItemUtils {
 	public static void sendItemStackInformation(ItemStack stack, CommandSender sender) {
 		ItemMeta meta = stack.getItemMeta();
 		sender.sendMessage("§eItem information:");
-		sender.sendMessage("  §2Type: §a" + BukkitReflect.getMaterialName(stack.getType()));
+		sender.sendMessage("  §2Type: §a" + stack.getType().getKey());
 		sender.sendMessage("  §2Data: §a" + stack.getDurability());
 		sender.sendMessage("  §2Amount: §a" + stack.getAmount());
 		String name = meta.getDisplayName();

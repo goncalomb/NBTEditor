@@ -25,7 +25,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.SimpleCommandMap;
 
 public final class BukkitReflect {
@@ -61,8 +60,6 @@ public final class BukkitReflect {
 
 	private static Method _getCommandMap;
 
-	private static HashMap<Material, String> _materialNames = new HashMap<Material, String>();
-
 	public static void prepareReflection() {
 		if (!_isPrepared) {
 			Class<?> craftServerClass = Bukkit.getServer().getClass();
@@ -76,22 +73,6 @@ public final class BukkitReflect {
 			}
 
 			_isPrepared = true;
-
-			try {
-				Class<?> mc_Item = getMinecraftClass("Item");
-				Field mc_Item_REGISTRY = mc_Item.getField("REGISTRY");
-				Method mc_Item_getById = mc_Item.getMethod("getById", int.class);
-				Method mc_RegistryMaterials_b = mc_Item_REGISTRY.getType().getMethod("b", Object.class);
-				Object the_REGISTRY = mc_Item_REGISTRY.get(null);
-				for (Material material : Material.values()) {
-					Object item = mc_Item_getById.invoke(null, material.getId());
-					if (item != null) {
-						_materialNames.put(material, mc_RegistryMaterials_b.invoke(the_REGISTRY, item).toString());
-					}
-				}
-			} catch (Exception e) {
-				throw new RuntimeException("Error while preparing Material names.", e);
-			}
 		}
 	}
 
@@ -110,11 +91,6 @@ public final class BukkitReflect {
 	public static SimpleCommandMap getCommandMap() {
 		prepareReflection();
 		return (SimpleCommandMap) invokeMethod(Bukkit.getServer(), _getCommandMap);
-	}
-
-	public static String getMaterialName(Material material) {
-		prepareReflection();
-		return _materialNames.get(material);
 	}
 
 	// Other helper methods...
