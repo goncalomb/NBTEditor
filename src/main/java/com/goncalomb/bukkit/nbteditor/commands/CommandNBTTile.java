@@ -101,20 +101,21 @@ public class CommandNBTTile extends AbstractNBTCommand<TileNBTWrapper> {
 			sender.sendMessage(MessageFormat.format("§7Non-vanilla /{0} command detected, using /minecraft:{0}.", command));
 			command = "minecraft:" + command;
 		}
-		command = "/" + command + " " + block.getX() + " " + block.getY() + " " + block.getZ() + " " + block.getType().getKey() + " " + block.getData() + " destroy";
+		command = "/" + command + " " + block.getX() + " " + block.getY() + " " + block.getZ() + " " + block.getType().getKey();
 		NBTTagCompound data = NBTUtils.getTileEntityNBTData(block);
 		if (data != null) {
 			data.remove("id");
 			data.remove("x");
 			data.remove("y");
 			data.remove("z");
-			command += " " + data.toString();
+			command += data.toString();
 			// We spare 50 characters of space so people can change the position.
 			if (command.length() > 32767 - 50) {
 				sender.sendMessage("§cTile entity too complex!");
 				return true;
 			}
 		}
+		command += " destroy";
 		Block newBlock = block.getRelative(BlockFace.DOWN);
 		newBlock.setType(Material.COMMAND_BLOCK);
 		CommandBlock commandBlock = (CommandBlock) newBlock.getState();
