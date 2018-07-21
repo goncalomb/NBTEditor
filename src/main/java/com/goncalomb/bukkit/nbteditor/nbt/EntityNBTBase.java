@@ -22,12 +22,11 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 import java.util.Arrays;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
-import com.goncalomb.bukkit.mylib.namemaps.MaterialMap;
+import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
@@ -103,10 +102,26 @@ abstract class EntityNBTBase extends BaseNBT {
 		data.setString("id", EntityTypeMap.getName(entityTypeNew));
 		entityType = entityTypeNew;
 
+		// Convert custom names to JSON (1.13).
+		refreshEntityName(data);
+
 		if (entityType != null) {
 			return EntityNBT.newInstance(entityType, data);
 		}
 		return null;
+	}
+
+	private static void refreshEntityName(NBTTagCompound data) {
+		String name = data.getString("CustomName");
+		if (name != null && !BukkitReflect.isValidRawJSON(name)) {
+			data.setString("CustomName", BukkitReflect.textToRawJSON(name));
+		}
+		Object[] passangers = data.getListAsArray("Passengers");
+		if (passangers != null) {
+			for (Object passager : passangers) {
+				refreshEntityName((NBTTagCompound) passager);
+			}
+		}
 	}
 
 	public static EntityNBT fromEntity(Entity entity) {

@@ -21,11 +21,14 @@ package com.goncalomb.bukkit.mylib.reflect;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.SimpleCommandMap;
+
+import com.google.gson.JsonParseException;
 
 public final class BukkitReflect {
 
@@ -59,6 +62,9 @@ public final class BukkitReflect {
 	private static CachedPackage _minecraftPackage;
 
 	private static Method _getCommandMap;
+	private static Method _ChatSerializer_a_serialize;
+	private static Method _ChatSerializer_a_unserialize;
+	private static Constructor<?> _ChatComponentTextClass_contructor;
 
 	public static void prepareReflection() {
 		if (!_isPrepared) {
@@ -73,6 +79,17 @@ public final class BukkitReflect {
 			}
 
 			_isPrepared = true;
+
+			try {
+				Class<?> iChatBaseComponentClass = getMinecraftClass("IChatBaseComponent");
+				Class<?> chatSerializerClass = getMinecraftClass("IChatBaseComponent$ChatSerializer");
+				_ChatSerializer_a_serialize = chatSerializerClass.getMethod("a", iChatBaseComponentClass);
+				_ChatSerializer_a_unserialize = chatSerializerClass.getMethod("a", String.class);
+				Class<?> chatComponentTextClass = getMinecraftClass("ChatComponentText");
+				_ChatComponentTextClass_contructor = chatComponentTextClass.getConstructor(String.class);
+			} catch (NoSuchMethodException e) {
+				throw new RuntimeException("Error while preparing ChatSerializer.", e);
+			}
 		}
 	}
 
@@ -91,6 +108,31 @@ public final class BukkitReflect {
 	public static SimpleCommandMap getCommandMap() {
 		prepareReflection();
 		return (SimpleCommandMap) invokeMethod(Bukkit.getServer(), _getCommandMap);
+	}
+
+	public static boolean isValidRawJSON(String text) {
+		prepareReflection();
+		try {
+			_ChatSerializer_a_unserialize.invoke(null, text);
+			return true;
+		} catch (InvocationTargetException e) {
+			if (e.getTargetException() instanceof JsonParseException) {
+				return false;
+			}
+			throw new RuntimeException(e);
+		} catch (IllegalAccessException | IllegalArgumentException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static String textToRawJSON(String text) {
+		prepareReflection();
+		try {
+			return (String) _ChatSerializer_a_serialize.invoke(null, _ChatComponentTextClass_contructor.newInstance(text));
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| InstantiationException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	// Other helper methods...

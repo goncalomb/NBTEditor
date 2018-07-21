@@ -48,6 +48,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ParticleVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.PassengersVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.PotionVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.RawJsonVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.RotationVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ShortVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.SingleItemVariable;
@@ -74,7 +75,7 @@ public class EntityNBT extends EntityNBTBase {
 		cEntity.add("NoGravity", new BooleanVariable("NoGravity"));
 		cEntity.add("Invulnerable", new BooleanVariable("Invulnerable"));
 		cEntity.add("Silent", new BooleanVariable("Silent"));
-		cEntity.add("Name", new StringVariable("CustomName"));
+		cEntity.add("Name", new RawJsonVariable("CustomName"));
 		cEntity.add("NameVisible", new BooleanVariable("CustomNameVisible"));
 		cEntity.add("Passengers", new PassengersVariable());
 		cEntity.add("Glowing", new BooleanVariable("Glowing"));

@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.BlockVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.BlockVariable.DataType;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ByteVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ContainerVariable;
@@ -12,10 +13,10 @@ import com.goncalomb.bukkit.nbteditor.nbt.variables.IntergerPositionVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ItemsVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.LongVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.RawJsonVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ShortVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.SingleItemVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.BlockVariable.DataType;
 
 public class TileNBT extends BaseNBT {
 
@@ -23,7 +24,7 @@ public class TileNBT extends BaseNBT {
 
 	static {
 		NBTUnboundVariableContainer cNameable = new NBTUnboundVariableContainer("Nameable");
-		cNameable.add("Name", new StringVariable("CustomName"));
+		cNameable.add("Name", new RawJsonVariable("CustomName"));
 
 		NBTUnboundVariableContainer cLockable = new NBTUnboundVariableContainer("Lockable", cNameable);
 		cLockable.add("Lock", new StringVariable("Lock"));
