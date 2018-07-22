@@ -60,6 +60,7 @@ import com.goncalomb.bukkit.nbteditor.commands.CommandNBTTile;
 import com.goncalomb.bukkit.nbteditor.tools.EntityInspectorTool;
 import com.goncalomb.bukkit.nbteditor.tools.EntityRemoverTool;
 import com.goncalomb.bukkit.nbteditor.tools.SuperLeadTool;
+import com.goncalomb.bukkit.nbteditor.tools.TropicalGeneratorTool;
 
 public final class NBTEditor extends JavaPlugin {
 
@@ -99,6 +100,7 @@ public final class NBTEditor extends JavaPlugin {
 		CustomItemManager.register(new EntityInspectorTool(), this, this.getName());
 		CustomItemManager.register(new EntityRemoverTool(), this, this.getName());
 		CustomItemManager.register(new SuperLeadTool(), this, this.getName());
+		CustomItemManager.register(new TropicalGeneratorTool(), this, this.getName());
 
 		saveDefaultConfig();
 
