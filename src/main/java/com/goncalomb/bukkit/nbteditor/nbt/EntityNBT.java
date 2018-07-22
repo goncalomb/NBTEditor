@@ -110,6 +110,9 @@ public class EntityNBT extends EntityNBTBase {
 		cTameable.add("Owner", new StringVariable("Owner"));
 		cTameable.add("Sitting", new BooleanVariable("Sitting"));
 
+		NBTUnboundVariableContainer cFish = new NBTUnboundVariableContainer("Fish", cMob);
+		cFish.add("FromBucket", new BooleanVariable("FromBucket"));
+
 		// Mob SubTypes
 
 		NBTUnboundVariableContainer cCreeper = new NBTUnboundVariableContainer("Creeper", cMob);
@@ -220,6 +223,14 @@ public class EntityNBT extends EntityNBTBase {
 		cWolf.add("Angry", new BooleanVariable("Angry"));
 		cWolf.add("CollarColor", new ByteVariable("CollarColor", (byte) 0, (byte) 15));
 
+		// Fish types
+
+		NBTUnboundVariableContainer cPufferfish = new NBTUnboundVariableContainer("Pufferfish", cFish);
+		cPufferfish.add("PuffState", new IntegerVariable("PuffState", 0, 2));
+
+		NBTUnboundVariableContainer cTropicalFish = new NBTUnboundVariableContainer("TropicalFish", cFish);
+		cTropicalFish.add("Variant", new IntegerVariable("Variant"));
+
 		// Mob Entities
 
 		ENTITY_VARIABLES.put("minecraft:bat", cMob);
@@ -271,6 +282,10 @@ public class EntityNBT extends EntityNBTBase {
 		ENTITY_VARIABLES.put("minecraft:zombie_horse", cHorse);
 		ENTITY_VARIABLES.put("minecraft:zombie_pigman", cZombiePigman);
 		ENTITY_VARIABLES.put("minecraft:zombie_villager", cZombieVillager);
+		ENTITY_VARIABLES.put("minecraft:cod", cFish);
+		ENTITY_VARIABLES.put("minecraft:salmon", cFish);
+		ENTITY_VARIABLES.put("minecraft:pufferfish", cPufferfish);
+		ENTITY_VARIABLES.put("minecraft:tropical_fish", cTropicalFish);
 
 		// Projectile Entities
 
