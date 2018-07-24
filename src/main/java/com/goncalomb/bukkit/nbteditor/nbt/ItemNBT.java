@@ -23,6 +23,7 @@ public class ItemNBT extends BaseNBT {
 		NBTUnboundVariableContainer cItem = new NBTUnboundVariableContainer("Item");
 		cItem.add("Name", new RawJsonVariable("display/Name"));
 		cItem.add("Lore", new StringListVariable("display/Lore"));
+		cItem.add("Damage", new IntegerVariable("Damage"));
 		cItem.add("Unbreakable", new BooleanVariable("Unbreakable"));
 		cItem.add("CanDestroy", new MaterialListVariable("CanDestroy"));
 		cItem.add("CanPlaceOn", new MaterialListVariable("CanPlaceOn"));
