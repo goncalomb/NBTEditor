@@ -161,6 +161,8 @@ public class EntityNBT extends EntityNBTBase {
 		NBTUnboundVariableContainer cZombie = new NBTUnboundVariableContainer("Zombie", cMob);
 		cZombie.add("IsBaby", new BooleanVariable("IsBaby"));
 		cZombie.add("CanBreakDoors", new BooleanVariable("CanBreakDoors"));
+		cZombie.add("InWaterTime", new IntegerVariable("InWaterTime"));
+		cZombie.add("DrownedConversionTime", new IntegerVariable("DrownedConversionTime"));
 
 		NBTUnboundVariableContainer cZombiePigman = new NBTUnboundVariableContainer("ZombiePigman", cZombie);
 		cZombiePigman.add("Anger", new ShortVariable("Anger"));
@@ -240,6 +242,7 @@ public class EntityNBT extends EntityNBTBase {
 		ENTITY_VARIABLES.put("minecraft:cow", cBreed);
 		ENTITY_VARIABLES.put("minecraft:creeper", cCreeper);
 		ENTITY_VARIABLES.put("minecraft:donkey", cChestedHorse);
+		ENTITY_VARIABLES.put("minecraft:drowned", cZombie);
 		ENTITY_VARIABLES.put("minecraft:elder_guardian", cMob);
 		ENTITY_VARIABLES.put("minecraft:ender_dragon", cEnderDragon);
 		ENTITY_VARIABLES.put("minecraft:enderman", cEnderman);
