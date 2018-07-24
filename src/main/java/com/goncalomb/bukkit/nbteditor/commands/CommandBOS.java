@@ -118,42 +118,6 @@ public class CommandBOS extends AbstractNBTCommand<EntityNBT> {
 		return true;
 	}
 
-	@Deprecated
-	@Command(args = "items", type = CommandType.PLAYER_ONLY)
-	public boolean itemsCommand(CommandSender sender, String[] args) throws MyCommandException {
-		sender.sendMessage("§eCOMMAND REMOVED in NBTEditor 3.0.");
-		sender.sendMessage("§7From now on, most NBT changes are done using variables!");
-		sender.sendMessage("§7To edit items on mobs and armor stands, use");
-		sender.sendMessage("§7  '§b/bos var ArmorItems§7'");
-		sender.sendMessage("§7  '§b/bos var HandItems§7'");
-		sender.sendMessage("§7To edit effects on mobs, use");
-		sender.sendMessage("§7  '§b/bos var ActiveEffects§7'");
-		sender.sendMessage("§7To edit item entities, use");
-		sender.sendMessage("§7  '§b/bos var Item§7'");
-		sender.sendMessage("§7To edit potion entities, use");
-		sender.sendMessage("§7  '§b/bos var Potion§7'");
-		sender.sendMessage("§7To the effects on area effect clouds, use");
-		sender.sendMessage("§7  '§b/bos var Effects§7'");
-		sender.sendMessage("§7To the effects on (tipped) arrows, use");
-		sender.sendMessage("§7  '§b/bos var CustomPotionEffects§7'");
-		sender.sendMessage("§7To edit firework rocket entities, use");
-		sender.sendMessage("§7  '§b/bos var FireworksItem§7'");
-		sender.sendMessage("§7To edit the items on chest and hopper minecarts, use");
-		sender.sendMessage("§7  '§b/bos var Items§7'");
-		sender.sendMessage("§eCOMMAND REMOVED in NBTEditor 3.0. Read above! ^^^");
-		return true;
-	}
-
-	@Deprecated
-	@Command(args = "offers", type = CommandType.PLAYER_ONLY)
-	public boolean offersCommand(CommandSender sender, String[] args) throws MyCommandException {
-		sender.sendMessage("§eCOMMAND REMOVED in NBTEditor 3.0.");
-		sender.sendMessage("§7From now on, most NBT changes are done using variables!");
-		sender.sendMessage("§7To edit villager offers, use");
-		sender.sendMessage("§7  '§b/bos var Offers§7'");
-		return true;
-	}
-
 	@Command(args = "attr add", type = CommandType.PLAYER_ONLY, maxargs = 2, usage = "<attribute> <base>")
 	public boolean attr_addCommand(CommandSender sender, String[] args) throws MyCommandException {
 		if (args.length == 2) {

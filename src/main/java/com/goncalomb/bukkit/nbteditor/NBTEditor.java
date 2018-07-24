@@ -49,10 +49,7 @@ import com.goncalomb.bukkit.mylib.reflect.NBTBase;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.commands.CommandBOS;
 import com.goncalomb.bukkit.nbteditor.commands.CommandItemStorage;
-import com.goncalomb.bukkit.nbteditor.commands.CommandNBTArmor;
-import com.goncalomb.bukkit.nbteditor.commands.CommandNBTBook;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTEnchant;
-import com.goncalomb.bukkit.nbteditor.commands.CommandNBTHead;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTItem;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTPotion;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTSpawner;
@@ -87,10 +84,7 @@ public final class NBTEditor extends JavaPlugin {
 		MyCommandManager.register(new CommandNBTSpawner(), this);
 		MyCommandManager.register(new CommandNBTItem(), this);
 		MyCommandManager.register(new CommandNBTEnchant(), this);
-		MyCommandManager.register(new CommandNBTBook(), this);
 		MyCommandManager.register(new CommandNBTPotion(), this);
-		MyCommandManager.register(new CommandNBTArmor(), this);
-		MyCommandManager.register(new CommandNBTHead(), this);
 		MyCommandManager.register(new CommandNBTTile(), this);
 
 		ItemStorage.setDataFolder(new File(getDataFolder(), "ItemStorage"));
