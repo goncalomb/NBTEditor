@@ -37,6 +37,8 @@ import org.bukkit.inventory.PlayerInventory;
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.command.MyCommandManager;
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
+import com.goncalomb.bukkit.mylib.namemaps.SpawnEggMap;
+import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.mylib.utils.Utils;
@@ -246,15 +248,23 @@ public class CommandBOS extends AbstractNBTCommand<EntityNBT> {
 	@Command(args = "toegg", type = CommandType.PLAYER_ONLY)
 	public boolean toeggCommand(CommandSender sender, String[] args) throws MyCommandException {
 		BookOfSouls bos = getBos((Player) sender);
-		sender.sendMessage("§eOnly some living entities can be spawned from eggs.");
-		NBTTagCompound entityData = bos.getEntityNBT().getData();
+		sender.sendMessage("§eSome entities may not spawn from eggs.");
+		EntityNBT entityNbt = bos.getEntityNBT();
+		NBTTagCompound entityData = entityNbt.getData();
 		entityData.remove("Pos");
 		if (entityData.hasKey("Passengers")) {
 			entityData.remove("Passengers");
-			sender.sendMessage("§eEntities spawned from eggs don't have riding entities.");
+			sender.sendMessage("§eEntities spawned from eggs don't passengers.");
 		}
-		ItemStack item = NBTUtils.itemStackToCraftItemStack(new ItemStack(Material.LEGACY_MONSTER_EGG));
-		NBTTagCompound itemData = new NBTTagCompound();
+		if (!entityData.hasKey("CustomName")) {
+			entityData.setString("CustomName", ""); // prevent entity from acquiring the egg's name
+		}
+		Material eggType = SpawnEggMap.getEggForEntity(entityData.getString("id"));
+		if (eggType == null) {
+			eggType = Material.TURTLE_SPAWN_EGG;
+		}
+		ItemStack item = NBTUtils.itemStackToCraftItemStack(UtilsMc.newSingleItemStack(eggType, "§rSpawn Egg - " + entityNbt.getEntityType().getName(), "Created from a BoS."));
+		NBTTagCompound itemData = NBTUtils.getItemStackTag(item);
 		itemData.setCompound("EntityTag", entityData);
 		NBTUtils.setItemStackTag(item, itemData);
 		CommandUtils.giveItem((Player) sender, item);

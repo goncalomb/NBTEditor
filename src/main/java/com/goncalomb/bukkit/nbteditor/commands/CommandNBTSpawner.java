@@ -26,12 +26,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Egg;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
+import com.goncalomb.bukkit.mylib.namemaps.SpawnEggMap;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.mylib.utils.Utils;
@@ -118,7 +120,7 @@ public class CommandNBTSpawner extends CommandNBTTile {
 	public boolean additemCommand(CommandSender sender, String[] args) throws MyCommandException {
 		SpawnerNBTWrapper spawner = getWrapper((Player) sender);
 		ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
-		if (item.getType() == Material.LEGACY_MONSTER_EGG) {
+		if (SpawnEggMap.getEntityType(item.getType()) != null) {
 			int weight = parseWeight(args, 0);
 			NBTTagCompound data = NBTUtils.getItemStackTag(item).getCompound("EntityTag");
 			if (data != null) {
@@ -126,7 +128,14 @@ public class CommandNBTSpawner extends CommandNBTTile {
 				spawner.save();
 				sender.sendMessage("§aEntity added to the spawner.");
 			} else {
-				sender.sendMessage("§cInvalid spawn egg!");
+				EntityNBT entityNbt = EntityNBT.fromEntityType(EntityTypeMap.getByName(SpawnEggMap.getEntityType(item.getType())));
+				if (entityNbt == null) {
+					sender.sendMessage("§cInvalid spawn egg!");
+				} else {
+					spawner.addEntity(new SpawnerNBTWrapper.SpawnerEntity(entityNbt, weight));
+					spawner.save();
+					sender.sendMessage("§aEntity added to the spawner.");
+				}
 			}
 		} else if (item.getType() == Material.FIREWORK_ROCKET) {
 			int weight = parseWeight(args, 0);
