@@ -45,9 +45,6 @@ public class TileNBT extends BaseNBT {
 		cBeacon.add("Primary", new IntegerVariable("Primary", 0));
 		cBeacon.add("Secondary", new IntegerVariable("Secondary", 0));
 
-		NBTUnboundVariableContainer cBed = new NBTUnboundVariableContainer("Bed");
-		cBed.add("Color", new IntegerVariable("color", 0, 15));
-
 		NBTUnboundVariableContainer cBrewingStand = new NBTUnboundVariableContainer("BrewingStand", cLockable);
 		cBrewingStand.add("Items", new ItemsVariable("Items", new String[] { "Left Item", "Middle Item", "Right Item", "Potion Ingredient", "Fuel" }, true));
 		cBrewingStand.add("BrewTime", new IntegerVariable("BrewTime"));
@@ -101,7 +98,6 @@ public class TileNBT extends BaseNBT {
 
 		TILE_VARIABLES.put("minecraft:banner", cBanner);
 		TILE_VARIABLES.put("minecraft:beacon", cBeacon);
-		TILE_VARIABLES.put("minecraft:bed", cBed);
 		TILE_VARIABLES.put("minecraft:brewing_stand", cBrewingStand);
 		// TILE_VARIABLES.put("minecraft:cauldron", null);  // not a tile entity on Java Edition
 		TILE_VARIABLES.put("minecraft:chest", cChest);
