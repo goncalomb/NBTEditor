@@ -62,6 +62,7 @@ public final class PotionEffectsMap {
 		_potionEffects.put("BadLuck", PotionEffectType.UNLUCK);
 		_potionEffects.put("SlowFalling", PotionEffectType.SLOW_FALLING);
 		_potionEffects.put("DolphinsGrace", PotionEffectType.DOLPHINS_GRACE);
+		_potionEffects.put("ConduitPower", PotionEffectType.CONDUIT_POWER);
 
 		List<String> potionEffectNames = new ArrayList<String>(_potionEffects.names());
 		Collections.sort(potionEffectNames, String.CASE_INSENSITIVE_ORDER);
