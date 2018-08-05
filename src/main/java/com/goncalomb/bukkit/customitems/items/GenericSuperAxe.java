@@ -40,7 +40,16 @@ public abstract class GenericSuperAxe extends CustomItem {
 	}
 
 	protected boolean isLog(Material mat) {
-		return (mat == Material.LEGACY_LOG || mat == Material.LEGACY_LOG_2);
+		return (mat == Material.OAK_LOG || mat == Material.SPRUCE_LOG || mat == Material.BIRCH_LOG
+				|| mat == Material.JUNGLE_LOG || mat == Material.ACACIA_LOG || mat == Material.DARK_OAK_LOG
+				|| mat == Material.STRIPPED_OAK_LOG || mat == Material.STRIPPED_SPRUCE_LOG
+				|| mat == Material.STRIPPED_BIRCH_LOG || mat == Material.STRIPPED_JUNGLE_LOG
+				|| mat == Material.STRIPPED_ACACIA_LOG || mat == Material.STRIPPED_DARK_OAK_LOG);
+	}
+
+	protected boolean isLeaves(Material mat) {
+		return (mat == Material.OAK_LEAVES || mat == Material.SPRUCE_LEAVES || mat == Material.BIRCH_LEAVES
+				|| mat == Material.JUNGLE_LEAVES || mat == Material.ACACIA_LEAVES || mat == Material.DARK_OAK_LEAVES);
 	}
 
 	@Override
@@ -72,14 +81,6 @@ public abstract class GenericSuperAxe extends CustomItem {
 			if (_finalSet.size() + more > 1000) {
 				throw new BlockLimitException();
 			}
-		}
-
-		private boolean isLog(Material mat) {
-			return (mat == Material.LEGACY_LOG || mat == Material.LEGACY_LOG_2);
-		}
-
-		private boolean isLeaves(Material mat) {
-			return (mat == Material.LEGACY_LEAVES || mat == Material.LEGACY_LEAVES_2);
 		}
 
 		private boolean isGround(Material mat) {

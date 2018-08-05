@@ -26,10 +26,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
@@ -62,15 +62,16 @@ public class KingsCrown extends CustomItem {
 	}
 
 	@Override
-	public void onPickup(PlayerPickupItemEvent event) {
-		PlayerInventory inv = event.getPlayer().getInventory();
+	public void onPickup(EntityPickupItemEvent event) {
+		Player player = ((Player) event.getEntity());
+		PlayerInventory inv = player.getInventory();
 		ItemStack lastHelmet = inv.getHelmet();
 		if (lastHelmet == null || inv.addItem(lastHelmet).size() == 0) {
 			inv.setHelmet(event.getItem().getItemStack());
 			event.getItem().remove();
 			event.setCancelled(true);
 			if (shouldBroadcastMessage()) {
-				UtilsMc.broadcastToWorld(event.getPlayer().getWorld(), MessageFormat.format("§6{0} §fhas been crown §6King§f!", event.getPlayer().getName(), getName()));
+				UtilsMc.broadcastToWorld(player.getWorld(), MessageFormat.format("§6{0} §fhas been crown §6King§f!", player.getName(), getName()));
 			}
 		}
 	}

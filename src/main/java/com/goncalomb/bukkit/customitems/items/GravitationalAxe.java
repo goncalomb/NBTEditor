@@ -32,6 +32,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 import org.bukkit.util.Vector;
 
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
@@ -60,18 +61,18 @@ public final class GravitationalAxe extends GenericSuperAxe {
 			// Bring 'em down.
 			for (Block block : blocks) {
 				Material mat = block.getType();
-				if (mat == Material.LEGACY_LOG && random.nextFloat() < 0.1f) {
+				if (random.nextFloat() < 0.1f && isLog(mat)) {
 					world.playSound(block.getLocation(), Sound.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR, 0.6f, 1);
 					block.breakNaturally();
 					durability += 1;
-				} else if (mat == Material.LEGACY_LEAVES && random.nextFloat() < 0.4f) {
+				} else if (random.nextFloat() < 0.4f && isLeaves(mat)) {
 					world.playSound(block.getLocation(), Sound.BLOCK_GRASS_BREAK, 0.5f, 1);
 					block.breakNaturally();
 					durability += 1;
 				} else {
-					FallingBlock fallingBlock = world.spawnFallingBlock(block.getLocation(), block.getType(), block.getData());
+					FallingBlock fallingBlock = world.spawnFallingBlock(block.getLocation(), new MaterialData(block.getType()));
 					fallingBlock.setVelocity(vel.multiply(random.nextFloat()*0.2 + 0.9));
-					if (block.getType() == Material.LEGACY_LEAVES) {
+					if (isLeaves(mat)) {
 						fallingBlock.setDropItem(false);
 					}
 					block.setType(Material.AIR);

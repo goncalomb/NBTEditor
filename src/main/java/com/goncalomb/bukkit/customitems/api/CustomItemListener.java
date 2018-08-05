@@ -34,6 +34,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -43,7 +44,6 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
@@ -155,9 +155,10 @@ final class CustomItemListener implements Listener {
 	}
 
 	@EventHandler
-	private void playerPickupItem(PlayerPickupItemEvent event) {
+	private void playerPickupItem(EntityPickupItemEvent event) {
 		CustomItem customItem = CustomItemManager.getCustomItem(event.getItem().getItemStack());
-		if (verifyCustomItem(customItem, event.getPlayer(), true)) {
+		Entity entity = event.getEntity();
+		if (entity instanceof Player && verifyCustomItem(customItem, (Player) entity, true)) {
 			customItem.onPickup(event);
 		}
 	}

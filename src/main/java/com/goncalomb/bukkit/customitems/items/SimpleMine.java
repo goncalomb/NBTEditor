@@ -24,9 +24,9 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Item;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.customitems.api.CustomItem;
@@ -45,7 +45,7 @@ public final class SimpleMine extends CustomItem {
 	}
 
 	@Override
-	public void onPickup(PlayerPickupItemEvent event) {
+	public void onPickup(EntityPickupItemEvent event) {
 		event.setCancelled(true);
 		Item item = event.getItem();
 		ItemStack stack = item.getItemStack();

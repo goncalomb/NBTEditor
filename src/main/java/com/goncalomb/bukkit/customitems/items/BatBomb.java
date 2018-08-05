@@ -19,12 +19,15 @@
 
 package com.goncalomb.bukkit.customitems.items;
 
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Bat;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
@@ -84,15 +87,18 @@ public final class BatBomb extends GenericBomb {
 	public void onTrigger(Item item) {
 		Entity bat = item.getWorld().spawnEntity(item.getLocation(), EntityType.BAT);
 		item.setMetadata("is-active", new FixedMetadataValue(getPlugin(), true));
-		item.setPassenger(bat);
+		item.addPassenger(bat);
 	}
 
 	@Override
 	public void onExplode(Item item, Location location) {
-		Entity bat = item.getPassenger();
-		if (bat != null && !bat.isDead()) {
-			bat.remove();
-			spawnBatsAt(location, 10, 50);
+		List<Entity> passengers = item.getPassengers();
+		if (passengers.size() != 0) {
+			Entity bat = passengers.get(0);
+			if (bat != null && bat instanceof Bat && !bat.isDead()) {
+				bat.remove();
+				spawnBatsAt(location, 10, 50);
+			}
 		}
 	}
 

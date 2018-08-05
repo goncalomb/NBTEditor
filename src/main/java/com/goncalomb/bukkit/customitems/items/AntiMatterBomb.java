@@ -32,6 +32,7 @@ import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Item;
+import org.bukkit.material.MaterialData;
 import org.bukkit.util.Vector;
 
 public final class AntiMatterBomb extends GenericBomb {
@@ -54,7 +55,6 @@ public final class AntiMatterBomb extends GenericBomb {
 
 	@Override
 	public void onExplode(Item item, Location location) {
-		/*
 		World world = location.getWorld();
 		Random rand = new Random();
 		int radiusSquared = 25;
@@ -70,7 +70,7 @@ public final class AntiMatterBomb extends GenericBomb {
 							Vector vel = location.toVector().subtract(loc.toVector()).normalize();
 							vel.add(new Vector(rand.nextFloat() - 0.5, 0, rand.nextFloat() - 0.5)).normalize();
 							vel.multiply(1 + rand.nextFloat());
-							FallingBlock fallingBlock = world.spawnFallingBlock(loc, block.getTypeId(), block.getData());
+							FallingBlock fallingBlock = world.spawnFallingBlock(loc, new MaterialData(block.getType()));
 							fallingBlock.setDropItem(false);
 							fallingBlock.setVelocity(vel);
 							fallingBlocks.add(fallingBlock);
@@ -88,7 +88,7 @@ public final class AntiMatterBomb extends GenericBomb {
 					public void run() {
 						for (FallingBlock fallingBlock : fallingBlocks) {
 							Block b = fallingBlock.getLocation().getBlock();
-							if (b.getTypeId() == fallingBlock.getBlockId() && b.getData() == fallingBlock.getBlockData()) {
+							if (b.getType() == fallingBlock.getBlockData().getMaterial()) {
 								b.setType(Material.AIR);
 							}
 							fallingBlock.remove();
@@ -97,7 +97,6 @@ public final class AntiMatterBomb extends GenericBomb {
 				}, 5*20);
 			}
 		}
-		*/
 	}
 
 }
