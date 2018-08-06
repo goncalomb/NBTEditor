@@ -121,6 +121,11 @@ public class EntityNBT extends EntityNBTBase {
 		cCreeper.add("Fuse", new ShortVariable("Fuse", (short) 0));
 		cCreeper.add("Ignited", new BooleanVariable("ignited"));
 
+		NBTUnboundVariableContainer cDolphin = new NBTUnboundVariableContainer("Dolphin", cMob);
+		cDolphin.add("GotFish", new BooleanVariable("GotFish"));
+		cDolphin.add("Moistness", new IntegerVariable("Moistness"));
+		// TODO: add missing variables
+
 		NBTUnboundVariableContainer cEnderDragon = new NBTUnboundVariableContainer("EnderDragon", cMob);
 		cEnderDragon.add("DragonPhase", new IntegerVariable("DragonPhase", 0, 10));
 
@@ -149,6 +154,10 @@ public class EntityNBT extends EntityNBTBase {
 		NBTUnboundVariableContainer cVex = new NBTUnboundVariableContainer("Vex", cMob);
 		cVex.add("LifeTicks", new IntegerVariable("LifeTicks"));
 
+		NBTUnboundVariableContainer cTurtle = new NBTUnboundVariableContainer("Turtle", cBreed);
+		cTurtle.add("HasEgg", new BooleanVariable("HasEgg"));
+		// TODO: add missing variables
+
 		NBTUnboundVariableContainer cVillagerGolem = new NBTUnboundVariableContainer("VillagerGolem", cMob);
 		cVillagerGolem.add("PlayerCreated", new BooleanVariable("PlayerCreated"));
 
@@ -170,6 +179,10 @@ public class EntityNBT extends EntityNBTBase {
 		NBTUnboundVariableContainer cZombieVillager = new NBTUnboundVariableContainer("ZombieVillager", cZombie);
 		cZombieVillager.add("Profession", new IntegerVariable("Profession", 0, 5));
 		cZombieVillager.add("ConversionTime", new IntegerVariable("ConversionTime", -1));
+
+		NBTUnboundVariableContainer cPhantom = new NBTUnboundVariableContainer("Phantom", cMob);
+		cPhantom.add("Size", new IntegerVariable("Size"));
+		// TODO: add missing variables
 
 		// Breed SubTypes
 
@@ -241,6 +254,7 @@ public class EntityNBT extends EntityNBTBase {
 		ENTITY_VARIABLES.put("minecraft:chicken", cChicken);
 		ENTITY_VARIABLES.put("minecraft:cow", cBreed);
 		ENTITY_VARIABLES.put("minecraft:creeper", cCreeper);
+		ENTITY_VARIABLES.put("minecraft:dolphin", cDolphin);
 		ENTITY_VARIABLES.put("minecraft:donkey", cChestedHorse);
 		ENTITY_VARIABLES.put("minecraft:drowned", cZombie);
 		ENTITY_VARIABLES.put("minecraft:elder_guardian", cMob);
@@ -260,6 +274,7 @@ public class EntityNBT extends EntityNBTBase {
 		ENTITY_VARIABLES.put("minecraft:mule", cChestedHorse);
 		ENTITY_VARIABLES.put("minecraft:ocelot", cOcelot);
 		ENTITY_VARIABLES.put("minecraft:parrot", cParrot);
+		ENTITY_VARIABLES.put("minecraft:phantom", cPhantom);
 		ENTITY_VARIABLES.put("minecraft:pig", cPig);
 		ENTITY_VARIABLES.put("minecraft:polar_bear", cBreed);
 		ENTITY_VARIABLES.put("minecraft:rabbit", cRabbit);
@@ -273,6 +288,7 @@ public class EntityNBT extends EntityNBTBase {
 		ENTITY_VARIABLES.put("minecraft:spider", cMob);
 		ENTITY_VARIABLES.put("minecraft:squid", cMob);
 		ENTITY_VARIABLES.put("minecraft:stray", cMob);
+		ENTITY_VARIABLES.put("minecraft:turtle", cTurtle);
 		ENTITY_VARIABLES.put("minecraft:vex", cVex);
 		ENTITY_VARIABLES.put("minecraft:villager", cVillager);
 		ENTITY_VARIABLES.put("minecraft:iron_golem", cVillagerGolem);
@@ -320,6 +336,9 @@ public class EntityNBT extends EntityNBTBase {
 		NBTUnboundVariableContainer cPotion = new NBTUnboundVariableContainer("Potion", cEntity);
 		cPotion.add("Potion", new PotionVariable("Potion"));
 
+		NBTUnboundVariableContainer cTrident = new NBTUnboundVariableContainer("Trident", cArrow);
+		cTrident.add("Trident", new SingleItemVariable("Trident"));
+
 		ENTITY_VARIABLES.put("minecraft:arrow", cTippedArrow);
 		ENTITY_VARIABLES.put("minecraft:dragon_fireball", cFireball);
 		ENTITY_VARIABLES.put("minecraft:egg", cEntity);
@@ -331,6 +350,7 @@ public class EntityNBT extends EntityNBTBase {
 		// ENTITY_VARIABLES.put("minecraft:shulker_bullet", cEntity);
 		ENTITY_VARIABLES.put("minecraft:snowball", cEntity);
 		ENTITY_VARIABLES.put("minecraft:spectral_arrow", cSpectralArrow);
+		ENTITY_VARIABLES.put("minecraft:trident", cTrident);
 		ENTITY_VARIABLES.put("minecraft:wither_skull", cFireball);
 		ENTITY_VARIABLES.put("minecraft:experience_bottle", cEntity);
 
