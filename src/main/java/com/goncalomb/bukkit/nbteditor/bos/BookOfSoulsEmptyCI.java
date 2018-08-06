@@ -19,10 +19,11 @@
 
 package com.goncalomb.bukkit.nbteditor.bos;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import com.goncalomb.bukkit.customitems.api.CustomItem;
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
@@ -40,12 +41,17 @@ final class BookOfSoulsEmptyCI extends CustomItem {
 	public void onInteractAtEntity(final PlayerInteractAtEntityEvent event, PlayerDetails details) {
 		if (EntityNBT.isValidType(event.getRightClicked().getType())) {
 			details.consumeItem();
-			Bukkit.getScheduler().runTask(getPlugin(), new Runnable() {
-				@Override
-				public void run() {
-					event.getPlayer().getInventory().addItem((new BookOfSouls(EntityNBT.fromEntity(event.getRightClicked()))).getBook());
-				}
-			});
+			Player player = event.getPlayer();
+			long tNow = System.currentTimeMillis();
+			long t = tNow;
+			// prevent spam while holding the mouse button
+			if (player.hasMetadata("BookOfSoulsEmptyCI-Time")) {
+				t = player.getMetadata("BookOfSoulsEmptyCI-Time").get(0).asLong();
+			}
+			if (tNow >= t) {
+				player.getInventory().addItem((new BookOfSouls(EntityNBT.fromEntity(event.getRightClicked()))).getBook());
+				player.setMetadata("BookOfSoulsEmptyCI-Time", new FixedMetadataValue(getPlugin(), tNow + 500));
+			}
 			event.setCancelled(true);
 		}
 	}
