@@ -53,7 +53,7 @@ public class InventoryForVillagerOffers extends InventoryForSpecialVariable<Vill
 		int l = _offers.size();
 		for (int i = 0, k = _index; i < 9; i++, k++) {
 			if (k < l) {
-				VillagerOffersVariable.Offer offer = _offers.get(i);
+				VillagerOffersVariable.Offer offer = _offers.get(k);
 				if (offer != null) {
 					setItem(i, offer.buyA);
 					setItem(9 + i, offer.buyB);
