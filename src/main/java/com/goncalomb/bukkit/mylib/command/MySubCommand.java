@@ -180,9 +180,10 @@ class MySubCommand {
 		if (argsLeft == 1) {
 			ArrayList<String> allowedCommands = new ArrayList<String>();
 			String arg = args[args.length - 1].toLowerCase();
-			for (Entry<String, MySubCommand> command : _subCommands.entrySet()) {
-				String name = command.getKey();
-				if (name.startsWith(arg) && command.getValue()._type.isValidSender(sender)) {
+			for (Entry<String, MySubCommand> entry : _subCommands.entrySet()) {
+				String name = entry.getKey();
+				MySubCommand command = entry.getValue();
+				if (name.startsWith(arg) && command._type.isValidSender(sender) && sender.hasPermission(command._perm)) {
 					allowedCommands.add(name);
 				}
 			}
