@@ -29,8 +29,7 @@ import org.bukkit.entity.EntityType;
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.BlockVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.BlockVariable.DataType;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.BlockStateVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.BooleanVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ByteVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ColorVariable;
@@ -130,7 +129,7 @@ public class EntityNBT extends EntityNBTBase {
 		cEnderDragon.add("DragonPhase", new IntegerVariable("DragonPhase", 0, 10));
 
 		NBTUnboundVariableContainer cEnderman = new NBTUnboundVariableContainer("Enderman", cMob);
-		cEnderman.add("Block", new BlockVariable("carried", "carriedData", DataType.SHORT));
+		cEnderman.add("BlockState", new BlockStateVariable("carriedBlockState"));
 
 		NBTUnboundVariableContainer cEndermite = new NBTUnboundVariableContainer("Endermite", cMob);
 		cEndermite.add("Lifetime", new IntegerVariable("Lifetime"));
@@ -378,7 +377,7 @@ public class EntityNBT extends EntityNBTBase {
 
 		NBTUnboundVariableContainer cMinecart = new NBTUnboundVariableContainer("Minecart", cEntity);
 		cMinecart.add("DisplayTile", new BooleanVariable("CustomDisplayTile"));
-		cMinecart.add("Tile", new BlockVariable("DisplayTile", "DisplayData", DataType.INT));
+		cMinecart.add("DisplayState", new BlockStateVariable("DisplayState"));
 		cMinecart.add("TileOffset", new IntegerVariable("DisplayOffset"));
 		cMinecart.add("Name", new StringVariable("CustomName"));
 
@@ -416,7 +415,7 @@ public class EntityNBT extends EntityNBTBase {
 		// Dynamic Entities
 
 		NBTUnboundVariableContainer cFallingBlock = new NBTUnboundVariableContainer("FallingBlock", cEntity);
-		cFallingBlock.add("Block", new BlockVariable("Block", "Data", DataType.BYTE));
+		cFallingBlock.add("BlockState", new BlockStateVariable("BlockState"));
 		cFallingBlock.add("Time", new ByteVariable("Time", (byte)0));
 		cFallingBlock.add("DropItem", new BooleanVariable("DropItem"));
 		cFallingBlock.add("HurtEntities", new BooleanVariable("HurtEntities"));

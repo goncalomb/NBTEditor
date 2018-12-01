@@ -33,8 +33,10 @@ public class FallingBlockNBT extends EntityNBT {
 	}
 
 	public void copyFromTileEntity(Block block) {
-		_data.setString("Block", MaterialMap.getName(block.getType()));
-		_data.setByte("Data", block.getData());
+		NBTTagCompound data = new NBTTagCompound();
+		data.setString("Name", MaterialMap.getName(block.getType()));
+		// TODO: add block states
+		_data.setCompound("BlockState", data);
 		NBTTagCompound tileEntityData = NBTUtils.getTileEntityNBTData(block);
 		if (tileEntityData != null) {
 			_data.setCompound("TileEntityData", tileEntityData);
