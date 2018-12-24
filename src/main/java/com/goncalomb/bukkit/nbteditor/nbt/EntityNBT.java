@@ -51,6 +51,7 @@ import com.goncalomb.bukkit.nbteditor.nbt.variables.RawJsonVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.RotationVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.ShortVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.SingleItemVariable;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.StringListVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.VectorVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.VillagerCareerVariable;
@@ -78,6 +79,7 @@ public class EntityNBT extends EntityNBTBase {
 		cEntity.add("NameVisible", new BooleanVariable("CustomNameVisible"));
 		cEntity.add("Passengers", new PassengersVariable());
 		cEntity.add("Glowing", new BooleanVariable("Glowing"));
+		cEntity.add("Tags", new StringListVariable("Tags"));
 
 		NBTUnboundVariableContainer cEquippable = new NBTUnboundVariableContainer("Equippable", cEntity);
 		cEquippable.add("FallFlying", new BooleanVariable("FallFlying"));
