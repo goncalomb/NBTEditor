@@ -54,7 +54,12 @@ public final class NBTUtils {
 
 	// CraftWorld
 	private static Method _CraftWorld_getHandle;
-	private static Method _CraftWorld_getTileEntityAt;
+
+	// Minecraft's BlockPosition
+	private static Constructor<?> _BlockPosition_constructor;
+
+	// Minecraft's World
+	private static Method _World_getTileEntity;
 
 	// Minecraft's ChunkRegionLoader Class
 	private static Method _ChunkRegionLoader_a; // Spawn an entity from a NBTCompound.
@@ -95,9 +100,13 @@ public final class NBTUtils {
 
 		Class<?> craftWorldClass = BukkitReflect.getCraftBukkitClass("CraftWorld");
 		_CraftWorld_getHandle = craftWorldClass.getMethod("getHandle");
-		_CraftWorld_getTileEntityAt = craftWorldClass.getMethod("getTileEntityAt", int.class, int.class, int.class);
+
+		Class<?> minecraftBlockPositionClass = BukkitReflect.getMinecraftClass("BlockPosition");
+		_BlockPosition_constructor = minecraftBlockPositionClass.getConstructor(int.class, int.class, int.class);
 
 		Class<?> minecraftWorldClass = BukkitReflect.getMinecraftClass("World");
+		_World_getTileEntity = minecraftWorldClass.getMethod("getTileEntity", minecraftBlockPositionClass);
+
 		Class<?> minecraftChunkRegionLoaderClass = BukkitReflect.getMinecraftClass("ChunkRegionLoader");
 		_ChunkRegionLoader_a = minecraftChunkRegionLoaderClass.getMethod("a", nbtTagCompoundClass, minecraftWorldClass, double.class, double.class, double.class, boolean.class);
 	}
@@ -159,7 +168,9 @@ public final class NBTUtils {
 	}
 
 	private static Object getTileEntity(Block block) {
-		return BukkitReflect.invokeMethod(block.getWorld(), _CraftWorld_getTileEntityAt, block.getX(), block.getY(), block.getZ());
+		Object worldHandle = BukkitReflect.invokeMethod(block.getWorld(), _CraftWorld_getHandle);
+		Object pos = BukkitReflect.invokeConstuctor(_BlockPosition_constructor, block.getX(), block.getY(), block.getZ());
+		return BukkitReflect.invokeMethod(worldHandle, _World_getTileEntity, pos);
 	}
 
 	public static NBTTagCompound getTileEntityNBTData(Block block) {
