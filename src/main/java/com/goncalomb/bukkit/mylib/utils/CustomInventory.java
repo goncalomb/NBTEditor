@@ -110,7 +110,7 @@ public abstract class CustomInventory {
 
 			this._owner = owner;
 
-			HashSet<CustomInventory> set = _openedInvsByPlugin.get(player);
+			HashSet<CustomInventory> set = _openedInvsByPlugin.get(owner);
 			if (set == null) {
 				set = new HashSet<CustomInventory>();
 				_openedInvsByPlugin.put(owner, set);

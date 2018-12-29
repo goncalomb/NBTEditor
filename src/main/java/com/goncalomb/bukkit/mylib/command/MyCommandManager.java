@@ -71,7 +71,7 @@ public final class MyCommandManager {
 			}
 		}
 		if (tabMethods.size() > 0) {
-			throw new RuntimeException("Tab completion method " + tabMethods.get(0).getName() + " on class " + command.getClass().getName() + " has no execution method.");
+			throw new RuntimeException("Tab completion method " + tabMethods.entrySet().iterator().next().getValue().getName() + " on class " + command.getClass().getName() + " has no execution method.");
 		}
 		command.setup(BukkitReflect.getCommandMap(), plugin);
 	}
