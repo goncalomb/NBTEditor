@@ -46,7 +46,6 @@ public class ItemUtils {
 		ItemMeta meta = stack.getItemMeta();
 		sender.sendMessage("§eItem information:");
 		sender.sendMessage("  §2Type: §a" + stack.getType().getKey());
-		sender.sendMessage("  §2Data: §a" + stack.getDurability());
 		sender.sendMessage("  §2Amount: §a" + stack.getAmount());
 		String name = meta.getDisplayName();
 		if (name != null) {

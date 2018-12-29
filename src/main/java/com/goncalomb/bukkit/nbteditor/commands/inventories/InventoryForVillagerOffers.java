@@ -3,7 +3,6 @@ package com.goncalomb.bukkit.nbteditor.commands.inventories;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;

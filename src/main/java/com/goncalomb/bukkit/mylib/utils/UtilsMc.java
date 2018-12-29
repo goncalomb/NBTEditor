@@ -33,6 +33,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
@@ -132,6 +133,16 @@ public final class UtilsMc {
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		return item;
+	}
+
+	public static boolean offsetItemStackDamage(ItemStack item, int offset) {
+		ItemMeta meta = item.getItemMeta();
+		if (meta instanceof Damageable) {
+			((Damageable) meta).setDamage(((Damageable) meta).getDamage() + offset);
+			item.setItemMeta(meta);
+			return true;
+		}
+		return false;
 	}
 
 	public static Permission getRootPermission(Plugin plugin) {

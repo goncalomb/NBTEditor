@@ -38,7 +38,6 @@ import com.goncalomb.bukkit.mylib.command.MyCommandException;
 import com.goncalomb.bukkit.mylib.command.MyCommandManager;
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.mylib.namemaps.SpawnEggMap;
-import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
 import com.goncalomb.bukkit.mylib.utils.Utils;
@@ -263,7 +262,7 @@ public class CommandBOS extends AbstractNBTCommand<EntityNBT> {
 		if (eggType == null) {
 			eggType = Material.TURTLE_SPAWN_EGG;
 		}
-		ItemStack item = NBTUtils.itemStackToCraftItemStack(UtilsMc.newSingleItemStack(eggType, "§rSpawn Egg - " + entityNbt.getEntityType().getName(), "Created from a BoS."));
+		ItemStack item = NBTUtils.itemStackToCraftItemStack(UtilsMc.newSingleItemStack(eggType, "§rSpawn Egg - " + EntityTypeMap.getName(entityNbt.getEntityType()), "Created from a BoS."));
 		NBTTagCompound itemData = NBTUtils.getItemStackTag(item);
 		itemData.setCompound("EntityTag", entityData);
 		NBTUtils.setItemStackTag(item, itemData);

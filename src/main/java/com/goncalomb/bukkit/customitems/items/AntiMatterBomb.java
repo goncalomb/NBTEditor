@@ -32,7 +32,6 @@ import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Item;
-import org.bukkit.material.MaterialData;
 import org.bukkit.util.Vector;
 
 public final class AntiMatterBomb extends GenericBomb {
@@ -70,7 +69,7 @@ public final class AntiMatterBomb extends GenericBomb {
 							Vector vel = location.toVector().subtract(loc.toVector()).normalize();
 							vel.add(new Vector(rand.nextFloat() - 0.5, 0, rand.nextFloat() - 0.5)).normalize();
 							vel.multiply(1 + rand.nextFloat());
-							FallingBlock fallingBlock = world.spawnFallingBlock(loc, new MaterialData(block.getType()));
+							FallingBlock fallingBlock = world.spawnFallingBlock(loc, block.getBlockData());
 							fallingBlock.setDropItem(false);
 							fallingBlock.setVelocity(vel);
 							fallingBlocks.add(fallingBlock);

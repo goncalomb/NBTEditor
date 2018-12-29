@@ -31,11 +31,10 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
 import org.bukkit.util.Vector;
 
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
+import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 
 public final class GravitationalAxe extends GenericSuperAxe {
 
@@ -70,7 +69,7 @@ public final class GravitationalAxe extends GenericSuperAxe {
 					block.breakNaturally();
 					durability += 1;
 				} else {
-					FallingBlock fallingBlock = world.spawnFallingBlock(block.getLocation(), new MaterialData(block.getType()));
+					FallingBlock fallingBlock = world.spawnFallingBlock(block.getLocation(), block.getBlockData());
 					fallingBlock.setVelocity(vel.multiply(random.nextFloat()*0.2 + 0.9));
 					if (isLeaves(mat)) {
 						fallingBlock.setDropItem(false);
@@ -80,8 +79,7 @@ public final class GravitationalAxe extends GenericSuperAxe {
 			}
 			// Apply durability.
 			if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
-				ItemStack item = details.getItem();
-				item.setDurability((short) (item.getDurability() + durability));
+				UtilsMc.offsetItemStackDamage(details.getItem(), (int) durability);
 			}
 		}
 	}

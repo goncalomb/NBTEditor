@@ -26,9 +26,9 @@ import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.inventory.ItemStack;
 
 import com.goncalomb.bukkit.customitems.api.PlayerDetails;
+import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 
 public final class TreeVaporizer extends GenericSuperAxe {
 
@@ -51,8 +51,7 @@ public final class TreeVaporizer extends GenericSuperAxe {
 			}
 			// Apply durability.
 			if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
-				ItemStack item = details.getItem();
-				item.setDurability((short) (item.getDurability() + blocks.size()));
+				UtilsMc.offsetItemStackDamage(details.getItem(), blocks.size());
 			}
 		}
 	}
