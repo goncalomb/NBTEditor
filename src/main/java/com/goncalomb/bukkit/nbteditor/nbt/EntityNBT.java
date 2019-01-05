@@ -100,6 +100,7 @@ public class EntityNBT extends EntityNBTBase {
 		cMob.add("NoAI", new BooleanVariable("NoAI"));
 		cMob.add("Persistent", new BooleanVariable("PersistenceRequired"));
 		cMob.add("LeftHanded", new BooleanVariable("LeftHanded"));
+		cMob.add("Team", new StringVariable("Team"));
 
 		NBTUnboundVariableContainer cBreed = new NBTUnboundVariableContainer("Breed", cMob);
 		cBreed.add("InLove", new IntegerVariable("InLove", 0));
