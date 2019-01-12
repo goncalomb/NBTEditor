@@ -159,4 +159,10 @@ public class CommandItemStorage extends MyCommand {
 		return true;
 	}
 
+	@Command(args = "open", type = CommandType.PLAYER_ONLY)
+	public boolean command_open(CommandSender sender, String[] args) throws MyCommandException {
+		(new InventoryForItemStorage((Player) sender)).openInventory((Player) sender, getOwner());
+		return true;
+	}
+
 }
