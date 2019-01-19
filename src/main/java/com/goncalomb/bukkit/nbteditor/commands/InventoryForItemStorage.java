@@ -4,8 +4,12 @@ import java.util.ArrayList;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -67,26 +71,43 @@ public final class InventoryForItemStorage extends CustomInventory {
 
 	@Override
 	protected void inventoryClick(InventoryClickEvent event) {
-		int slot = event.getRawSlot();
-		if (slot >= 0 && slot < getInventory().getSize()) {
-			event.setCancelled(true);
-			if (slot < ITEMS_PER_PAGE) {
-				if (event.getCursor().getType() == Material.AIR && _originaItems[slot] != null) {
-					event.getView().setCursor(_originaItems[slot]);
+		Inventory inventory = event.getClickedInventory();
+		if (inventory != null) {
+			InventoryAction action = event.getAction();
+			if (action == InventoryAction.COLLECT_TO_CURSOR) {
+				event.setCancelled(true);
+			} else if (inventory.getType() == InventoryType.PLAYER) {
+				if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
+					event.setCancelled(true);
 				}
-			} else if (slot == 52) {
-				// previous page
-				changePage(-1);
-			} else if (slot == 53) {
-				// next page
-				changePage(1);
+			} else {
+				event.setCancelled(true);
+				int slot = event.getSlot();
+				if (slot < ITEMS_PER_PAGE) {
+					if (event.getCursor().getType() == Material.AIR && _originaItems[slot] != null) {
+						event.getView().setCursor(_originaItems[slot]);
+					}
+				} else if (slot == 52) {
+					// previous page
+					changePage(-1);
+				} else if (slot == 53) {
+					// next page
+					changePage(1);
+				}
 			}
-		} else if (event.getCursor().getType() == Material.AIR) {
-			event.setCancelled(true);
+		}
+		
+	}
+	
+	@Override
+	protected void inventoryDrag(InventoryDragEvent event) {
+		InventoryView view = event.getView();
+		for (int slot : event.getRawSlots()) {
+			if (view.getInventory(slot).getType() != InventoryType.PLAYER) {
+				event.setCancelled(true);
+				return;
+			}
 		}
 	}
-
-	@Override
-	protected void inventoryClose(InventoryCloseEvent event) { }
 
 }

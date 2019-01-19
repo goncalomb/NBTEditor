@@ -30,6 +30,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
@@ -75,6 +76,14 @@ public abstract class CustomInventory {
 						CustomInventory inv = _openedInvsByPlayer.get(event.getWhoClicked());
 						if (inv != null) {
 							inv.inventoryClick(event);
+						}
+					}
+
+					@EventHandler
+					private void inventoryDrag(InventoryDragEvent event) {
+						CustomInventory inv = _openedInvsByPlayer.get(event.getWhoClicked());
+						if (inv != null) {
+							inv.inventoryDrag(event);
 						}
 					}
 
@@ -136,8 +145,10 @@ public abstract class CustomInventory {
 		}
 	}
 
-	protected abstract void inventoryClick(InventoryClickEvent event);
+	protected void inventoryDrag(InventoryDragEvent event) { };
 
-	protected abstract void inventoryClose(InventoryCloseEvent event);
+	protected void inventoryClick(InventoryClickEvent event) { };
+
+	protected void inventoryClose(InventoryCloseEvent event) { };
 
 }
