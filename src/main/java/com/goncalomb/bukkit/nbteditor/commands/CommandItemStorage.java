@@ -81,7 +81,9 @@ public class CommandItemStorage extends MyCommand {
 			return false;
 		}
 		CommandUtils.giveItem(player, ItemStorage.getItem(args[0]));
-		sender.sendMessage("§aDone.");
+		if (!CommandType.CONSOLE_ONLY.isValidSender(sender)) {
+			sender.sendMessage("§aDone.");
+		}
 		return true;
 	}
 
@@ -106,7 +108,7 @@ public class CommandItemStorage extends MyCommand {
 		return Utils.getElementsWithPrefix(ItemStorage.listItems(), args[0]);
 	}
 
-	@Command(args = "update", type = CommandType.DEFAULT, minargs = 1, usage = "<name>")
+	@Command(args = "update", type = CommandType.PLAYER_ONLY, minargs = 1, usage = "<name>")
 	public boolean command_update(CommandSender sender, String[] args) throws MyCommandException {
 		ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
 		if (item == null || item.getType() == Material.AIR) {
@@ -153,7 +155,7 @@ public class CommandItemStorage extends MyCommand {
 		return Utils.getElementsWithPrefix(ItemStorage.listItems(), args[0]);
 	}
 
-	@Command(args = "list", type = CommandType.PLAYER_ONLY)
+	@Command(args = "list", type = CommandType.DEFAULT)
 	public boolean command_list(CommandSender sender, String[] args) throws MyCommandException {
 		sender.sendMessage("§7Stored items: " + StringUtils.join(ItemStorage.listItems(), ", "));
 		return true;
