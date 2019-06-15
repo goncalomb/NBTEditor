@@ -67,6 +67,9 @@ public final class EnchantmentsMap {
 		_enchantments.put("Riptide", Enchantment.RIPTIDE);
 		_enchantments.put("Channeling", Enchantment.CHANNELING);
 		_enchantments.put("Loyalty", Enchantment.LOYALTY);
+		_enchantments.put("Multishot", Enchantment.MULTISHOT);
+		_enchantments.put("Piercing", Enchantment.PIERCING);
+		_enchantments.put("QuickCharge", Enchantment.QUICK_CHARGE);
 
 		List<String> enchantmentNames = new ArrayList<String>(_enchantments.names());
 		Collections.sort(enchantmentNames, String.CASE_INSENSITIVE_ORDER);
