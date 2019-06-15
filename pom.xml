@@ -5,7 +5,7 @@
 
   <groupId>com.goncalomb.bukkit</groupId>
   <artifactId>nbteditor</artifactId>
-  <version>3.1.1-SNAPSHOT</version>
+  <version>3.2-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>NBTEditor</name>
@@ -13,7 +13,7 @@
   <inceptionYear>2013</inceptionYear>
 
   <properties>
-    <bukkit.version>1.13.2-R0.1-SNAPSHOT</bukkit.version>
+    <bukkit.version>1.14-R0.1-SNAPSHOT</bukkit.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.timestamp>${maven.build.timestamp}</project.build.timestamp>
     <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ss'Z'</maven.build.timestamp.format>
@@ -31,6 +31,12 @@
   </repositories>
 
   <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
