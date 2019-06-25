@@ -48,6 +48,9 @@ public class TileNBT extends BaseNBT {
 		cBrewingStand.add("BrewTime", new IntegerVariable("BrewTime"));
 		cBrewingStand.add("Fuel", new ByteVariable("Fuel"));
 
+		NBTUnboundVariableContainer cCampfire = new NBTUnboundVariableContainer("Campfire");
+		cCampfire.add("Items", new ContainerVariable("Items", 4));
+
 		NBTUnboundVariableContainer cChest = new NBTUnboundVariableContainer("Chest", cLootable);
 		cChest.add("Items", new ContainerVariable("Items", 27));
 
@@ -64,6 +67,10 @@ public class TileNBT extends BaseNBT {
 
 		NBTUnboundVariableContainer cJukebox = new NBTUnboundVariableContainer("Jukebox");
 		cJukebox.add("RecordItem", new SingleItemVariable("RecordItem"));
+
+		NBTUnboundVariableContainer cLectern = new NBTUnboundVariableContainer("Lectern");
+		cLectern.add("Book", new SingleItemVariable("Book"));
+		cLectern.add("Page", new IntegerVariable("Page"));
 
 		NBTUnboundVariableContainer cSpawner = new NBTUnboundVariableContainer("Spawner");
 		cSpawner.add("Count", new ShortVariable("SpawnCount", (short) 0));
@@ -92,12 +99,16 @@ public class TileNBT extends BaseNBT {
 		//
 
 		TILE_VARIABLES.put("minecraft:banner", cBanner);
+		TILE_VARIABLES.put("minecraft:barrel", cChest);
 		TILE_VARIABLES.put("minecraft:beacon", cBeacon);
+		TILE_VARIABLES.put("minecraft:blast_furnace", cLockable);
 		TILE_VARIABLES.put("minecraft:brewing_stand", cBrewingStand);
+		TILE_VARIABLES.put("minecraft:campfire", cCampfire);
 		// TILE_VARIABLES.put("minecraft:cauldron", null);  // not a tile entity on Java Edition
 		TILE_VARIABLES.put("minecraft:chest", cChest);
 		// TILE_VARIABLES.put("minecraft:comparator", null);
 		TILE_VARIABLES.put("minecraft:command_block", cCommandBlock);
+		// TILE_VARIABLES.put("minecraft:conduit", null);
 		// TILE_VARIABLES.put("minecraft:daylight_detector", null); // no extra tags
 		TILE_VARIABLES.put("minecraft:dispenser", cDispenser);
 		TILE_VARIABLES.put("minecraft:dropper", cDispenser);
@@ -107,12 +118,16 @@ public class TileNBT extends BaseNBT {
 		// TILE_VARIABLES.put("minecraft:end_portal", null); // no extra tags
 		TILE_VARIABLES.put("minecraft:furnace", cLockable);
 		TILE_VARIABLES.put("minecraft:hopper", cLootable);
+		// TILE_VARIABLES.put("minecraft:jigsaw", null);
 		TILE_VARIABLES.put("minecraft:jukebox", cJukebox);
+		TILE_VARIABLES.put("minecraft:lectern", cLectern);
 		TILE_VARIABLES.put("minecraft:mob_spawner", cSpawner);
 		TILE_VARIABLES.put("minecraft:noteblock", cNoteBlock);
 		// TILE_VARIABLES.put("minecraft:piston", null);
+		TILE_VARIABLES.put("minecraft:shulker_box", cChest);
 		TILE_VARIABLES.put("minecraft:sign", cSign);
 		// TILE_VARIABLES.put("minecraft:skull", cSkull); // XXX: needs more testing
+		TILE_VARIABLES.put("minecraft:smoker", cLockable);
 		// TILE_VARIABLES.put("minecraft:structure_block", null);
 	}
 
