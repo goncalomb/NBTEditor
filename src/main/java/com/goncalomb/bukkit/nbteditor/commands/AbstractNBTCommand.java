@@ -106,7 +106,7 @@ public abstract class AbstractNBTCommand<T extends BaseNBT> extends MyCommand {
 							sender.sendMessage("§aVariable updated (removed from list).");
 							return true;
 						} else {
-							sender.sendMessage(MessageFormat.format("§cItem with index {0} doesn''t exist!", index));
+							sender.sendMessage(MessageFormat.format("§cItem with index {0} doesn't exist!", index));
 						}
 					} else {
 						sender.sendMessage("§cVariable is a list use 'add <value>' or 'del <index>'.");

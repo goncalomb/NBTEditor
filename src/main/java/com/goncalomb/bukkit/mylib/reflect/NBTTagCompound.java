@@ -42,6 +42,7 @@ public final class NBTTagCompound extends NBTBase {
 
 	private static Method _tagSerializeStream;
 	private static Method _tagUnserializeStream;
+	private static Method _parseMojangson;
 
 	static void prepareReflectionz() throws SecurityException, NoSuchMethodException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
 		_getByte = _nbtTagCompoundClass.getMethod("getByte", String.class);
@@ -53,6 +54,9 @@ public final class NBTTagCompound extends NBTBase {
 		_getString = _nbtTagCompoundClass.getMethod("getString", String.class);
 		_mapField = _nbtTagCompoundClass.getDeclaredField("map");
 		_mapField.setAccessible(true);
+
+		Class<?>_mojangsonParserClass = BukkitReflect.getMinecraftClass("MojangsonParser");
+		_parseMojangson = _mojangsonParserClass.getMethod("parse", String.class);
 
 		Class<?> nbtCompressedStreamToolsClass = BukkitReflect.getMinecraftClass("NBTCompressedStreamTools");
 		_tagSerializeStream = nbtCompressedStreamToolsClass.getMethod("a", _nbtTagCompoundClass, OutputStream.class);
@@ -218,4 +222,11 @@ public final class NBTTagCompound extends NBTBase {
 		return (NBTTagCompound) super.clone();
 	}
 
+	/*
+	 * Converts a string-ified "mojangson" tag back into an NBTTagCompound
+	 * This is the opposite of toString()
+	 */
+	public static NBTTagCompound fromString(String mojangson) {
+		return new NBTTagCompound(BukkitReflect.invokeMethod(null, _parseMojangson, mojangson));
+	}
 }
