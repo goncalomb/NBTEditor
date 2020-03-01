@@ -16,4 +16,4 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Deploy with Maven
-      run: mvn deploy -Dregistry=https://maven.pkg.github.com/goncalomb -Dtoken=${{ secrets.GITHUB_TOKEN }}
+      run: mvn deploy -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/goncalomb/NBTEditor -Dregistry=https://maven.pkg.github.com/goncalomb -Dtoken=${{ secrets.GITHUB_TOKEN }}
