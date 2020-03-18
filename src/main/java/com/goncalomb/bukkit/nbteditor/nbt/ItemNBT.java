@@ -11,8 +11,8 @@ import com.goncalomb.bukkit.nbteditor.nbt.variables.ColorVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.IntegerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.MaterialListVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.NBTUnboundVariableContainer;
+import com.goncalomb.bukkit.nbteditor.nbt.variables.RawJsonListVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.RawJsonVariable;
-import com.goncalomb.bukkit.nbteditor.nbt.variables.StringListVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
 
 public class ItemNBT extends BaseNBT {
@@ -22,7 +22,7 @@ public class ItemNBT extends BaseNBT {
 	static {
 		NBTUnboundVariableContainer cItem = new NBTUnboundVariableContainer("Item");
 		cItem.add("Name", new RawJsonVariable("display/Name"));
-		cItem.add("Lore", new StringListVariable("display/Lore"));
+		cItem.add("Lore", new RawJsonListVariable("display/Lore"));
 		cItem.add("Damage", new IntegerVariable("Damage"));
 		cItem.add("Unbreakable", new BooleanVariable("Unbreakable"));
 		cItem.add("CanDestroy", new MaterialListVariable("CanDestroy"));
