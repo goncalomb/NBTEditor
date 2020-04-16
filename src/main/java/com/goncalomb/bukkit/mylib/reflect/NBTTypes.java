@@ -31,7 +31,7 @@ final class NBTTypes {
 	private static HashMap<Class<?>, NBTTypes> _outerTypeMap = new HashMap<Class<?>, NBTTypes>();;
 
 	private Class<?> _class;
-	private Constructor<?> _contructor;
+	private Constructor<?> _constructor;
 	private Field _data;
 	private Class<?> _dataType;
 
@@ -83,12 +83,13 @@ final class NBTTypes {
 		_data = _class.getDeclaredField("data");
 		_data.setAccessible(true);
 		_dataType = _data.getType();
-		_contructor = _class.getConstructor(_dataType);
+		_constructor = _class.getDeclaredConstructor(_dataType);
+		_constructor.setAccessible(true);
 	}
 
 	// Wraps primitives and strings with Minecraft tags.
 	private Object wrap(Object innerObject) {
-		return BukkitReflect.newInstance(_contructor, innerObject);
+		return BukkitReflect.newInstance(_constructor, innerObject);
 	}
 
 	// Unwraps primitives and strings from Minecraft tags.
