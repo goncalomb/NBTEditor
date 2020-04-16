@@ -50,6 +50,17 @@
     </dependency>
   </dependencies>
 
+  <distributionManagement>
+    <repository>
+      <id>nexus-releases</id>
+      <url>https://nexus.goncalomb.com/repository/maven-releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>nexus-snapshots</id>
+      <url>https://nexus.goncalomb.com/repository/maven-snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
   <build>
     <defaultGoal>clean package</defaultGoal>
 
