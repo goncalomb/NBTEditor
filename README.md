@@ -1,4 +1,4 @@
-NBTEditor
+NBTEditor [![Build Status](https://jenkins.goncalomb.com/buildStatus/icon?job=NBTEditor)](https://jenkins.goncalomb.com/job/NBTEditor/)
 =========
 
 An in-game NBT editor for [Bukkit]. Built and tested for CraftBukkit and Spigot ([SpigotMC BuildTools][BuildTools]).
