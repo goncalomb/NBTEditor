@@ -4,6 +4,7 @@ pipeline {
     parameters {
         string(name: 'BRANCH', defaultValue: '', description: 'Branch to build.')
         booleanParam(name: 'DEPLOY', defaultValue: true, description: 'Deploy to repository.')
+        string(name: 'MAVEN_ARGS', defaultValue: '', description: 'Extra Maven arguments.')
     }
 
     stages {
@@ -26,9 +27,14 @@ pipeline {
         stage('Build And Deploy') {
             steps {
                 script {
+                    currentBuild.keepLog = true
                     MVN_GOAL = 'verify'
                     if (params.DEPLOY) {
                         MVN_GOAL = 'deploy'
+                    }
+                    MVN_ARGS = ''
+                    if (params.MAVEN_ARGS) {
+                        MVN_ARGS = ' ' + params.MAVEN_ARGS
                     }
                     POM_VERSION = readMavenPom().getVersion()
                     GIT_COMMIT = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
@@ -42,7 +48,7 @@ pipeline {
                     maven: 'mvn3',
                     mavenSettingsConfig: 'maven-settings'
                 ) {
-                    sh "mvn -B clean ${MVN_GOAL}"
+                    sh "mvn -B${MVN_ARGS} clean ${MVN_GOAL}"
                 }
             }
         }
