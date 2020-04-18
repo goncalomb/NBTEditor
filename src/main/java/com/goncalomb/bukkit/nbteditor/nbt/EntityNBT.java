@@ -27,6 +27,7 @@ import java.util.List;
 import org.bukkit.entity.EntityType;
 
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
+import com.goncalomb.bukkit.mylib.reflect.BukkitVersion;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.BlockStateVariable;
@@ -307,6 +308,20 @@ public class EntityNBT extends EntityNBTBase {
 		ENTITY_VARIABLES.put("minecraft:salmon", cFish);
 		ENTITY_VARIABLES.put("minecraft:pufferfish", cPufferfish);
 		ENTITY_VARIABLES.put("minecraft:tropical_fish", cTropicalFish);
+
+		// TODO: add variables for 1.14 mobs
+		ENTITY_VARIABLES.put("minecraft:pillager", cMob);
+		ENTITY_VARIABLES.put("minecraft:panda", cMob);
+		ENTITY_VARIABLES.put("minecraft:wandering_trader", cMob);
+		ENTITY_VARIABLES.put("minecraft:trader_llama", cMob);
+		ENTITY_VARIABLES.put("minecraft:fox", cMob);
+		ENTITY_VARIABLES.put("minecraft:cat", cMob);
+		ENTITY_VARIABLES.put("minecraft:ravager", cMob);
+
+		if (BukkitVersion.isVersion(15)) {
+			// TODO: add variables for 1.15 mobs
+			ENTITY_VARIABLES.put("minecraft:bee", cMob);
+		}
 
 		// Projectile Entities
 
