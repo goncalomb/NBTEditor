@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.Material;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
@@ -39,7 +40,7 @@ public class VillagerOffersVariable extends NBTVariable implements SpecialVariab
 		NBTTagCompound getCompound() {
 			NBTTagCompound offer = new NBTTagCompound();
 			offer.setCompound("buy", NBTUtils.itemStackToNBTData(buyA));
-			if (buyB != null) {
+			if (buyB != null && !buyB.getType().equals(Material.AIR)) {
 				offer.setCompound("buyB", NBTUtils.itemStackToNBTData(buyB));
 			}
 			offer.setCompound("sell", NBTUtils.itemStackToNBTData(sell));
