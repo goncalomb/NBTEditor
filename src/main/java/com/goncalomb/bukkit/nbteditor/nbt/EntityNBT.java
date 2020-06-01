@@ -229,6 +229,13 @@ public class EntityNBT extends EntityNBTBase {
 		cVillager.add("Offers", new VillagerOffersVariable());
 		// TODO: add villager inventory
 
+		NBTUnboundVariableContainer cFox = new NBTUnboundVariableContainer("Fox", cBreed);
+		// XXX: missing TrustedUUIDs
+		cFox.add("Sleeping", new BooleanVariable("Sleeping"));
+		cFox.add("Type", new StringVariable("Type")); // TODO: add list of possibilities (red, snow)
+		cFox.add("Sitting", new BooleanVariable("Sitting"));
+		cFox.add("Crouching", new BooleanVariable("Crouching"));
+
 		// Tameable SubTypes
 
 		NBTUnboundVariableContainer cOcelot = new NBTUnboundVariableContainer("Ocelot", cTameable);
@@ -240,6 +247,10 @@ public class EntityNBT extends EntityNBTBase {
 		NBTUnboundVariableContainer cWolf = new NBTUnboundVariableContainer("Wolf", cTameable);
 		cWolf.add("Angry", new BooleanVariable("Angry"));
 		cWolf.add("CollarColor", new ByteVariable("CollarColor", (byte) 0, (byte) 15));
+
+		NBTUnboundVariableContainer cCat = new NBTUnboundVariableContainer("Cat", cTameable);
+		cCat.add("CatType", new IntegerVariable("CatType", (byte) -1, (byte) 10)); // -1 = random type
+		cCat.add("CollarColor", new IntegerVariable("CollarColor", (byte) 0, (byte) 15));
 
 		// Fish types
 
@@ -314,8 +325,8 @@ public class EntityNBT extends EntityNBTBase {
 		ENTITY_VARIABLES.put("minecraft:panda", cMob);
 		ENTITY_VARIABLES.put("minecraft:wandering_trader", cMob);
 		ENTITY_VARIABLES.put("minecraft:trader_llama", cMob);
-		ENTITY_VARIABLES.put("minecraft:fox", cMob);
-		ENTITY_VARIABLES.put("minecraft:cat", cMob);
+		ENTITY_VARIABLES.put("minecraft:fox", cFox);
+		ENTITY_VARIABLES.put("minecraft:cat", cCat);
 		ENTITY_VARIABLES.put("minecraft:ravager", cMob);
 
 		if (BukkitVersion.isVersion(15)) {
