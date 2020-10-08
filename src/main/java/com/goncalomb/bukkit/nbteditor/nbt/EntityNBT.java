@@ -176,8 +176,19 @@ public class EntityNBT extends EntityNBTBase {
 		cZombie.add("InWaterTime", new IntegerVariable("InWaterTime"));
 		cZombie.add("DrownedConversionTime", new IntegerVariable("DrownedConversionTime"));
 
+		// 1.15 and below
 		NBTUnboundVariableContainer cZombiePigman = new NBTUnboundVariableContainer("ZombiePigman", cZombie);
 		cZombiePigman.add("Anger", new ShortVariable("Anger"));
+
+		NBTUnboundVariableContainer cPiglin = new NBTUnboundVariableContainer("Piglin", cMob);
+		cPiglin.add("IsBaby", new BooleanVariable("IsBaby"));
+		cPiglin.add("IsImmuneToZombification", new BooleanVariable("IsImmuneToZombification"));
+		cPiglin.add("CannotHunt", new BooleanVariable("CannotHunt"));
+		cPiglin.add("TimeInOverworld", new IntegerVariable("TimeInOverworld"));
+		// TODO: add villager inventory
+
+		NBTUnboundVariableContainer cZombifiedPiglin = new NBTUnboundVariableContainer("ZombifiedPilgin", cZombie);
+		cZombifiedPiglin.add("AngerTime", new IntegerVariable("AngerTime"));
 
 		NBTUnboundVariableContainer cZombieVillager = new NBTUnboundVariableContainer("ZombieVillager", cZombie);
 		cZombieVillager.add("Profession", new IntegerVariable("Profession", 0, 5));
@@ -313,7 +324,9 @@ public class EntityNBT extends EntityNBTBase {
 		ENTITY_VARIABLES.put("minecraft:wolf", cWolf);
 		ENTITY_VARIABLES.put("minecraft:zombie", cZombie);
 		ENTITY_VARIABLES.put("minecraft:zombie_horse", cHorse);
-		ENTITY_VARIABLES.put("minecraft:zombie_pigman", cZombiePigman);
+		if (!BukkitVersion.isVersion(16)) {
+			ENTITY_VARIABLES.put("minecraft:zombie_pigman", cZombiePigman);
+		}
 		ENTITY_VARIABLES.put("minecraft:zombie_villager", cZombieVillager);
 		ENTITY_VARIABLES.put("minecraft:cod", cFish);
 		ENTITY_VARIABLES.put("minecraft:salmon", cFish);
@@ -321,17 +334,26 @@ public class EntityNBT extends EntityNBTBase {
 		ENTITY_VARIABLES.put("minecraft:tropical_fish", cTropicalFish);
 
 		// TODO: add variables for 1.14 mobs
-		ENTITY_VARIABLES.put("minecraft:pillager", cMob);
-		ENTITY_VARIABLES.put("minecraft:panda", cMob);
-		ENTITY_VARIABLES.put("minecraft:wandering_trader", cMob);
-		ENTITY_VARIABLES.put("minecraft:trader_llama", cMob);
-		ENTITY_VARIABLES.put("minecraft:fox", cFox);
-		ENTITY_VARIABLES.put("minecraft:cat", cCat);
-		ENTITY_VARIABLES.put("minecraft:ravager", cMob);
+		if (BukkitVersion.isVersion(14)) {
+			ENTITY_VARIABLES.put("minecraft:pillager", cMob);
+			ENTITY_VARIABLES.put("minecraft:panda", cMob);
+			ENTITY_VARIABLES.put("minecraft:wandering_trader", cMob);
+			ENTITY_VARIABLES.put("minecraft:trader_llama", cMob);
+			ENTITY_VARIABLES.put("minecraft:fox", cFox);
+			ENTITY_VARIABLES.put("minecraft:cat", cCat);
+			ENTITY_VARIABLES.put("minecraft:ravager", cMob);
+		}
 
 		if (BukkitVersion.isVersion(15)) {
 			// TODO: add variables for 1.15 mobs
 			ENTITY_VARIABLES.put("minecraft:bee", cMob);
+		}
+
+		if (BukkitVersion.isVersion(16)) {
+			// TODO: add variables for 1.16 mobs
+			ENTITY_VARIABLES.put("minecraft:piglin", cPiglin);
+			ENTITY_VARIABLES.put("minecraft:piglin_brute", cMob);
+			ENTITY_VARIABLES.put("minecraft:zombified_piglin", cZombifiedPiglin);
 		}
 
 		// Projectile Entities

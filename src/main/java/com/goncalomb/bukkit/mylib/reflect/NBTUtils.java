@@ -94,12 +94,18 @@ public final class NBTUtils {
 		Class<?> minecraftTileEntityClass = BukkitReflect.getMinecraftClass("TileEntity");
 		_TileEntity_save = minecraftTileEntityClass.getMethod("save", nbtTagCompoundClass);
 		try {
-			// Bukkit 1.12.1+
+			// Bukkit 1.12.1-1.15.2
 			_TileEntity_load = minecraftTileEntityClass.getMethod("load", nbtTagCompoundClass);
 		} catch (NoSuchMethodException e) {
-			// Bukkit 1.12
-			// XXX: remove fallback on next version
-			_TileEntity_load = minecraftTileEntityClass.getMethod("a", nbtTagCompoundClass);
+			try {
+				// Bukkit 1.16+
+				Class<?> minecraftIBlockDataClass = BukkitReflect.getMinecraftClass("IBlockData");
+				_TileEntity_load = minecraftTileEntityClass.getMethod("load", minecraftIBlockDataClass, nbtTagCompoundClass);
+			} catch (NoSuchMethodException ex) {
+				// Bukkit 1.12
+				// XXX: remove fallback on next version
+				_TileEntity_load = minecraftTileEntityClass.getMethod("a", nbtTagCompoundClass);
+			}
 		}
 
 		Class<?> craftWorldClass = BukkitReflect.getCraftBukkitClass("CraftWorld");
@@ -197,7 +203,7 @@ public final class NBTUtils {
 		NBTBase.prepareReflection();
 		Object tileEntity = getTileEntity(block);
 		if (tileEntity != null) {
-			BukkitReflect.invokeMethod(tileEntity, _TileEntity_load, data._handle);
+			BukkitReflect.invokeMethod(tileEntity, _TileEntity_load, null, data._handle);
 		}
 	}
 
