@@ -129,6 +129,7 @@ abstract class EntityNBTBase extends BaseNBT {
 		// When cloning, remove the UUID to force all entities to have a unique one.
 		entityNbt._data.remove("UUIDMost");
 		entityNbt._data.remove("UUIDLeast");
+		entityNbt._data.remove("UUID");
 		return entityNbt;
 	}
 

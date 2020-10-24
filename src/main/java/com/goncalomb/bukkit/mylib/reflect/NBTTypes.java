@@ -43,6 +43,10 @@ final class NBTTypes {
 		registerNew("NBTTagFloat");
 		registerNew("NBTTagDouble");
 		registerNew("NBTTagString");
+		registerNew("NBTTagByteArray");
+		registerNew("NBTTagIntArray");
+		// TagLongArray's internal field name is 'b' for some absurd reason.
+		// Since it isn't used, don't bother working around this
 	}
 
 	private static void registerNew(String tagClassName) throws SecurityException, NoSuchMethodException, NoSuchFieldException {

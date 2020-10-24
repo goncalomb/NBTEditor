@@ -22,6 +22,7 @@ package com.goncalomb.bukkit.mylib.utils;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -155,4 +156,16 @@ public final class UtilsMc {
 		return perm;
 	}
 
+	public static UUID convertFromUUIDInts(int[] uuidData) {
+		return new UUID(uuidData[0] << 32 | uuidData[1], uuidData[2] << 32 | uuidData[3]);
+	}
+
+	public static int[] convertToUUIDInts(UUID uuid) {
+		return new int[] {
+			(int)((uuid.getMostSignificantBits() >> 32)  & 0xFFFFFFFF),
+			(int)(uuid.getMostSignificantBits()          & 0xFFFFFFFF),
+			(int)((uuid.getLeastSignificantBits() >> 32) & 0xFFFFFFFF),
+			(int)(uuid.getLeastSignificantBits()         & 0xFFFFFFFF)
+		};
+	}
 }

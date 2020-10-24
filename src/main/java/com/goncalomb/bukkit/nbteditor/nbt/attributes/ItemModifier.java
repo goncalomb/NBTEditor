@@ -28,6 +28,7 @@ import org.bukkit.inventory.ItemStack;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
 import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
+import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 
 public final class ItemModifier extends Modifier {
 
@@ -41,7 +42,7 @@ public final class ItemModifier extends Modifier {
 				data.getDouble("Amount"),
 				data.getInt("Operation"),
 				(data.hasKey("Slot") ? data.getString("Slot") : null),
-				new UUID(data.getLong("UUIDMost"), data.getLong("UUIDLeast")));
+				UtilsMc.convertFromUUIDInts(data.getIntArray("UUID")));
 	}
 
 	public static List<ItemModifier> getItemStackModifiers(ItemStack item) {
