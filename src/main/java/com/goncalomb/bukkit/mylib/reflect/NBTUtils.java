@@ -22,7 +22,7 @@ package com.goncalomb.bukkit.mylib.reflect;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Optional;
+import java.util.function.Function;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -62,7 +62,7 @@ public final class NBTUtils {
 
 	// Minecraft's World
 	private static Method _World_getTileEntity;
-	private static Method _World_addEntity;
+	private static Method _WorldServer_addAllEntitiesSafely;
 
 	// Minecraft's EntityTypes Class
 	private static Method _EntityTypes_a; // Spawn an entity from a NBTCompound.
@@ -116,10 +116,12 @@ public final class NBTUtils {
 
 		Class<?> minecraftWorldClass = BukkitReflect.getMinecraftClass("World");
 		_World_getTileEntity = minecraftWorldClass.getMethod("getTileEntity", minecraftBlockPositionClass);
-		_World_addEntity = minecraftWorldClass.getMethod("addEntity", minecraftEntityClass);
+
+		Class<?> minecraftWorldServerClass = BukkitReflect.getMinecraftClass("WorldServer");
+		_WorldServer_addAllEntitiesSafely = minecraftWorldServerClass.getMethod("addAllEntitiesSafely", minecraftEntityClass);
 
 		Class<?> minecraftEntityTypesClass = BukkitReflect.getMinecraftClass("EntityTypes");
-		_EntityTypes_a = minecraftEntityTypesClass.getMethod("a", nbtTagCompoundClass, minecraftWorldClass);
+		_EntityTypes_a = minecraftEntityTypesClass.getMethod("a", nbtTagCompoundClass, minecraftWorldClass, Function.class);
 	}
 
 	private NBTUtils() { }
@@ -138,13 +140,17 @@ public final class NBTUtils {
 	@SuppressWarnings("unchecked")
 	public static Entity spawnEntity(NBTTagCompound data, Location location) {
 		Object worldHandle = BukkitReflect.invokeMethod(location.getWorld(), _CraftWorld_getHandle);
-		Optional<Object> entityHandleOp = (Optional<Object>) BukkitReflect.invokeMethod(null, _EntityTypes_a, data._handle, worldHandle);
-		if (!entityHandleOp.isPresent()) {
+		// This function will be applied to each summoned entity (including passengers) to set their location
+		Function<Object, Object> entityFunction = (Object entity) -> {
+			BukkitReflect.invokeMethod(entity, _Entity_setPosition, location.getX(), location.getY(), location.getZ());
+			return entity;
+		};
+		// Summon the entity, and for each entity summoned (including passengers) run the above function
+		Object entityHandle = BukkitReflect.invokeMethod(null, _EntityTypes_a, data._handle, worldHandle, entityFunction);
+		if (entityHandle == null) {
 			return null;
 		}
-		Object entityHandle = entityHandleOp.get();
-		BukkitReflect.invokeMethod(entityHandle, _Entity_setPosition, location.getX(), location.getY(), location.getZ());
-		BukkitReflect.invokeMethod(worldHandle, _World_addEntity, entityHandle);
+		BukkitReflect.invokeMethod(worldHandle, _WorldServer_addAllEntitiesSafely, entityHandle);
 		return (Entity) BukkitReflect.invokeMethod(entityHandle, _Entity_getBukkitEntity);
 	}
 
