@@ -384,7 +384,7 @@ public class EntityNBT extends EntityNBTBase {
 		cEnderPearl.add("Owner", new StringVariable("ownerName"));
 
 		NBTUnboundVariableContainer cPotion = new NBTUnboundVariableContainer("Potion", cEntity);
-		cPotion.add("Potion", new PotionVariable("Potion"));
+		cPotion.add("Item", new PotionVariable("Item"));
 
 		NBTUnboundVariableContainer cTrident = new NBTUnboundVariableContainer("Trident", cArrow);
 		cTrident.add("Trident", new SingleItemVariable("Trident"));

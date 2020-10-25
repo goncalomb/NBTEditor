@@ -179,7 +179,7 @@ public final class NBTUtils {
 	public static ItemStack potionFromNBTEffectsList(NBTTagList effects) {
 		NBTTagCompound tag = new NBTTagCompound();
 		tag.setList("CustomPotionEffects", effects.clone());
-		tag.setString("Potion", "minecraft:empty");
+		tag.setString("Potion", "minecraft:mundane");
 		NBTTagCompound data = new NBTTagCompound();
 		data.setString("id", "minecraft:potion");
 		data.setByte("Count", (byte) 1);
