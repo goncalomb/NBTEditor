@@ -70,6 +70,7 @@ public final class EnchantmentsMap {
 		_enchantments.put("Multishot", Enchantment.MULTISHOT);
 		_enchantments.put("Piercing", Enchantment.PIERCING);
 		_enchantments.put("QuickCharge", Enchantment.QUICK_CHARGE);
+		_enchantments.put("SoulSpeed", Enchantment.SOUL_SPEED);
 
 		List<String> enchantmentNames = new ArrayList<String>(_enchantments.names());
 		Collections.sort(enchantmentNames, String.CASE_INSENSITIVE_ORDER);

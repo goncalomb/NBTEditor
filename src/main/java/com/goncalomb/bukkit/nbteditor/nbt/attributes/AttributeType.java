@@ -23,22 +23,22 @@ import java.util.HashMap;
 
 public enum AttributeType {
 	// Mobs
-	MAX_HEALTH("MaxHealth", "generic.maxHealth", 0.0, Double.MAX_VALUE),
-	FOLLOW_RANGE("FollowRange", "generic.followRange", 0.0, 2048),
-	KNOCKBACK_RESISTANCE("KnockbackResistance", "generic.knockbackResistance", 0.0, 1.0),
-	MOVEMENT_SPEED("MovementSpeed", "generic.movementSpeed", 0.0, Double.MAX_VALUE),
-	ATTACK_DAMAGE("AttackDamage", "generic.attackDamage", 0.0, Double.MAX_VALUE),
-	ATTACK_KNOCKBACK("AttackKnockback", "generic.attackKnockback", 0.0, 5.0),
+	MAX_HEALTH("MaxHealth", "generic.max_health", 0.0, Double.MAX_VALUE),
+	FOLLOW_RANGE("FollowRange", "generic.follow_range", 0.0, 2048),
+	KNOCKBACK_RESISTANCE("KnockbackResistance", "generic.knockback_resistance", 0.0, 1.0),
+	MOVEMENT_SPEED("MovementSpeed", "generic.movement_speed", 0.0, Double.MAX_VALUE),
+	ATTACK_DAMAGE("AttackDamage", "generic.attack_damage", 0.0, Double.MAX_VALUE),
+	ATTACK_KNOCKBACK("AttackKnockback", "generic.attack_knockback", 0.0, 5.0),
 	ARMOR("Armor", "generic.armor", 0.0, 30.0),
-	ARMOR_TOUGHNESS("ArmorToughness", "generic.armorToughness", 0.0, 20.0),
-	FLYING_SPEED("FlyingSpeed", "generic.flyingSpeed", 0.0, 1024.0),
+	ARMOR_TOUGHNESS("ArmorToughness", "generic.armor_toughness", 0.0, 20.0),
+	FLYING_SPEED("FlyingSpeed", "generic.flying_speed", 0.0, 1024.0),
 	// Player
-	ATTACK_SPEED("AttackSpeed", "generic.attackSpeed", 0.0, 1024.0),
+	ATTACK_SPEED("AttackSpeed", "generic.attack_speed", 0.0, 1024.0),
 	LUCK("Luck", "generic.luck", -1024.0, 1024.0),
 	// Horses
-	JUMP_STRENGTH("JumpStrength", "horse.jumpStrength", 0.0, 2),
+	JUMP_STRENGTH("JumpStrength", "horse.jump_strength", 0.0, 2),
 	// Zombies
-	SPAWN_REINFORCEMENTS("SpawnReinforcements", "zombie.spawnReinforcements", 0.0, 1.0);
+	SPAWN_REINFORCEMENTS("SpawnReinforcements", "zombie.spawn_reinforcements", 0.0, 1.0);
 
 	private static final HashMap<String, AttributeType> _attributes = new HashMap<String, AttributeType>();
 	private static final HashMap<String, AttributeType> _attributesInternal = new HashMap<String, AttributeType>();

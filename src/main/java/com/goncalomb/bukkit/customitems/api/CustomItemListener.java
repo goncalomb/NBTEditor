@@ -22,6 +22,9 @@ package com.goncalomb.bukkit.customitems.api;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import com.goncalomb.bukkit.mylib.utils.Utils;
+import com.goncalomb.bukkit.nbteditor.NBTEditor;
+
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -73,7 +76,10 @@ final class CustomItemListener implements Listener {
 	@EventHandler
 	private void playerInteract(PlayerInteractEvent event) {
 		Action action = event.getAction();
-		if (action != Action.PHYSICAL) {
+
+		// Only check the first interaction each tick per player
+		// This is needed because 1.15+ generate an extra left click event when right clicking with a book
+		if (action != Action.PHYSICAL && Utils.checkOnceThisTick(NBTEditor.getInstance(), event.getPlayer(), "NBTEditorInteractEvent")) {
 			if (action == Action.RIGHT_CLICK_BLOCK && _interationMaterials.contains(event.getClickedBlock().getType())) {
 				return;
 			}
