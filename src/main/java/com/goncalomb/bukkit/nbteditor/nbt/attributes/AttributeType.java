@@ -23,22 +23,22 @@ import java.util.HashMap;
 
 public enum AttributeType {
 	// Mobs
-	MAX_HEALTH("MaxHealth", "generic.max_health", 0.0, Double.MAX_VALUE),
-	FOLLOW_RANGE("FollowRange", "generic.follow_range", 0.0, 2048),
-	KNOCKBACK_RESISTANCE("KnockbackResistance", "generic.knockback_resistance", 0.0, 1.0),
-	MOVEMENT_SPEED("MovementSpeed", "generic.movement_speed", 0.0, Double.MAX_VALUE),
-	ATTACK_DAMAGE("AttackDamage", "generic.attack_damage", 0.0, Double.MAX_VALUE),
-	ATTACK_KNOCKBACK("AttackKnockback", "generic.attack_knockback", 0.0, 5.0),
-	ARMOR("Armor", "generic.armor", 0.0, 30.0),
-	ARMOR_TOUGHNESS("ArmorToughness", "generic.armor_toughness", 0.0, 20.0),
-	FLYING_SPEED("FlyingSpeed", "generic.flying_speed", 0.0, 1024.0),
+	MAX_HEALTH("MaxHealth", "minecraft:generic.max_health", 0.0, Double.MAX_VALUE),
+	FOLLOW_RANGE("FollowRange", "minecraft:generic.follow_range", 0.0, 2048),
+	KNOCKBACK_RESISTANCE("KnockbackResistance", "minecraft:generic.knockback_resistance", 0.0, 1.0),
+	MOVEMENT_SPEED("MovementSpeed", "minecraft:generic.movement_speed", 0.0, Double.MAX_VALUE),
+	ATTACK_DAMAGE("AttackDamage", "minecraft:generic.attack_damage", 0.0, Double.MAX_VALUE),
+	ATTACK_KNOCKBACK("AttackKnockback", "minecraft:generic.attack_knockback", 0.0, 5.0),
+	ARMOR("Armor", "minecraft:generic.armor", 0.0, 30.0),
+	ARMOR_TOUGHNESS("ArmorToughness", "minecraft:generic.armor_toughness", 0.0, 20.0),
+	FLYING_SPEED("FlyingSpeed", "minecraft:generic.flying_speed", 0.0, 1024.0),
 	// Player
-	ATTACK_SPEED("AttackSpeed", "generic.attack_speed", 0.0, 1024.0),
-	LUCK("Luck", "generic.luck", -1024.0, 1024.0),
+	ATTACK_SPEED("AttackSpeed", "minecraft:generic.attack_speed", 0.0, 1024.0),
+	LUCK("Luck", "minecraft:generic.luck", -1024.0, 1024.0),
 	// Horses
-	JUMP_STRENGTH("JumpStrength", "horse.jump_strength", 0.0, 2),
+	JUMP_STRENGTH("JumpStrength", "minecraft:horse.jump_strength", 0.0, 2),
 	// Zombies
-	SPAWN_REINFORCEMENTS("SpawnReinforcements", "zombie.spawn_reinforcements", 0.0, 1.0);
+	SPAWN_REINFORCEMENTS("SpawnReinforcements", "minecraft:zombie.spawn_reinforcements", 0.0, 1.0);
 
 	private static final HashMap<String, AttributeType> _attributes = new HashMap<String, AttributeType>();
 	private static final HashMap<String, AttributeType> _attributesInternal = new HashMap<String, AttributeType>();
