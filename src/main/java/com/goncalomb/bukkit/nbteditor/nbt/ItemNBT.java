@@ -25,6 +25,7 @@ public class ItemNBT extends BaseNBT {
 		cItem.add("Lore", new RawJsonListVariable("display/Lore"));
 		cItem.add("Damage", new IntegerVariable("Damage"));
 		cItem.add("Unbreakable", new BooleanVariable("Unbreakable"));
+		cItem.add("CustomModelData", new IntegerVariable("CustomModelData"));
 		cItem.add("CanDestroy", new MaterialListVariable("CanDestroy"));
 		cItem.add("CanPlaceOn", new MaterialListVariable("CanPlaceOn"));
 		cItem.add("HideFlags", new IntegerVariable("HideFlags"));
