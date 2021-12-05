@@ -68,9 +68,9 @@ public final class NBTUtils {
 	private static Method _EntityTypes_a; // Spawn an entity from a NBTCompound.
 
 	static void prepareReflection() throws SecurityException, NoSuchMethodException, NoSuchFieldException {
-		Class<?> nbtTagCompoundClass = BukkitReflect.getMinecraftClass("NBTTagCompound");
+		Class<?> nbtTagCompoundClass = BukkitReflect.getMinecraftClass("nbt.NBTTagCompound");
 
-		Class<?> minecraftItemStackClass = BukkitReflect.getMinecraftClass("ItemStack");
+		Class<?> minecraftItemStackClass = BukkitReflect.getMinecraftClass("world.item.ItemStack");
 		_ItemStack_nbtConstructor = minecraftItemStackClass.getDeclaredConstructor(nbtTagCompoundClass);
 		_ItemStack_nbtConstructor.setAccessible(true);
 		_ItemStack_save = minecraftItemStackClass.getMethod("save", nbtTagCompoundClass);
@@ -83,7 +83,7 @@ public final class NBTUtils {
 		_CraftItemStack_handle = craftItemStackClass.getDeclaredField("handle");
 		_CraftItemStack_handle.setAccessible(true);
 
-		Class<?> minecraftEntityClass = BukkitReflect.getMinecraftClass("Entity");
+		Class<?> minecraftEntityClass = BukkitReflect.getMinecraftClass("world.entity.Entity");
 		_Entity_save = minecraftEntityClass.getMethod("save", nbtTagCompoundClass);
 		_Entity_getBukkitEntity = minecraftEntityClass.getMethod("getBukkitEntity");
 		_Entity_setPosition = minecraftEntityClass.getMethod("setPosition", double.class, double.class, double.class);
@@ -91,7 +91,7 @@ public final class NBTUtils {
 		Class<?> craftEntityClass = BukkitReflect.getCraftBukkitClass("entity.CraftEntity");
 		_CraftEntity_getHandle = craftEntityClass.getMethod("getHandle");
 
-		Class<?> minecraftTileEntityClass = BukkitReflect.getMinecraftClass("TileEntity");
+		Class<?> minecraftTileEntityClass = BukkitReflect.getMinecraftClass("world.level.block.entity.TileEntity");
 		_TileEntity_save = minecraftTileEntityClass.getMethod("save", nbtTagCompoundClass);
 		try {
 			// Bukkit 1.12.1-1.15.2
@@ -99,7 +99,7 @@ public final class NBTUtils {
 		} catch (NoSuchMethodException e) {
 			try {
 				// Bukkit 1.16+
-				Class<?> minecraftIBlockDataClass = BukkitReflect.getMinecraftClass("IBlockData");
+				Class<?> minecraftIBlockDataClass = BukkitReflect.getMinecraftClass("world.level.block.state");
 				_TileEntity_load = minecraftTileEntityClass.getMethod("load", minecraftIBlockDataClass, nbtTagCompoundClass);
 			} catch (NoSuchMethodException ex) {
 				// Bukkit 1.12
@@ -111,16 +111,16 @@ public final class NBTUtils {
 		Class<?> craftWorldClass = BukkitReflect.getCraftBukkitClass("CraftWorld");
 		_CraftWorld_getHandle = craftWorldClass.getMethod("getHandle");
 
-		Class<?> minecraftBlockPositionClass = BukkitReflect.getMinecraftClass("BlockPosition");
+		Class<?> minecraftBlockPositionClass = BukkitReflect.getMinecraftClass("core.BlockPosition");
 		_BlockPosition_constructor = minecraftBlockPositionClass.getConstructor(int.class, int.class, int.class);
 
-		Class<?> minecraftWorldClass = BukkitReflect.getMinecraftClass("World");
+		Class<?> minecraftWorldClass = BukkitReflect.getMinecraftClass("world.level.World");
 		_World_getTileEntity = minecraftWorldClass.getMethod("getTileEntity", minecraftBlockPositionClass);
 
-		Class<?> minecraftWorldServerClass = BukkitReflect.getMinecraftClass("WorldServer");
+		Class<?> minecraftWorldServerClass = BukkitReflect.getMinecraftClass("server.level.WorldServer");
 		_WorldServer_addAllEntitiesSafely = minecraftWorldServerClass.getMethod("addAllEntitiesSafely", minecraftEntityClass);
 
-		Class<?> minecraftEntityTypesClass = BukkitReflect.getMinecraftClass("EntityTypes");
+		Class<?> minecraftEntityTypesClass = BukkitReflect.getMinecraftClass("world.entity.EntityTypes");
 		_EntityTypes_a = minecraftEntityTypesClass.getMethod("a", nbtTagCompoundClass, minecraftWorldClass, Function.class);
 	}
 

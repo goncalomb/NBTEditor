@@ -29,9 +29,9 @@ public final class NBTTagList extends NBTBase {
 	List<Object> _list;
 
 	static void prepareReflectionz() throws SecurityException, NoSuchMethodException, NoSuchFieldException {
-		_typeField = _nbtTagListClass.getDeclaredField("type");
+		_typeField = _nbtTagListClass.getDeclaredField("w");
 		_typeField.setAccessible(true);
-		_listField = _nbtTagListClass.getDeclaredField("list");
+		_listField = _nbtTagListClass.getDeclaredField("c");
 		_listField.setAccessible(true);
 	}
 

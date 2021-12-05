@@ -36,21 +36,21 @@ final class NBTTypes {
 	private Class<?> _dataType;
 
 	public static void prepareReflection() throws SecurityException, NoSuchMethodException, NoSuchFieldException {
-		registerNew("NBTTagByte");
-		registerNew("NBTTagShort");
-		registerNew("NBTTagInt");
-		registerNew("NBTTagLong");
-		registerNew("NBTTagFloat");
-		registerNew("NBTTagDouble");
-		registerNew("NBTTagString");
-		registerNew("NBTTagByteArray");
-		registerNew("NBTTagIntArray");
+		registerNew("NBTTagByte", "x");
+		registerNew("NBTTagShort", "c");
+		registerNew("NBTTagInt", "c");
+		registerNew("NBTTagLong", "c");
+		registerNew("NBTTagFloat", "w");
+		registerNew("NBTTagDouble", "w");
+		registerNew("NBTTagString", "A");
+		registerNew("NBTTagByteArray", "c");
+		registerNew("NBTTagIntArray", "c");
 		// TagLongArray's internal field name is 'b' for some absurd reason.
 		// Since it isn't used, don't bother working around this
 	}
 
-	private static void registerNew(String tagClassName) throws SecurityException, NoSuchMethodException, NoSuchFieldException {
-		NBTTypes handler = new NBTTypes(tagClassName);
+	private static void registerNew(String tagClassName, String fieldName) throws SecurityException, NoSuchMethodException, NoSuchFieldException {
+		NBTTypes handler = new NBTTypes(tagClassName, fieldName);
 		_innerTypeMap.put((handler._dataType.isPrimitive() ? ClassUtils.primitiveToWrapper(handler._dataType) : handler._dataType), handler);
 		_outerTypeMap.put(handler._class, handler);
 	}
@@ -82,9 +82,9 @@ final class NBTTypes {
 		}
 	}
 
-	private NBTTypes(String tagClassName) throws SecurityException, NoSuchMethodException, NoSuchFieldException {
-		_class = BukkitReflect.getMinecraftClass(tagClassName);
-		_data = _class.getDeclaredField("data");
+	private NBTTypes(String tagClassName, String fieldName) throws SecurityException, NoSuchMethodException, NoSuchFieldException {
+		_class = BukkitReflect.getMinecraftClass("nbt." + tagClassName);
+		_data = _class.getDeclaredField(fieldName);
 		_data.setAccessible(true);
 		_dataType = _data.getType();
 		_constructor = _class.getDeclaredConstructor(_dataType);

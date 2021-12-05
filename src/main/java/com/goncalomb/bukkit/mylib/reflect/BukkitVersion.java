@@ -21,7 +21,7 @@ public final class BukkitVersion {
 			}
 			try {
 				Object mcServer = BukkitReflect.invokeMethod(server, BukkitReflect.getCraftBukkitClass("CraftServer").getDeclaredMethod("getServer"));
-				String version = (String) BukkitReflect.invokeMethod(mcServer, BukkitReflect.getMinecraftClass("MinecraftServer").getDeclaredMethod("getVersion"));
+				String version = (String) BukkitReflect.invokeMethod(mcServer, BukkitReflect.getMinecraftClass("server.MinecraftServer").getDeclaredMethod("getVersion"));
 				Matcher matcher = Pattern.compile("^(\\d+)(?:\\.(\\d+)(?:\\.(\\d+))?)?$").matcher(version);
 				if (matcher.find()) {
 					_minecraftVersionMajor = Integer.parseInt(matcher.group(1));

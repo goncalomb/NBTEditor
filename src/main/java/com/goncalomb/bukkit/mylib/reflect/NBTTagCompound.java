@@ -58,13 +58,13 @@ public final class NBTTagCompound extends NBTBase {
 		_getByteArray = _nbtTagCompoundClass.getMethod("getByteArray", String.class);
 		_getIntArray = _nbtTagCompoundClass.getMethod("getIntArray", String.class);
 		_getLongArray = _nbtTagCompoundClass.getMethod("getLongArray", String.class);
-		_mapField = _nbtTagCompoundClass.getDeclaredField("map");
+		_mapField = _nbtTagCompoundClass.getDeclaredField("x");
 		_mapField.setAccessible(true);
 
-		Class<?>_mojangsonParserClass = BukkitReflect.getMinecraftClass("MojangsonParser");
+		Class<?>_mojangsonParserClass = BukkitReflect.getMinecraftClass("nbt.MojangsonParser");
 		_parseMojangson = _mojangsonParserClass.getMethod("parse", String.class);
 
-		Class<?> nbtCompressedStreamToolsClass = BukkitReflect.getMinecraftClass("NBTCompressedStreamTools");
+		Class<?> nbtCompressedStreamToolsClass = BukkitReflect.getMinecraftClass("nbt.NBTCompressedStreamTools");
 		_tagSerializeStream = nbtCompressedStreamToolsClass.getMethod("a", _nbtTagCompoundClass, OutputStream.class);
 		_tagUnserializeStream = nbtCompressedStreamToolsClass.getMethod("a", InputStream.class);
 	}
