@@ -157,7 +157,7 @@ public final class UtilsMc {
 	}
 
 	public static UUID convertFromUUIDInts(int[] uuidData) {
-		return new UUID(uuidData[0] << 32 | uuidData[1], uuidData[2] << 32 | uuidData[3]);
+		return new UUID(((long) uuidData[0] << 32) | uuidData[1], ((long) uuidData[2] << 32) | uuidData[3]);
 	}
 
 	public static int[] convertToUUIDInts(UUID uuid) {
