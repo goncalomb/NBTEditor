@@ -125,9 +125,12 @@ public class EntityNBT extends EntityNBTBase {
 		cCreeper.add("Ignited", new BooleanVariable("ignited"));
 
 		NBTUnboundVariableContainer cDolphin = new NBTUnboundVariableContainer("Dolphin", cMob);
+		cDolphin.add("CanFindTreasure", new BooleanVariable("CanFindTreasure"));
 		cDolphin.add("GotFish", new BooleanVariable("GotFish"));
 		cDolphin.add("Moistness", new IntegerVariable("Moistness"));
-		// TODO: add missing variables
+		cDolphin.add("TreasurePosX", new IntegerVariable("TreasurePosX"));
+		cDolphin.add("TreasurePosY", new IntegerVariable("TreasurePosY"));
+		cDolphin.add("TreasurePosZ", new IntegerVariable("TreasurePosZ"));
 
 		NBTUnboundVariableContainer cEnderDragon = new NBTUnboundVariableContainer("EnderDragon", cMob);
 		cEnderDragon.add("DragonPhase", new IntegerVariable("DragonPhase", 0, 10));
@@ -159,7 +162,12 @@ public class EntityNBT extends EntityNBTBase {
 
 		NBTUnboundVariableContainer cTurtle = new NBTUnboundVariableContainer("Turtle", cBreed);
 		cTurtle.add("HasEgg", new BooleanVariable("HasEgg"));
-		// TODO: add missing variables
+		cTurtle.add("HomePosX", new IntegerVariable("HomePosX"));
+		cTurtle.add("HomePosY", new IntegerVariable("HomePosY"));
+		cTurtle.add("HomePosZ", new IntegerVariable("HomePosZ"));
+		cTurtle.add("TravelPosX", new IntegerVariable("TravelPosX"));
+		cTurtle.add("TravelPosY", new IntegerVariable("TravelPosY"));
+		cTurtle.add("TravelPosZ", new IntegerVariable("TravelPosZ"));
 
 		NBTUnboundVariableContainer cVillagerGolem = new NBTUnboundVariableContainer("VillagerGolem", cMob);
 		cVillagerGolem.add("PlayerCreated", new BooleanVariable("PlayerCreated"));
@@ -176,16 +184,32 @@ public class EntityNBT extends EntityNBTBase {
 		cZombie.add("InWaterTime", new IntegerVariable("InWaterTime"));
 		cZombie.add("DrownedConversionTime", new IntegerVariable("DrownedConversionTime"));
 
+		// 1.15 and below
 		NBTUnboundVariableContainer cZombiePigman = new NBTUnboundVariableContainer("ZombiePigman", cZombie);
 		cZombiePigman.add("Anger", new ShortVariable("Anger"));
+
+		NBTUnboundVariableContainer cZoglin = new NBTUnboundVariableContainer("Zoglin", cMob);
+		cZoglin.add("IsBaby", new BooleanVariable("IsBaby"));
+
+		NBTUnboundVariableContainer cPiglin = new NBTUnboundVariableContainer("Piglin", cMob);
+		cPiglin.add("IsBaby", new BooleanVariable("IsBaby"));
+		cPiglin.add("IsImmuneToZombification", new BooleanVariable("IsImmuneToZombification"));
+		cPiglin.add("CannotHunt", new BooleanVariable("CannotHunt"));
+		cPiglin.add("TimeInOverworld", new IntegerVariable("TimeInOverworld"));
+		// TODO: add villager inventory
+
+		NBTUnboundVariableContainer cZombifiedPiglin = new NBTUnboundVariableContainer("ZombifiedPilgin", cZombie);
+		cZombifiedPiglin.add("AngerTime", new IntegerVariable("AngerTime"));
 
 		NBTUnboundVariableContainer cZombieVillager = new NBTUnboundVariableContainer("ZombieVillager", cZombie);
 		cZombieVillager.add("Profession", new IntegerVariable("Profession", 0, 5));
 		cZombieVillager.add("ConversionTime", new IntegerVariable("ConversionTime", -1));
 
 		NBTUnboundVariableContainer cPhantom = new NBTUnboundVariableContainer("Phantom", cMob);
+		cPhantom.add("AX", new IntegerVariable("AX"));
+		cPhantom.add("AY", new IntegerVariable("AY"));
+		cPhantom.add("AZ", new IntegerVariable("AZ"));
 		cPhantom.add("Size", new IntegerVariable("Size"));
-		// TODO: add missing variables
 
 		// Breed SubTypes
 
@@ -236,6 +260,20 @@ public class EntityNBT extends EntityNBTBase {
 		cFox.add("Sitting", new BooleanVariable("Sitting"));
 		cFox.add("Crouching", new BooleanVariable("Crouching"));
 
+		NBTUnboundVariableContainer cBee = new NBTUnboundVariableContainer("Bee", cBreed);
+		cBee.add("AngerTime", new IntegerVariable("AngerTime"));
+		cBee.add("CannotEnterHiveTicks", new IntegerVariable("CannotEnterHiveTicks"));
+		cBee.add("CropsGrownSincePollination", new IntegerVariable("CropsGrownSincePollination"));
+		cBee.add("TicksSincePollination", new IntegerVariable("TicksSincePollination"));
+		cBee.add("HasNectar", new BooleanVariable("HasNectar"));
+		cBee.add("HasStung", new BooleanVariable("HasStung"));
+		// TODO: add FlowerPos / HivePos
+
+		NBTUnboundVariableContainer cHoglin = new NBTUnboundVariableContainer("Hoglin", cBreed);
+		cHoglin.add("IsImmuneToZombification", new BooleanVariable("IsImmuneToZombification"));
+		cHoglin.add("CannotBeHunted", new BooleanVariable("CannotBeHunted"));
+		cHoglin.add("TimeInOverworld", new IntegerVariable("TimeInOverworld"));
+
 		// Tameable SubTypes
 
 		NBTUnboundVariableContainer cOcelot = new NBTUnboundVariableContainer("Ocelot", cTameable);
@@ -245,7 +283,7 @@ public class EntityNBT extends EntityNBTBase {
 		cParrot.add("Variant", new IntegerVariable("Variant", 0, 4));
 
 		NBTUnboundVariableContainer cWolf = new NBTUnboundVariableContainer("Wolf", cTameable);
-		cWolf.add("Angry", new BooleanVariable("Angry"));
+		cWolf.add("AngerTime", new IntegerVariable("AngerTime"));
 		cWolf.add("CollarColor", new ByteVariable("CollarColor", (byte) 0, (byte) 15));
 
 		NBTUnboundVariableContainer cCat = new NBTUnboundVariableContainer("Cat", cTameable);
@@ -313,7 +351,9 @@ public class EntityNBT extends EntityNBTBase {
 		ENTITY_VARIABLES.put("minecraft:wolf", cWolf);
 		ENTITY_VARIABLES.put("minecraft:zombie", cZombie);
 		ENTITY_VARIABLES.put("minecraft:zombie_horse", cHorse);
-		ENTITY_VARIABLES.put("minecraft:zombie_pigman", cZombiePigman);
+		if (!BukkitVersion.isVersion(16)) {
+			ENTITY_VARIABLES.put("minecraft:zombie_pigman", cZombiePigman);
+		}
 		ENTITY_VARIABLES.put("minecraft:zombie_villager", cZombieVillager);
 		ENTITY_VARIABLES.put("minecraft:cod", cFish);
 		ENTITY_VARIABLES.put("minecraft:salmon", cFish);
@@ -321,17 +361,27 @@ public class EntityNBT extends EntityNBTBase {
 		ENTITY_VARIABLES.put("minecraft:tropical_fish", cTropicalFish);
 
 		// TODO: add variables for 1.14 mobs
-		ENTITY_VARIABLES.put("minecraft:pillager", cMob);
-		ENTITY_VARIABLES.put("minecraft:panda", cMob);
-		ENTITY_VARIABLES.put("minecraft:wandering_trader", cMob);
-		ENTITY_VARIABLES.put("minecraft:trader_llama", cMob);
-		ENTITY_VARIABLES.put("minecraft:fox", cFox);
-		ENTITY_VARIABLES.put("minecraft:cat", cCat);
-		ENTITY_VARIABLES.put("minecraft:ravager", cMob);
+		if (BukkitVersion.isVersion(14)) {
+			ENTITY_VARIABLES.put("minecraft:pillager", cMob);
+			ENTITY_VARIABLES.put("minecraft:panda", cMob);
+			ENTITY_VARIABLES.put("minecraft:wandering_trader", cMob);
+			ENTITY_VARIABLES.put("minecraft:trader_llama", cMob);
+			ENTITY_VARIABLES.put("minecraft:fox", cFox);
+			ENTITY_VARIABLES.put("minecraft:cat", cCat);
+			ENTITY_VARIABLES.put("minecraft:ravager", cMob);
+		}
 
 		if (BukkitVersion.isVersion(15)) {
-			// TODO: add variables for 1.15 mobs
-			ENTITY_VARIABLES.put("minecraft:bee", cMob);
+			ENTITY_VARIABLES.put("minecraft:bee", cBee);
+		}
+
+		if (BukkitVersion.isVersion(16)) {
+			ENTITY_VARIABLES.put("minecraft:piglin", cPiglin);
+			ENTITY_VARIABLES.put("minecraft:piglin_brute", cMob);
+			ENTITY_VARIABLES.put("minecraft:zombified_piglin", cZombifiedPiglin);
+			ENTITY_VARIABLES.put("minecraft:zoglin", cZoglin);
+			ENTITY_VARIABLES.put("minecraft:hoglin", cHoglin);
+			ENTITY_VARIABLES.put("minecraft:strider", cPig);
 		}
 
 		// Projectile Entities
@@ -362,7 +412,7 @@ public class EntityNBT extends EntityNBTBase {
 		cEnderPearl.add("Owner", new StringVariable("ownerName"));
 
 		NBTUnboundVariableContainer cPotion = new NBTUnboundVariableContainer("Potion", cEntity);
-		cPotion.add("Potion", new PotionVariable("Potion"));
+		cPotion.add("Item", new PotionVariable("Item"));
 
 		NBTUnboundVariableContainer cTrident = new NBTUnboundVariableContainer("Trident", cArrow);
 		cTrident.add("Trident", new SingleItemVariable("Trident"));

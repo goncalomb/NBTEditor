@@ -71,7 +71,7 @@ public final class EntityTypeMap {
 		_legacyNames.put("Zombie".toLowerCase(), EntityType.ZOMBIE);
 		_legacyNames.put("Slime".toLowerCase(), EntityType.SLIME);
 		_legacyNames.put("Ghast".toLowerCase(), EntityType.GHAST);
-		_legacyNames.put("PigZombie".toLowerCase(), EntityType.PIG_ZOMBIE);
+		_legacyNames.put("PigZombie".toLowerCase(), EntityType.ZOMBIFIED_PIGLIN);
 		_legacyNames.put("Enderman".toLowerCase(), EntityType.ENDERMAN);
 		_legacyNames.put("CaveSpider".toLowerCase(), EntityType.CAVE_SPIDER);
 		_legacyNames.put("Silverfish".toLowerCase(), EntityType.SILVERFISH);

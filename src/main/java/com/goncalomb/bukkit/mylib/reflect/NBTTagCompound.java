@@ -38,6 +38,9 @@ public final class NBTTagCompound extends NBTBase {
 	private static Method _getFloat;
 	private static Method _getDouble;
 	private static Method _getString;
+	private static Method _getByteArray;
+	private static Method _getIntArray;
+	private static Method _getLongArray;
 	private static Field _mapField;
 
 	private static Method _tagSerializeStream;
@@ -52,13 +55,16 @@ public final class NBTTagCompound extends NBTBase {
 		_getFloat = _nbtTagCompoundClass.getMethod("getFloat", String.class);
 		_getDouble = _nbtTagCompoundClass.getMethod("getDouble", String.class);
 		_getString = _nbtTagCompoundClass.getMethod("getString", String.class);
-		_mapField = _nbtTagCompoundClass.getDeclaredField("map");
+		_getByteArray = _nbtTagCompoundClass.getMethod("getByteArray", String.class);
+		_getIntArray = _nbtTagCompoundClass.getMethod("getIntArray", String.class);
+		_getLongArray = _nbtTagCompoundClass.getMethod("getLongArray", String.class);
+		_mapField = _nbtTagCompoundClass.getDeclaredField("x");
 		_mapField.setAccessible(true);
 
-		Class<?>_mojangsonParserClass = BukkitReflect.getMinecraftClass("MojangsonParser");
+		Class<?>_mojangsonParserClass = BukkitReflect.getMinecraftClass("nbt.MojangsonParser");
 		_parseMojangson = _mojangsonParserClass.getMethod("parse", String.class);
 
-		Class<?> nbtCompressedStreamToolsClass = BukkitReflect.getMinecraftClass("NBTCompressedStreamTools");
+		Class<?> nbtCompressedStreamToolsClass = BukkitReflect.getMinecraftClass("nbt.NBTCompressedStreamTools");
 		_tagSerializeStream = nbtCompressedStreamToolsClass.getMethod("a", _nbtTagCompoundClass, OutputStream.class);
 		_tagUnserializeStream = nbtCompressedStreamToolsClass.getMethod("a", InputStream.class);
 	}
@@ -102,6 +108,20 @@ public final class NBTTagCompound extends NBTBase {
 	public String getString(String key) {
 		return (String) invokeMethod(_getString, key);
 	}
+
+	public byte[] getByteArray(String key) {
+		return (byte[]) invokeMethod(_getByteArray, key);
+	}
+
+	public int[] getIntArray(String key) {
+		return (int[]) invokeMethod(_getIntArray, key);
+	}
+
+	// TagLongArray's internal field name is 'b' for some absurd reason.
+	// Since it isn't used, don't bother working around this
+//	public long[] getLongArray(String key) {
+//		return (long[]) invokeMethod(_getLongArray, key);
+//	}
 
 	public NBTTagCompound getCompound(String key) {
 		Object obj = _map.get(key);
@@ -163,6 +183,20 @@ public final class NBTTagCompound extends NBTBase {
 	public void setList(String key, Object... objects) {
 		set(key, new NBTTagList(objects));
 	}
+
+	public void setByteArray(String key, byte[] value) {
+		set(key, value);
+	}
+
+	public void setIntArray(String key, int[] value) {
+		set(key, value);
+	}
+
+	// TagLongArray's internal field name is 'b' for some absurd reason.
+	// Since it isn't used, don't bother working around this
+//	public void setLongArray(String key, long[] value) {
+//		set(key, value);
+//	}
 
 	private void set(String key, Object value) {
 		_map.put(key, NBTTypes.toInternal(value));

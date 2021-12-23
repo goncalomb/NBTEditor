@@ -22,6 +22,7 @@ package com.goncalomb.bukkit.nbteditor.nbt.attributes;
 import java.util.UUID;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.utils.UtilsMc;
 
 public class Modifier {
 
@@ -31,7 +32,7 @@ public class Modifier {
 	private UUID _uuid;
 
 	public static Modifier fromNBT(NBTTagCompound data) {
-		return new Modifier(data.getString("Name"), data.getDouble("Amount"), data.getInt("Operation"), new UUID(data.getLong("UUIDMost"), data.getLong("UUIDLeast")));
+		return new Modifier(data.getString("Name"), data.getDouble("Amount"), data.getInt("Operation"), UtilsMc.convertFromUUIDInts(data.getIntArray("UUID")));
 	}
 
 	public Modifier(String name, double amount, int operation) {
@@ -66,8 +67,7 @@ public class Modifier {
 		data.setString("Name", _name);
 		data.setDouble("Amount", _amount);
 		data.setInt("Operation", _operation);
-		data.setLong("UUIDMost", _uuid.getMostSignificantBits());
-		data.setLong("UUIDLeast", _uuid.getLeastSignificantBits());
+		data.setIntArray("UUID", UtilsMc.convertToUUIDInts(_uuid));
 		return data;
 	}
 

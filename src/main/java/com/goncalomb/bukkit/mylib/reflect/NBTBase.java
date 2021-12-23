@@ -37,10 +37,10 @@ public class NBTBase {
 
 	public static final void prepareReflection() {
 		if (!_isPrepared) {
-			_nbtBaseClass = BukkitReflect.getMinecraftClass("NBTBase");
-			_nbtTagCompoundClass = BukkitReflect.getMinecraftClass("NBTTagCompound");
-			_nbtTagListClass = BukkitReflect.getMinecraftClass("NBTTagList");
-			_nbtTagStringClass = BukkitReflect.getMinecraftClass("NBTTagString");
+			_nbtBaseClass = BukkitReflect.getMinecraftClass("nbt.NBTBase");
+			_nbtTagCompoundClass = BukkitReflect.getMinecraftClass("nbt.NBTTagCompound");
+			_nbtTagListClass = BukkitReflect.getMinecraftClass("nbt.NBTTagList");
+			_nbtTagStringClass = BukkitReflect.getMinecraftClass("nbt.NBTTagString");
 			try {
 				_getTypeId = _nbtBaseClass.getMethod("getTypeId");
 				_clone = _nbtBaseClass.getMethod("clone");
