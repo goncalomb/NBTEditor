@@ -20,6 +20,7 @@
 package com.goncalomb.bukkit.mylib.reflect;
 
 import java.lang.reflect.Method;
+import java.util.logging.Logger;
 
 public class NBTBase {
 
@@ -35,19 +36,19 @@ public class NBTBase {
 
 	final Object _handle; // The wrapped Minecraft NBTBase instance.
 
-	public static final void prepareReflection() {
+	public static final void prepareReflection(Class<?> serverClass, Logger logger) {
 		if (!_isPrepared) {
-			_nbtBaseClass = BukkitReflect.getMinecraftClass("nbt.NBTBase");
-			_nbtTagCompoundClass = BukkitReflect.getMinecraftClass("nbt.NBTTagCompound");
-			_nbtTagListClass = BukkitReflect.getMinecraftClass("nbt.NBTTagList");
-			_nbtTagStringClass = BukkitReflect.getMinecraftClass("nbt.NBTTagString");
+			_nbtBaseClass = BukkitReflect.getMinecraftClass("NBTBase");
+			_nbtTagCompoundClass = BukkitReflect.getMinecraftClass("NBTTagCompound");
+			_nbtTagListClass = BukkitReflect.getMinecraftClass("NBTTagList");
+			_nbtTagStringClass = BukkitReflect.getMinecraftClass("NBTTagString");
 			try {
 				_getTypeId = _nbtBaseClass.getMethod("getTypeId");
 				_clone = _nbtBaseClass.getMethod("clone");
 				NBTTagCompound.prepareReflectionz();
 				NBTTagList.prepareReflectionz();
 				NBTTypes.prepareReflection();
-				NBTUtils.prepareReflection();
+				NBTUtils.prepareReflection(serverClass, logger);
 			} catch (Exception e) {
 				throw new RuntimeException("Error while preparing NBT wrapper classes.", e);
 			}

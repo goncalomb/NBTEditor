@@ -24,6 +24,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.SimpleCommandMap;
@@ -47,7 +48,7 @@ public final class BukkitReflect {
 				try {
 					clazz = this.getClass().getClassLoader().loadClass(_packageName + "." + className);
 				} catch (ClassNotFoundException e) {
-					throw new RuntimeException("Cannot find class " + _packageName + "." + className + ":", e);
+					throw new RuntimeException("Cannot find class " + _packageName + "." + className + ".", e);
 				}
 				_cache.put(className, clazz);
 			}
@@ -66,13 +67,13 @@ public final class BukkitReflect {
 	private static Method _ChatSerializer_a_unserialize;
 	private static Constructor<?> _ChatComponentTextClass_contructor;
 
-	public static void prepareReflection() {
+	public static void prepareReflection(Class<?> serverClass, Logger logger) {
 		if (!_isPrepared) {
 			Class<?> craftServerClass = Bukkit.getServer().getClass();
 			_craftBukkitPackage = new CachedPackage(craftServerClass.getPackage().getName());
 			try {
 				Method getHandle = craftServerClass.getMethod("getHandle");
-				_minecraftPackage = new CachedPackage(getHandle.getReturnType().getPackage().getName().replace(".server.dedicated", ""));
+				_minecraftPackage = new CachedPackage(getHandle.getReturnType().getPackage().getName());
 				_getCommandMap = craftServerClass.getMethod("getCommandMap");
 			} catch (NoSuchMethodException e) {
 				throw new RuntimeException("Cannot find the required methods on the server class.", e);
@@ -81,11 +82,11 @@ public final class BukkitReflect {
 			_isPrepared = true;
 
 			try {
-				Class<?> iChatBaseComponentClass = getMinecraftClass("network.chat.IChatBaseComponent");
-				Class<?> chatSerializerClass = getMinecraftClass("network.chat.IChatBaseComponent$ChatSerializer");
+				Class<?> iChatBaseComponentClass = getMinecraftClass("IChatBaseComponent");
+				Class<?> chatSerializerClass = getMinecraftClass("IChatBaseComponent$ChatSerializer");
 				_ChatSerializer_a_serialize = chatSerializerClass.getMethod("a", iChatBaseComponentClass);
 				_ChatSerializer_a_unserialize = chatSerializerClass.getMethod("a", String.class);
-				Class<?> chatComponentTextClass = getMinecraftClass("network.chat.ChatComponentText");
+				Class<?> chatComponentTextClass = getMinecraftClass("ChatComponentText");
 				_ChatComponentTextClass_contructor = chatComponentTextClass.getConstructor(String.class);
 			} catch (NoSuchMethodException e) {
 				throw new RuntimeException("Error while preparing ChatSerializer.", e);
@@ -96,22 +97,18 @@ public final class BukkitReflect {
 	private BukkitReflect() { }
 
 	public static Class<?> getCraftBukkitClass(String className) {
-		prepareReflection();
 		return _craftBukkitPackage.getClass(className);
 	}
 
 	public static Class<?> getMinecraftClass(String className) {
-		prepareReflection();
 		return _minecraftPackage.getClass(className);
 	}
 
 	public static SimpleCommandMap getCommandMap() {
-		prepareReflection();
 		return (SimpleCommandMap) invokeMethod(Bukkit.getServer(), _getCommandMap);
 	}
 
 	public static boolean isValidRawJSON(String text) {
-		prepareReflection();
 		try {
 			_ChatSerializer_a_unserialize.invoke(null, text);
 			return true;
@@ -126,7 +123,6 @@ public final class BukkitReflect {
 	}
 
 	public static String textToRawJSON(String text) {
-		prepareReflection();
 		try {
 			return (String) _ChatSerializer_a_serialize.invoke(null, _ChatComponentTextClass_contructor.newInstance(text));
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException

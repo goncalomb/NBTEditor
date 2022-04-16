@@ -66,8 +66,8 @@ public final class NBTEditor extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		try {
-			BukkitReflect.prepareReflection();
-			NBTBase.prepareReflection();
+			BukkitReflect.prepareReflection(this.getServer().getClass(), getLogger());
+			NBTBase.prepareReflection(this.getServer().getClass(), getLogger());
 		} catch (Throwable e) {
 			getLogger().log(Level.SEVERE, "Error preparing reflection objects", e);
 			getLogger().severe("This version of NBTEditor is not compatible with this version of Bukkit");
