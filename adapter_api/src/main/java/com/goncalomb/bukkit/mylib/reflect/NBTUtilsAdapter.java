@@ -33,10 +33,6 @@ public interface NBTUtilsAdapter {
 
 	NBTTagCompound getEntityNBTData(Entity entity);
 
-	NBTTagList potionToNBTEffectsList(ItemStack potion);
-
-	ItemStack potionFromNBTEffectsList(NBTTagList effects);
-
 	NBTTagCompound getTileEntityNBTData(Block block);
 
 	void setTileEntityNBTData(Block block, NBTTagCompound data);

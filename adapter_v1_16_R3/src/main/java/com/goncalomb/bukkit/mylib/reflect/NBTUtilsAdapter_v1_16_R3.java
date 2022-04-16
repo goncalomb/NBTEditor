@@ -146,33 +146,6 @@ public final class NBTUtilsAdapter_v1_16_R3 implements NBTUtilsAdapter {
 		return data;
 	}
 
-	public NBTTagList potionToNBTEffectsList(ItemStack potion) {
-		NBTTagCompound tag = getItemStackTag(potion);
-		if (tag.hasKey("CustomPotionEffects")) {
-			return tag.getList("CustomPotionEffects").clone();
-		}
-		// Fallback to default potion effect.
-
-		// XXX: implement fallback
-
-		// Finding the default potion effect is not trivial on 1.9.
-		// Wait until org.bukkit.craftbukkit.potion.CraftPotionUtil is available upstream.
-		// For now, display some alert messages on InventoryForMobs and InventoryForThrownPotion.
-		return new NBTTagList();
-	}
-
-	public ItemStack potionFromNBTEffectsList(NBTTagList effects) {
-		NBTTagCompound tag = new NBTTagCompound();
-		tag.setList("CustomPotionEffects", effects.clone());
-		tag.setString("Potion", "minecraft:mundane");
-		NBTTagCompound data = new NBTTagCompound();
-		data.setString("id", "minecraft:potion");
-		data.setByte("Count", (byte) 1);
-		data.setShort("Damage", (short) 0);
-		data.setCompound("tag", tag);
-		return itemStackFromNBTData(data);
-	}
-
 	private Object getTileEntity(Block block) {
 		Object worldHandle = BukkitReflect.invokeMethod(block.getWorld(), _CraftWorld_getHandle);
 		Object pos = BukkitReflect.invokeConstuctor(_BlockPosition_constructor, block.getX(), block.getY(), block.getZ());
