@@ -1,49 +1,32 @@
 package com.goncalomb.bukkit.mylib.reflect;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.bukkit.Bukkit;
+import java.util.logging.Logger;
 
 public final class BukkitVersion {
 
-	private static int _minecraftVersionMajor;
-	private static int _minecraftVersionMinor;
+	private static BukkitVersionAdapter adapter = null;
 
-	private static void getVersion() {
-		if (_minecraftVersionMajor == 0) {
-			Object server = Bukkit.getServer();
-			if (server == null) {
-				// test environment, CraftBukkit / Minecraft not available
-				_minecraftVersionMajor = Integer.MAX_VALUE;
-				_minecraftVersionMinor = Integer.MAX_VALUE;
-				return;
-			}
-			try {
-				Object mcServer = BukkitReflect.invokeMethod(server, BukkitReflect.getCraftBukkitClass("CraftServer").getDeclaredMethod("getServer"));
-				String version = (String) BukkitReflect.invokeMethod(mcServer, BukkitReflect.getMinecraftClass("MinecraftServer").getDeclaredMethod("getVersion"));
-				Matcher matcher = Pattern.compile("^(\\d+)(?:\\.(\\d+)(?:\\.(\\d+))?)?$").matcher(version);
-				if (matcher.find()) {
-					_minecraftVersionMajor = Integer.parseInt(matcher.group(1));
-					_minecraftVersionMinor = Integer.parseInt(matcher.group(2));
-				} else {
-					throw new RuntimeException("Invalid Minecraft version.");
-				}
-			} catch (Exception e) {
-				throw new RuntimeException("Error finding Minecraft version.", e);
-			}
-		}
+	public static void prepareReflection(Class<?> serverClass, Logger logger) throws Exception {
+		String packageName = serverClass.getPackage().getName();
+		String version = packageName.substring(packageName.lastIndexOf('.') + 1);
+
+		Class<?> clazz = Class.forName("com.goncalomb.bukkit.mylib.reflect.BukkitVersionAdapter_" + version);
+		adapter = (BukkitVersionAdapter) clazz.getConstructor().newInstance();
+		logger.info("Loaded BukkitVersion adapter for " + version);
 	}
-
-	private BukkitVersion() { }
 
 	public static boolean isVersion(int minor) {
 		return isVersion(minor, 1);
 	}
 
 	public static boolean isVersion(int minor, int major) {
-		getVersion();
-		return _minecraftVersionMajor > major || (_minecraftVersionMajor == major && _minecraftVersionMinor >= minor);
+		ensureAdapter(adapter);
+		return adapter.isVersion(minor, major);
 	}
 
+	private static void ensureAdapter(Object adapter) throws RuntimeException {
+		if (adapter == null) {
+			throw new RuntimeException("Version adapter is not loaded");
+		}
+	}
 }

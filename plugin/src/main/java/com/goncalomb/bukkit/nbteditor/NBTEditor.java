@@ -45,6 +45,7 @@ import com.goncalomb.bukkit.customitems.items.TreeVaporizer;
 import com.goncalomb.bukkit.customitems.items.WitherBow;
 import com.goncalomb.bukkit.mylib.command.MyCommandManager;
 import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
+import com.goncalomb.bukkit.mylib.reflect.BukkitVersion;
 import com.goncalomb.bukkit.mylib.reflect.NBTBase;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
@@ -71,6 +72,7 @@ public final class NBTEditor extends JavaPlugin {
 	public void onEnable() {
 		try {
 			BukkitReflect.prepareReflection(this.getServer().getClass(), getLogger());
+			BukkitVersion.prepareReflection(this.getServer().getClass(), getLogger());
 			NBTBase.prepareReflection(this.getServer().getClass(), getLogger());
 			NBTTagCompound.prepareReflection(this.getServer().getClass(), getLogger());
 			NBTTagList.prepareReflection(this.getServer().getClass(), getLogger());
