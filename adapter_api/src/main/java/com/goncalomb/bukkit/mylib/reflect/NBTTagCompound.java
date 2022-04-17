@@ -24,124 +24,91 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 public final class NBTTagCompound extends NBTBase {
 
-	protected static Class<?> _nbtTagListClass;
-	protected static Class<?> _nbtTagCompoundClass;
-	private static Method _getByte;
-	private static Method _getShort;
-	private static Method _getInt;
-	private static Method _getLong;
-	private static Method _getFloat;
-	private static Method _getDouble;
-	private static Method _getString;
-	private static Method _getByteArray;
-	private static Method _getIntArray;
-	private static Method _getLongArray;
-	private static Field _mapField;
-
-	private static Method _tagSerializeStream;
-	private static Method _tagUnserializeStream;
-	private static Method _parseMojangson;
+	private static NBTTagCompoundAdapter adapter = null;
 
 	public static void prepareReflection(Class<?> serverClass, Logger logger) throws Exception {
-		_nbtTagCompoundClass = BukkitReflect.getMinecraftClass("NBTTagCompound");
-		_nbtTagListClass = BukkitReflect.getMinecraftClass("NBTTagList");
-		_getByte = _nbtTagCompoundClass.getMethod("getByte", String.class);
-		_getShort = _nbtTagCompoundClass.getMethod("getShort", String.class);
-		_getInt = _nbtTagCompoundClass.getMethod("getInt", String.class);
-		_getLong = _nbtTagCompoundClass.getMethod("getLong", String.class);
-		_getFloat = _nbtTagCompoundClass.getMethod("getFloat", String.class);
-		_getDouble = _nbtTagCompoundClass.getMethod("getDouble", String.class);
-		_getString = _nbtTagCompoundClass.getMethod("getString", String.class);
-		_getByteArray = _nbtTagCompoundClass.getMethod("getByteArray", String.class);
-		_getIntArray = _nbtTagCompoundClass.getMethod("getIntArray", String.class);
-		_getLongArray = _nbtTagCompoundClass.getMethod("getLongArray", String.class);
-		_mapField = _nbtTagCompoundClass.getDeclaredField("map");
-		_mapField.setAccessible(true);
+		String packageName = serverClass.getPackage().getName();
+		String version = packageName.substring(packageName.lastIndexOf('.') + 1);
 
-		Class<?>_mojangsonParserClass = BukkitReflect.getMinecraftClass("MojangsonParser");
-		_parseMojangson = _mojangsonParserClass.getMethod("parse", String.class);
-
-		Class<?> nbtCompressedStreamToolsClass = BukkitReflect.getMinecraftClass("NBTCompressedStreamTools");
-		_tagSerializeStream = nbtCompressedStreamToolsClass.getMethod("a", _nbtTagCompoundClass, OutputStream.class);
-		_tagUnserializeStream = nbtCompressedStreamToolsClass.getMethod("a", InputStream.class);
+		Class<?> clazz = Class.forName("com.goncalomb.bukkit.mylib.reflect.NBTTagCompoundAdapter_" + version);
+		adapter = (NBTTagCompoundAdapter) clazz.getConstructor().newInstance();
+		logger.info("Loaded NBTTagCompound adapter for " + version);
 	}
 
-	Map<String, Object> _map;
+	private final Map<String, Object> _map;
 
 	public NBTTagCompound() {
-		this(BukkitReflect.newInstance(_nbtTagCompoundClass));
+		this(adapter.newInternalInstance());
 	}
 
-	@SuppressWarnings("unchecked")
-	NBTTagCompound(Object handle) {
+	public NBTTagCompound(Object handle) {
 		super(handle);
-		_map = (Map<String, Object>) BukkitReflect.getFieldValue(handle, _mapField);
+		_map = adapter.getMap(handle);
 	}
 
 	public byte getByte(String key) {
-		return (Byte) invokeMethod(_getByte, key);
+		return adapter.getByte(_handle, key);
 	}
 
 	public short getShort(String key) {
-		return (Short) invokeMethod(_getShort, key);
+		ensureAdapter(adapter);
+		return adapter.getShort(_handle, key);
 	}
 
 	public int getInt(String key) {
-		return (Integer) invokeMethod(_getInt, key);
+		ensureAdapter(adapter);
+		return adapter.getInt(_handle, key);
 	}
 
 	public long getLong(String key) {
-		return (Long) invokeMethod(_getLong, key);
+		ensureAdapter(adapter);
+		return adapter.getLong(_handle, key);
 	}
 
 	public float getFloat(String key) {
-		return (Float) invokeMethod(_getFloat, key);
+		ensureAdapter(adapter);
+		return adapter.getFloat(_handle, key);
 	}
 
 	public Double getDouble(String key) {
-		return (Double) invokeMethod(_getDouble, key);
+		ensureAdapter(adapter);
+		return adapter.getDouble(_handle, key);
 	}
 
 	public String getString(String key) {
-		return (String) invokeMethod(_getString, key);
+		ensureAdapter(adapter);
+		return adapter.getString(_handle, key);
 	}
 
 	public byte[] getByteArray(String key) {
-		return (byte[]) invokeMethod(_getByteArray, key);
+		ensureAdapter(adapter);
+		return adapter.getByteArray(_handle, key);
 	}
 
 	public int[] getIntArray(String key) {
-		return (int[]) invokeMethod(_getIntArray, key);
+		ensureAdapter(adapter);
+		return adapter.getIntArray(_handle, key);
 	}
 
-	// TagLongArray's internal field name is 'b' for some absurd reason.
-	// Since it isn't used, don't bother working around this
-//	public long[] getLongArray(String key) {
-//		return (long[]) invokeMethod(_getLongArray, key);
-//	}
+	public long[] getLongArray(String key) {
+		ensureAdapter(adapter);
+		return adapter.getLongArray(_handle, key);
+	}
 
 	public NBTTagCompound getCompound(String key) {
-		Object obj = _map.get(key);
-		if (obj != null && _nbtTagCompoundClass.isInstance(obj)) {
-			return new NBTTagCompound(obj);
-		}
-		return null;
+		ensureAdapter(adapter);
+		return adapter.getCompound(_handle, key);
 	}
 
 	public NBTTagList getList(String key) {
-		Object obj = _map.get(key);
-		if (obj != null && _nbtTagListClass.isInstance(obj)) {
-			return new NBTTagList(obj);
-		}
-		return null;
+		ensureAdapter(adapter);
+		return adapter.getList(_handle, key);
 	}
 
 	public Object[] getListAsArray(String key) {
@@ -197,14 +164,13 @@ public final class NBTTagCompound extends NBTBase {
 		set(key, value);
 	}
 
-	// TagLongArray's internal field name is 'b' for some absurd reason.
-	// Since it isn't used, don't bother working around this
-//	public void setLongArray(String key, long[] value) {
-//		set(key, value);
-//	}
+	public void setLongArray(String key, long[] value) {
+		set(key, value);
+	}
 
 	private void set(String key, Object value) {
-		_map.put(key, NBTTypes.toInternal(value));
+		ensureAdapter(adapter);
+		adapter.set(_handle, key, value);
 	}
 
 	public boolean hasKey(String key) {
@@ -227,27 +193,27 @@ public final class NBTTagCompound extends NBTBase {
 		_map.clear();
 	}
 
-	public byte[] serialize() {
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		serialize(out);
-		return out.toByteArray();
+	public byte[] serialize() throws IOException {
+		try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+			serialize(out);
+			return out.toByteArray();
+		}
 	}
 
-	public void serialize(OutputStream outputStream) {
-		BukkitReflect.invokeMethod(null, _tagSerializeStream, _handle, outputStream);
+	public void serialize(OutputStream outputStream) throws IOException {
+		ensureAdapter(adapter);
+		adapter.serialize(_handle, outputStream);
 	}
 
-	public static NBTTagCompound unserialize(byte[] data) {
-		ByteArrayInputStream in = new ByteArrayInputStream(data);
-		NBTTagCompound tag = unserialize(in);
-		try {
-			in.close();
-		} catch (IOException e) { }
-		return tag;
+	public static NBTTagCompound unserialize(byte[] data) throws IOException {
+		try (ByteArrayInputStream in = new ByteArrayInputStream(data)) {
+			return unserialize(in);
+		}
 	}
 
-	public static NBTTagCompound unserialize(InputStream inputStream) {
-		return new NBTTagCompound(BukkitReflect.invokeMethod(null, _tagUnserializeStream, inputStream));
+	public static NBTTagCompound unserialize(InputStream inputStream) throws IOException {
+		ensureAdapter(adapter);
+		return adapter.unserialize(inputStream);
 	}
 
 	public void merge(NBTTagCompound other) {
@@ -265,11 +231,14 @@ public final class NBTTagCompound extends NBTBase {
 	 * Converts a string-ified "mojangson" tag back into an NBTTagCompound
 	 * This is the opposite of toString()
 	 */
-	public static NBTTagCompound fromString(String mojangson) {
-		return new NBTTagCompound(BukkitReflect.invokeMethod(null, _parseMojangson, mojangson));
+	public static NBTTagCompound fromString(String mojangson) throws Exception {
+		ensureAdapter(adapter);
+		return adapter.fromString(mojangson);
 	}
 
-	protected final Object invokeMethod(Method method, Object... args) {
-		return BukkitReflect.invokeMethod(_handle, method, args);
+	private static void ensureAdapter(Object adapter) throws RuntimeException {
+		if (adapter == null) {
+			throw new RuntimeException("Version adapter is not loaded");
+		}
 	}
 }
