@@ -19,87 +19,36 @@
 
 package com.goncalomb.bukkit.mylib.reflect;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.logging.Logger;
-
-import org.apache.commons.lang.ClassUtils;
 
 public final class NBTTypes {
 
-	private static HashMap<Class<?>, NBTTypes> _innerTypeMap = new HashMap<Class<?>, NBTTypes>();;
-	private static HashMap<Class<?>, NBTTypes> _outerTypeMap = new HashMap<Class<?>, NBTTypes>();;
-
-	private Class<?> _class;
-	private Constructor<?> _constructor;
-	private Field _data;
-	private Class<?> _dataType;
+	private static NBTTypesAdapter adapter = null;
 
 	public static void prepareReflection(Class<?> serverClass, Logger logger) throws Exception {
-		registerNew("NBTTagByte");
-		registerNew("NBTTagShort");
-		registerNew("NBTTagInt");
-		registerNew("NBTTagLong");
-		registerNew("NBTTagFloat");
-		registerNew("NBTTagDouble");
-		registerNew("NBTTagString");
-		registerNew("NBTTagByteArray");
-		registerNew("NBTTagIntArray");
-		// TagLongArray's internal field name is 'b' for some absurd reason.
-		// Since it isn't used, don't bother working around this
-	}
+		String packageName = serverClass.getPackage().getName();
+		String version = packageName.substring(packageName.lastIndexOf('.') + 1);
 
-	private static void registerNew(String tagClassName) throws SecurityException, NoSuchMethodException, NoSuchFieldException {
-		NBTTypes handler = new NBTTypes(tagClassName);
-		_innerTypeMap.put((handler._dataType.isPrimitive() ? ClassUtils.primitiveToWrapper(handler._dataType) : handler._dataType), handler);
-		_outerTypeMap.put(handler._class, handler);
+		Class<?> clazz = Class.forName("com.goncalomb.bukkit.mylib.reflect.NBTTypesAdapter_" + version);
+		adapter = (NBTTypesAdapter) clazz.getConstructor().newInstance();
+		logger.info("Loaded NBTTypes adapter for " + version);
 	}
 
 	// Converts from MyLib tags, primitives and strings to internal Minecraft tags.
 	public static Object toInternal(Object object) {
-		if (object instanceof NBTBase) {
-			return ((NBTBase) object)._handle;
-		} else {
-			NBTTypes handler = _innerTypeMap.get(object.getClass());
-			if (handler != null) {
-				return handler.wrap(object);
-			} else {
-				throw new RuntimeException(object.getClass() + " is not a valid NBTTag type.");
-			}
-		}
+		ensureAdapter(adapter);
+		return adapter.toInternal(object);
 	}
 
 	// Converts internal Minecraft tags to MyLib tags, primitives and strings.
 	public static Object fromInternal(Object object) {
-		if (object == null) {
-			return null;
+		ensureAdapter(adapter);
+		return adapter.fromInternal(object);
+	}
+
+	private static void ensureAdapter(Object adapter) throws RuntimeException {
+		if (adapter == null) {
+			throw new RuntimeException("Version adapter is not loaded");
 		}
-		NBTTypes handler = _outerTypeMap.get(object.getClass());
-		if (handler != null) {
-			return handler.unwrap(object);
-		} else {
-			return NBTBase.wrap(object);
-		}
 	}
-
-	private NBTTypes(String tagClassName) throws SecurityException, NoSuchMethodException, NoSuchFieldException {
-		_class = BukkitReflect.getMinecraftClass(tagClassName);
-		_data = _class.getDeclaredField("data");
-		_data.setAccessible(true);
-		_dataType = _data.getType();
-		_constructor = _class.getDeclaredConstructor(_dataType);
-		_constructor.setAccessible(true);
-	}
-
-	// Wraps primitives and strings with Minecraft tags.
-	private Object wrap(Object innerObject) {
-		return BukkitReflect.newInstance(_constructor, innerObject);
-	}
-
-	// Unwraps primitives and strings from Minecraft tags.
-	private Object unwrap(Object tagObject) {
-		return BukkitReflect.getFieldValue(tagObject, _data);
-	}
-
 }
