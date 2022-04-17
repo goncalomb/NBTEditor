@@ -28,9 +28,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Logger;
 
 public final class NBTTagCompound extends NBTBase {
 
+	protected static Class<?> _nbtTagListClass;
+	protected static Class<?> _nbtTagCompoundClass;
 	private static Method _getByte;
 	private static Method _getShort;
 	private static Method _getInt;
@@ -47,7 +50,9 @@ public final class NBTTagCompound extends NBTBase {
 	private static Method _tagUnserializeStream;
 	private static Method _parseMojangson;
 
-	static void prepareReflectionz() throws SecurityException, NoSuchMethodException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+	public static void prepareReflection(Class<?> serverClass, Logger logger) throws Exception {
+		_nbtTagCompoundClass = BukkitReflect.getMinecraftClass("NBTTagCompound");
+		_nbtTagListClass = BukkitReflect.getMinecraftClass("NBTTagList");
 		_getByte = _nbtTagCompoundClass.getMethod("getByte", String.class);
 		_getShort = _nbtTagCompoundClass.getMethod("getShort", String.class);
 		_getInt = _nbtTagCompoundClass.getMethod("getInt", String.class);
@@ -262,5 +267,9 @@ public final class NBTTagCompound extends NBTBase {
 	 */
 	public static NBTTagCompound fromString(String mojangson) {
 		return new NBTTagCompound(BukkitReflect.invokeMethod(null, _parseMojangson, mojangson));
+	}
+
+	protected final Object invokeMethod(Method method, Object... args) {
+		return BukkitReflect.invokeMethod(_handle, method, args);
 	}
 }

@@ -22,10 +22,11 @@ package com.goncalomb.bukkit.mylib.reflect;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang.ClassUtils;
 
-final class NBTTypes {
+public final class NBTTypes {
 
 	private static HashMap<Class<?>, NBTTypes> _innerTypeMap = new HashMap<Class<?>, NBTTypes>();;
 	private static HashMap<Class<?>, NBTTypes> _outerTypeMap = new HashMap<Class<?>, NBTTypes>();;
@@ -35,7 +36,7 @@ final class NBTTypes {
 	private Field _data;
 	private Class<?> _dataType;
 
-	public static void prepareReflection() throws SecurityException, NoSuchMethodException, NoSuchFieldException {
+	public static void prepareReflection(Class<?> serverClass, Logger logger) throws Exception {
 		registerNew("NBTTagByte");
 		registerNew("NBTTagShort");
 		registerNew("NBTTagInt");

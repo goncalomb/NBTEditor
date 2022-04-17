@@ -67,7 +67,7 @@ public final class BukkitReflect {
 	private static Method _ChatSerializer_a_unserialize;
 	private static Constructor<?> _ChatComponentTextClass_contructor;
 
-	public static void prepareReflection(Class<?> serverClass, Logger logger) {
+	public static void prepareReflection(Class<?> serverClass, Logger logger) throws Exception {
 		if (!_isPrepared) {
 			Class<?> craftServerClass = Bukkit.getServer().getClass();
 			_craftBukkitPackage = new CachedPackage(craftServerClass.getPackage().getName());

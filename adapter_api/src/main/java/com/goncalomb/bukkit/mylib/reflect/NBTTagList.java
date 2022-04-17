@@ -21,14 +21,17 @@ package com.goncalomb.bukkit.mylib.reflect;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.logging.Logger;
 
 public final class NBTTagList extends NBTBase {
 
 	private static Field _typeField;
 	private static Field _listField;
+	protected static Class<?> _nbtTagListClass;
 	List<Object> _list;
 
-	static void prepareReflectionz() throws SecurityException, NoSuchMethodException, NoSuchFieldException {
+	public static void prepareReflection(Class<?> serverClass, Logger logger) throws Exception {
+		_nbtTagListClass = BukkitReflect.getMinecraftClass("NBTTagList");
 		_typeField = _nbtTagListClass.getDeclaredField("type");
 		_typeField.setAccessible(true);
 		_listField = _nbtTagListClass.getDeclaredField("list");

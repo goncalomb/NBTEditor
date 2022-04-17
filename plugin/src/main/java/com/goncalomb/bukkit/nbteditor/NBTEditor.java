@@ -46,6 +46,10 @@ import com.goncalomb.bukkit.customitems.items.WitherBow;
 import com.goncalomb.bukkit.mylib.command.MyCommandManager;
 import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
 import com.goncalomb.bukkit.mylib.reflect.NBTBase;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
+import com.goncalomb.bukkit.mylib.reflect.NBTUtils;
+import com.goncalomb.bukkit.mylib.reflect.NBTTypes;
 import com.goncalomb.bukkit.nbteditor.bos.BookOfSouls;
 import com.goncalomb.bukkit.nbteditor.commands.CommandBOS;
 import com.goncalomb.bukkit.nbteditor.commands.CommandItemStorage;
@@ -68,6 +72,10 @@ public final class NBTEditor extends JavaPlugin {
 		try {
 			BukkitReflect.prepareReflection(this.getServer().getClass(), getLogger());
 			NBTBase.prepareReflection(this.getServer().getClass(), getLogger());
+			NBTTagCompound.prepareReflection(this.getServer().getClass(), getLogger());
+			NBTTagList.prepareReflection(this.getServer().getClass(), getLogger());
+			NBTTypes.prepareReflection(this.getServer().getClass(), getLogger());
+			NBTUtils.prepareReflection(this.getServer().getClass(), getLogger());
 		} catch (Throwable e) {
 			getLogger().log(Level.SEVERE, "Error preparing reflection objects", e);
 			getLogger().severe("This version of NBTEditor is not compatible with this version of Bukkit");

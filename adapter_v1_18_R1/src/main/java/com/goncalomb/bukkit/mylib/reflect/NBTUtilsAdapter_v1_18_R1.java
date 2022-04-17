@@ -34,6 +34,10 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 public final class NBTUtilsAdapter_v1_18_R1 implements NBTUtilsAdapter {
+	public NBTUtilsAdapter_v1_18_R1() {
+		// No setup needed but this constructor must exist
+	}
+
 	public ItemStack itemStackFromNBTData(NBTTagCompound data) {
 		return net.minecraft.world.item.ItemStack.of((CompoundTag) data._handle).asBukkitMirror();
 	}

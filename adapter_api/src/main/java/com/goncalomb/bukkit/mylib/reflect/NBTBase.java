@@ -19,77 +19,54 @@
 
 package com.goncalomb.bukkit.mylib.reflect;
 
-import java.lang.reflect.Method;
 import java.util.logging.Logger;
 
 public class NBTBase {
 
-	private static boolean _isPrepared = false;
+	private static NBTBaseAdapter adapter = null;
 
-	protected static Class<?> _nbtBaseClass;
-	protected static Class<?> _nbtTagCompoundClass;
-	protected static Class<?> _nbtTagListClass;
-	protected static Class<?> _nbtTagStringClass;
+	public static void prepareReflection(Class<?> serverClass, Logger logger) throws Exception {
+		String packageName = serverClass.getPackage().getName();
+		String version = packageName.substring(packageName.lastIndexOf('.') + 1);
 
-	private static Method _getTypeId;
-	private static Method _clone;
+		Class<?> clazz = Class.forName("com.goncalomb.bukkit.mylib.reflect.NBTBaseAdapter_" + version);
+		adapter = (NBTBaseAdapter) clazz.getConstructor().newInstance();
+		logger.info("Loaded NBTBase adapter for " + version);
+	}
 
 	final Object _handle; // The wrapped Minecraft NBTBase instance.
-
-	public static final void prepareReflection(Class<?> serverClass, Logger logger) {
-		if (!_isPrepared) {
-			_nbtBaseClass = BukkitReflect.getMinecraftClass("NBTBase");
-			_nbtTagCompoundClass = BukkitReflect.getMinecraftClass("NBTTagCompound");
-			_nbtTagListClass = BukkitReflect.getMinecraftClass("NBTTagList");
-			_nbtTagStringClass = BukkitReflect.getMinecraftClass("NBTTagString");
-			try {
-				_getTypeId = _nbtBaseClass.getMethod("getTypeId");
-				_clone = _nbtBaseClass.getMethod("clone");
-				NBTTagCompound.prepareReflectionz();
-				NBTTagList.prepareReflectionz();
-				NBTTypes.prepareReflection();
-				NBTUtils.prepareReflection(serverClass, logger);
-			} catch (Exception e) {
-				throw new RuntimeException("Error while preparing NBT wrapper classes.", e);
-			}
-			_isPrepared = true;
-		}
-	}
 
 	// Wraps any Minecraft tags in MyLib tags.
 	// Primitives and strings are wrapped with NBTBase.
 	protected static final NBTBase wrap(Object object) {
-		if (_nbtTagCompoundClass.isInstance(object)) {
-			return new NBTTagCompound(object);
-		} else if (_nbtTagListClass.isInstance(object)) {
-			return new NBTTagList(object);
-		} else if (_nbtBaseClass.isInstance(object)) {
-			return new NBTBase(object);
-		} else {
-			throw new RuntimeException(object.getClass() + " is not a valid NBT tag type.");
+		if (adapter == null) {
+			throw new RuntimeException("Version adapter is not loaded");
 		}
+		return adapter.wrap(object);
 	}
 
 	// Helper method for NBTTagCompoundWrapper.merge().
 	// Clones any internal Minecraft tags.
 	protected static final Object clone(Object nbtBaseObject) {
-		return BukkitReflect.invokeMethod(nbtBaseObject, _clone);
+		if (adapter == null) {
+			throw new RuntimeException("Version adapter is not loaded");
+		}
+		return adapter.clone(nbtBaseObject);
+	}
+
+	static byte getTypeId(Object handle) {
+		if (adapter == null) {
+			throw new RuntimeException("Version adapter is not loaded");
+		}
+		return adapter.getTypeId(handle);
 	}
 
 	protected NBTBase(Object handle) {
 		_handle = handle;
 	}
 
-	protected final Object invokeMethod(Method method, Object... args) {
-		return BukkitReflect.invokeMethod(_handle, method, args);
-	}
-
-	static byte getTypeId(Object handle) {
-		return (Byte) BukkitReflect.invokeMethod(handle, _getTypeId);
-	}
-
 	public NBTBase clone() {
-		return wrap(invokeMethod(_clone));
+		return wrap(clone(_handle));
 	}
 
 	@Override

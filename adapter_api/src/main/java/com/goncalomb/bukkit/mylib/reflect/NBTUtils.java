@@ -30,7 +30,7 @@ public final class NBTUtils {
 
 	private static NBTUtilsAdapter adapter = null;
 
-	static void prepareReflection(Class<?> serverClass, Logger logger) throws Exception {
+	public static void prepareReflection(Class<?> serverClass, Logger logger) throws Exception {
 		String packageName = serverClass.getPackage().getName();
 		String version = packageName.substring(packageName.lastIndexOf('.') + 1);
 
