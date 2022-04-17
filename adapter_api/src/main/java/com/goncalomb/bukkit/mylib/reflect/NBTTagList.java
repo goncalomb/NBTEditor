@@ -19,37 +19,35 @@
 
 package com.goncalomb.bukkit.mylib.reflect;
 
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.logging.Logger;
 
 public final class NBTTagList extends NBTBase {
 
-	private static Field _typeField;
-	private static Field _listField;
-	protected static Class<?> _nbtTagListClass;
-	List<Object> _list;
+	private static NBTTagListAdapter adapter = null;
 
 	public static void prepareReflection(Class<?> serverClass, Logger logger) throws Exception {
-		_nbtTagListClass = BukkitReflect.getMinecraftClass("NBTTagList");
-		_typeField = _nbtTagListClass.getDeclaredField("type");
-		_typeField.setAccessible(true);
-		_listField = _nbtTagListClass.getDeclaredField("list");
-		_listField.setAccessible(true);
+		String packageName = serverClass.getPackage().getName();
+		String version = packageName.substring(packageName.lastIndexOf('.') + 1);
+
+		Class<?> clazz = Class.forName("com.goncalomb.bukkit.mylib.reflect.NBTTagListAdapter_" + version);
+		adapter = (NBTTagListAdapter) clazz.getConstructor().newInstance();
+		logger.info("Loaded NBTTagList adapter for " + version);
 	}
+
+	private final List<Object> _list;
 
 	public NBTTagList() {
-		this(BukkitReflect.newInstance(_nbtTagListClass));
+		this(adapter.newInternalInstance());
 	}
 
-	@SuppressWarnings("unchecked")
 	NBTTagList(Object handle) {
 		super(handle);
-		_list = (List<Object>) BukkitReflect.getFieldValue(handle, _listField);
+		_list = adapter.getList(handle);
 	}
 
 	public NBTTagList(Object... values) {
-		this(BukkitReflect.newInstance(_nbtTagListClass));
+		this(adapter.newInternalInstance());
 		for (Object value : values) {
 			add(value);
 		}
@@ -60,9 +58,8 @@ public final class NBTTagList extends NBTBase {
 	}
 
 	public void add(Object value) {
-		Object handle = NBTTypes.toInternal(value);
-		BukkitReflect.setFieldValue(_handle, _typeField, NBTBase.getTypeId(handle));
-		_list.add(handle);
+		ensureAdapter(adapter);
+		adapter.add(_handle, value);
 	}
 
 	public Object remove(int index) {
@@ -87,4 +84,9 @@ public final class NBTTagList extends NBTBase {
 		return (NBTTagList) super.clone();
 	}
 
+	private static void ensureAdapter(Object adapter) throws RuntimeException {
+		if (adapter == null) {
+			throw new RuntimeException("Version adapter is not loaded");
+		}
+	}
 }
