@@ -32,10 +32,10 @@ public class NBTBaseAdapter_v1_16_R3 implements NBTBaseAdapter {
 	private static Method _clone;
 
 	public NBTBaseAdapter_v1_16_R3() {
-		_nbtBaseClass = BukkitReflect.getMinecraftClass("NBTBase");
-		_nbtTagCompoundClass = BukkitReflect.getMinecraftClass("NBTTagCompound");
-		_nbtTagListClass = BukkitReflect.getMinecraftClass("NBTTagList");
-		_nbtTagStringClass = BukkitReflect.getMinecraftClass("NBTTagString");
+		_nbtBaseClass = BukkitReflectAdapter_v1_16_R3.getMinecraftClass("NBTBase");
+		_nbtTagCompoundClass = BukkitReflectAdapter_v1_16_R3.getMinecraftClass("NBTTagCompound");
+		_nbtTagListClass = BukkitReflectAdapter_v1_16_R3.getMinecraftClass("NBTTagList");
+		_nbtTagStringClass = BukkitReflectAdapter_v1_16_R3.getMinecraftClass("NBTTagString");
 		try {
 			_getTypeId = _nbtBaseClass.getMethod("getTypeId");
 			_clone = _nbtBaseClass.getMethod("clone");
@@ -59,11 +59,11 @@ public class NBTBaseAdapter_v1_16_R3 implements NBTBaseAdapter {
 
 	@Override
 	public Object clone(Object nbtBaseObject) {
-		return BukkitReflect.invokeMethod(nbtBaseObject, _clone);
+		return BukkitReflectAdapter_v1_16_R3.invokeMethod(nbtBaseObject, _clone);
 	}
 
 	@Override
 	public byte getTypeId(Object handle) {
-		return (Byte) BukkitReflect.invokeMethod(handle, _getTypeId);
+		return (Byte) BukkitReflectAdapter_v1_16_R3.invokeMethod(handle, _getTypeId);
 	}
 }

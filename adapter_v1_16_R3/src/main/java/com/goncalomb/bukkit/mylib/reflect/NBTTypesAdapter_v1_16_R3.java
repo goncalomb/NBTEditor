@@ -34,7 +34,7 @@ public final class NBTTypesAdapter_v1_16_R3 implements NBTTypesAdapter {
 		private Class<?> _dataType;
 
 		private NBTTypes(String tagClassName) throws SecurityException, NoSuchMethodException, NoSuchFieldException {
-			_class = BukkitReflect.getMinecraftClass(tagClassName);
+			_class = BukkitReflectAdapter_v1_16_R3.getMinecraftClass(tagClassName);
 			_data = _class.getDeclaredField("data");
 			_data.setAccessible(true);
 			_dataType = _data.getType();
@@ -44,12 +44,12 @@ public final class NBTTypesAdapter_v1_16_R3 implements NBTTypesAdapter {
 
 		// Wraps primitives and strings with Minecraft tags.
 		private Object wrap(Object innerObject) {
-			return BukkitReflect.newInstance(_constructor, innerObject);
+			return BukkitReflectAdapter_v1_16_R3.newInstance(_constructor, innerObject);
 		}
 
 		// Unwraps primitives and strings from Minecraft tags.
 		private Object unwrap(Object tagObject) {
-			return BukkitReflect.getFieldValue(tagObject, _data);
+			return BukkitReflectAdapter_v1_16_R3.getFieldValue(tagObject, _data);
 		}
 	}
 

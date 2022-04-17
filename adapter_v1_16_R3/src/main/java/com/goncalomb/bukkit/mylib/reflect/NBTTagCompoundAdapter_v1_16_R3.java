@@ -47,8 +47,8 @@ public final class NBTTagCompoundAdapter_v1_16_R3 implements NBTTagCompoundAdapt
 	private static Method _parseMojangson;
 
 	public NBTTagCompoundAdapter_v1_16_R3() throws Exception {
-		_nbtTagCompoundClass = BukkitReflect.getMinecraftClass("NBTTagCompound");
-		_nbtTagListClass = BukkitReflect.getMinecraftClass("NBTTagList");
+		_nbtTagCompoundClass = BukkitReflectAdapter_v1_16_R3.getMinecraftClass("NBTTagCompound");
+		_nbtTagListClass = BukkitReflectAdapter_v1_16_R3.getMinecraftClass("NBTTagList");
 		_getByte = _nbtTagCompoundClass.getMethod("getByte", String.class);
 		_getShort = _nbtTagCompoundClass.getMethod("getShort", String.class);
 		_getInt = _nbtTagCompoundClass.getMethod("getInt", String.class);
@@ -62,61 +62,61 @@ public final class NBTTagCompoundAdapter_v1_16_R3 implements NBTTagCompoundAdapt
 		_mapField = _nbtTagCompoundClass.getDeclaredField("map");
 		_mapField.setAccessible(true);
 
-		Class<?>_mojangsonParserClass = BukkitReflect.getMinecraftClass("MojangsonParser");
+		Class<?>_mojangsonParserClass = BukkitReflectAdapter_v1_16_R3.getMinecraftClass("MojangsonParser");
 		_parseMojangson = _mojangsonParserClass.getMethod("parse", String.class);
 
-		Class<?> nbtCompressedStreamToolsClass = BukkitReflect.getMinecraftClass("NBTCompressedStreamTools");
+		Class<?> nbtCompressedStreamToolsClass = BukkitReflectAdapter_v1_16_R3.getMinecraftClass("NBTCompressedStreamTools");
 		_tagSerializeStream = nbtCompressedStreamToolsClass.getMethod("a", _nbtTagCompoundClass, OutputStream.class);
 		_tagUnserializeStream = nbtCompressedStreamToolsClass.getMethod("a", InputStream.class);
 	}
 
 	public Object newInternalInstance() {
-		return BukkitReflect.newInstance(_nbtTagCompoundClass);
+		return BukkitReflectAdapter_v1_16_R3.newInstance(_nbtTagCompoundClass);
 	}
 
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> getMap(Object handle) {
-		return (Map<String, Object>) BukkitReflect.getFieldValue(handle, _mapField);
+		return (Map<String, Object>) BukkitReflectAdapter_v1_16_R3.getFieldValue(handle, _mapField);
 	}
 
 	public byte getByte(Object handle, String key) {
-		return (Byte) BukkitReflect.invokeMethod(handle, _getByte, key);
+		return (Byte) BukkitReflectAdapter_v1_16_R3.invokeMethod(handle, _getByte, key);
 	}
 
 	public short getShort(Object handle, String key) {
-		return (Short) BukkitReflect.invokeMethod(handle, _getShort, key);
+		return (Short) BukkitReflectAdapter_v1_16_R3.invokeMethod(handle, _getShort, key);
 	}
 
 	public int getInt(Object handle, String key) {
-		return (Integer) BukkitReflect.invokeMethod(handle, _getInt, key);
+		return (Integer) BukkitReflectAdapter_v1_16_R3.invokeMethod(handle, _getInt, key);
 	}
 
 	public long getLong(Object handle, String key) {
-		return (Long) BukkitReflect.invokeMethod(handle, _getLong, key);
+		return (Long) BukkitReflectAdapter_v1_16_R3.invokeMethod(handle, _getLong, key);
 	}
 
 	public float getFloat(Object handle, String key) {
-		return (Float) BukkitReflect.invokeMethod(handle, _getFloat, key);
+		return (Float) BukkitReflectAdapter_v1_16_R3.invokeMethod(handle, _getFloat, key);
 	}
 
 	public Double getDouble(Object handle, String key) {
-		return (Double) BukkitReflect.invokeMethod(handle, _getDouble, key);
+		return (Double) BukkitReflectAdapter_v1_16_R3.invokeMethod(handle, _getDouble, key);
 	}
 
 	public String getString(Object handle, String key) {
-		return (String) BukkitReflect.invokeMethod(handle, _getString, key);
+		return (String) BukkitReflectAdapter_v1_16_R3.invokeMethod(handle, _getString, key);
 	}
 
 	public byte[] getByteArray(Object handle, String key) {
-		return (byte[]) BukkitReflect.invokeMethod(handle, _getByteArray, key);
+		return (byte[]) BukkitReflectAdapter_v1_16_R3.invokeMethod(handle, _getByteArray, key);
 	}
 
 	public int[] getIntArray(Object handle, String key) {
-		return (int[]) BukkitReflect.invokeMethod(handle, _getIntArray, key);
+		return (int[]) BukkitReflectAdapter_v1_16_R3.invokeMethod(handle, _getIntArray, key);
 	}
 
 	public long[] getLongArray(Object handle, String key) {
-		return (long[]) BukkitReflect.invokeMethod(handle, _getLongArray, key);
+		return (long[]) BukkitReflectAdapter_v1_16_R3.invokeMethod(handle, _getLongArray, key);
 	}
 
 	public NBTTagCompound getCompound(Object handle, String key) {
@@ -140,14 +140,14 @@ public final class NBTTagCompoundAdapter_v1_16_R3 implements NBTTagCompoundAdapt
 	}
 
 	public void serialize(Object handle, OutputStream outputStream) throws IOException {
-		BukkitReflect.invokeMethod(null, _tagSerializeStream, handle, outputStream);
+		BukkitReflectAdapter_v1_16_R3.invokeMethod(null, _tagSerializeStream, handle, outputStream);
 	}
 
 	public NBTTagCompound unserialize(InputStream inputStream) throws IOException {
-		return new NBTTagCompound(BukkitReflect.invokeMethod(null, _tagUnserializeStream, inputStream));
+		return new NBTTagCompound(BukkitReflectAdapter_v1_16_R3.invokeMethod(null, _tagUnserializeStream, inputStream));
 	}
 
 	public NBTTagCompound fromString(String mojangson) throws Exception {
-		return new NBTTagCompound(BukkitReflect.invokeMethod(null, _parseMojangson, mojangson));
+		return new NBTTagCompound(BukkitReflectAdapter_v1_16_R3.invokeMethod(null, _parseMojangson, mojangson));
 	}
 }

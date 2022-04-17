@@ -30,8 +30,8 @@ public final class NBTTagListAdapter_v1_18_R1 implements NBTTagListAdapter {
 	protected static Class<?> _nbtTagListClass;
 
 	public NBTTagListAdapter_v1_18_R1() throws Exception {
-		_nbtTagListClass = BukkitReflect.getMinecraftClass("nbt.ListTag");
-		_listField = _nbtTagListClass.getDeclaredField("list");
+		_nbtTagListClass = Class.forName("net.minecraft.nbt.NBTTagList");
+		_listField = _nbtTagListClass.getDeclaredField("c");
 		_listField.setAccessible(true);
 	}
 
@@ -41,7 +41,11 @@ public final class NBTTagListAdapter_v1_18_R1 implements NBTTagListAdapter {
 
 	@SuppressWarnings("unchecked")
 	public List<Object> getList(Object handle) {
-		return (List<Object>) BukkitReflect.getFieldValue(handle, _listField);
+		try {
+			return (List<Object>) _listField.get(handle);
+		} catch (Exception e) {
+			throw new RuntimeException("Error while getting field value " + _listField.getName() + " of class " + _listField.getDeclaringClass().getName() + ".", e);
+		}
 	}
 
 	public void add(Object handle, Object value) {

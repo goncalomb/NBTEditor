@@ -19,166 +19,42 @@
 
 package com.goncalomb.bukkit.mylib.reflect;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.logging.Logger;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.SimpleCommandMap;
-
-import com.google.gson.JsonParseException;
 
 public final class BukkitReflect {
 
-	private final static class CachedPackage {
-
-		private String _packageName;
-		private HashMap<String, Class<?>> _cache = new HashMap<String, Class<?>>();
-
-		public CachedPackage(String packageName) {
-			_packageName = packageName;
-		}
-
-		public Class<?> getClass(String className) {
-			Class <?> clazz = _cache.get(className);
-			if (clazz == null) {
-				try {
-					clazz = this.getClass().getClassLoader().loadClass(_packageName + "." + className);
-				} catch (ClassNotFoundException e) {
-					throw new RuntimeException("Cannot find class " + _packageName + "." + className + ".", e);
-				}
-				_cache.put(className, clazz);
-			}
-			return clazz;
-		}
-
-	}
-
-	private static boolean _isPrepared = false;
-
-	private static CachedPackage _craftBukkitPackage;
-	private static CachedPackage _minecraftPackage;
-
-	private static Method _getCommandMap;
-	private static Method _ChatSerializer_a_serialize;
-	private static Method _ChatSerializer_a_unserialize;
-	private static Constructor<?> _ChatComponentTextClass_contructor;
+	private static BukkitReflectAdapter adapter = null;
 
 	public static void prepareReflection(Class<?> serverClass, Logger logger) throws Exception {
-		if (!_isPrepared) {
-			Class<?> craftServerClass = Bukkit.getServer().getClass();
-			_craftBukkitPackage = new CachedPackage(craftServerClass.getPackage().getName());
-			try {
-				Method getHandle = craftServerClass.getMethod("getHandle");
-				_minecraftPackage = new CachedPackage(getHandle.getReturnType().getPackage().getName());
-				_getCommandMap = craftServerClass.getMethod("getCommandMap");
-			} catch (NoSuchMethodException e) {
-				throw new RuntimeException("Cannot find the required methods on the server class.", e);
-			}
+		String packageName = serverClass.getPackage().getName();
+		String version = packageName.substring(packageName.lastIndexOf('.') + 1);
 
-			_isPrepared = true;
-
-			try {
-				Class<?> iChatBaseComponentClass = getMinecraftClass("IChatBaseComponent");
-				Class<?> chatSerializerClass = getMinecraftClass("IChatBaseComponent$ChatSerializer");
-				_ChatSerializer_a_serialize = chatSerializerClass.getMethod("a", iChatBaseComponentClass);
-				_ChatSerializer_a_unserialize = chatSerializerClass.getMethod("a", String.class);
-				Class<?> chatComponentTextClass = getMinecraftClass("ChatComponentText");
-				_ChatComponentTextClass_contructor = chatComponentTextClass.getConstructor(String.class);
-			} catch (NoSuchMethodException e) {
-				throw new RuntimeException("Error while preparing ChatSerializer.", e);
-			}
-		}
+		Class<?> clazz = Class.forName("com.goncalomb.bukkit.mylib.reflect.BukkitReflectAdapter_" + version);
+		adapter = (BukkitReflectAdapter) clazz.getConstructor().newInstance();
+		logger.info("Loaded BukkitReflect adapter for " + version);
 	}
 
-	private BukkitReflect() { }
-
-	public static Class<?> getCraftBukkitClass(String className) {
-		return _craftBukkitPackage.getClass(className);
-	}
-
-	public static Class<?> getMinecraftClass(String className) {
-		return _minecraftPackage.getClass(className);
-	}
 
 	public static SimpleCommandMap getCommandMap() {
-		return (SimpleCommandMap) invokeMethod(Bukkit.getServer(), _getCommandMap);
+		ensureAdapter(adapter);
+		return adapter.getCommandMap();
 	}
 
 	public static boolean isValidRawJSON(String text) {
-		try {
-			_ChatSerializer_a_unserialize.invoke(null, text);
-			return true;
-		} catch (InvocationTargetException e) {
-			if (e.getTargetException() instanceof JsonParseException) {
-				return false;
-			}
-			throw new RuntimeException(e);
-		} catch (IllegalAccessException | IllegalArgumentException e) {
-			throw new RuntimeException(e);
-		}
+		ensureAdapter(adapter);
+		return adapter.isValidRawJSON(text);
 	}
 
 	public static String textToRawJSON(String text) {
-		try {
-			return (String) _ChatSerializer_a_serialize.invoke(null, _ChatComponentTextClass_contructor.newInstance(text));
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| InstantiationException e) {
-			throw new RuntimeException(e);
-		}
+		ensureAdapter(adapter);
+		return adapter.textToRawJSON(text);
 	}
 
-	// Other helper methods...
-
-	static Object invokeConstuctor(Constructor<?> constuctor, Object... args) {
-		try {
-			return constuctor.newInstance(args);
-		} catch (Exception e) {
-			throw new RuntimeException("Error while invoking " + constuctor.getName() + ".", e);
+	private static void ensureAdapter(Object adapter) throws RuntimeException {
+		if (adapter == null) {
+			throw new RuntimeException("Version adapter is not loaded");
 		}
 	}
-
-	static Object invokeMethod(Object object, Method method, Object... args) {
-		try {
-			return method.invoke(object, args);
-		} catch (Exception e) {
-			throw new RuntimeException("Error while invoking " + method.getName() + ".", e);
-		}
-	}
-
-	static Object getFieldValue(Object object, Field field) {
-		try {
-			return field.get(object);
-		} catch (Exception e) {
-			throw new RuntimeException("Error while getting field value " + field.getName() + " of class " + field.getDeclaringClass().getName() + ".", e);
-		}
-	}
-
-	static void setFieldValue(Object object, Field field, Object value) {
-		try {
-			field.set(object, value);
-		} catch (Exception e) {
-			throw new RuntimeException("Error while setting field value " + field.getName() + " of class " + field.getDeclaringClass().getName() + ".", e);
-		}
-	}
-
-	static Object newInstance(Class<?> clazz) {
-		try {
-			return clazz.newInstance();
-		} catch (Exception e) {
-			throw new RuntimeException("Error creating instance of " + clazz.getName() + ".", e);
-		}
-	}
-
-	static Object newInstance(Constructor<?> contructor, Object... initargs) {
-		try {
-			return contructor.newInstance(initargs);
-		} catch (Exception e) {
-			throw new RuntimeException("Error creating instance of " + contructor.getDeclaringClass().getName() + ".", e);
-		}
-	}
-
 }

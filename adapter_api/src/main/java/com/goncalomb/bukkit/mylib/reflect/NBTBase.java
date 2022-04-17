@@ -39,25 +39,19 @@ public class NBTBase {
 	// Wraps any Minecraft tags in MyLib tags.
 	// Primitives and strings are wrapped with NBTBase.
 	protected static final NBTBase wrap(Object object) {
-		if (adapter == null) {
-			throw new RuntimeException("Version adapter is not loaded");
-		}
+		ensureAdapter(adapter);
 		return adapter.wrap(object);
 	}
 
 	// Helper method for NBTTagCompoundWrapper.merge().
 	// Clones any internal Minecraft tags.
 	protected static final Object clone(Object nbtBaseObject) {
-		if (adapter == null) {
-			throw new RuntimeException("Version adapter is not loaded");
-		}
+		ensureAdapter(adapter);
 		return adapter.clone(nbtBaseObject);
 	}
 
 	static byte getTypeId(Object handle) {
-		if (adapter == null) {
-			throw new RuntimeException("Version adapter is not loaded");
-		}
+		ensureAdapter(adapter);
 		return adapter.getTypeId(handle);
 	}
 
@@ -74,4 +68,9 @@ public class NBTBase {
 		return _handle.toString();
 	}
 
+	private static void ensureAdapter(Object adapter) throws RuntimeException {
+		if (adapter == null) {
+			throw new RuntimeException("Version adapter is not loaded");
+		}
+	}
 }

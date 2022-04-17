@@ -37,8 +37,8 @@ public class BukkitVersionAdapter_v1_16_R3 implements BukkitVersionAdapter {
 			return;
 		}
 		try {
-			Object mcServer = BukkitReflect.invokeMethod(server, BukkitReflect.getCraftBukkitClass("CraftServer").getDeclaredMethod("getServer"));
-			String version = (String) BukkitReflect.invokeMethod(mcServer, BukkitReflect.getMinecraftClass("MinecraftServer").getDeclaredMethod("getVersion"));
+			Object mcServer = BukkitReflectAdapter_v1_16_R3.invokeMethod(server, BukkitReflectAdapter_v1_16_R3.getCraftBukkitClass("CraftServer").getDeclaredMethod("getServer"));
+			String version = (String) BukkitReflectAdapter_v1_16_R3.invokeMethod(mcServer, BukkitReflectAdapter_v1_16_R3.getMinecraftClass("MinecraftServer").getDeclaredMethod("getVersion"));
 			Matcher matcher = Pattern.compile("^(\\d+)(?:\\.(\\d+)(?:\\.(\\d+))?)?$").matcher(version);
 			if (matcher.find()) {
 				_minecraftVersionMajor = Integer.parseInt(matcher.group(1));

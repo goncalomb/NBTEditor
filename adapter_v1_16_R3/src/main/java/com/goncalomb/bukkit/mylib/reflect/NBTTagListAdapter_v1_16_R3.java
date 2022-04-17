@@ -29,7 +29,7 @@ public final class NBTTagListAdapter_v1_16_R3 implements NBTTagListAdapter {
 	protected static Class<?> _nbtTagListClass;
 
 	public NBTTagListAdapter_v1_16_R3() throws Exception {
-		_nbtTagListClass = BukkitReflect.getMinecraftClass("NBTTagList");
+		_nbtTagListClass = BukkitReflectAdapter_v1_16_R3.getMinecraftClass("NBTTagList");
 		_typeField = _nbtTagListClass.getDeclaredField("type");
 		_typeField.setAccessible(true);
 		_listField = _nbtTagListClass.getDeclaredField("list");
@@ -37,17 +37,17 @@ public final class NBTTagListAdapter_v1_16_R3 implements NBTTagListAdapter {
 	}
 
 	public Object newInternalInstance() {
-		return BukkitReflect.newInstance(_nbtTagListClass);
+		return BukkitReflectAdapter_v1_16_R3.newInstance(_nbtTagListClass);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Object> getList(Object handle) {
-		return (List<Object>) BukkitReflect.getFieldValue(handle, _listField);
+		return (List<Object>) BukkitReflectAdapter_v1_16_R3.getFieldValue(handle, _listField);
 	}
 
 	public void add(Object handle, Object value) {
 		Object addHandle = NBTTypes.toInternal(value);
-		BukkitReflect.setFieldValue(handle, _typeField, NBTBase.getTypeId(addHandle));
+		BukkitReflectAdapter_v1_16_R3.setFieldValue(handle, _typeField, NBTBase.getTypeId(addHandle));
 		getList(handle).add(addHandle);
 	}
 }

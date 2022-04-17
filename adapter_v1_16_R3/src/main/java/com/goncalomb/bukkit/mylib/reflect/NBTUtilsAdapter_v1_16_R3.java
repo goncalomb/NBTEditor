@@ -68,95 +68,95 @@ public final class NBTUtilsAdapter_v1_16_R3 implements NBTUtilsAdapter {
 	private Method _EntityTypes_a; // Spawn an entity from a NBTCompound.
 
 	public NBTUtilsAdapter_v1_16_R3() throws SecurityException, NoSuchMethodException, NoSuchFieldException {
-		Class<?> nbtTagCompoundClass = BukkitReflect.getMinecraftClass("NBTTagCompound");
+		Class<?> nbtTagCompoundClass = BukkitReflectAdapter_v1_16_R3.getMinecraftClass("NBTTagCompound");
 
-		Class<?> minecraftItemStackClass = BukkitReflect.getMinecraftClass("ItemStack");
+		Class<?> minecraftItemStackClass = BukkitReflectAdapter_v1_16_R3.getMinecraftClass("ItemStack");
 		_ItemStack_nbtConstructor = minecraftItemStackClass.getDeclaredConstructor(nbtTagCompoundClass);
 		_ItemStack_nbtConstructor.setAccessible(true);
 		_ItemStack_save = minecraftItemStackClass.getMethod("save", nbtTagCompoundClass);
 		_ItemStack_getTag = minecraftItemStackClass.getMethod("getTag");
 		_ItemStack_setTag = minecraftItemStackClass.getMethod("setTag", nbtTagCompoundClass);
 
-		Class<?> craftItemStackClass = BukkitReflect.getCraftBukkitClass("inventory.CraftItemStack");
+		Class<?> craftItemStackClass = BukkitReflectAdapter_v1_16_R3.getCraftBukkitClass("inventory.CraftItemStack");
 		_CraftItemStack_asCraftMirror = craftItemStackClass.getMethod("asCraftMirror", minecraftItemStackClass);
 		_CraftItemStack_asCraftCopy = craftItemStackClass.getMethod("asCraftCopy", ItemStack.class);
 		_CraftItemStack_handle = craftItemStackClass.getDeclaredField("handle");
 		_CraftItemStack_handle.setAccessible(true);
 
-		Class<?> minecraftEntityClass = BukkitReflect.getMinecraftClass("Entity");
+		Class<?> minecraftEntityClass = BukkitReflectAdapter_v1_16_R3.getMinecraftClass("Entity");
 		_Entity_save = minecraftEntityClass.getMethod("save", nbtTagCompoundClass);
 		_Entity_getBukkitEntity = minecraftEntityClass.getMethod("getBukkitEntity");
 		_Entity_setPosition = minecraftEntityClass.getMethod("setPosition", double.class, double.class, double.class);
 
-		Class<?> craftEntityClass = BukkitReflect.getCraftBukkitClass("entity.CraftEntity");
+		Class<?> craftEntityClass = BukkitReflectAdapter_v1_16_R3.getCraftBukkitClass("entity.CraftEntity");
 		_CraftEntity_getHandle = craftEntityClass.getMethod("getHandle");
 
-		Class<?> minecraftTileEntityClass = BukkitReflect.getMinecraftClass("TileEntity");
+		Class<?> minecraftTileEntityClass = BukkitReflectAdapter_v1_16_R3.getMinecraftClass("TileEntity");
 		_TileEntity_save = minecraftTileEntityClass.getMethod("save", nbtTagCompoundClass);
-		Class<?> minecraftIBlockDataClass = BukkitReflect.getMinecraftClass("IBlockData");
+		Class<?> minecraftIBlockDataClass = BukkitReflectAdapter_v1_16_R3.getMinecraftClass("IBlockData");
 		_TileEntity_load = minecraftTileEntityClass.getMethod("load", minecraftIBlockDataClass, nbtTagCompoundClass);
 
-		Class<?> craftWorldClass = BukkitReflect.getCraftBukkitClass("CraftWorld");
+		Class<?> craftWorldClass = BukkitReflectAdapter_v1_16_R3.getCraftBukkitClass("CraftWorld");
 		_CraftWorld_getHandle = craftWorldClass.getMethod("getHandle");
 
-		Class<?> minecraftBlockPositionClass = BukkitReflect.getMinecraftClass("BlockPosition");
+		Class<?> minecraftBlockPositionClass = BukkitReflectAdapter_v1_16_R3.getMinecraftClass("BlockPosition");
 		_BlockPosition_constructor = minecraftBlockPositionClass.getConstructor(int.class, int.class, int.class);
 
-		Class<?> minecraftWorldClass = BukkitReflect.getMinecraftClass("World");
+		Class<?> minecraftWorldClass = BukkitReflectAdapter_v1_16_R3.getMinecraftClass("World");
 		_World_getTileEntity = minecraftWorldClass.getMethod("getTileEntity", minecraftBlockPositionClass);
 
-		Class<?> minecraftWorldServerClass = BukkitReflect.getMinecraftClass("WorldServer");
+		Class<?> minecraftWorldServerClass = BukkitReflectAdapter_v1_16_R3.getMinecraftClass("WorldServer");
 		_WorldServer_addAllEntitiesSafely = minecraftWorldServerClass.getMethod("addAllEntitiesSafely", minecraftEntityClass);
 
-		Class<?> minecraftEntityTypesClass = BukkitReflect.getMinecraftClass("EntityTypes");
+		Class<?> minecraftEntityTypesClass = BukkitReflectAdapter_v1_16_R3.getMinecraftClass("EntityTypes");
 		_EntityTypes_a = minecraftEntityTypesClass.getMethod("a", nbtTagCompoundClass, minecraftWorldClass, Function.class);
 	}
 
 	public ItemStack itemStackFromNBTData(NBTTagCompound data) {
-		return (ItemStack) BukkitReflect.invokeMethod(null, _CraftItemStack_asCraftMirror, BukkitReflect.invokeConstuctor(_ItemStack_nbtConstructor, data._handle));
+		return (ItemStack) BukkitReflectAdapter_v1_16_R3.invokeMethod(null, _CraftItemStack_asCraftMirror, BukkitReflectAdapter_v1_16_R3.invokeConstuctor(_ItemStack_nbtConstructor, data._handle));
 	}
 
 	public NBTTagCompound itemStackToNBTData(ItemStack stack) {
 		NBTTagCompound data = new NBTTagCompound();
-		Object handle = BukkitReflect.getFieldValue(stack, _CraftItemStack_handle);
-		BukkitReflect.invokeMethod(handle, _ItemStack_save, data._handle);
+		Object handle = BukkitReflectAdapter_v1_16_R3.getFieldValue(stack, _CraftItemStack_handle);
+		BukkitReflectAdapter_v1_16_R3.invokeMethod(handle, _ItemStack_save, data._handle);
 		return data;
 	}
 
 	public Entity spawnEntity(NBTTagCompound data, Location location) {
-		Object worldHandle = BukkitReflect.invokeMethod(location.getWorld(), _CraftWorld_getHandle);
+		Object worldHandle = BukkitReflectAdapter_v1_16_R3.invokeMethod(location.getWorld(), _CraftWorld_getHandle);
 		// This function will be applied to each summoned entity (including passengers) to set their location
 		Function<Object, Object> entityFunction = (Object entity) -> {
-			BukkitReflect.invokeMethod(entity, _Entity_setPosition, location.getX(), location.getY(), location.getZ());
+			BukkitReflectAdapter_v1_16_R3.invokeMethod(entity, _Entity_setPosition, location.getX(), location.getY(), location.getZ());
 			return entity;
 		};
 		// Summon the entity, and for each entity summoned (including passengers) run the above function
-		Object entityHandle = BukkitReflect.invokeMethod(null, _EntityTypes_a, data._handle, worldHandle, entityFunction);
+		Object entityHandle = BukkitReflectAdapter_v1_16_R3.invokeMethod(null, _EntityTypes_a, data._handle, worldHandle, entityFunction);
 		if (entityHandle == null) {
 			return null;
 		}
-		BukkitReflect.invokeMethod(worldHandle, _WorldServer_addAllEntitiesSafely, entityHandle);
-		return (Entity) BukkitReflect.invokeMethod(entityHandle, _Entity_getBukkitEntity);
+		BukkitReflectAdapter_v1_16_R3.invokeMethod(worldHandle, _WorldServer_addAllEntitiesSafely, entityHandle);
+		return (Entity) BukkitReflectAdapter_v1_16_R3.invokeMethod(entityHandle, _Entity_getBukkitEntity);
 	}
 
 	public NBTTagCompound getEntityNBTData(Entity entity) {
-		Object entityHandle = BukkitReflect.invokeMethod(entity, _CraftEntity_getHandle);
+		Object entityHandle = BukkitReflectAdapter_v1_16_R3.invokeMethod(entity, _CraftEntity_getHandle);
 		NBTTagCompound data = new NBTTagCompound();
-		BukkitReflect.invokeMethod(entityHandle, _Entity_save, data._handle);
+		BukkitReflectAdapter_v1_16_R3.invokeMethod(entityHandle, _Entity_save, data._handle);
 		return data;
 	}
 
 	private Object getTileEntity(Block block) {
-		Object worldHandle = BukkitReflect.invokeMethod(block.getWorld(), _CraftWorld_getHandle);
-		Object pos = BukkitReflect.invokeConstuctor(_BlockPosition_constructor, block.getX(), block.getY(), block.getZ());
-		return BukkitReflect.invokeMethod(worldHandle, _World_getTileEntity, pos);
+		Object worldHandle = BukkitReflectAdapter_v1_16_R3.invokeMethod(block.getWorld(), _CraftWorld_getHandle);
+		Object pos = BukkitReflectAdapter_v1_16_R3.invokeConstuctor(_BlockPosition_constructor, block.getX(), block.getY(), block.getZ());
+		return BukkitReflectAdapter_v1_16_R3.invokeMethod(worldHandle, _World_getTileEntity, pos);
 	}
 
 	public NBTTagCompound getTileEntityNBTData(Block block) {
 		Object tileEntity = getTileEntity(block);
 		if (tileEntity != null) {
 			NBTTagCompound data = new NBTTagCompound();
-			BukkitReflect.invokeMethod(tileEntity, _TileEntity_save, data._handle);
+			BukkitReflectAdapter_v1_16_R3.invokeMethod(tileEntity, _TileEntity_save, data._handle);
 			return data;
 		}
 		return null;
@@ -165,24 +165,24 @@ public final class NBTUtilsAdapter_v1_16_R3 implements NBTUtilsAdapter {
 	public void setTileEntityNBTData(Block block, NBTTagCompound data) {
 		Object tileEntity = getTileEntity(block);
 		if (tileEntity != null) {
-			BukkitReflect.invokeMethod(tileEntity, _TileEntity_load, null, data._handle);
+			BukkitReflectAdapter_v1_16_R3.invokeMethod(tileEntity, _TileEntity_load, null, data._handle);
 		}
 	}
 
 	public NBTTagCompound getItemStackTag(ItemStack item) {
-		Object handle = BukkitReflect.getFieldValue(item, _CraftItemStack_handle);
-		Object tag = BukkitReflect.invokeMethod(handle, _ItemStack_getTag);
+		Object handle = BukkitReflectAdapter_v1_16_R3.getFieldValue(item, _CraftItemStack_handle);
+		Object tag = BukkitReflectAdapter_v1_16_R3.invokeMethod(handle, _ItemStack_getTag);
 		return (tag == null ? new NBTTagCompound() : new NBTTagCompound(tag));
 	}
 
 	public void setItemStackTag(ItemStack item, NBTTagCompound tag) {
-		Object handle = BukkitReflect.getFieldValue(item, _CraftItemStack_handle);
-		BukkitReflect.invokeMethod(handle, _ItemStack_setTag, tag._handle);
+		Object handle = BukkitReflectAdapter_v1_16_R3.getFieldValue(item, _CraftItemStack_handle);
+		BukkitReflectAdapter_v1_16_R3.invokeMethod(handle, _ItemStack_setTag, tag._handle);
 	}
 
 	public ItemStack itemStackToCraftItemStack(ItemStack item) {
 		if (!_CraftItemStack_asCraftCopy.getClass().isInstance(item)) {
-			return (ItemStack) BukkitReflect.invokeMethod(null, _CraftItemStack_asCraftCopy, item);
+			return (ItemStack) BukkitReflectAdapter_v1_16_R3.invokeMethod(null, _CraftItemStack_asCraftCopy, item);
 		}
 		return item;
 	}
