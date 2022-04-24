@@ -59,6 +59,7 @@ public class CommandNBTTile extends AbstractNBTCommand<TileNBTWrapper> {
 			}
 			return new TileNBTWrapper(block);
 		} catch (RuntimeException e) {
+			e.printStackTrace();
 			throw new MyCommandException("§cCannot edit that tile!");
 		}
 	}

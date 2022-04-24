@@ -52,7 +52,7 @@ public final class BukkitReflect {
 		return adapter.textToRawJSON(text);
 	}
 
-	private static void ensureAdapter(Object adapter) throws RuntimeException {
+	public static void ensureAdapter(Object adapter) throws RuntimeException {
 		if (adapter == null) {
 			throw new RuntimeException("Version adapter is not loaded");
 		}

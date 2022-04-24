@@ -21,15 +21,27 @@ package com.goncalomb.bukkit.nbteditor.nbt;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
+import com.goncalomb.bukkit.mylib.reflect.BukkitReflect;
+import com.goncalomb.bukkit.nbteditor.nbt.SpawnerNBTWrapperAdapter.SpawnerAdapterWrappedEntity;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 
-import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
-import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
-import com.goncalomb.bukkit.mylib.reflect.NBTTagList;
-
 public final class SpawnerNBTWrapper extends TileNBTWrapper {
+
+	private static SpawnerNBTWrapperAdapter adapter = null;
+
+	public static void prepareReflection(Class<?> serverClass, Logger logger) throws Exception {
+		String packageName = serverClass.getPackage().getName();
+		String version = packageName.substring(packageName.lastIndexOf('.') + 1);
+
+		Class<?> clazz = Class.forName("com.goncalomb.bukkit.nbteditor.nbt.SpawnerNBTWrapperAdapter_" + version);
+		adapter = (SpawnerNBTWrapperAdapter) clazz.getConstructor().newInstance();
+		logger.info("Loaded SpawnerNBTWrapper adapter for " + version);
+	}
 
 	public static class SpawnerEntity {
 
@@ -45,13 +57,13 @@ public final class SpawnerNBTWrapper extends TileNBTWrapper {
 			this(EntityNBT.fromEntityType(entityType), weight);
 		}
 
-		NBTTagCompound getCompound() {
-			NBTTagCompound data = new  NBTTagCompound();
-			data.setInt("Weight", weight);
-			data.setCompound("Entity", entityNBT._data);
-			return data;
+		private SpawnerAdapterWrappedEntity wrapForAdapter() {
+			return new SpawnerAdapterWrappedEntity(entityNBT._data, weight);
 		}
 
+		private static SpawnerEntity fromAdapterWrapped(SpawnerAdapterWrappedEntity wrapped) {
+			return new SpawnerEntity(EntityNBT.fromEntityData(wrapped.data), wrapped.weight);
+		}
 	}
 
 	public SpawnerNBTWrapper(Block block) {
@@ -59,43 +71,26 @@ public final class SpawnerNBTWrapper extends TileNBTWrapper {
 	}
 
 	public void addEntity(SpawnerEntity entity) {
-		List<SpawnerEntity> entities = getEntities();
-		entities.add(entity);
-		_data.setCompound("SpawnData", entity.entityNBT._data);
-		setEntities(entities);
+		BukkitReflect.ensureAdapter(adapter);
+		adapter.addEntity(_data, entity.wrapForAdapter());
 	}
 
 	public List<SpawnerEntity> getEntities() {
-		ArrayList<SpawnerEntity> entities = new ArrayList<SpawnerEntity>();
-		if (_data.hasKey("SpawnPotentials")) {
-			NBTTagList spawnPotentials = _data.getList("SpawnPotentials");
-			int l = spawnPotentials.size();
-			for (int i = 0; i < l; ++i) {
-				NBTTagCompound potential = (NBTTagCompound) spawnPotentials.get(i);
-				EntityNBT entityNbt = EntityNBT.fromEntityData(potential.getCompound("Entity"));
-				if (entityNbt != null) {
-					entities.add(new SpawnerEntity(entityNbt, potential.getInt("Weight")));
-				}
-			}
-			_data.remove("SpawnPotentials");
+		BukkitReflect.ensureAdapter(adapter);
+		List<SpawnerAdapterWrappedEntity> entities = adapter.getEntities(_data);
+		if (entities == null) {
+			return null;
 		}
-		return entities;
+		return new ArrayList<>(entities.stream().map((entity) -> SpawnerEntity.fromAdapterWrapped(entity)).collect(Collectors.toList()));
 	}
 
 	public void setEntities(List<SpawnerEntity> entities) {
-		if (entities != null && entities.size() > 0) {
-			NBTTagList spawnPotentials = new NBTTagList();
-			for (SpawnerEntity entity : entities) {
-				spawnPotentials.add(entity.getCompound());
-			}
-			_data.setList("SpawnPotentials", spawnPotentials);
+		BukkitReflect.ensureAdapter(adapter);
+		if (entities == null) {
+			adapter.setEntities(_data, null);
 		} else {
-			NBTTagCompound simplePig = new NBTTagCompound();
-
-			_data.setCompound("SpawnData", simplePig);
-			_data.remove("SpawnPotentials");
+			adapter.setEntities(_data, entities.stream().map((entity) -> entity.wrapForAdapter()).collect(Collectors.toList()));
 		}
-
 	}
 
 	public void clearEntities() {
@@ -103,11 +98,7 @@ public final class SpawnerNBTWrapper extends TileNBTWrapper {
 	}
 
 	public EntityType getCurrentEntity() {
-		NBTTagCompound spawnData = _data.getCompound("SpawnData");
-		if (spawnData != null) {
-			return EntityTypeMap.getByName(spawnData.getString("id"));
-		}
-		return null;
+		BukkitReflect.ensureAdapter(adapter);
+		return adapter.getCurrentEntity(_data);
 	}
-
 }

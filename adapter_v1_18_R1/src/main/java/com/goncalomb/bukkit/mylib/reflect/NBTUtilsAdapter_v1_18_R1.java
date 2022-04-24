@@ -72,7 +72,7 @@ public final class NBTUtilsAdapter_v1_18_R1 implements NBTUtilsAdapter {
 	public NBTTagCompound getTileEntityNBTData(Block block) {
 		BlockEntity tileEntity = getTileEntity(block);
 		if (tileEntity != null) {
-			return new NBTTagCompound(tileEntity.saveWithoutMetadata());
+			return new NBTTagCompound(tileEntity.saveWithId());
 		}
 		return null;
 	}

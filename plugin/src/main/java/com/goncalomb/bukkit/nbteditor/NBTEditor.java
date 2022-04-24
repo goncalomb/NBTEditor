@@ -59,6 +59,7 @@ import com.goncalomb.bukkit.nbteditor.commands.CommandNBTItem;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTPotion;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTSpawner;
 import com.goncalomb.bukkit.nbteditor.commands.CommandNBTTile;
+import com.goncalomb.bukkit.nbteditor.nbt.SpawnerNBTWrapper;
 import com.goncalomb.bukkit.nbteditor.tools.EntityInspectorTool;
 import com.goncalomb.bukkit.nbteditor.tools.EntityRemoverTool;
 import com.goncalomb.bukkit.nbteditor.tools.SuperLeadTool;
@@ -78,6 +79,7 @@ public final class NBTEditor extends JavaPlugin {
 			NBTTagList.prepareReflection(this.getServer().getClass(), getLogger());
 			NBTTypes.prepareReflection(this.getServer().getClass(), getLogger());
 			NBTUtils.prepareReflection(this.getServer().getClass(), getLogger());
+			SpawnerNBTWrapper.prepareReflection(this.getServer().getClass(), getLogger());
 		} catch (Throwable e) {
 			getLogger().log(Level.SEVERE, "Error preparing reflection objects", e);
 			getLogger().severe("This version of NBTEditor is not compatible with this version of Bukkit");
