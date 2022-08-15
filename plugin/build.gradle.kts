@@ -17,6 +17,7 @@ dependencies {
     implementation(project(":adapter_api"))
     implementation(project(":adapter_v1_16_R3"))
     implementation(project(":adapter_v1_18_R1"))
+    implementation(project(":adapter_v1_18_R2"))
     implementation("org.bstats:bstats-bukkit:1.5")
     compileOnly("org.spigotmc:spigot-api:1.16.3-R0.1-SNAPSHOT")
 
