@@ -19,10 +19,13 @@
 
 package com.goncalomb.bukkit.nbteditor;
 
+import com.goncalomb.bukkit.mylib.reflect.BukkitVersion;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import java.util.logging.Logger;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Server;
 import org.bukkit.entity.EntityType;
 import org.junit.Test;
 
@@ -32,9 +35,9 @@ import com.goncalomb.bukkit.nbteditor.nbt.EntityNBT;
 public class TestBosEntities {
 
 	@Test
-	public void testBosEntities() {
-		HashSet<EntityType> entityTypes = new HashSet<EntityType>();
-		entityTypes.addAll(Arrays.asList(EntityType.values()));
+	public void testBosEntities() throws Exception {
+		BukkitVersion.prepareForTest();
+		HashSet<EntityType> entityTypes = new HashSet<>(Arrays.asList(EntityType.values()));
 		for (String name : EntityNBT.getValidTypeNames()) {
 			entityTypes.remove(EntityTypeMap.getByName(name));
 		}

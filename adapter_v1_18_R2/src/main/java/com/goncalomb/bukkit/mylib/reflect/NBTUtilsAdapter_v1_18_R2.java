@@ -55,7 +55,7 @@ public final class NBTUtilsAdapter_v1_18_R2 implements NBTUtilsAdapter {
 			spawnedEntity.setPos(location.getX(), location.getY(), location.getZ());
 			return spawnedEntity;
 		});
-		world.addFreshEntity(entity);
+		entity.getSelfAndPassengers().forEach((e) -> world.addFreshEntity(e));
 		return entity.getBukkitEntity();
 	};
 

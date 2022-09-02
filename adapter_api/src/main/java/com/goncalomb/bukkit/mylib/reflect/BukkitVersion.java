@@ -15,6 +15,11 @@ public final class BukkitVersion {
 		logger.info("Loaded BukkitVersion adapter for " + version);
 	}
 
+	public static void prepareForTest() throws Exception {
+		Class<?> clazz = Class.forName("com.goncalomb.bukkit.mylib.reflect.BukkitVersionAdapter_v1_18_R2");
+		adapter = (BukkitVersionAdapter) clazz.getConstructor().newInstance();
+	}
+
 	public static boolean isVersion(int minor) {
 		return isVersion(minor, 1);
 	}
