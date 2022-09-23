@@ -1,5 +1,0 @@
-name: NBTEditor
-main: com.goncalomb.bukkit.nbteditor.NBTEditor
-version: ${project.version}
-author: goncalomb
-api-version: 1.13
