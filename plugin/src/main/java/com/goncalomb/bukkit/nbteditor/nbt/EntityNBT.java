@@ -19,13 +19,6 @@
 
 package com.goncalomb.bukkit.nbteditor.nbt;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-
-import org.bukkit.entity.EntityType;
-
 import com.goncalomb.bukkit.mylib.namemaps.EntityTypeMap;
 import com.goncalomb.bukkit.mylib.reflect.BukkitVersion;
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
@@ -57,6 +50,11 @@ import com.goncalomb.bukkit.nbteditor.nbt.variables.StringVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.VectorVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.VillagerCareerVariable;
 import com.goncalomb.bukkit.nbteditor.nbt.variables.VillagerOffersVariable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import org.bukkit.entity.EntityType;
 
 public class EntityNBT extends EntityNBTBase {
 
@@ -274,6 +272,17 @@ public class EntityNBT extends EntityNBTBase {
 		cHoglin.add("CannotBeHunted", new BooleanVariable("CannotBeHunted"));
 		cHoglin.add("TimeInOverworld", new IntegerVariable("TimeInOverworld"));
 
+		NBTUnboundVariableContainer cAxolotl = new NBTUnboundVariableContainer("Axolotl", cBreed);
+		cAxolotl.add("FromBucket", new BooleanVariable("FromBucket"));
+		cAxolotl.add("Variant", new IntegerVariable("Variant", 0, 4));
+
+		NBTUnboundVariableContainer cGoat = new NBTUnboundVariableContainer("Goat", cBreed);
+		cGoat.add("IsScreamingGoat", new BooleanVariable("IsScreamingGoat"));
+		if (BukkitVersion.isVersion(19)) {
+			cGoat.add("HasLeftHorn", new BooleanVariable("HasLeftHorn"));
+			cGoat.add("HasRightHorn", new BooleanVariable("HasRightHorn"));
+		}
+
 		// Tameable SubTypes
 
 		NBTUnboundVariableContainer cOcelot = new NBTUnboundVariableContainer("Ocelot", cTameable);
@@ -382,6 +391,12 @@ public class EntityNBT extends EntityNBTBase {
 			ENTITY_VARIABLES.put("minecraft:zoglin", cZoglin);
 			ENTITY_VARIABLES.put("minecraft:hoglin", cHoglin);
 			ENTITY_VARIABLES.put("minecraft:strider", cPig);
+		}
+
+		if (BukkitVersion.isVersion(17)) {
+			ENTITY_VARIABLES.put("minecraft:axolotl", cAxolotl);
+			ENTITY_VARIABLES.put("minecraft:goat", cGoat);
+			ENTITY_VARIABLES.put("minecraft:glow_squid", cMob);
 		}
 
 		// Projectile Entities

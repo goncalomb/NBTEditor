@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
-
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtIo;
@@ -68,22 +67,37 @@ public final class NBTTagCompoundAdapter_v1_18_R2 implements NBTTagCompoundAdapt
 	}
 
 	public String getString(Object handle, String key) {
+		if (!((CompoundTag) handle).contains(key)) {
+			return null;
+		}
 		return ((CompoundTag) handle).getString(key);
 	}
 
 	public byte[] getByteArray(Object handle, String key) {
+		if (!((CompoundTag) handle).contains(key)) {
+			return null;
+		}
 		return ((CompoundTag) handle).getByteArray(key);
 	}
 
 	public int[] getIntArray(Object handle, String key) {
+		if (!((CompoundTag) handle).contains(key)) {
+			return null;
+		}
 		return ((CompoundTag) handle).getIntArray(key);
 	}
 
 	public long[] getLongArray(Object handle, String key) {
+		if (!((CompoundTag) handle).contains(key)) {
+			return null;
+		}
 		return ((CompoundTag) handle).getLongArray(key);
 	}
 
 	public NBTTagCompound getCompound(Object handle, String key) {
+		if (!((CompoundTag) handle).contains(key)) {
+			return null;
+		}
 		CompoundTag obj = ((CompoundTag) handle).getCompound(key);
 		if (obj != null) {
 			return new NBTTagCompound(obj);
